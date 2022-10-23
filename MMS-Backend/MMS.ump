@@ -70,7 +70,7 @@ class Request
 class LoanRequest
 {
 
-  enum LoanStatus { Approved, Rejected, Pending }
+  enum LoanStatus { Approved, Rejected, Pending, Returned}
 
   isA Request;
   Integer loanDuration;
@@ -80,7 +80,7 @@ class LoanRequest
 
 class DonationRequest
 {
-  enum DonationStatus { Approved, Rejected, Pending, Returned}
+  enum DonationStatus { Approved, Rejected, Pending}
   isA Request;
   DonationStatus status;
 }
