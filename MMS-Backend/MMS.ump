@@ -1,0 +1,192 @@
+class MuseumManagementSystem
+{
+  Time openTime;
+  Time closeTime;
+  Integer maxLoanNumber;
+  
+  Double ticketFee;
+  1 <@>- 1 Manager manager;
+  1 <@>- * Employee employees;
+  1 <@>- * Client clients;
+  1 <@>- * Shift shifts;
+  1 <@>- * LoanRequest loanRequests;
+  1 <@>- * DonationRequest donationRequests;
+  1 <@>- * Artifact artifacts;
+  1 <@>- * Room rooms;
+  1 <@>- * Ticket tickets;
+  1 <@>- 0..7 SpecificWeekDay weekDays;
+}
+
+class Account
+{
+  abstract;
+  unique username;
+  name;
+  password;
+}
+
+class Manager
+{
+  isA Account;
+}
+
+class Employee
+{
+  isA Account;
+  
+  1 employee -- * Shift shifts;
+}
+
+class Client
+{
+  isA Account;
+  Integer currentLoanNumber;
+  1 client -- * Request requests;
+  1 client -- * Ticket tickets;
+}
+
+class Shift
+{
+  unique shiftId;
+  Time startTime;
+  Time endTime;
+
+  * shifts -- 1 SpecificWeekDay dayOfTheWeek;
+}
+
+class SpecificWeekDay
+{
+  enum DayType { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+  Boolean isClosed;
+  DayType dayType;
+}
+
+class Request
+{
+  abstract;
+  unique requestId;
+}
+
+class LoanRequest
+{
+
+  enum LoanStatus { Approved, Rejected, Pending }
+
+  isA Request;
+  Integer loanDuration;
+  Double fee;
+  LoanStatus status;
+}
+
+class DonationRequest
+{
+  enum DonationStatus { Approved, Rejected, Pending, Returned}
+  isA Request;
+  DonationStatus status;
+}
+
+class Artifact
+{
+  enum LoanStatus { Available, Unavailable, Loaned }
+  unique artifactId;
+  name;
+  image;
+  description;
+  LoanStatus loanStatus;
+  Boolean isDamaged;
+  Double loanFee;
+  Double worth; 
+  1 artifact -- * Request requests;
+  * artifacts -- 1 Room room;
+}
+
+class Room
+{
+  enum RoomType { Small, Large, Storage }
+  RoomType type;
+  unique roomId;
+}
+
+class Ticket
+{
+  unique ticketId;
+  Double fee;
+  Boolean isActive;
+}//$?[End_of_model]$?
+
+namespace -;
+
+
+class MuseumManagementSystem
+{
+  position 50 30 109 45;
+  position.association Manager:manager__MuseumManagementSystem 13,110 30,0;
+  position.association Employee:employees__MuseumManagementSystem 8,110 30,0;
+  position.association Client:clients__MuseumManagementSystem 5,110 30,0;
+  position.association LoanRequest:loanRequests__MuseumManagementSystem 141,110 0,10;
+  position.association DonationRequest:donationRequests__MuseumManagementSystem 42,110 30,0;
+  position.association Artifact:artifacts__MuseumManagementSystem 217,4 0,10;
+  position.association MuseumManagementSystem__Room:rooms 217,41 0,10;
+  position.association MuseumManagementSystem__Ticket:tickets 217,78 0,10;
+}
+
+class Account
+{
+  position 50 130 109 45;
+}
+
+class Manager
+{
+  position 50 230 109 45;
+}
+
+class Employee
+{
+  position 50 330 109 45;
+  position.association Employee:employee__Shift:shifts 110,7 0,10;
+}
+
+class Client
+{
+  position 50 430 109 45;
+}
+
+class Shift
+{
+  position 250 30 109 45;
+}
+
+class SpecificWeekDay
+{
+  position 250 130 109 45;
+}
+
+class Request
+{
+  position 250 230 109 45;
+}
+
+class LoanRequest
+{
+  position 250 330 109 45;
+}
+
+class DonationRequest
+{
+  position 250 430 109 45;
+}
+
+class Artifact
+{
+  position 450 30 109 45;
+}
+
+class Room
+{
+  position 450 130 109 45;
+}
+
+class Ticket
+{
+  position 450 230 109 45;
+}
