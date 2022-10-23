@@ -1,10 +1,10 @@
-package ca.mcgill.ecse321.group13_backend;
+package ca.mcgill.ecse321.MMSBackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Group13BackendApplicationTests {
+class MmsBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
