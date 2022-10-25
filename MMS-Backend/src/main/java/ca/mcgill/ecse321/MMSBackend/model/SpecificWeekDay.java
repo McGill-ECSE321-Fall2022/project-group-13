@@ -3,16 +3,23 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import java.sql.Time;
 
 // line 57 "MMS.ump"
 // line 159 "MMS.ump"
+@Entity
 public class SpecificWeekDay
 {
 
   //------------------------
   // ENUMERATIONS
   //------------------------
+
 
   public enum DayType { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
@@ -22,9 +29,11 @@ public class SpecificWeekDay
 
   //SpecificWeekDay Attributes
   private boolean isClosed;
+  @Id
   private DayType dayType;
 
   //SpecificWeekDay Associations
+  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
   private List<Shift> shifts;
 
