@@ -3,10 +3,16 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import java.sql.Time;
 
 // line 28 "MMS.ump"
 // line 138 "MMS.ump"
+@Entity
+@DiscriminatorValue("Manager")
 public class Manager extends Account
 {
 

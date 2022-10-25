@@ -3,10 +3,16 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import java.sql.Time;
 
 // line 33 "MMS.ump"
 // line 143 "MMS.ump"
+@Entity
+@DiscriminatorValue("Employee")
 public class Employee extends Account
 {
 

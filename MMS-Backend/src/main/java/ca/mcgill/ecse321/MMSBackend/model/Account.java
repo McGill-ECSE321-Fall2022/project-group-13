@@ -4,8 +4,18 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 // line 20 "MMS.ump"
 // line 133 "MMS.ump"
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "AccountType")
 public abstract class Account
 {
 
@@ -20,8 +30,14 @@ public abstract class Account
   //------------------------
 
   //Account Attributes
+  @Id
+  @Column(name = "username")
   private String username;
+  
+  @Column(name = "name") 
   private String name;
+  
+  @Column(name = "password")
   private String password;
 
   //------------------------

@@ -4,8 +4,14 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 // line 40 "MMS.ump"
 // line 149 "MMS.ump"
+@Entity
+@DiscriminatorValue("Client")
 public class Client extends Account
 {
 
@@ -14,6 +20,7 @@ public class Client extends Account
   //------------------------
 
   //Client Attributes
+  @Column(name = "currentLoanNumber")
   private int currentLoanNumber;
 
   //Client Associations
