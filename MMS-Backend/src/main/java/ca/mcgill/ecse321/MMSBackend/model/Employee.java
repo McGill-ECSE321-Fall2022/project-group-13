@@ -7,7 +7,7 @@ import java.util.*;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import java.sql.Time;
+//import java.sql.Time;
 
 // line 33 "MMS.ump"
 // line 143 "MMS.ump"
@@ -82,11 +82,11 @@ public class Employee extends Account
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, aMuseumManagementSystem, this);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, aMuseumManagementSystem, this);
+  // }
 
   public boolean addShift(Shift aShift)
   {
