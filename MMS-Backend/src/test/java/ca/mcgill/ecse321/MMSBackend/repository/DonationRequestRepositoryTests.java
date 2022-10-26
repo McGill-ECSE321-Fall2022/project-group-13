@@ -50,8 +50,8 @@ public class DonationRequestRepositoryTests {
     public void testPersistAndLoadDonationRequest() {
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        Time openTime = new Time(9, 0, 0);
-        Time closeTime = new Time(17, 0, 0);
+        Time openTime = Time.valueOf("9:00:00");
+        Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
         double ticketFee = 13.25;
 
