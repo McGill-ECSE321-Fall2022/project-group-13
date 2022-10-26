@@ -1,11 +1,13 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
+//Mona
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
 // line 103 "MMS.ump"
 // line 184 "MMS.ump"
+@Entity
 public class Room
 {
 
@@ -25,19 +27,22 @@ public class Room
   // MEMBER VARIABLES
   //------------------------
 
+  @Id
   //Room Attributes
   private RoomType type;
   private String roomId;
 
   //Room Associations
+  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
+  @OneToMany(optional = false)
   private List<Artifact> artifacts;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Room(RoomType aType, String aRoomId, MuseumManagementSystem aMuseumManagementSystem)
+ /* public Room(RoomType aType, String aRoomId, MuseumManagementSystem aMuseumManagementSystem)
   {
     type = aType;
     if (!setRoomId(aRoomId))
@@ -50,7 +55,7 @@ public class Room
       throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     artifacts = new ArrayList<Artifact>();
-  }
+  }*/
 
   //------------------------
   // INTERFACE
@@ -92,21 +97,25 @@ public class Room
   {
     return roomId;
   }
+
   /* Code from template attribute_GetUnique */
   public static Room getWithRoomId(String aRoomId)
   {
     return roomsByRoomId.get(aRoomId);
   }
+
   /* Code from template attribute_HasUnique */
   public static boolean hasWithRoomId(String aRoomId)
   {
     return getWithRoomId(aRoomId) != null;
   }
+
   /* Code from template association_GetOne */
   public MuseumManagementSystem getMuseumManagementSystem()
   {
     return museumManagementSystem;
   }
+
   /* Code from template association_GetMany */
   public Artifact getArtifact(int index)
   {
