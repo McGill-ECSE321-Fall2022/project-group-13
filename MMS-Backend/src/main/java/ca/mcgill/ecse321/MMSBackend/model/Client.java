@@ -32,18 +32,18 @@ public class Client extends Account
   // CONSTRUCTOR
   //------------------------
 
-  public Client(String aUsername, String aName, String aPassword, int aCurrentLoanNumber, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    super(aUsername, aName, aPassword);
-    currentLoanNumber = aCurrentLoanNumber;
-    requests = new ArrayList<Request>();
-    tickets = new ArrayList<Ticket>();
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create client due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Client(String aUsername, String aName, String aPassword, int aCurrentLoanNumber, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   super(aUsername, aName, aPassword);
+  //   currentLoanNumber = aCurrentLoanNumber;
+  //   requests = new ArrayList<Request>();
+  //   tickets = new ArrayList<Ticket>();
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create client due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE

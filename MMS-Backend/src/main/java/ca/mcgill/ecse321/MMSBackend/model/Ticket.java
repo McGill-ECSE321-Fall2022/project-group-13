@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 // line 110 "MMS.ump"
 // line 189 "MMS.ump"

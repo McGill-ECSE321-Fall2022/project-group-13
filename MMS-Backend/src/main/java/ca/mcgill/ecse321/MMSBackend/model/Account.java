@@ -44,15 +44,15 @@ public abstract class Account
   // CONSTRUCTOR
   //------------------------
 
-  public Account(String aUsername, String aName, String aPassword)
-  {
-    name = aName;
-    password = aPassword;
-    if (!setUsername(aUsername))
-    {
-      throw new RuntimeException("Cannot create due to duplicate username. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-  }
+  // public Account(String aUsername, String aName, String aPassword)
+  // {
+  //   name = aName;
+  //   password = aPassword;
+  //   if (!setUsername(aUsername))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate username. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
