@@ -2,10 +2,14 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.*;
 
 // line 110 "MMS.ump"
 // line 189 "MMS.ump"
+@Entity
 public class Ticket
 {
 
@@ -20,12 +24,16 @@ public class Ticket
   //------------------------
 
   //Ticket Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private String ticketId;
   private double fee;
   private boolean isActive;
 
   //Ticket Associations
+  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
+  @ManyToOne(optional = false)
   private Client client;
 
   //------------------------
