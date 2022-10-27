@@ -2,16 +2,10 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import java.util.*;
 
-// line 112 "MMS.ump"
-// line 187 "MMS.ump"
-@Entity
+// line 113 "MMS.ump"
+// line 188 "MMS.ump"
 public class Ticket
 {
 
@@ -19,57 +13,52 @@ public class Ticket
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<String, Ticket> ticketsByTicketId = new HashMap<String, Ticket>();
+  private static Map<Integer, Ticket> ticketsByTicketId = new HashMap<Integer, Ticket>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Ticket Attributes
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private String ticketId;
+  private int ticketId;
   private double fee;
   private boolean isActive;
 
   //Ticket Associations
-  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
-  @ManyToOne(optional = false)
   private Client client;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public Ticket(String aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Client aClient)
-  // {
-  //   fee = aFee;
-  //   isActive = aIsActive;
-  //   if (!setTicketId(aTicketId))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate ticketId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create ticket due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   boolean didAddClient = setClient(aClient);
-  //   if (!didAddClient)
-  //   {
-  //     throw new RuntimeException("Unable to create ticket due to client. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public Ticket(int aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Client aClient)
+  {
+    fee = aFee;
+    isActive = aIsActive;
+    if (!setTicketId(aTicketId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate ticketId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create ticket due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    if (!setClient(aClient))
+    {
+      throw new RuntimeException("Unable to create Ticket due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setTicketId(String aTicketId)
+  public boolean setTicketId(int aTicketId)
   {
     boolean wasSet = false;
-    String anOldTicketId = getTicketId();
+    Integer anOldTicketId = getTicketId();
     if (anOldTicketId != null && anOldTicketId.equals(aTicketId)) {
       return true;
     }
@@ -101,17 +90,17 @@ public class Ticket
     return wasSet;
   }
 
-  public String getTicketId()
+  public int getTicketId()
   {
     return ticketId;
   }
   /* Code from template attribute_GetUnique */
-  public static Ticket getWithTicketId(String aTicketId)
+  public static Ticket getWithTicketId(int aTicketId)
   {
     return ticketsByTicketId.get(aTicketId);
   }
   /* Code from template attribute_HasUnique */
-  public static boolean hasWithTicketId(String aTicketId)
+  public static boolean hasWithTicketId(int aTicketId)
   {
     return getWithTicketId(aTicketId) != null;
   }
@@ -159,23 +148,15 @@ public class Ticket
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setClient(Client aClient)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setClient(Client aNewClient)
   {
     boolean wasSet = false;
-    if (aClient == null)
+    if (aNewClient != null)
     {
-      return wasSet;
+      client = aNewClient;
+      wasSet = true;
     }
-
-    Client existingClient = client;
-    client = aClient;
-    if (existingClient != null && !existingClient.equals(aClient))
-    {
-      existingClient.removeTicket(this);
-    }
-    client.addTicket(this);
-    wasSet = true;
     return wasSet;
   }
 
@@ -188,12 +169,7 @@ public class Ticket
     {
       placeholderMuseumManagementSystem.removeTicket(this);
     }
-    Client placeholderClient = client;
-    this.client = null;
-    if(placeholderClient != null)
-    {
-      placeholderClient.removeTicket(this);
-    }
+    client = null;
   }
 
 

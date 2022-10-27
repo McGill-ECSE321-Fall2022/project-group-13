@@ -2,15 +2,10 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-
 import java.util.*;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 // line 66 "MMS.ump"
-// line 158 "MMS.ump"
-@Entity
+// line 159 "MMS.ump"
 public abstract class Request
 {
 
@@ -18,53 +13,47 @@ public abstract class Request
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<String, Request> requestsByRequestId = new HashMap<String, Request>();
+  private static Map<Integer, Request> requestsByRequestId = new HashMap<Integer, Request>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Request Attributes
-  @Id
-  private String requestId;
+  private int requestId;
 
   //Request Associations
-  @ManyToOne(optional=false)
   private Client client;
-
-  @ManyToOne(optional=false)
   private Artifact artifact;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public Request(String aRequestId, Client aClient, Artifact aArtifact)
-  // {
-  //   if (!setRequestId(aRequestId))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate requestId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   boolean didAddClient = setClient(aClient);
-  //   if (!didAddClient)
-  //   {
-  //     throw new RuntimeException("Unable to create request due to client. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   boolean didAddArtifact = setArtifact(aArtifact);
-  //   if (!didAddArtifact)
-  //   {
-  //     throw new RuntimeException("Unable to create request due to artifact. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public Request(int aRequestId, Client aClient, Artifact aArtifact)
+  {
+    if (!setRequestId(aRequestId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate requestId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
+    if (!setClient(aClient))
+    {
+      throw new RuntimeException("Unable to create Request due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    if (!setArtifact(aArtifact))
+    {
+      throw new RuntimeException("Unable to create Request due to aArtifact. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setRequestId(String aRequestId)
+  public boolean setRequestId(int aRequestId)
   {
     boolean wasSet = false;
-    String anOldRequestId = getRequestId();
+    Integer anOldRequestId = getRequestId();
     if (anOldRequestId != null && anOldRequestId.equals(aRequestId)) {
       return true;
     }
@@ -80,17 +69,17 @@ public abstract class Request
     return wasSet;
   }
 
-  public String getRequestId()
+  public int getRequestId()
   {
     return requestId;
   }
   /* Code from template attribute_GetUnique */
-  public static Request getWithRequestId(String aRequestId)
+  public static Request getWithRequestId(int aRequestId)
   {
     return requestsByRequestId.get(aRequestId);
   }
   /* Code from template attribute_HasUnique */
-  public static boolean hasWithRequestId(String aRequestId)
+  public static boolean hasWithRequestId(int aRequestId)
   {
     return getWithRequestId(aRequestId) != null;
   }
@@ -104,60 +93,34 @@ public abstract class Request
   {
     return artifact;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setClient(Client aClient)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setClient(Client aNewClient)
   {
     boolean wasSet = false;
-    if (aClient == null)
+    if (aNewClient != null)
     {
-      return wasSet;
+      client = aNewClient;
+      wasSet = true;
     }
-
-    Client existingClient = client;
-    client = aClient;
-    if (existingClient != null && !existingClient.equals(aClient))
-    {
-      existingClient.removeRequest(this);
-    }
-    client.addRequest(this);
-    wasSet = true;
     return wasSet;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setArtifact(Artifact aArtifact)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setArtifact(Artifact aNewArtifact)
   {
     boolean wasSet = false;
-    if (aArtifact == null)
+    if (aNewArtifact != null)
     {
-      return wasSet;
+      artifact = aNewArtifact;
+      wasSet = true;
     }
-
-    Artifact existingArtifact = artifact;
-    artifact = aArtifact;
-    if (existingArtifact != null && !existingArtifact.equals(aArtifact))
-    {
-      existingArtifact.removeRequest(this);
-    }
-    artifact.addRequest(this);
-    wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
     requestsByRequestId.remove(getRequestId());
-    Client placeholderClient = client;
-    this.client = null;
-    if(placeholderClient != null)
-    {
-      placeholderClient.removeRequest(this);
-    }
-    Artifact placeholderArtifact = artifact;
-    this.artifact = null;
-    if(placeholderArtifact != null)
-    {
-      placeholderArtifact.removeRequest(this);
-    }
+    client = null;
+    artifact = null;
   }
 
 

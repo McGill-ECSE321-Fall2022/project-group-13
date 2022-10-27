@@ -1,6 +1,6 @@
 class MuseumManagementSystem
 {
-  systemId;
+  unique Integer systemId;
   name;
   Time openTime;
   Time closeTime;
@@ -36,24 +36,24 @@ class Employee
 {
   isA Account;
   
-  1 employee -- * Shift shifts;
+  1 employee <- * Shift shifts;
 }
 
 class Client
 {
   isA Account;
   Integer currentLoanNumber;
-  1 client -- * Request requests;
-  1 client -- * Ticket tickets;
+  1 client <- * Request requests;
+  1 client <- * Ticket tickets;
 }
 
 class Shift
 {
-  unique shiftId;
+  unique Integer shiftId;
   Time startTime;
   Time endTime;
 
-  * shifts -- 1 SpecificWeekDay dayOfTheWeek;
+  * shifts -> 1 SpecificWeekDay dayOfTheWeek;
 }
 
 class SpecificWeekDay
@@ -66,7 +66,7 @@ class SpecificWeekDay
 class Request
 {
   abstract;
-  unique requestId;
+  unique Integer requestId;
 }
 
 class LoanRequest
@@ -90,7 +90,7 @@ class DonationRequest
 class Artifact
 {
   enum LoanStatus { Available, Unavailable, Loaned }
-  unique artifactId;
+  unique Integer artifactId;
   name;
   image;
   description;
@@ -98,20 +98,21 @@ class Artifact
   Boolean isDamaged;
   Double loanFee;
   Double worth; 
-  1 artifact -- * Request requests;
-  * artifacts -- 1 Room roomLocation;
+  1 artifact <- * Request requests;
+  * artifacts -> 1 Room roomLocation;
 }
 
 class Room
 {
   enum RoomType { Small, Large, Storage }
+  name;
   RoomType type;
-  unique roomId;
+  unique Integer roomId;
 }
 
 class Ticket
 {
-  unique ticketId;
+  unique Integer ticketId;
   Double fee;
   Boolean isActive;
 }
@@ -215,3 +216,4 @@ class MuseumManagementSystem
   position.association LoanRequest:loanRequests__MuseumManagementSystem:mms 217,8 0,10;
   position.association MuseumManagementSystem:mms__Shift:shifts 0,63 66,0;
 }
+

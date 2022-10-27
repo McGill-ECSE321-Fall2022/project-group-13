@@ -2,15 +2,10 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-
 import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 // line 105 "MMS.ump"
-// line 182 "MMS.ump"
-@Entity
+// line 183 "MMS.ump"
 public class Room
 {
 
@@ -24,27 +19,27 @@ public class Room
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<String, Room> roomsByRoomId = new HashMap<String, Room>();
+  private static Map<Integer, Room> roomsByRoomId = new HashMap<Integer, Room>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Room Attributes
-  @Id
+  private String name;
   private RoomType type;
-  private String roomId;
+  private int roomId;
 
   //Room Associations
   private MuseumManagementSystem museumManagementSystem;
-  private List<Artifact> artifacts;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
-/*
-  public Room(RoomType aType, String aRoomId, MuseumManagementSystem aMuseumManagementSystem)
+
+  public Room(String aName, RoomType aType, int aRoomId, MuseumManagementSystem aMuseumManagementSystem)
   {
+    name = aName;
     type = aType;
     if (!setRoomId(aRoomId))
     {
@@ -55,12 +50,19 @@ public class Room
     {
       throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    artifacts = new ArrayList<Artifact>();
-  }*/
+  }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    name = aName;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setType(RoomType aType)
   {
@@ -70,10 +72,10 @@ public class Room
     return wasSet;
   }
 
-  public boolean setRoomId(String aRoomId)
+  public boolean setRoomId(int aRoomId)
   {
     boolean wasSet = false;
-    String anOldRoomId = getRoomId();
+    Integer anOldRoomId = getRoomId();
     if (anOldRoomId != null && anOldRoomId.equals(aRoomId)) {
       return true;
     }
@@ -89,22 +91,27 @@ public class Room
     return wasSet;
   }
 
+  public String getName()
+  {
+    return name;
+  }
+
   public RoomType getType()
   {
     return type;
   }
 
-  public String getRoomId()
+  public int getRoomId()
   {
     return roomId;
   }
   /* Code from template attribute_GetUnique */
-  public static Room getWithRoomId(String aRoomId)
+  public static Room getWithRoomId(int aRoomId)
   {
     return roomsByRoomId.get(aRoomId);
   }
   /* Code from template attribute_HasUnique */
-  public static boolean hasWithRoomId(String aRoomId)
+  public static boolean hasWithRoomId(int aRoomId)
   {
     return getWithRoomId(aRoomId) != null;
   }
@@ -112,36 +119,6 @@ public class Room
   public MuseumManagementSystem getMuseumManagementSystem()
   {
     return museumManagementSystem;
-  }
-  /* Code from template association_GetMany */
-  public Artifact getArtifact(int index)
-  {
-    Artifact aArtifact = artifacts.get(index);
-    return aArtifact;
-  }
-
-  public List<Artifact> getArtifacts()
-  {
-    List<Artifact> newArtifacts = Collections.unmodifiableList(artifacts);
-    return newArtifacts;
-  }
-
-  public int numberOfArtifacts()
-  {
-    int number = artifacts.size();
-    return number;
-  }
-
-  public boolean hasArtifacts()
-  {
-    boolean has = artifacts.size() > 0;
-    return has;
-  }
-
-  public int indexOfArtifact(Artifact aArtifact)
-  {
-    int index = artifacts.indexOf(aArtifact);
-    return index;
   }
   /* Code from template association_SetOneToMany */
   public boolean setMuseumManagementSystem(MuseumManagementSystem aMuseumManagementSystem)
@@ -162,78 +139,6 @@ public class Room
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfArtifacts()
-  {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  // public Artifact addArtifact(String aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, this, aMuseumManagementSystem);
-  // }
-
-  public boolean addArtifact(Artifact aArtifact)
-  {
-    boolean wasAdded = false;
-    if (artifacts.contains(aArtifact)) { return false; }
-    Room existingRoomLocation = aArtifact.getRoomLocation();
-    boolean isNewRoomLocation = existingRoomLocation != null && !this.equals(existingRoomLocation);
-    if (isNewRoomLocation)
-    {
-      aArtifact.setRoomLocation(this);
-    }
-    else
-    {
-      artifacts.add(aArtifact);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeArtifact(Artifact aArtifact)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aArtifact, as it must always have a roomLocation
-    if (!this.equals(aArtifact.getRoomLocation()))
-    {
-      artifacts.remove(aArtifact);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addArtifactAt(Artifact aArtifact, int index)
-  {  
-    boolean wasAdded = false;
-    if(addArtifact(aArtifact))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfArtifacts()) { index = numberOfArtifacts() - 1; }
-      artifacts.remove(aArtifact);
-      artifacts.add(index, aArtifact);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveArtifactAt(Artifact aArtifact, int index)
-  {
-    boolean wasAdded = false;
-    if(artifacts.contains(aArtifact))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfArtifacts()) { index = numberOfArtifacts() - 1; }
-      artifacts.remove(aArtifact);
-      artifacts.add(index, aArtifact);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addArtifactAt(aArtifact, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
@@ -244,17 +149,13 @@ public class Room
     {
       placeholderMuseumManagementSystem.removeRoom(this);
     }
-    for(int i=artifacts.size(); i > 0; i--)
-    {
-      Artifact aArtifact = artifacts.get(i - 1);
-      aArtifact.delete();
-    }
   }
 
 
   public String toString()
   {
     return super.toString() + "["+
+            "name" + ":" + getName()+ "," +
             "roomId" + ":" + getRoomId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "type" + "=" + (getType() != null ? !getType().equals(this)  ? getType().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "museumManagementSystem = "+(getMuseumManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getMuseumManagementSystem())):"null");
