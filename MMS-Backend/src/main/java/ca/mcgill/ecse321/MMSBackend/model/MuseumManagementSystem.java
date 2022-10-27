@@ -3,6 +3,11 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import java.sql.Time;
 
 // line 1 "MMS.ump"
@@ -21,6 +26,8 @@ public class MuseumManagementSystem
   //------------------------
 
   //MuseumManagementSystem Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int systemId;
   private String name;
   private Time openTime;
@@ -29,37 +36,32 @@ public class MuseumManagementSystem
   private double ticketFee;
 
   //MuseumManagementSystem Associations
+  @OneToOne(mappedBy="museumManagementSystem")
   private Manager manager;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<Employee> employees;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<Client> clients;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<Shift> shifts;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<LoanRequest> loanRequests;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<DonationRequest> donationRequests;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<Artifact> artifacts;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<Room> rooms;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<Ticket> tickets;
+  @OneToMany(mappedBy="museumManagementSystem")
   private List<SpecificWeekDay> weekDays;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public MuseumManagementSystem(int aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
-  {
-    name = aName;
-    openTime = aOpenTime;
-    closeTime = aCloseTime;
-    maxLoanNumber = aMaxLoanNumber;
-    ticketFee = aTicketFee;
-    if (!setSystemId(aSystemId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate systemId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    if (aManager == null || aManager.getMuseumManagementSystem() != null)
-    {
-      throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    manager = aManager;
+  public MuseumManagementSystem(){
     employees = new ArrayList<Employee>();
     clients = new ArrayList<Client>();
     shifts = new ArrayList<Shift>();
@@ -71,28 +73,55 @@ public class MuseumManagementSystem
     weekDays = new ArrayList<SpecificWeekDay>();
   }
 
-  public MuseumManagementSystem(int aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
-  {
-    if (!setSystemId(aSystemId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate systemId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    name = aName;
-    openTime = aOpenTime;
-    closeTime = aCloseTime;
-    maxLoanNumber = aMaxLoanNumber;
-    ticketFee = aTicketFee;
-    manager = new Manager(aUsernameForManager, aNameForManager, aPasswordForManager, this);
-    employees = new ArrayList<Employee>();
-    clients = new ArrayList<Client>();
-    shifts = new ArrayList<Shift>();
-    loanRequests = new ArrayList<LoanRequest>();
-    donationRequests = new ArrayList<DonationRequest>();
-    artifacts = new ArrayList<Artifact>();
-    rooms = new ArrayList<Room>();
-    tickets = new ArrayList<Ticket>();
-    weekDays = new ArrayList<SpecificWeekDay>();
-  }
+  // public MuseumManagementSystem(int aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
+  // {
+  //   name = aName;
+  //   openTime = aOpenTime;
+  //   closeTime = aCloseTime;
+  //   maxLoanNumber = aMaxLoanNumber;
+  //   ticketFee = aTicketFee;
+  //   if (!setSystemId(aSystemId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate systemId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   if (aManager == null || aManager.getMuseumManagementSystem() != null)
+  //   {
+  //     throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   manager = aManager;
+  //   employees = new ArrayList<Employee>();
+  //   clients = new ArrayList<Client>();
+  //   shifts = new ArrayList<Shift>();
+  //   loanRequests = new ArrayList<LoanRequest>();
+  //   donationRequests = new ArrayList<DonationRequest>();
+  //   artifacts = new ArrayList<Artifact>();
+  //   rooms = new ArrayList<Room>();
+  //   tickets = new ArrayList<Ticket>();
+  //   weekDays = new ArrayList<SpecificWeekDay>();
+  // }
+
+  // public MuseumManagementSystem(int aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
+  // {
+  //   if (!setSystemId(aSystemId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate systemId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   name = aName;
+  //   openTime = aOpenTime;
+  //   closeTime = aCloseTime;
+  //   maxLoanNumber = aMaxLoanNumber;
+  //   ticketFee = aTicketFee;
+  //   manager = new Manager(aUsernameForManager, aNameForManager, aPasswordForManager, this);
+  //   employees = new ArrayList<Employee>();
+  //   clients = new ArrayList<Client>();
+  //   shifts = new ArrayList<Shift>();
+  //   loanRequests = new ArrayList<LoanRequest>();
+  //   donationRequests = new ArrayList<DonationRequest>();
+  //   artifacts = new ArrayList<Artifact>();
+  //   rooms = new ArrayList<Room>();
+  //   tickets = new ArrayList<Ticket>();
+  //   weekDays = new ArrayList<SpecificWeekDay>();
+  // }
 
   //------------------------
   // INTERFACE
@@ -981,10 +1010,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Ticket addTicket(int aTicketId, double aFee, boolean aIsActive, Client aClient)
-  {
-    return new Ticket(aTicketId, aFee, aIsActive, this, aClient);
-  }
+  // public Ticket addTicket(int aTicketId, double aFee, boolean aIsActive, Client aClient)
+  // {
+  //   return new Ticket(aTicketId, aFee, aIsActive, this, aClient);
+  // }
 
   public boolean addTicket(Ticket aTicket)
   {

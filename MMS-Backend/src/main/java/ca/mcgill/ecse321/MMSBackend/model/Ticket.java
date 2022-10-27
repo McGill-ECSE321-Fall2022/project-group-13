@@ -3,6 +3,10 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 // line 113 "MMS.ump"
 // line 188 "MMS.ump"
@@ -20,36 +24,40 @@ public class Ticket
   //------------------------
 
   //Ticket Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int ticketId;
   private double fee;
   private boolean isActive;
 
   //Ticket Associations
+  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
+  @ManyToOne(optional = false)
   private Client client;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Ticket(int aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Client aClient)
-  {
-    fee = aFee;
-    isActive = aIsActive;
-    if (!setTicketId(aTicketId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate ticketId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create ticket due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    if (!setClient(aClient))
-    {
-      throw new RuntimeException("Unable to create Ticket due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Ticket(int aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Client aClient)
+  // {
+  //   fee = aFee;
+  //   isActive = aIsActive;
+  //   if (!setTicketId(aTicketId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate ticketId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create ticket due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   if (!setClient(aClient))
+  //   {
+  //     throw new RuntimeException("Unable to create Ticket due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
