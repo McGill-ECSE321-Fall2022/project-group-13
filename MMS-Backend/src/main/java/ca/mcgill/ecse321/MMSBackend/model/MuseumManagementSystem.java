@@ -620,11 +620,11 @@ public class MuseumManagementSystem
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Shift addShift(int aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, Employee aEmployee)
-  {
-    return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, this, aEmployee);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Shift addShift(int aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, Employee aEmployee)
+  // {
+  //   return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, this, aEmployee);
+  // }
 
   public boolean addShift(Shift aShift)
   {
@@ -1057,18 +1057,18 @@ public class MuseumManagementSystem
   {
     return 7;
   }
-  /* Code from template association_AddOptionalNToOne */
-  public SpecificWeekDay addWeekDay(boolean aIsClosed, SpecificWeekDay.DayType aDayType)
-  {
-    if (numberOfWeekDays() >= maximumNumberOfWeekDays())
-    {
-      return null;
-    }
-    else
-    {
-      return new SpecificWeekDay(aIsClosed, aDayType, this);
-    }
-  }
+  // /* Code from template association_AddOptionalNToOne */
+  // public SpecificWeekDay addWeekDay(boolean aIsClosed, SpecificWeekDay.DayType aDayType)
+  // {
+  //   if (numberOfWeekDays() >= maximumNumberOfWeekDays())
+  //   {
+  //     return null;
+  //   }
+  //   else
+  //   {
+  //     return new SpecificWeekDay(aIsClosed, aDayType, this);
+  //   }
+  // }
 
   public boolean addWeekDay(SpecificWeekDay aWeekDay)
   {
