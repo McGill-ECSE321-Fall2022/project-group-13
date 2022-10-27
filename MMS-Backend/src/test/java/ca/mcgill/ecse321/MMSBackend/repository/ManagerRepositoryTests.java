@@ -34,9 +34,9 @@ public class ManagerRepositoryTests {
         managerRepository.deleteAll(); 
         mmsRepository.deleteAll();
     }
-
+    
     @Test
-    public void testPersistAndLoadDonationRequest() {
+    public void testManagerRepository() {
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
         String museumName = "Marwan's MMS";
