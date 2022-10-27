@@ -49,7 +49,7 @@ public class ShiftRepositoryTests {
     }
 
     @Test
-    public void testPersistAndLoadEvent(){
+    public void testPersistAndLoadShift(){
         // Create a museum management system 
         MuseumManagementSystem mms = new MuseumManagementSystem();
         String mmsName = "Marwan's MMS";
