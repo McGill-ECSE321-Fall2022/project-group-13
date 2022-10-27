@@ -2,12 +2,19 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.CascadeType;
 import java.sql.Time;
 import java.util.*;
 
 // line 1 "MMS.ump"
 // line 198 "MMS.ump"
+@Entity
 public class MuseumManagementSystem
 {
 
@@ -16,6 +23,8 @@ public class MuseumManagementSystem
   //------------------------
 
   //MuseumManagementSystem Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private String systemId;
   private String name;
   private Time openTime;
@@ -24,44 +33,54 @@ public class MuseumManagementSystem
   private double ticketFee;
 
   //MuseumManagementSystem Associations
+  @OneToOne(cascade = {CascadeType.ALL})
   private Manager manager;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<Employee> employees;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<Client> clients;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<Shift> shifts;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<LoanRequest> loanRequests;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<DonationRequest> donationRequests;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<Artifact> artifacts;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<Room> rooms;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<Ticket> tickets;
+  @OneToMany(cascade = { CascadeType.ALL })
   private List<SpecificWeekDay> weekDays;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
-  {
-    systemId = aSystemId;
-    name = aName;
-    openTime = aOpenTime;
-    closeTime = aCloseTime;
-    maxLoanNumber = aMaxLoanNumber;
-    ticketFee = aTicketFee;
-    if (aManager == null || aManager.getMuseumManagementSystem() != null)
-    {
-      throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    manager = aManager;
-    employees = new ArrayList<Employee>();
-    clients = new ArrayList<Client>();
-    shifts = new ArrayList<Shift>();
-    loanRequests = new ArrayList<LoanRequest>();
-    donationRequests = new ArrayList<DonationRequest>();
-    artifacts = new ArrayList<Artifact>();
-    rooms = new ArrayList<Room>();
-    tickets = new ArrayList<Ticket>();
-    weekDays = new ArrayList<SpecificWeekDay>();
-  }
+  // public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
+  // {
+  //   systemId = aSystemId;
+  //   name = aName;
+  //   openTime = aOpenTime;
+  //   closeTime = aCloseTime;
+  //   maxLoanNumber = aMaxLoanNumber;
+  //   ticketFee = aTicketFee;
+  //   if (aManager == null || aManager.getMuseumManagementSystem() != null)
+  //   {
+  //     throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   manager = aManager;
+  //   employees = new ArrayList<Employee>();
+  //   clients = new ArrayList<Client>();
+  //   shifts = new ArrayList<Shift>();
+  //   loanRequests = new ArrayList<LoanRequest>();
+  //   donationRequests = new ArrayList<DonationRequest>();
+  //   artifacts = new ArrayList<Artifact>();
+  //   rooms = new ArrayList<Room>();
+  //   tickets = new ArrayList<Ticket>();
+  //   weekDays = new ArrayList<SpecificWeekDay>();
+  // }
 
   // public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
   // {

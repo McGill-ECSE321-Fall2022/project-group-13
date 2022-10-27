@@ -39,6 +39,7 @@ public class Shift
   //Shift Associations
   @ManyToOne(optional = false)
   private SpecificWeekDay dayOfTheWeek;
+  @ManyToOne(optional=false)
   private MuseumManagementSystem museumManagementSystem;
   @ManyToOne(optional = false)
   private Employee employee;

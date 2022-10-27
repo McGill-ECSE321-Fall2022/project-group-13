@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 //import java.sql.Time;
 
@@ -32,6 +33,7 @@ public class SpecificWeekDay
   private DayType dayType;
 
   //SpecificWeekDay Associations
+  @ManyToOne(optional=false)
   private MuseumManagementSystem museumManagementSystem;
   private List<Shift> shifts;
 
