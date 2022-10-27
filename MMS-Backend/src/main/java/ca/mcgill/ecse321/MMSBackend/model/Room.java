@@ -5,6 +5,9 @@ package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 // line 105 "MMS.ump"
 // line 182 "MMS.ump"
 @Entity
