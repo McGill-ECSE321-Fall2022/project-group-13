@@ -83,10 +83,8 @@ public class DonationRequestRepositoryTests {
 
         // Create storage room
         Room room = new Room();
-        String roomId = "Storage";
         RoomType type = RoomType.Storage;
 
-        room.setRoomId(roomId);
         room.setType(type);
         room.setMuseumManagementSystem(mms);
 
@@ -133,12 +131,14 @@ public class DonationRequestRepositoryTests {
         // Get ids of artifacts, clients, and donation requests
         Integer mmsId = mms.getSystemId();
         Integer artifactId = artifact.getArtifactId();
+        Integer roomId = artifact.getRoomLocation().getRoomId();
         String clientUsername = client.getUsername();
         Integer donationRequestId = donationRequest.getRequestId();
 
         // Make the variables null
         mms = null;
         artifact = null;
+        room = null;
         client = null;
         donationRequest = null;
 
