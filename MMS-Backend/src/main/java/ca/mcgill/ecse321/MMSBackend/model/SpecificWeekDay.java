@@ -3,6 +3,10 @@
 
 
 package ca.mcgill.ecse321.MMSBackend.model;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 // line 59 "MMS.ump"
 // line 154 "MMS.ump"
 public class SpecificWeekDay
@@ -23,22 +27,24 @@ public class SpecificWeekDay
   private DayType dayType;
 
   //SpecificWeekDay Associations
+  @ManyToOne(optional=false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public SpecificWeekDay(boolean aIsClosed, DayType aDayType, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    isClosed = aIsClosed;
-    dayType = aDayType;
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create weekDay due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public SpecificWeekDay(boolean aIsClosed, DayType aDayType, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   isClosed = aIsClosed;
+  //   dayType = aDayType;
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create weekDay due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
