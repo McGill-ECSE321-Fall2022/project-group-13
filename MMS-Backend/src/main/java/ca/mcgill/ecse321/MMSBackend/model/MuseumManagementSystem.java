@@ -39,29 +39,29 @@ public class MuseumManagementSystem
   // CONSTRUCTOR
   //------------------------
 
-  public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
-  {
-    systemId = aSystemId;
-    name = aName;
-    openTime = aOpenTime;
-    closeTime = aCloseTime;
-    maxLoanNumber = aMaxLoanNumber;
-    ticketFee = aTicketFee;
-    if (aManager == null || aManager.getMuseumManagementSystem() != null)
-    {
-      throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    manager = aManager;
-    employees = new ArrayList<Employee>();
-    clients = new ArrayList<Client>();
-    shifts = new ArrayList<Shift>();
-    loanRequests = new ArrayList<LoanRequest>();
-    donationRequests = new ArrayList<DonationRequest>();
-    artifacts = new ArrayList<Artifact>();
-    rooms = new ArrayList<Room>();
-    tickets = new ArrayList<Ticket>();
-    weekDays = new ArrayList<SpecificWeekDay>();
-  }
+  // public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
+  // {
+  //   systemId = aSystemId;
+  //   name = aName;
+  //   openTime = aOpenTime;
+  //   closeTime = aCloseTime;
+  //   maxLoanNumber = aMaxLoanNumber;
+  //   ticketFee = aTicketFee;
+  //   if (aManager == null || aManager.getMuseumManagementSystem() != null)
+  //   {
+  //     throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   manager = aManager;
+  //   employees = new ArrayList<Employee>();
+  //   clients = new ArrayList<Client>();
+  //   shifts = new ArrayList<Shift>();
+  //   loanRequests = new ArrayList<LoanRequest>();
+  //   donationRequests = new ArrayList<DonationRequest>();
+  //   artifacts = new ArrayList<Artifact>();
+  //   rooms = new ArrayList<Room>();
+  //   tickets = new ArrayList<Ticket>();
+  //   weekDays = new ArrayList<SpecificWeekDay>();
+  // }
 
   // public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
   // {
