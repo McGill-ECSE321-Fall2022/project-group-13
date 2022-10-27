@@ -39,7 +39,7 @@ public class Room
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
+/*
   public Room(RoomType aType, String aRoomId, MuseumManagementSystem aMuseumManagementSystem)
   {
     type = aType;
@@ -53,7 +53,7 @@ public class Room
       throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     artifacts = new ArrayList<Artifact>();
-  }
+  }*/
 
   //------------------------
   // INTERFACE
