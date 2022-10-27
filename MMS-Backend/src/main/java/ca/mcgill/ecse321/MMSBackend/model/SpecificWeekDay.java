@@ -4,11 +4,14 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 // line 59 "MMS.ump"
 // line 154 "MMS.ump"
+@Entity
 public class SpecificWeekDay
 {
 
@@ -24,6 +27,7 @@ public class SpecificWeekDay
 
   //SpecificWeekDay Attributes
   private boolean isClosed;
+  @Id
   private DayType dayType;
 
   //SpecificWeekDay Associations
