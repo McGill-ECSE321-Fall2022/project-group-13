@@ -30,8 +30,8 @@ public class Room
 
   //Room Attributes
   private RoomType type;
-  @Id
   private String name;
+  @Id
   private int roomId;
 
   //Room Associations
