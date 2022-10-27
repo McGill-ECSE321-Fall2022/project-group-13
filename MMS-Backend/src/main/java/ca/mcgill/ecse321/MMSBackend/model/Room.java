@@ -32,6 +32,7 @@ public class Room
   private RoomType type;
   private String name;
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int roomId;
 
   //Room Associations
