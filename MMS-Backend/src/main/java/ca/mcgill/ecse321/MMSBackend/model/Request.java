@@ -4,8 +4,15 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 // line 66 "MMS.ump"
 // line 159 "MMS.ump"
+@Entity
 public abstract class Request
 {
 
@@ -20,31 +27,35 @@ public abstract class Request
   //------------------------
 
   //Request Attributes
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
   private int requestId;
 
   //Request Associations
+  @ManyToOne(optional=false)
   private Client client;
+  @ManyToOne(optional=false)
   private Artifact artifact;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Request(int aRequestId, Client aClient, Artifact aArtifact)
-  {
-    if (!setRequestId(aRequestId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate requestId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    if (!setClient(aClient))
-    {
-      throw new RuntimeException("Unable to create Request due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    if (!setArtifact(aArtifact))
-    {
-      throw new RuntimeException("Unable to create Request due to aArtifact. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Request(int aRequestId, Client aClient, Artifact aArtifact)
+  // {
+  //   if (!setRequestId(aRequestId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate requestId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   if (!setClient(aClient))
+  //   {
+  //     throw new RuntimeException("Unable to create Request due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   if (!setArtifact(aArtifact))
+  //   {
+  //     throw new RuntimeException("Unable to create Request due to aArtifact. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
