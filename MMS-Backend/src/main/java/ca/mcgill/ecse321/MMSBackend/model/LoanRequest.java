@@ -5,8 +5,11 @@ package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
 
+import javax.persistence.Entity;
+
 // line 72 "MMS.ump"
 // line 163 "MMS.ump"
+@Entity
 public class LoanRequest extends Request
 {
 
@@ -32,18 +35,18 @@ public class LoanRequest extends Request
   // CONSTRUCTOR
   //------------------------
 
-  public LoanRequest(String aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanStatus aStatus, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    super(aRequestId, aClient, aArtifact);
-    loanDuration = aLoanDuration;
-    fee = aFee;
-    status = aStatus;
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create loanRequest due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public LoanRequest(String aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanStatus aStatus, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   super(aRequestId, aClient, aArtifact);
+  //   loanDuration = aLoanDuration;
+  //   fee = aFee;
+  //   status = aStatus;
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create loanRequest due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE

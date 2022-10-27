@@ -5,8 +5,15 @@ package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 // line 90 "MMS.ump"
 // line 173 "MMS.ump"
+@Entity
 public class Artifact
 {
 
@@ -27,6 +34,8 @@ public class Artifact
   //------------------------
 
   //Artifact Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private String artifactId;
   private String name;
   private String image;
@@ -38,6 +47,7 @@ public class Artifact
 
   //Artifact Associations
   private List<Request> requests;
+  @ManyToOne(optional = false)
   private Room roomLocation;
   private MuseumManagementSystem museumManagementSystem;
 
