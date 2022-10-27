@@ -47,7 +47,7 @@ public class LoanRequestRepositoryTests {
     }
 
     @Test
-    public void testPersistAndLoadDonationRequest() {
+    public void testPersistAndLoadLoanRequest() {
 
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
