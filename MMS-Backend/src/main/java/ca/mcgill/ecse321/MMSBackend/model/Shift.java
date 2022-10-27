@@ -35,30 +35,30 @@ public class Shift
   // CONSTRUCTOR
   //------------------------
 
-  public Shift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
-  {
-    startTime = aStartTime;
-    endTime = aEndTime;
-    if (!setShiftId(aShiftId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate shiftId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddDayOfTheWeek = setDayOfTheWeek(aDayOfTheWeek);
-    if (!didAddDayOfTheWeek)
-    {
-      throw new RuntimeException("Unable to create shift due to dayOfTheWeek. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create shift due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddEmployee = setEmployee(aEmployee);
-    if (!didAddEmployee)
-    {
-      throw new RuntimeException("Unable to create shift due to employee. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Shift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
+  // {
+  //   startTime = aStartTime;
+  //   endTime = aEndTime;
+  //   if (!setShiftId(aShiftId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate shiftId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   boolean didAddDayOfTheWeek = setDayOfTheWeek(aDayOfTheWeek);
+  //   if (!didAddDayOfTheWeek)
+  //   {
+  //     throw new RuntimeException("Unable to create shift due to dayOfTheWeek. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create shift due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   boolean didAddEmployee = setEmployee(aEmployee);
+  //   if (!didAddEmployee)
+  //   {
+  //     throw new RuntimeException("Unable to create shift due to employee. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
