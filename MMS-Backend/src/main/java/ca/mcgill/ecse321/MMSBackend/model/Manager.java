@@ -22,21 +22,21 @@ public class Manager extends Account
   // CONSTRUCTOR
   //------------------------
 
-  public Manager(String aUsername, String aName, String aPassword, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    super(aUsername, aName, aPassword);
-    if (aMuseumManagementSystem == null || aMuseumManagementSystem.getManager() != null)
-    {
-      throw new RuntimeException("Unable to create Manager due to aMuseumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    museumManagementSystem = aMuseumManagementSystem;
-  }
+  // public Manager(String aUsername, String aName, String aPassword, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   super(aUsername, aName, aPassword);
+  //   if (aMuseumManagementSystem == null || aMuseumManagementSystem.getManager() != null)
+  //   {
+  //     throw new RuntimeException("Unable to create Manager due to aMuseumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   museumManagementSystem = aMuseumManagementSystem;
+  // }
 
-  public Manager(String aUsername, String aName, String aPassword, String aSystemIdForMuseumManagementSystem, String aNameForMuseumManagementSystem, Time aOpenTimeForMuseumManagementSystem, Time aCloseTimeForMuseumManagementSystem, int aMaxLoanNumberForMuseumManagementSystem, double aTicketFeeForMuseumManagementSystem)
-  {
-    super(aUsername, aName, aPassword);
-    museumManagementSystem = new MuseumManagementSystem(aSystemIdForMuseumManagementSystem, aNameForMuseumManagementSystem, aOpenTimeForMuseumManagementSystem, aCloseTimeForMuseumManagementSystem, aMaxLoanNumberForMuseumManagementSystem, aTicketFeeForMuseumManagementSystem, this);
-  }
+  // public Manager(String aUsername, String aName, String aPassword, String aSystemIdForMuseumManagementSystem, String aNameForMuseumManagementSystem, Time aOpenTimeForMuseumManagementSystem, Time aCloseTimeForMuseumManagementSystem, int aMaxLoanNumberForMuseumManagementSystem, double aTicketFeeForMuseumManagementSystem)
+  // {
+  //   super(aUsername, aName, aPassword);
+  //   museumManagementSystem = new MuseumManagementSystem(aSystemIdForMuseumManagementSystem, aNameForMuseumManagementSystem, aOpenTimeForMuseumManagementSystem, aCloseTimeForMuseumManagementSystem, aMaxLoanNumberForMuseumManagementSystem, aTicketFeeForMuseumManagementSystem, this);
+  // }
 
   //------------------------
   // INTERFACE
