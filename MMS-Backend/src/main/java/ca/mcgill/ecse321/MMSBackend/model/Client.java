@@ -5,8 +5,11 @@ package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
 
+import javax.persistence.Entity;
+
 // line 42 "MMS.ump"
 // line 140 "MMS.ump"
+@Entity
 public class Client extends Account
 {
 

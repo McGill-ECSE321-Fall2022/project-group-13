@@ -4,10 +4,14 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
+
+import javax.persistence.Entity;
+
 import java.sql.Time;
 
 // line 30 "MMS.ump"
 // line 130 "MMS.ump"
+@Entity
 public class Manager extends Account
 {
 
