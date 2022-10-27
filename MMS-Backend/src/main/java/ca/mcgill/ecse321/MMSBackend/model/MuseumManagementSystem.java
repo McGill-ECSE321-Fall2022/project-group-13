@@ -693,10 +693,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public LoanRequest addLoanRequest(int aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanRequest.LoanStatus aStatus)
-  {
-    return new LoanRequest(aRequestId, aClient, aArtifact, aLoanDuration, aFee, aStatus, this);
-  }
+  // public LoanRequest addLoanRequest(int aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanRequest.LoanStatus aStatus)
+  // {
+  //   return new LoanRequest(aRequestId, aClient, aArtifact, aLoanDuration, aFee, aStatus, this);
+  // }
 
   public boolean addLoanRequest(LoanRequest aLoanRequest)
   {
@@ -837,10 +837,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Artifact addArtifact(int aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation)
-  {
-    return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, aRoomLocation, this);
-  }
+  // public Artifact addArtifact(int aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation)
+  // {
+  //   return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, aRoomLocation, this);
+  // }
 
   public boolean addArtifact(Artifact aArtifact)
   {
