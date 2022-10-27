@@ -156,7 +156,11 @@ public class DonationRequestRepositoryTests {
         assertEquals(description, donationRequest.getArtifact().getDescription());
         assertEquals(worth, donationRequest.getArtifact().getWorth());
         assertEquals(mmsId, donationRequest.getArtifact().getMuseumManagementSystem().getSystemId());
+
+        assertNotNull(donationRequest.getArtifact().getRoomLocation());
         assertEquals(roomId, donationRequest.getArtifact().getRoomLocation().getRoomId());
+        assertEquals(type, donationRequest.getArtifact().getRoomLocation().getType());
+        assertEquals(mmsId, donationRequest.getArtifact().getRoomLocation().getMuseumManagementSystem().getSystemId());
 
         assertNotNull(donationRequest.getClient());
         assertEquals(clientUsername, donationRequest.getClient().getUsername());
