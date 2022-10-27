@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Shift;
 
 public interface ShiftRepository extends CrudRepository<Shift, Integer>{
-    public Shift findShiftByShiftId(String id); 
+    public Shift findShiftByShiftId(Integer id); 
 }

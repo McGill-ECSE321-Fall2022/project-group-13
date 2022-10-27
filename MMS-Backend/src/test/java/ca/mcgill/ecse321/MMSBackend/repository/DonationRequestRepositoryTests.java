@@ -131,10 +131,10 @@ public class DonationRequestRepositoryTests {
         // Check that everything was saved in the database
 
         // Get ids of artifacts, clients, and donation requests
-        String mmsId = mms.getSystemId();
-        String artifactId = artifact.getArtifactId();
+        Integer mmsId = mms.getSystemId();
+        Integer artifactId = artifact.getArtifactId();
         String clientUsername = client.getUsername();
-        String donationRequestId = donationRequest.getRequestId();
+        Integer donationRequestId = donationRequest.getRequestId();
 
         // Make the variables null
         mms = null;
