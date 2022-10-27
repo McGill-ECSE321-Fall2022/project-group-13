@@ -76,6 +76,7 @@ public class ShiftRepositoryTests {
         employee.setUsername(employeeUsername);
         employee.setName(employeeName);
         employee.setPassword(employeePassword);
+        employee.setMuseumManagementSystem(mms);
 
         // Save the employee in the database
         employeeRepository.save(employee);
@@ -87,6 +88,7 @@ public class ShiftRepositoryTests {
 
         weekDay.setIsClosed(weekDayIsClosed);
         weekDay.setDayType(type);
+        weekDay.setMuseumManagementSystem(mms);
         
         // Save the specific week day in the database
         weekDayRepository.save(weekDay);
@@ -100,6 +102,7 @@ public class ShiftRepositoryTests {
         shift.setEndTime(endTime);
         shift.setEmployee(employee);
         shift.setDayOfTheWeek(weekDay);
+        shift.setMuseumManagementSystem(mms);
 
         // Save the shift in the database
         shiftRepository.save(shift);
@@ -138,10 +141,14 @@ public class ShiftRepositoryTests {
         assertEquals(employeeUsername, shift.getEmployee().getUsername());
         assertEquals(employeeName, shift.getEmployee().getName());
         assertEquals(employeePassword, shift.getEmployee().getPassword());
+        assertNotNull(shift.getEmployee().getMuseumManagementSystem());
+        assertEquals(shift.getMuseumManagementSystem(), shift.getEmployee().getMuseumManagementSystem());
 
         assertNotNull(shift.getDayOfTheWeek());
         assertEquals(type, shift.getDayOfTheWeek().getDayType());
         assertEquals(weekDayIsClosed, shift.getDayOfTheWeek().getIsClosed());
+        assertNotNull(shift.getDayOfTheWeek().getMuseumManagementSystem());
+        assertEquals(shift.getMuseumManagementSystem(), shift.getDayOfTheWeek().getMuseumManagementSystem());
 
     }
 }
