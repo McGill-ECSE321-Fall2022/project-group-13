@@ -7,6 +7,7 @@ import java.util.*;
 
 // line 105 "MMS.ump"
 // line 182 "MMS.ump"
+@Entity
 public class Room
 {
 
@@ -27,6 +28,7 @@ public class Room
   //------------------------
 
   //Room Attributes
+  @Id
   private RoomType type;
   private String roomId;
 
