@@ -4,8 +4,16 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 // line 90 "MMS.ump"
 // line 174 "MMS.ump"
+@Entity
 public class Artifact
 {
 
@@ -26,6 +34,8 @@ public class Artifact
   //------------------------
 
   //Artifact Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int artifactId;
   private String name;
   private String image;
@@ -36,36 +46,39 @@ public class Artifact
   private double worth;
 
   //Artifact Associations
+  @ManyToOne(optional = false)
   private Room roomLocation;
+  @ManyToOne(optional = false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Artifact(int aArtifactId, String aName, String aImage, String aDescription, LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    name = aName;
-    image = aImage;
-    description = aDescription;
-    loanStatus = aLoanStatus;
-    isDamaged = aIsDamaged;
-    loanFee = aLoanFee;
-    worth = aWorth;
-    if (!setArtifactId(aArtifactId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate artifactId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    if (!setRoomLocation(aRoomLocation))
-    {
-      throw new RuntimeException("Unable to create Artifact due to aRoomLocation. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create artifact due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Artifact(int aArtifactId, String aName, String aImage, String aDescription, LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   name = aName;
+  //   image = aImage;
+  //   description = aDescription;
+  //   loanStatus = aLoanStatus;
+  //   isDamaged = aIsDamaged;
+  //   loanFee = aLoanFee;
+  //   worth = aWorth;
+  //   if (!setArtifactId(aArtifactId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate artifactId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   if (!setRoomLocation(aRoomLocation))
+  //   {
+  //     throw new RuntimeException("Unable to create Artifact due to aRoomLocation. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create artifact due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
