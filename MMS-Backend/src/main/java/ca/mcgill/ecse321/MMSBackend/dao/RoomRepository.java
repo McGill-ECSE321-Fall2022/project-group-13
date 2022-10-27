@@ -5,6 +5,6 @@ import ca.mcgill.ecse321.MMSBackend.model.Room;
 
 //Mona
 
-public interface RoomRepository extends CrudRepository<Room, String>{
-    public Room findRoomByRoomId(String roomId);
+public interface RoomRepository extends CrudRepository<Room, Integer>{
+    public Room findRoomByRoomId(Integer roomId);
 }

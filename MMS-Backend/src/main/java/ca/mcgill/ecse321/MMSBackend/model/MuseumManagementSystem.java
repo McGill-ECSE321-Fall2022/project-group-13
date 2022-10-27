@@ -909,10 +909,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Room addRoom(String aName, Room.RoomType aType, int aRoomId)
+  /*public Room addRoom(String aName, Room.RoomType aType, int aRoomId)
   {
     return new Room(aName, aType, aRoomId, this);
-  }
+  }*/
 
   public boolean addRoom(Room aRoom)
   {

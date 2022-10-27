@@ -3,9 +3,12 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+import javax.persistence.*;
 
 // line 105 "MMS.ump"
 // line 183 "MMS.ump"
+
+@Entity
 public class Room
 {
 
@@ -26,18 +29,21 @@ public class Room
   //------------------------
 
   //Room Attributes
-  private String name;
   private RoomType type;
+  @Id
+  private String name;
   private int roomId;
 
   //Room Associations
+  @ManyToOne(optional = false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Room(String aName, RoomType aType, int aRoomId, MuseumManagementSystem aMuseumManagementSystem)
+ /* public Room(String aName, RoomType aType, int aRoomId, MuseumManagementSystem aMuseumManagementSystem)
   {
     name = aName;
     type = aType;
@@ -50,7 +56,7 @@ public class Room
     {
       throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-  }
+  }*/
 
   //------------------------
   // INTERFACE
