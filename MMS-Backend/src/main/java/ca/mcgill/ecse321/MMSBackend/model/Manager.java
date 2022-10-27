@@ -21,7 +21,7 @@ public class Manager extends Account
   //------------------------
 
   //Manager Associations
-  @OneToOne(mappedBy = "museumManagementSystem")
+  @OneToOne(mappedBy = "manager")
   @JoinColumn(name = "museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
