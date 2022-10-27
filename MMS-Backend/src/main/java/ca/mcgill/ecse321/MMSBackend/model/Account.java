@@ -5,8 +5,12 @@ package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 // line 22 "MMS.ump"
 // line 125 "MMS.ump"
+@MappedSuperclass
 public abstract class Account
 {
 
@@ -21,6 +25,7 @@ public abstract class Account
   //------------------------
 
   //Account Attributes
+  @Id
   private String username;
   private String name;
   private String password;

@@ -4,10 +4,18 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 
 import java.util.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import java.sql.Time;
 
 // line 50 "MMS.ump"
 // line 147 "MMS.ump"
+@Entity
 public class Shift
 {
 
@@ -22,13 +30,18 @@ public class Shift
   //------------------------
 
   //Shift Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private String shiftId;
   private Time startTime;
   private Time endTime;
 
   //Shift Associations
+  @ManyToOne(optional = false)
   private SpecificWeekDay dayOfTheWeek;
+  @ManyToOne(optional=false)
   private MuseumManagementSystem museumManagementSystem;
+  @ManyToOne(optional = false)
   private Employee employee;
 
   //------------------------

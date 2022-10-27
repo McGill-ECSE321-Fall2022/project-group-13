@@ -168,10 +168,10 @@ public class Room
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Artifact addArtifact(String aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, this, aMuseumManagementSystem);
-  }
+  // public Artifact addArtifact(String aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, this, aMuseumManagementSystem);
+  // }
 
   public boolean addArtifact(Artifact aArtifact)
   {
