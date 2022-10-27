@@ -127,13 +127,13 @@ public class MuseumManagementSystem
     return wasSet;
   }
 
-  public boolean setTicketFee(double aTicketFee)
-  {
-    boolean wasSet = false;
-    ticketFee = aTicketFee;
-    wasSet = true;
-    return wasSet;
-  }
+  // public boolean setTicketFee(double aTicketFee)
+  // {
+  //   boolean wasSet = false;
+  //   ticketFee = aTicketFee;
+  //   wasSet = true;
+  //   return wasSet;
+  // }
 
   public String getSystemId()
   {
@@ -160,10 +160,10 @@ public class MuseumManagementSystem
     return maxLoanNumber;
   }
 
-  public double getTicketFee()
-  {
-    return ticketFee;
-  }
+  // public double getTicketFee()
+  // {
+  //   return ticketFee;
+  // }
   /* Code from template association_GetOne */
   public Manager getManager()
   {
@@ -380,35 +380,35 @@ public class MuseumManagementSystem
     return index;
   }
   /* Code from template association_GetMany */
-  public Ticket getTicket(int index)
-  {
-    Ticket aTicket = tickets.get(index);
-    return aTicket;
-  }
+  // public Ticket getTicket(int index)
+  // {
+  //   Ticket aTicket = tickets.get(index);
+  //   return aTicket;
+  // }
 
-  public List<Ticket> getTickets()
-  {
-    List<Ticket> newTickets = Collections.unmodifiableList(tickets);
-    return newTickets;
-  }
+  // public List<Ticket> getTickets()
+  // {
+  //   List<Ticket> newTickets = Collections.unmodifiableList(tickets);
+  //   return newTickets;
+  // }
 
-  public int numberOfTickets()
-  {
-    int number = tickets.size();
-    return number;
-  }
+  // public int numberOfTickets()
+  // {
+  //   int number = tickets.size();
+  //   return number;
+  // }
 
-  public boolean hasTickets()
-  {
-    boolean has = tickets.size() > 0;
-    return has;
-  }
+  // public boolean hasTickets()
+  // {
+  //   boolean has = tickets.size() > 0;
+  //   return has;
+  // }
 
-  public int indexOfTicket(Ticket aTicket)
-  {
-    int index = tickets.indexOf(aTicket);
-    return index;
-  }
+  // public int indexOfTicket(Ticket aTicket)
+  // {
+  //   int index = tickets.indexOf(aTicket);
+  //   return index;
+  // }
   /* Code from template association_GetMany */
   public SpecificWeekDay getWeekDay(int index)
   {
@@ -733,10 +733,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  // public DonationRequest addDonationRequest(String aRequestId, Client aClient, Artifact aArtifact, DonationRequest.DonationStatus aStatus)
-  // {
-  //   return new DonationRequest(aRequestId, aClient, aArtifact, aStatus, this);
-  // }
+  public DonationRequest addDonationRequest(String aRequestId, Client aClient, Artifact aArtifact, DonationRequest.DonationStatus aStatus)
+  {
+    return new DonationRequest(aRequestId, aClient, aArtifact, aStatus, this);
+  }
 
   public boolean addDonationRequest(DonationRequest aDonationRequest)
   {
@@ -944,77 +944,77 @@ public class MuseumManagementSystem
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfTickets()
-  {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  public Ticket addTicket(String aTicketId, double aFee, boolean aIsActive, Client aClient)
-  {
-    return new Ticket(aTicketId, aFee, aIsActive, this, aClient);
-  }
+  // public static int minimumNumberOfTickets()
+  // {
+  //   return 0;
+  // }
+  // /* Code from template association_AddManyToOne */
+  // public Ticket addTicket(String aTicketId, double aFee, boolean aIsActive, Client aClient)
+  // {
+  //   return new Ticket(aTicketId, aFee, aIsActive, this, aClient);
+  // }
 
-  public boolean addTicket(Ticket aTicket)
-  {
-    boolean wasAdded = false;
-    if (tickets.contains(aTicket)) { return false; }
-    MuseumManagementSystem existingMuseumManagementSystem = aTicket.getMuseumManagementSystem();
-    boolean isNewMuseumManagementSystem = existingMuseumManagementSystem != null && !this.equals(existingMuseumManagementSystem);
-    if (isNewMuseumManagementSystem)
-    {
-      aTicket.setMuseumManagementSystem(this);
-    }
-    else
-    {
-      tickets.add(aTicket);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
+  // public boolean addTicket(Ticket aTicket)
+  // {
+  //   boolean wasAdded = false;
+  //   if (tickets.contains(aTicket)) { return false; }
+  //   MuseumManagementSystem existingMuseumManagementSystem = aTicket.getMuseumManagementSystem();
+  //   boolean isNewMuseumManagementSystem = existingMuseumManagementSystem != null && !this.equals(existingMuseumManagementSystem);
+  //   if (isNewMuseumManagementSystem)
+  //   {
+  //     aTicket.setMuseumManagementSystem(this);
+  //   }
+  //   else
+  //   {
+  //     tickets.add(aTicket);
+  //   }
+  //   wasAdded = true;
+  //   return wasAdded;
+  // }
 
-  public boolean removeTicket(Ticket aTicket)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aTicket, as it must always have a museumManagementSystem
-    if (!this.equals(aTicket.getMuseumManagementSystem()))
-    {
-      tickets.remove(aTicket);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addTicketAt(Ticket aTicket, int index)
-  {  
-    boolean wasAdded = false;
-    if(addTicket(aTicket))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfTickets()) { index = numberOfTickets() - 1; }
-      tickets.remove(aTicket);
-      tickets.add(index, aTicket);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
+  // public boolean removeTicket(Ticket aTicket)
+  // {
+  //   boolean wasRemoved = false;
+  //   //Unable to remove aTicket, as it must always have a museumManagementSystem
+  //   if (!this.equals(aTicket.getMuseumManagementSystem()))
+  //   {
+  //     tickets.remove(aTicket);
+  //     wasRemoved = true;
+  //   }
+  //   return wasRemoved;
+  // }
+  // /* Code from template association_AddIndexControlFunctions */
+  // public boolean addTicketAt(Ticket aTicket, int index)
+  // {  
+  //   boolean wasAdded = false;
+  //   if(addTicket(aTicket))
+  //   {
+  //     if(index < 0 ) { index = 0; }
+  //     if(index > numberOfTickets()) { index = numberOfTickets() - 1; }
+  //     tickets.remove(aTicket);
+  //     tickets.add(index, aTicket);
+  //     wasAdded = true;
+  //   }
+  //   return wasAdded;
+  // }
 
-  public boolean addOrMoveTicketAt(Ticket aTicket, int index)
-  {
-    boolean wasAdded = false;
-    if(tickets.contains(aTicket))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfTickets()) { index = numberOfTickets() - 1; }
-      tickets.remove(aTicket);
-      tickets.add(index, aTicket);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addTicketAt(aTicket, index);
-    }
-    return wasAdded;
-  }
+  // public boolean addOrMoveTicketAt(Ticket aTicket, int index)
+  // {
+  //   boolean wasAdded = false;
+  //   if(tickets.contains(aTicket))
+  //   {
+  //     if(index < 0 ) { index = 0; }
+  //     if(index > numberOfTickets()) { index = numberOfTickets() - 1; }
+  //     tickets.remove(aTicket);
+  //     tickets.add(index, aTicket);
+  //     wasAdded = true;
+  //   } 
+  //   else 
+  //   {
+  //     wasAdded = addTicketAt(aTicket, index);
+  //   }
+  //   return wasAdded;
+  // }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfWeekDays()
   {

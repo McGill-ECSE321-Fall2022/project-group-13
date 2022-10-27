@@ -33,25 +33,25 @@ public class Ticket
   // CONSTRUCTOR
   //------------------------
 
-  public Ticket(String aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Client aClient)
-  {
-    fee = aFee;
-    isActive = aIsActive;
-    if (!setTicketId(aTicketId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate ticketId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create ticket due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddClient = setClient(aClient);
-    if (!didAddClient)
-    {
-      throw new RuntimeException("Unable to create ticket due to client. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Ticket(String aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Client aClient)
+  // {
+  //   fee = aFee;
+  //   isActive = aIsActive;
+  //   if (!setTicketId(aTicketId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate ticketId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create ticket due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   boolean didAddClient = setClient(aClient);
+  //   if (!didAddClient)
+  //   {
+  //     throw new RuntimeException("Unable to create ticket due to client. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
