@@ -733,10 +733,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public DonationRequest addDonationRequest(String aRequestId, Client aClient, Artifact aArtifact, DonationRequest.DonationStatus aStatus)
-  {
-    return new DonationRequest(aRequestId, aClient, aArtifact, aStatus, this);
-  }
+  // public DonationRequest addDonationRequest(String aRequestId, Client aClient, Artifact aArtifact, DonationRequest.DonationStatus aStatus)
+  // {
+  //   return new DonationRequest(aRequestId, aClient, aArtifact, aStatus, this);
+  // }
 
   public boolean addDonationRequest(DonationRequest aDonationRequest)
   {

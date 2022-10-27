@@ -1,16 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
-package ca.mcgill.ecse321.MMSBackend.model;
-
+package ca.mcgill.ecse321.group13_backend.model;
 import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-// line 105 "MMS.ump"
-// line 182 "MMS.ump"
-@Entity
+// line 103 "../../../../../MuseumSystem.ump"
 public class Room
 {
 
@@ -31,7 +25,6 @@ public class Room
   //------------------------
 
   //Room Attributes
-  @Id
   private RoomType type;
   private String roomId;
 
@@ -42,7 +35,7 @@ public class Room
   //------------------------
   // CONSTRUCTOR
   //------------------------
-/*
+
   public Room(RoomType aType, String aRoomId, MuseumManagementSystem aMuseumManagementSystem)
   {
     type = aType;
@@ -56,7 +49,7 @@ public class Room
       throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     artifacts = new ArrayList<Artifact>();
-  }*/
+  }
 
   //------------------------
   // INTERFACE
@@ -177,11 +170,11 @@ public class Room
   {
     boolean wasAdded = false;
     if (artifacts.contains(aArtifact)) { return false; }
-    Room existingRoomLocation = aArtifact.getRoomLocation();
-    boolean isNewRoomLocation = existingRoomLocation != null && !this.equals(existingRoomLocation);
-    if (isNewRoomLocation)
+    Room existingRoom = aArtifact.getRoom();
+    boolean isNewRoom = existingRoom != null && !this.equals(existingRoom);
+    if (isNewRoom)
     {
-      aArtifact.setRoomLocation(this);
+      aArtifact.setRoom(this);
     }
     else
     {
@@ -194,8 +187,8 @@ public class Room
   public boolean removeArtifact(Artifact aArtifact)
   {
     boolean wasRemoved = false;
-    //Unable to remove aArtifact, as it must always have a roomLocation
-    if (!this.equals(aArtifact.getRoomLocation()))
+    //Unable to remove aArtifact, as it must always have a room
+    if (!this.equals(aArtifact.getRoom()))
     {
       artifacts.remove(aArtifact);
       wasRemoved = true;

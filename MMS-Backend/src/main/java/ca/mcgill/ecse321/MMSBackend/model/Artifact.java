@@ -45,31 +45,31 @@ public class Artifact
   // CONSTRUCTOR
   //------------------------
 
-  public Artifact(String aArtifactId, String aName, String aImage, String aDescription, LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    name = aName;
-    image = aImage;
-    description = aDescription;
-    loanStatus = aLoanStatus;
-    isDamaged = aIsDamaged;
-    loanFee = aLoanFee;
-    worth = aWorth;
-    if (!setArtifactId(aArtifactId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate artifactId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    requests = new ArrayList<Request>();
-    boolean didAddRoomLocation = setRoomLocation(aRoomLocation);
-    if (!didAddRoomLocation)
-    {
-      throw new RuntimeException("Unable to create artifact due to roomLocation. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create artifact due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Artifact(String aArtifactId, String aName, String aImage, String aDescription, LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   name = aName;
+  //   image = aImage;
+  //   description = aDescription;
+  //   loanStatus = aLoanStatus;
+  //   isDamaged = aIsDamaged;
+  //   loanFee = aLoanFee;
+  //   worth = aWorth;
+  //   if (!setArtifactId(aArtifactId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate artifactId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   requests = new ArrayList<Request>();
+  //   boolean didAddRoomLocation = setRoomLocation(aRoomLocation);
+  //   if (!didAddRoomLocation)
+  //   {
+  //     throw new RuntimeException("Unable to create artifact due to roomLocation. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create artifact due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
