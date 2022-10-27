@@ -6,6 +6,7 @@ package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 // line 72 "MMS.ump"
 // line 163 "MMS.ump"
@@ -29,6 +30,7 @@ public class LoanRequest extends Request
   private LoanStatus status;
 
   //LoanRequest Associations
+  @ManyToOne(optional=false)
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------

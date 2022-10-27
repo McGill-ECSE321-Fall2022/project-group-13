@@ -46,9 +46,11 @@ public class Artifact
   private double worth;
 
   //Artifact Associations
+  
   private List<Request> requests;
   @ManyToOne(optional = false)
   private Room roomLocation;
+  @ManyToOne(optional=false)
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
