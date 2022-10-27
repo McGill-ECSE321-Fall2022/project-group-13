@@ -33,17 +33,17 @@ public class SpecificWeekDay
   // CONSTRUCTOR
   //------------------------
 
-  public SpecificWeekDay(boolean aIsClosed, DayType aDayType, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    isClosed = aIsClosed;
-    dayType = aDayType;
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create weekDay due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    shifts = new ArrayList<Shift>();
-  }
+  // public SpecificWeekDay(boolean aIsClosed, DayType aDayType, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   isClosed = aIsClosed;
+  //   dayType = aDayType;
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create weekDay due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  //   shifts = new ArrayList<Shift>();
+  // }
 
   //------------------------
   // INTERFACE
@@ -150,11 +150,11 @@ public class SpecificWeekDay
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
-  {
-    return new Shift(aShiftId, aStartTime, aEndTime, this, aMuseumManagementSystem, aEmployee);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
+  // {
+  //   return new Shift(aShiftId, aStartTime, aEndTime, this, aMuseumManagementSystem, aEmployee);
+  // }
 
   public boolean addShift(Shift aShift)
   {
