@@ -876,11 +876,11 @@ public class MuseumManagementSystem
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Room addRoom(Room.RoomType aType, String aRoomId)
-  {
-    return new Room(aType, aRoomId, this);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Room addRoom(Room.RoomType aType, String aRoomId)
+  // {
+  //   return new Room(aType, aRoomId, this);
+  // }
 
   public boolean addRoom(Room aRoom)
   {

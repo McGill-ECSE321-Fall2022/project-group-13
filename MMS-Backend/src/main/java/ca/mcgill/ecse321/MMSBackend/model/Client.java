@@ -194,11 +194,11 @@ public class Client extends Account
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Ticket addTicket(String aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    return new Ticket(aTicketId, aFee, aIsActive, aMuseumManagementSystem, this);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Ticket addTicket(String aTicketId, double aFee, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   return new Ticket(aTicketId, aFee, aIsActive, aMuseumManagementSystem, this);
+  // }
 
   public boolean addTicket(Ticket aTicket)
   {
