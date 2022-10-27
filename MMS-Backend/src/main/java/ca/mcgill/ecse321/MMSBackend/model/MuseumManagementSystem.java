@@ -477,10 +477,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Employee addEmployee(String aUsername, String aName, String aPassword)
-  {
-    return new Employee(aUsername, aName, aPassword, this);
-  }
+  // public Employee addEmployee(String aUsername, String aName, String aPassword)
+  // {
+  //   return new Employee(aUsername, aName, aPassword, this);
+  // }
 
   public boolean addEmployee(Employee aEmployee)
   {
@@ -549,10 +549,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Client addClient(String aUsername, String aName, String aPassword, int aCurrentLoanNumber)
-  {
-    return new Client(aUsername, aName, aPassword, aCurrentLoanNumber, this);
-  }
+  // public Client addClient(String aUsername, String aName, String aPassword, int aCurrentLoanNumber)
+  // {
+  //   return new Client(aUsername, aName, aPassword, aCurrentLoanNumber, this);
+  // }
 
   public boolean addClient(Client aClient)
   {
