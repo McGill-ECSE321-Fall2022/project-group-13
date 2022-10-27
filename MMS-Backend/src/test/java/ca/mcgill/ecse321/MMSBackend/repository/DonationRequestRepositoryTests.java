@@ -16,10 +16,13 @@ import ca.mcgill.ecse321.MMSBackend.dao.ArtifactRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.DonationRequestRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
+import ca.mcgill.ecse321.MMSBackend.model.Room;
+import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -36,12 +39,16 @@ public class DonationRequestRepositoryTests {
     @Autowired
     private DonationRequestRepository donationRequestRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
     @AfterEach
     public void clearDatabase() {
         // Delete the donation requests first to avoid violating not-null constraints
         donationRequestRepository.deleteAll();
 
         artifactRepository.deleteAll();
+        roomRepository.deleteAll();
         clientRepository.deleteAll();
         mmsRepository.deleteAll();
     }
@@ -50,6 +57,7 @@ public class DonationRequestRepositoryTests {
     public void testPersistAndLoadDonationRequest() {
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
+
         String name = "Marwan's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
@@ -61,6 +69,7 @@ public class DonationRequestRepositoryTests {
         mms.setCloseTime(closeTime);
         mms.setMaxLoanNumber(maxLoanNumber);
         mms.setTicketFee(ticketFee);
+        
 
         // Save the museum management system to the database
         mmsRepository.save(mms);
@@ -72,10 +81,24 @@ public class DonationRequestRepositoryTests {
         String description = "Woman looking at the viewer";
         double worth = 1000000000;
 
+        // Create storage room
+        Room room = new Room();
+        String roomId = "Storage";
+        RoomType type = RoomType.Storage;
+
+        room.setRoomId(roomId);
+        room.setType(type);
+        room.setMuseumManagementSystem(mms);
+
+        // Save the room to the database
+        roomRepository.save(room);
+
         artifact.setName(artifactName);
         artifact.setImage(image);
         artifact.setDescription(description);
         artifact.setWorth(worth);
+        artifact.setMuseumManagementSystem(mms);
+        artifact.setRoomLocation(room);
 
         // Save the artifact to the database
         artifactRepository.save(artifact);
@@ -91,6 +114,7 @@ public class DonationRequestRepositoryTests {
         client.setName(clientName);
         client.setPassword(clientPassword);
         client.setCurrentLoanNumber(currentLoanNumber);
+        client.setMuseumManagementSystem(mms);
 
         // Save the client to the database
         clientRepository.save(client);
@@ -99,6 +123,7 @@ public class DonationRequestRepositoryTests {
         DonationRequest donationRequest = new DonationRequest();
         donationRequest.setArtifact(artifact);
         donationRequest.setClient(client);
+        donationRequest.setMuseumManagementSystem(mms);
 
         // Save the donation request to the database
         donationRequestRepository.save(donationRequest);
@@ -130,12 +155,19 @@ public class DonationRequestRepositoryTests {
         assertEquals(image, donationRequest.getArtifact().getImage());
         assertEquals(description, donationRequest.getArtifact().getDescription());
         assertEquals(worth, donationRequest.getArtifact().getWorth());
+        assertEquals(mmsId, donationRequest.getArtifact().getMuseumManagementSystem().getSystemId());
+
+        assertNotNull(donationRequest.getArtifact().getRoomLocation());
+        assertEquals(roomId, donationRequest.getArtifact().getRoomLocation().getRoomId());
+        assertEquals(type, donationRequest.getArtifact().getRoomLocation().getType());
+        assertEquals(mmsId, donationRequest.getArtifact().getRoomLocation().getMuseumManagementSystem().getSystemId());
 
         assertNotNull(donationRequest.getClient());
         assertEquals(clientUsername, donationRequest.getClient().getUsername());
         assertEquals(clientName, donationRequest.getClient().getName());
         assertEquals(clientPassword, donationRequest.getClient().getPassword());
         assertEquals(currentLoanNumber, donationRequest.getClient().getCurrentLoanNumber());
+        assertEquals(mmsId, donationRequest.getClient().getMuseumManagementSystem().getSystemId());
 
         assertNotNull(donationRequest.getMuseumManagementSystem());
         assertEquals(mmsId, donationRequest.getMuseumManagementSystem().getSystemId());
@@ -144,5 +176,6 @@ public class DonationRequestRepositoryTests {
         assertEquals(closeTime, donationRequest.getMuseumManagementSystem().getCloseTime());
         assertEquals(maxLoanNumber, donationRequest.getMuseumManagementSystem().getMaxLoanNumber());
         assertEquals(ticketFee, donationRequest.getMuseumManagementSystem().getTicketFee());
+        assertEquals(mmsId, donationRequest.getMuseumManagementSystem().getSystemId());
     }
 }
