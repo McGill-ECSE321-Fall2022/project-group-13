@@ -4,8 +4,11 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Entity;
+
 // line 42 "MMS.ump"
 // line 141 "MMS.ump"
+@Entity
 public class Client extends Account
 {
 
@@ -23,16 +26,16 @@ public class Client extends Account
   // CONSTRUCTOR
   //------------------------
 
-  public Client(String aUsername, String aName, String aPassword, int aCurrentLoanNumber, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    super(aUsername, aName, aPassword);
-    currentLoanNumber = aCurrentLoanNumber;
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create client due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Client(String aUsername, String aName, String aPassword, int aCurrentLoanNumber, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   super(aUsername, aName, aPassword);
+  //   currentLoanNumber = aCurrentLoanNumber;
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create client due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE

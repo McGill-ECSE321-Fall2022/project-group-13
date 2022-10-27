@@ -24,15 +24,15 @@ public class Employee extends Account
   // CONSTRUCTOR
   //------------------------
 
-  public Employee(String aUsername, String aName, String aPassword, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    super(aUsername, aName, aPassword);
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create employee due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Employee(String aUsername, String aName, String aPassword, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   super(aUsername, aName, aPassword);
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create employee due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE
