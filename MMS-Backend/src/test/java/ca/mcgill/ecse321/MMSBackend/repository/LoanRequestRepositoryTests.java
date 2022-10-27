@@ -110,6 +110,7 @@ public class LoanRequestRepositoryTests {
         client.setName(clientName);
         client.setPassword(clientPassword);
         client.setCurrentLoanNumber(currentLoanNumber);
+        client.setMuseumManagementSystem(mms);
 
         // Save the client to the database
         clientRepository.save(client);
