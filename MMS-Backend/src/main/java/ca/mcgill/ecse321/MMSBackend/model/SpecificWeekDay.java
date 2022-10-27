@@ -2,24 +2,18 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
+
 import java.util.*;
+import java.sql.Time;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-//import java.sql.Time;
-
-// line 57 "MMS.ump"
-// line 159 "MMS.ump"
-@Entity
+// line 59 "MMS.ump"
+// line 153 "MMS.ump"
 public class SpecificWeekDay
 {
 
   //------------------------
   // ENUMERATIONS
   //------------------------
-
 
   public enum DayType { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
@@ -29,11 +23,9 @@ public class SpecificWeekDay
 
   //SpecificWeekDay Attributes
   private boolean isClosed;
-  @Id
   private DayType dayType;
 
   //SpecificWeekDay Associations
-  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
   private List<Shift> shifts;
 
@@ -41,17 +33,17 @@ public class SpecificWeekDay
   // CONSTRUCTOR
   //------------------------
 
-  // public SpecificWeekDay(boolean aIsClosed, DayType aDayType, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   isClosed = aIsClosed;
-  //   dayType = aDayType;
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create weekDay due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   shifts = new ArrayList<Shift>();
-  // }
+  public SpecificWeekDay(boolean aIsClosed, DayType aDayType, MuseumManagementSystem aMuseumManagementSystem)
+  {
+    isClosed = aIsClosed;
+    dayType = aDayType;
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create weekDay due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    shifts = new ArrayList<Shift>();
+  }
 
   //------------------------
   // INTERFACE
@@ -158,11 +150,11 @@ public class SpecificWeekDay
   {
     return 0;
   }
-  // /* Code from template association_AddManyToOne */
-  // public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
-  // {
-  //   return new Shift(aShiftId, aStartTime, aEndTime, this, aMuseumManagementSystem, aEmployee);
-  // }
+  /* Code from template association_AddManyToOne */
+  public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
+  {
+    return new Shift(aShiftId, aStartTime, aEndTime, this, aMuseumManagementSystem, aEmployee);
+  }
 
   public boolean addShift(Shift aShift)
   {

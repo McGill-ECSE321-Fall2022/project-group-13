@@ -2,13 +2,11 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-// import java.util.*;
 
-// line 70 "MMS.ump"
-// line 169 "MMS.ump"
-@Entity
+import java.util.*;
+
+// line 72 "MMS.ump"
+// line 163 "MMS.ump"
 public class LoanRequest extends Request
 {
 
@@ -28,25 +26,24 @@ public class LoanRequest extends Request
   private LoanStatus status;
 
   //LoanRequest Associations
-  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public LoanRequest(String aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanStatus aStatus, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   super(aRequestId, aClient, aArtifact);
-  //   loanDuration = aLoanDuration;
-  //   fee = aFee;
-  //   status = aStatus;
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create loanRequest due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public LoanRequest(String aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanStatus aStatus, MuseumManagementSystem aMuseumManagementSystem)
+  {
+    super(aRequestId, aClient, aArtifact);
+    loanDuration = aLoanDuration;
+    fee = aFee;
+    status = aStatus;
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create loanRequest due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE

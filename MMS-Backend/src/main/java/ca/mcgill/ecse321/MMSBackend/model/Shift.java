@@ -2,19 +2,12 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
+
 import java.util.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 import java.sql.Time;
 
-// line 48 "MMS.ump"
-// line 154 "MMS.ump"
-@Entity
+// line 50 "MMS.ump"
+// line 147 "MMS.ump"
 public class Shift
 {
 
@@ -29,48 +22,43 @@ public class Shift
   //------------------------
 
   //Shift Attributes
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private String shiftId;
   private Time startTime;
   private Time endTime;
 
   //Shift Associations
-  @ManyToOne(optional = false)
   private SpecificWeekDay dayOfTheWeek;
-  @ManyToOne(optional = false)
   private MuseumManagementSystem museumManagementSystem;
-  @ManyToOne(optional = false)
   private Employee employee;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public Shift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
-  // {
-  //   startTime = aStartTime;
-  //   endTime = aEndTime;
-  //   if (!setShiftId(aShiftId))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate shiftId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   boolean didAddDayOfTheWeek = setDayOfTheWeek(aDayOfTheWeek);
-  //   if (!didAddDayOfTheWeek)
-  //   {
-  //     throw new RuntimeException("Unable to create shift due to dayOfTheWeek. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create shift due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   boolean didAddEmployee = setEmployee(aEmployee);
-  //   if (!didAddEmployee)
-  //   {
-  //     throw new RuntimeException("Unable to create shift due to employee. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public Shift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
+  {
+    startTime = aStartTime;
+    endTime = aEndTime;
+    if (!setShiftId(aShiftId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate shiftId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
+    boolean didAddDayOfTheWeek = setDayOfTheWeek(aDayOfTheWeek);
+    if (!didAddDayOfTheWeek)
+    {
+      throw new RuntimeException("Unable to create shift due to dayOfTheWeek. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create shift due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    boolean didAddEmployee = setEmployee(aEmployee);
+    if (!didAddEmployee)
+    {
+      throw new RuntimeException("Unable to create shift due to employee. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE

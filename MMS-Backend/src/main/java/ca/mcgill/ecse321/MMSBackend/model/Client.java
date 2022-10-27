@@ -2,16 +2,11 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
+
 import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
-// line 40 "MMS.ump"
-// line 149 "MMS.ump"
-@Entity
-@DiscriminatorValue("Client")
+// line 42 "MMS.ump"
+// line 140 "MMS.ump"
 public class Client extends Account
 {
 
@@ -20,7 +15,6 @@ public class Client extends Account
   //------------------------
 
   //Client Attributes
-  @Column(name = "currentLoanNumber")
   private int currentLoanNumber;
 
   //Client Associations
@@ -32,18 +26,18 @@ public class Client extends Account
   // CONSTRUCTOR
   //------------------------
 
-  // public Client(String aUsername, String aName, String aPassword, int aCurrentLoanNumber, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   super(aUsername, aName, aPassword);
-  //   currentLoanNumber = aCurrentLoanNumber;
-  //   requests = new ArrayList<Request>();
-  //   tickets = new ArrayList<Ticket>();
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create client due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public Client(String aUsername, String aName, String aPassword, int aCurrentLoanNumber, MuseumManagementSystem aMuseumManagementSystem)
+  {
+    super(aUsername, aName, aPassword);
+    currentLoanNumber = aCurrentLoanNumber;
+    requests = new ArrayList<Request>();
+    tickets = new ArrayList<Ticket>();
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create client due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE

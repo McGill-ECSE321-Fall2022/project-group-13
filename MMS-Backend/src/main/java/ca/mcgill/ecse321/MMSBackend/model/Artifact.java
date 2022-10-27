@@ -2,14 +2,11 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 import java.util.*;
 
-// line 88 "MMS.ump"
-// line 179 "MMS.ump"
-@Entity
+// line 90 "MMS.ump"
+// line 173 "MMS.ump"
 public class Artifact
 {
 
@@ -30,7 +27,6 @@ public class Artifact
   //------------------------
 
   //Artifact Attributes
-  @Id
   private String artifactId;
   private String name;
   private String image;
@@ -42,40 +38,38 @@ public class Artifact
 
   //Artifact Associations
   private List<Request> requests;
-  @ManyToOne(optional = false)
-  private Room room;
-  @ManyToOne(optional = false)
+  private Room roomLocation;
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public Artifact(String aArtifactId, String aName, String aImage, String aDescription, LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoom, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   name = aName;
-  //   image = aImage;
-  //   description = aDescription;
-  //   loanStatus = aLoanStatus;
-  //   isDamaged = aIsDamaged;
-  //   loanFee = aLoanFee;
-  //   worth = aWorth;
-  //   if (!setArtifactId(aArtifactId))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate artifactId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   requests = new ArrayList<Request>();
-  //   boolean didAddRoom = setRoom(aRoom);
-  //   if (!didAddRoom)
-  //   {
-  //     throw new RuntimeException("Unable to create artifact due to room. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create artifact due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public Artifact(String aArtifactId, String aName, String aImage, String aDescription, LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation, MuseumManagementSystem aMuseumManagementSystem)
+  {
+    name = aName;
+    image = aImage;
+    description = aDescription;
+    loanStatus = aLoanStatus;
+    isDamaged = aIsDamaged;
+    loanFee = aLoanFee;
+    worth = aWorth;
+    if (!setArtifactId(aArtifactId))
+    {
+      throw new RuntimeException("Cannot create due to duplicate artifactId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
+    requests = new ArrayList<Request>();
+    boolean didAddRoomLocation = setRoomLocation(aRoomLocation);
+    if (!didAddRoomLocation)
+    {
+      throw new RuntimeException("Unable to create artifact due to roomLocation. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create artifact due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE
@@ -241,9 +235,9 @@ public class Artifact
     return index;
   }
   /* Code from template association_GetOne */
-  public Room getRoom()
+  public Room getRoomLocation()
   {
-    return room;
+    return roomLocation;
   }
   /* Code from template association_GetOne */
   public MuseumManagementSystem getMuseumManagementSystem()
@@ -320,21 +314,21 @@ public class Artifact
     return wasAdded;
   }
   /* Code from template association_SetOneToMany */
-  public boolean setRoom(Room aRoom)
+  public boolean setRoomLocation(Room aRoomLocation)
   {
     boolean wasSet = false;
-    if (aRoom == null)
+    if (aRoomLocation == null)
     {
       return wasSet;
     }
 
-    Room existingRoom = room;
-    room = aRoom;
-    if (existingRoom != null && !existingRoom.equals(aRoom))
+    Room existingRoomLocation = roomLocation;
+    roomLocation = aRoomLocation;
+    if (existingRoomLocation != null && !existingRoomLocation.equals(aRoomLocation))
     {
-      existingRoom.removeArtifact(this);
+      existingRoomLocation.removeArtifact(this);
     }
-    room.addArtifact(this);
+    roomLocation.addArtifact(this);
     wasSet = true;
     return wasSet;
   }
@@ -366,11 +360,11 @@ public class Artifact
       Request aRequest = requests.get(i - 1);
       aRequest.delete();
     }
-    Room placeholderRoom = room;
-    this.room = null;
-    if(placeholderRoom != null)
+    Room placeholderRoomLocation = roomLocation;
+    this.roomLocation = null;
+    if(placeholderRoomLocation != null)
     {
-      placeholderRoom.removeArtifact(this);
+      placeholderRoomLocation.removeArtifact(this);
     }
     MuseumManagementSystem placeholderMuseumManagementSystem = museumManagementSystem;
     this.museumManagementSystem = null;
@@ -392,7 +386,7 @@ public class Artifact
             "loanFee" + ":" + getLoanFee()+ "," +
             "worth" + ":" + getWorth()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "loanStatus" + "=" + (getLoanStatus() != null ? !getLoanStatus().equals(this)  ? getLoanStatus().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "room = "+(getRoom()!=null?Integer.toHexString(System.identityHashCode(getRoom())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "roomLocation = "+(getRoomLocation()!=null?Integer.toHexString(System.identityHashCode(getRoomLocation())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "museumManagementSystem = "+(getMuseumManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getMuseumManagementSystem())):"null");
   }
 }

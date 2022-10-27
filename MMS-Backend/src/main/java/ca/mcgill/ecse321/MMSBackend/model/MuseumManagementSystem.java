@@ -2,16 +2,12 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import java.sql.Time;
 import java.util.*;
 
 // line 1 "MMS.ump"
-// line 120 "MMS.ump"
-@Entity
+// line 198 "MMS.ump"
 public class MuseumManagementSystem
 {
 
@@ -20,80 +16,92 @@ public class MuseumManagementSystem
   //------------------------
 
   //MuseumManagementSystem Attributes
+  private String systemId;
+  private String name;
   private Time openTime;
   private Time closeTime;
   private int maxLoanNumber;
   private double ticketFee;
 
   //MuseumManagementSystem Associations
-  @OneToOne(cascade = { CascadeType.ALL })
   private Manager manager;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<Employee> employees;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<Client> clients;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<Shift> shifts;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<LoanRequest> loanRequests;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<DonationRequest> donationRequests;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<Artifact> artifacts;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<Room> rooms;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<Ticket> tickets;
-  @OneToMany(cascade = { CascadeType.ALL })
   private List<SpecificWeekDay> weekDays;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public MuseumManagementSystem(Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
-  // {
-  //   openTime = aOpenTime;
-  //   closeTime = aCloseTime;
-  //   maxLoanNumber = aMaxLoanNumber;
-  //   ticketFee = aTicketFee;
-  //   if (aManager == null || aManager.getMuseumManagementSystem() != null)
-  //   {
-  //     throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   manager = aManager;
-  //   employees = new ArrayList<Employee>();
-  //   clients = new ArrayList<Client>();
-  //   shifts = new ArrayList<Shift>();
-  //   loanRequests = new ArrayList<LoanRequest>();
-  //   donationRequests = new ArrayList<DonationRequest>();
-  //   artifacts = new ArrayList<Artifact>();
-  //   rooms = new ArrayList<Room>();
-  //   tickets = new ArrayList<Ticket>();
-  //   weekDays = new ArrayList<SpecificWeekDay>();
-  // }
+  public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
+  {
+    systemId = aSystemId;
+    name = aName;
+    openTime = aOpenTime;
+    closeTime = aCloseTime;
+    maxLoanNumber = aMaxLoanNumber;
+    ticketFee = aTicketFee;
+    if (aManager == null || aManager.getMuseumManagementSystem() != null)
+    {
+      throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    manager = aManager;
+    employees = new ArrayList<Employee>();
+    clients = new ArrayList<Client>();
+    shifts = new ArrayList<Shift>();
+    loanRequests = new ArrayList<LoanRequest>();
+    donationRequests = new ArrayList<DonationRequest>();
+    artifacts = new ArrayList<Artifact>();
+    rooms = new ArrayList<Room>();
+    tickets = new ArrayList<Ticket>();
+    weekDays = new ArrayList<SpecificWeekDay>();
+  }
 
-  // public MuseumManagementSystem(Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
-  // {
-  //   openTime = aOpenTime;
-  //   closeTime = aCloseTime;
-  //   maxLoanNumber = aMaxLoanNumber;
-  //   ticketFee = aTicketFee;
-  //   manager = new Manager(aUsernameForManager, aNameForManager, aPasswordForManager, this);
-  //   employees = new ArrayList<Employee>();
-  //   clients = new ArrayList<Client>();
-  //   shifts = new ArrayList<Shift>();
-  //   loanRequests = new ArrayList<LoanRequest>();
-  //   donationRequests = new ArrayList<DonationRequest>();
-  //   artifacts = new ArrayList<Artifact>();
-  //   rooms = new ArrayList<Room>();
-  //   tickets = new ArrayList<Ticket>();
-  //   weekDays = new ArrayList<SpecificWeekDay>();
-  // }
+  public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
+  {
+    systemId = aSystemId;
+    name = aName;
+    openTime = aOpenTime;
+    closeTime = aCloseTime;
+    maxLoanNumber = aMaxLoanNumber;
+    ticketFee = aTicketFee;
+    manager = new Manager(aUsernameForManager, aNameForManager, aPasswordForManager, this);
+    employees = new ArrayList<Employee>();
+    clients = new ArrayList<Client>();
+    shifts = new ArrayList<Shift>();
+    loanRequests = new ArrayList<LoanRequest>();
+    donationRequests = new ArrayList<DonationRequest>();
+    artifacts = new ArrayList<Artifact>();
+    rooms = new ArrayList<Room>();
+    tickets = new ArrayList<Ticket>();
+    weekDays = new ArrayList<SpecificWeekDay>();
+  }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setSystemId(String aSystemId)
+  {
+    boolean wasSet = false;
+    systemId = aSystemId;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    name = aName;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setOpenTime(Time aOpenTime)
   {
@@ -125,6 +133,16 @@ public class MuseumManagementSystem
     ticketFee = aTicketFee;
     wasSet = true;
     return wasSet;
+  }
+
+  public String getSystemId()
+  {
+    return systemId;
+  }
+
+  public String getName()
+  {
+    return name;
   }
 
   public Time getOpenTime()
@@ -427,10 +445,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  // public Employee addEmployee(String aUsername, String aName, String aPassword)
-  // {
-  //   return new Employee(aUsername, aName, aPassword, this);
-  // }
+  public Employee addEmployee(String aUsername, String aName, String aPassword)
+  {
+    return new Employee(aUsername, aName, aPassword, this);
+  }
 
   public boolean addEmployee(Employee aEmployee)
   {
@@ -499,10 +517,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  // public Client addClient(String aUsername, String aName, String aPassword, int aCurrentLoanNumber)
-  // {
-  //   return new Client(aUsername, aName, aPassword, aCurrentLoanNumber, this);
-  // }
+  public Client addClient(String aUsername, String aName, String aPassword, int aCurrentLoanNumber)
+  {
+    return new Client(aUsername, aName, aPassword, aCurrentLoanNumber, this);
+  }
 
   public boolean addClient(Client aClient)
   {
@@ -570,11 +588,11 @@ public class MuseumManagementSystem
   {
     return 0;
   }
-  // /* Code from template association_AddManyToOne */
-  // public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, Employee aEmployee)
-  // {
-  //   return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, this, aEmployee);
-  // }
+  /* Code from template association_AddManyToOne */
+  public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, Employee aEmployee)
+  {
+    return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, this, aEmployee);
+  }
 
   public boolean addShift(Shift aShift)
   {
@@ -643,10 +661,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  // public LoanRequest addLoanRequest(String aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanRequest.LoanStatus aStatus)
-  // {
-  //   return new LoanRequest(aRequestId, aClient, aArtifact, aLoanDuration, aFee, aStatus, this);
-  // }
+  public LoanRequest addLoanRequest(String aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanRequest.LoanStatus aStatus)
+  {
+    return new LoanRequest(aRequestId, aClient, aArtifact, aLoanDuration, aFee, aStatus, this);
+  }
 
   public boolean addLoanRequest(LoanRequest aLoanRequest)
   {
@@ -715,10 +733,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  // public DonationRequest addDonationRequest(String aRequestId, Client aClient, Artifact aArtifact, DonationRequest.DonationStatus aStatus)
-  // {
-  //   return new DonationRequest(aRequestId, aClient, aArtifact, aStatus, this);
-  // }
+  public DonationRequest addDonationRequest(String aRequestId, Client aClient, Artifact aArtifact, DonationRequest.DonationStatus aStatus)
+  {
+    return new DonationRequest(aRequestId, aClient, aArtifact, aStatus, this);
+  }
 
   public boolean addDonationRequest(DonationRequest aDonationRequest)
   {
@@ -787,10 +805,10 @@ public class MuseumManagementSystem
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  // public Artifact addArtifact(String aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoom)
-  // {
-  //   return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, aRoom, this);
-  // }
+  public Artifact addArtifact(String aArtifactId, String aName, String aImage, String aDescription, Artifact.LoanStatus aLoanStatus, boolean aIsDamaged, double aLoanFee, double aWorth, Room aRoomLocation)
+  {
+    return new Artifact(aArtifactId, aName, aImage, aDescription, aLoanStatus, aIsDamaged, aLoanFee, aWorth, aRoomLocation, this);
+  }
 
   public boolean addArtifact(Artifact aArtifact)
   {
@@ -1007,18 +1025,18 @@ public class MuseumManagementSystem
   {
     return 7;
   }
-  // /* Code from template association_AddOptionalNToOne */
-  // public SpecificWeekDay addWeekDay(boolean aIsClosed, SpecificWeekDay.DayType aDayType)
-  // {
-  //   if (numberOfWeekDays() >= maximumNumberOfWeekDays())
-  //   {
-  //     return null;
-  //   }
-  //   else
-  //   {
-  //     return new SpecificWeekDay(aIsClosed, aDayType, this);
-  //   }
-  // }
+  /* Code from template association_AddOptionalNToOne */
+  public SpecificWeekDay addWeekDay(boolean aIsClosed, SpecificWeekDay.DayType aDayType)
+  {
+    if (numberOfWeekDays() >= maximumNumberOfWeekDays())
+    {
+      return null;
+    }
+    else
+    {
+      return new SpecificWeekDay(aIsClosed, aDayType, this);
+    }
+  }
 
   public boolean addWeekDay(SpecificWeekDay aWeekDay)
   {
@@ -1164,6 +1182,8 @@ public class MuseumManagementSystem
   public String toString()
   {
     return super.toString() + "["+
+            "systemId" + ":" + getSystemId()+ "," +
+            "name" + ":" + getName()+ "," +
             "maxLoanNumber" + ":" + getMaxLoanNumber()+ "," +
             "ticketFee" + ":" + getTicketFee()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "openTime" + "=" + (getOpenTime() != null ? !getOpenTime().equals(this)  ? getOpenTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +

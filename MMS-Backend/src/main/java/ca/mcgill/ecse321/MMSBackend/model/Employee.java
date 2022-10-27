@@ -2,17 +2,13 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
+
 import java.util.*;
+import java.sql.Time;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
-//import java.sql.Time;
-
-// line 33 "MMS.ump"
-// line 143 "MMS.ump"
-@Entity
-@DiscriminatorValue("Employee")
+// line 35 "MMS.ump"
+// line 135 "MMS.ump"
+// line 192 "MMS.ump"
 public class Employee extends Account
 {
 
@@ -28,16 +24,16 @@ public class Employee extends Account
   // CONSTRUCTOR
   //------------------------
 
-  // public Employee(String aUsername, String aName, String aPassword, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   super(aUsername, aName, aPassword);
-  //   shifts = new ArrayList<Shift>();
-  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-  //   if (!didAddMuseumManagementSystem)
-  //   {
-  //     throw new RuntimeException("Unable to create employee due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+  public Employee(String aUsername, String aName, String aPassword, MuseumManagementSystem aMuseumManagementSystem)
+  {
+    super(aUsername, aName, aPassword);
+    shifts = new ArrayList<Shift>();
+    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+    if (!didAddMuseumManagementSystem)
+    {
+      throw new RuntimeException("Unable to create employee due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   //------------------------
   // INTERFACE
@@ -82,11 +78,11 @@ public class Employee extends Account
   {
     return 0;
   }
-  // /* Code from template association_AddManyToOne */
-  // public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem)
-  // {
-  //   return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, aMuseumManagementSystem, this);
-  // }
+  /* Code from template association_AddManyToOne */
+  public Shift addShift(String aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem)
+  {
+    return new Shift(aShiftId, aStartTime, aEndTime, aDayOfTheWeek, aMuseumManagementSystem, this);
+  }
 
   public boolean addShift(Shift aShift)
   {

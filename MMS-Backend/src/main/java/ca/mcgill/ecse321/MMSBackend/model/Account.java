@@ -2,20 +2,11 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.MMSBackend.model;
+
 import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-
-// line 20 "MMS.ump"
-// line 133 "MMS.ump"
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "AccountType")
+// line 22 "MMS.ump"
+// line 125 "MMS.ump"
 public abstract class Account
 {
 
@@ -30,29 +21,23 @@ public abstract class Account
   //------------------------
 
   //Account Attributes
-  @Id
-  @Column(name = "username")
   private String username;
-  
-  @Column(name = "name") 
   private String name;
-  
-  @Column(name = "password")
   private String password;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  // public Account(String aUsername, String aName, String aPassword)
-  // {
-  //   name = aName;
-  //   password = aPassword;
-  //   if (!setUsername(aUsername))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate username. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  // }
+  public Account(String aUsername, String aName, String aPassword)
+  {
+    name = aName;
+    password = aPassword;
+    if (!setUsername(aUsername))
+    {
+      throw new RuntimeException("Cannot create due to duplicate username. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
+  }
 
   //------------------------
   // INTERFACE

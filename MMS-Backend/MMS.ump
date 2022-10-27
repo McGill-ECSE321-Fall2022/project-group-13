@@ -1,5 +1,7 @@
 class MuseumManagementSystem
 {
+  systemId;
+  name;
   Time openTime;
   Time closeTime;
   Integer maxLoanNumber;
@@ -97,7 +99,7 @@ class Artifact
   Double loanFee;
   Double worth; 
   1 artifact -- * Request requests;
-  * artifacts -- 1 Room room;
+  * artifacts -- 1 Room roomLocation;
 }
 
 class Room
@@ -112,81 +114,104 @@ class Ticket
   unique ticketId;
   Double fee;
   Boolean isActive;
-}//$?[End_of_model]$?
+}
+
+
+//$?[End_of_model]$?
 
 namespace -;
 
 
-class MuseumManagementSystem
-{
-  position 50 30 109 45;
-  position.association Manager:manager__MuseumManagementSystem 13,110 30,0;
-  position.association Employee:employees__MuseumManagementSystem 8,110 30,0;
-  position.association Client:clients__MuseumManagementSystem 5,110 30,0;
-  position.association LoanRequest:loanRequests__MuseumManagementSystem 141,110 0,10;
-  position.association DonationRequest:donationRequests__MuseumManagementSystem 42,110 30,0;
-  position.association Artifact:artifacts__MuseumManagementSystem 217,4 0,10;
-  position.association MuseumManagementSystem__Room:rooms 217,41 0,10;
-  position.association MuseumManagementSystem__Ticket:tickets 217,78 0,10;
-}
-
 class Account
 {
-  position 50 130 109 45;
+  position 394 20 141.914 106.572;
 }
 
 class Manager
 {
-  position 50 230 109 45;
+  position 354 216 109 41.084;
 }
 
 class Employee
 {
-  position 50 330 109 45;
-  position.association Employee:employee__Shift:shifts 110,7 0,10;
+  position 128 224 109 41.084;
 }
 
 class Client
 {
-  position 50 430 109 45;
+  position 556 204 217.93 57.7051;
+  position.association Client:client__Request:requests 219,13 0,10;
+  position.association Client:client__Ticket:tickets 109,0 0,14;
 }
 
 class Shift
 {
-  position 250 30 109 45;
+  position 112 417 131.797 90.9473;
+  position.association Shift:shifts__SpecificWeekDay:dayOfTheWeek 17,91 21,0;
 }
 
 class SpecificWeekDay
 {
-  position 250 130 109 45;
+  position 107 701 147.354 74.3262;
 }
 
 class Request
 {
-  position 250 230 109 45;
+  position 973 176 139.98 73.3301;
 }
 
 class LoanRequest
 {
-  position 250 330 109 45;
+  position 1039 357 170.068 90.9473;
 }
 
 class DonationRequest
 {
-  position 250 430 109 45;
+  position 831 359 179.18 57.7051;
 }
 
 class Artifact
 {
-  position 450 30 109 45;
+  position 1295 274 180.762 174.053;
+  position.association Artifact:artifact__Request:requests 108,0 141,10;
+  position.association Artifact:artifacts__Room:room 58,174 120,74;
+  position.association Artifact:artifacts__Room:location 0,10 135,44;
+  position.association Artifact:artifacts__Room:roomLocation 52,174 109,0;
 }
 
 class Room
 {
-  position 450 130 109 45;
+  position 888 617 133.555 74.3262;
 }
 
 class Ticket
 {
-  position 450 230 109 45;
+  position 1000 21 139.746 90.9473;
+}
+
+class Employee
+{
+  position.association Employee:employee__Shift:shifts 8,41 2,0;
+  position 128 224 109 41.084;
+}
+
+class MuseumManagementSystem
+{
+  position 483 361 216.084 107.568;
+  position.association Manager:manager__MuseumManagementSystem 1,0 110,40;
+  position.association Employee:employees__MuseumManagementSystem 0,59 109,41;
+  position.association Client:clients__MuseumManagementSystem 96,0 159,58;
+  position.association LoanRequest:loanRequests__MuseumManagementSystem 217,102 0,85;
+  position.association DonationRequest:donationRequests__MuseumManagementSystem 202,80 0,37;
+  position.association Artifact:artifacts__MuseumManagementSystem 217,9 0,31;
+  position.association MuseumManagementSystem__Room:rooms 142,138 0,10;
+  position.association MuseumManagementSystem__Ticket:tickets 211,0 0,80;
+  position.association MuseumManagementSystem__Shift:shifts 0,102 133,90;
+  position.association MuseumManagementSystem__SpecificWeekDay:weekDays 82,141 148,17;
+  position.association Manager:manager__MuseumManagementSystem:museumMan 10,0 110,30;
+  position.association Manager:manager__MuseumManagementSystem:mms 9,0 110,38;
+  position.association Employee:employees__MuseumManagementSystem:mms 0,10 110,18;
+  position.association Client:clients__MuseumManagementSystem:mms 5,0 0,10;
+  position.association LoanRequest:loanRequests__MuseumManagementSystem:mms 217,8 0,10;
+  position.association MuseumManagementSystem:mms__Shift:shifts 0,63 66,0;
 }
