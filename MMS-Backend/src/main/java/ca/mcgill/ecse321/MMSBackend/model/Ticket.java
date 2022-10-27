@@ -4,12 +4,15 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 // line 113 "MMS.ump"
 // line 188 "MMS.ump"
+@Entity
 public class Ticket
 {
 
@@ -32,6 +35,7 @@ public class Ticket
 
   //Ticket Associations
   @ManyToOne(optional = false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
   @ManyToOne(optional = false)
   private Client client;
