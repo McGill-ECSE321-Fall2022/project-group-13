@@ -70,7 +70,7 @@ public class ManagerRepositoryTests {
 
         //  Getting ids of Manager and mms 
         String managerUsername = manager.getUsername(); 
-        String museumID = mms.getSystemId(); 
+        int museumID = mms.getSystemId(); 
 
         // Make the variables null 
         mms = null; 
