@@ -3,10 +3,16 @@
 
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 import java.sql.Time;
 
 // line 30 "MMS.ump"
 // line 131 "MMS.ump"
+@Entity
 public class Manager extends Account
 {
 
@@ -15,6 +21,8 @@ public class Manager extends Account
   //------------------------
 
   //Manager Associations
+  @OneToOne(mappedBy = "museumManagementSystem")
+  @JoinColumn(name = "museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------

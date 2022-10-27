@@ -4,9 +4,12 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Entity;
+
 // line 35 "MMS.ump"
 // line 136 "MMS.ump"
 // line 193 "MMS.ump"
+@Entity
 public class Employee extends Account
 {
 

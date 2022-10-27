@@ -37,23 +37,23 @@ public class ManagerRepositoryTests {
 
     @Test
     public void testPersistAndLoadDonationRequest() {
-        // // Creating a museum management system using a plain constructor
-        // MuseumManagementSystem mms = new MuseumManagementSystem();
-        // String museumName = "Marwan's MMS";
-        // Time openTime = Time.valueOf("9:00:00");
-        // Time closeTime = Time.valueOf("17:00:00");
-        // int maxLoanNumber = 5;
-        // double ticketFee = 13.25;
+        // Creating a museum management system using a plain constructor
+        MuseumManagementSystem mms = new MuseumManagementSystem();
+        String museumName = "Marwan's MMS";
+        Time openTime = Time.valueOf("9:00:00");
+        Time closeTime = Time.valueOf("17:00:00");
+        int maxLoanNumber = 5;
+        double ticketFee = 13.25;
 
-        // // Setting the museum management system's attributes using setters
-        // mms.setName(museumName);
-        // mms.setOpenTime(openTime);
-        // mms.setCloseTime(closeTime);
-        // mms.setMaxLoanNumber(maxLoanNumber);
-        // mms.setTicketFee(ticketFee);
+        // Setting the museum management system's attributes using setters
+        mms.setName(museumName);
+        mms.setOpenTime(openTime);
+        mms.setCloseTime(closeTime);
+        mms.setMaxLoanNumber(maxLoanNumber);
+        mms.setTicketFee(ticketFee);
 
-        // // Saving the museum anagement system to the db 
-        // mmsRepository.save(mms);
+        // Saving the museum anagement system to the db 
+        mmsRepository.save(mms);
 
         // Creating a manager
         Manager manager = new Manager(); 
@@ -70,10 +70,10 @@ public class ManagerRepositoryTests {
 
         //  Getting ids of Manager and mms 
         String managerUsername = manager.getUsername(); 
-        // String museumID = mms.getSystemId(); 
+        String museumID = mms.getSystemId(); 
 
         // Make the variables null 
-        // mms = null; 
+        mms = null; 
         manager = null; 
 
         // Fetching information from the database 
@@ -84,13 +84,13 @@ public class ManagerRepositoryTests {
         assertEquals(managerUsername, manager.getUsername()); 
 
         //  Checking for proper connection between museum and manager 
-        // assertNotNull(manager.getMuseumManagementSystem());
-        // assertEquals(museumID, manager.getMuseumManagementSystem().getSystemId());
-        // assertEquals(name, manager.getMuseumManagementSystem().getName());
-        // assertEquals(openTime, manager.getMuseumManagementSystem().getOpenTime());
-        // assertEquals(closeTime, manager.getMuseumManagementSystem().getCloseTime());
-        // assertEquals(maxLoanNumber, manager.getMuseumManagementSystem().getMaxLoanNumber());
-        // assertEquals(ticketFee, manager.getMuseumManagementSystem().getTicketFee());
+        assertNotNull(manager.getMuseumManagementSystem());
+        assertEquals(museumID, manager.getMuseumManagementSystem().getSystemId());
+        assertEquals(name, manager.getMuseumManagementSystem().getName());
+        assertEquals(openTime, manager.getMuseumManagementSystem().getOpenTime());
+        assertEquals(closeTime, manager.getMuseumManagementSystem().getCloseTime());
+        assertEquals(maxLoanNumber, manager.getMuseumManagementSystem().getMaxLoanNumber());
+        assertEquals(ticketFee, manager.getMuseumManagementSystem().getTicketFee());
 
     }
 }
