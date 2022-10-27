@@ -63,25 +63,25 @@ public class MuseumManagementSystem
     weekDays = new ArrayList<SpecificWeekDay>();
   }
 
-  public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
-  {
-    systemId = aSystemId;
-    name = aName;
-    openTime = aOpenTime;
-    closeTime = aCloseTime;
-    maxLoanNumber = aMaxLoanNumber;
-    ticketFee = aTicketFee;
-    manager = new Manager(aUsernameForManager, aNameForManager, aPasswordForManager, this);
-    employees = new ArrayList<Employee>();
-    clients = new ArrayList<Client>();
-    shifts = new ArrayList<Shift>();
-    loanRequests = new ArrayList<LoanRequest>();
-    donationRequests = new ArrayList<DonationRequest>();
-    artifacts = new ArrayList<Artifact>();
-    rooms = new ArrayList<Room>();
-    tickets = new ArrayList<Ticket>();
-    weekDays = new ArrayList<SpecificWeekDay>();
-  }
+  // public MuseumManagementSystem(String aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
+  // {
+  //   systemId = aSystemId;
+  //   name = aName;
+  //   openTime = aOpenTime;
+  //   closeTime = aCloseTime;
+  //   maxLoanNumber = aMaxLoanNumber;
+  //   ticketFee = aTicketFee;
+  //   manager = new Manager(aUsernameForManager, aNameForManager, aPasswordForManager, this);
+  //   employees = new ArrayList<Employee>();
+  //   clients = new ArrayList<Client>();
+  //   shifts = new ArrayList<Shift>();
+  //   loanRequests = new ArrayList<LoanRequest>();
+  //   donationRequests = new ArrayList<DonationRequest>();
+  //   artifacts = new ArrayList<Artifact>();
+  //   rooms = new ArrayList<Room>();
+  //   tickets = new ArrayList<Ticket>();
+  //   weekDays = new ArrayList<SpecificWeekDay>();
+  // }
 
   //------------------------
   // INTERFACE
@@ -444,11 +444,11 @@ public class MuseumManagementSystem
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Employee addEmployee(String aUsername, String aName, String aPassword)
-  {
-    return new Employee(aUsername, aName, aPassword, this);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Employee addEmployee(String aUsername, String aName, String aPassword)
+  // {
+  //   return new Employee(aUsername, aName, aPassword, this);
+  // }
 
   public boolean addEmployee(Employee aEmployee)
   {
@@ -516,11 +516,11 @@ public class MuseumManagementSystem
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Client addClient(String aUsername, String aName, String aPassword, int aCurrentLoanNumber)
-  {
-    return new Client(aUsername, aName, aPassword, aCurrentLoanNumber, this);
-  }
+  // /* Code from template association_AddManyToOne */
+  // public Client addClient(String aUsername, String aName, String aPassword, int aCurrentLoanNumber)
+  // {
+  //   return new Client(aUsername, aName, aPassword, aCurrentLoanNumber, this);
+  // }
 
   public boolean addClient(Client aClient)
   {
