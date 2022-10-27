@@ -16,10 +16,13 @@ import ca.mcgill.ecse321.MMSBackend.dao.ArtifactRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.LoanRequestRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
+import ca.mcgill.ecse321.MMSBackend.model.Room;
+import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -35,6 +38,9 @@ public class LoanRequestRepositoryTests {
 
     @Autowired
     private LoanRequestRepository loanRequestRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -73,10 +79,22 @@ public class LoanRequestRepositoryTests {
         String description = "Artifact Description";
         double worth = 50;
 
+        // Create storage room
+        Room room = new Room();
+        RoomType type = RoomType.Storage;
+
+        room.setType(type);
+        room.setMuseumManagementSystem(mms);
+
+        // Save the room to the database
+        roomRepository.save(room);
+
         artifact.setName(artifactName);
         artifact.setImage(image);
         artifact.setDescription(description);
         artifact.setWorth(worth);
+        artifact.setMuseumManagementSystem(mms);
+        artifact.setRoomLocation(room);
 
         // Save the artifact to the database
         artifactRepository.save(artifact);
@@ -100,6 +118,7 @@ public class LoanRequestRepositoryTests {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setArtifact(artifact);
         loanRequest.setClient(client);
+        loanRequest.setMuseumManagementSystem(mms);
 
         // Save the loan request to the database
         loanRequestRepository.save(loanRequest);
@@ -109,6 +128,7 @@ public class LoanRequestRepositoryTests {
         // Get ids of artifacts, clients, and donation requests
         Integer mmsId = mms.getSystemId();
         Integer artifactId = artifact.getArtifactId();
+        Integer roomId = artifact.getRoomLocation().getRoomId();
         String clientUsername = client.getUsername();
         Integer loanRequestId = loanRequest.getRequestId();
 
@@ -117,6 +137,7 @@ public class LoanRequestRepositoryTests {
         artifact = null;
         client = null;
         loanRequest = null;
+        room = null;
 
         // Get loan request from database
         loanRequest = loanRequestRepository.findLoanRequestByRequestId(loanRequestId);
@@ -131,12 +152,19 @@ public class LoanRequestRepositoryTests {
         assertEquals(image, loanRequest.getArtifact().getImage());
         assertEquals(description, loanRequest.getArtifact().getDescription());
         assertEquals(worth, loanRequest.getArtifact().getWorth());
+        assertEquals(mmsId, loanRequest.getArtifact().getMuseumManagementSystem().getSystemId());
+
+        assertNotNull(loanRequest.getArtifact().getRoomLocation());
+        assertEquals(roomId, loanRequest.getArtifact().getRoomLocation().getRoomId());
+        assertEquals(type, loanRequest.getArtifact().getRoomLocation().getType());
+        assertEquals(mmsId, loanRequest.getArtifact().getRoomLocation().getMuseumManagementSystem().getSystemId());
 
         assertNotNull(loanRequest.getClient());
         assertEquals(clientUsername, loanRequest.getClient().getUsername());
         assertEquals(clientName, loanRequest.getClient().getName());
         assertEquals(clientPassword, loanRequest.getClient().getPassword());
         assertEquals(currentLoanNumber, loanRequest.getClient().getCurrentLoanNumber());
+        assertEquals(mmsId, loanRequest.getClient().getMuseumManagementSystem().getSystemId());
 
         assertNotNull(loanRequest.getMuseumManagementSystem());
         assertEquals(mmsId, loanRequest.getMuseumManagementSystem().getSystemId());
@@ -145,5 +173,6 @@ public class LoanRequestRepositoryTests {
         assertEquals(closeTime, loanRequest.getMuseumManagementSystem().getCloseTime());
         assertEquals(maxLoanNumber, loanRequest.getMuseumManagementSystem().getMaxLoanNumber());
         assertEquals(ticketFee, loanRequest.getMuseumManagementSystem().getTicketFee());
+        assertEquals(mmsId, loanRequest.getMuseumManagementSystem().getSystemId());
     }
 }
