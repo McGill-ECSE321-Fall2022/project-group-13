@@ -5,6 +5,8 @@ package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 // line 42 "MMS.ump"
 // line 141 "MMS.ump"
@@ -20,6 +22,8 @@ public class Client extends Account
   private int currentLoanNumber;
 
   //Client Associations
+  @ManyToOne(optional=false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------
