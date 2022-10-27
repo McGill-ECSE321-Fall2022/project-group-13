@@ -5,6 +5,8 @@ package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 // line 35 "MMS.ump"
 // line 136 "MMS.ump"
@@ -18,6 +20,8 @@ public class Employee extends Account
   //------------------------
 
   //Employee Associations
+  @ManyToOne(optional=false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
 
   //------------------------

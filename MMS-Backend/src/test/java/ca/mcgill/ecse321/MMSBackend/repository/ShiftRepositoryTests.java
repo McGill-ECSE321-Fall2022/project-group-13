@@ -107,8 +107,8 @@ public class ShiftRepositoryTests {
         // Check that everything was saved in the database
         
         // Get the auto generated id of the shift and of the mms
-        String mmsId = mms.getSystemId();
-        String shiftId = shift.getShiftId();
+        Integer mmsId = mms.getSystemId();
+        Integer shiftId = shift.getShiftId();
 
         // Set shift, employee and weekDay to null 
         shift = null;
