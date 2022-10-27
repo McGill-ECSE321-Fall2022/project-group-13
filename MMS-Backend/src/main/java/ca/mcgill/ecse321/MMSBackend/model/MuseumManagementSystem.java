@@ -4,6 +4,7 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import java.sql.Time;
 
 // line 1 "MMS.ump"
 // line 199 "MMS.ump"
+@Entity
 public class MuseumManagementSystem
 {
 
