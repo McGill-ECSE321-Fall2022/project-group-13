@@ -25,6 +25,9 @@ import ca.mcgill.ecse321.MMSBackend.model.Room;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest.DonationStatus;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
+/**
+ * @author Yu An Lu
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class DonationRequestRepositoryTests {

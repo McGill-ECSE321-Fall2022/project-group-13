@@ -17,6 +17,9 @@ import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Manager;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
+/**
+ * @author Nikolas Pasichnik
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ManagerRepositoryTests {
