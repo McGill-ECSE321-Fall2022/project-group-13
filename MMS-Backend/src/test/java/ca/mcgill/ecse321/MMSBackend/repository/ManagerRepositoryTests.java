@@ -64,7 +64,7 @@ public class ManagerRepositoryTests {
         manager.setUsername(username); 
         manager.setName(name);
         manager.setPassword(password); 
-
+        manager.setMuseumManagementSystem(mms); 
 
         // Saving the manager to the database 
         managerRepository.save(manager); 
