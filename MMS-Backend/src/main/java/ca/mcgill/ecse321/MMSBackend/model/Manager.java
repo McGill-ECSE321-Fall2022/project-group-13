@@ -65,4 +65,18 @@ public class Manager extends Account
     super.delete();
   }
 
-}
+  public boolean setMuseumManagementSystem(MuseumManagementSystem aMuseumManagementSystem)
+  {
+    boolean wasSet = false;
+    if (museumManagementSystem != null && aMuseumManagementSystem != null) {
+      wasSet = true;
+      museumManagementSystem = aMuseumManagementSystem;
+      return wasSet;
+    }
+    else
+    {
+      return wasSet;
+    }
+  
+    }
+  }
