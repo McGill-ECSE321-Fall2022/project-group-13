@@ -18,7 +18,9 @@ import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
 
 import java.sql.Time;
 
-
+/**
+ * @author Samantha Perez Hoffman
+ */ 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class SpecificWeekDayRepositoryTests {

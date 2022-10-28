@@ -22,6 +22,9 @@ import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
+/**
+ * @author Samantha Perez Hoffman
+ */ 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ShiftRepositoryTests {
