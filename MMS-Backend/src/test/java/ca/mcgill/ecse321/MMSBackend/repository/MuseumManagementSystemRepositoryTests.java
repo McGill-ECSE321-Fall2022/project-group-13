@@ -20,7 +20,6 @@ import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
  * @author Lucy Zhang
  */
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("/applicationContext.xml")
 @SpringBootTest
 public class MuseumManagementSystemRepositoryTests {
 
