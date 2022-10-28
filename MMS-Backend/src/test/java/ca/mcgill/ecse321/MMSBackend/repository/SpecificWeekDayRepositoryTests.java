@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.ShiftRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.SpecificWeekDayRepository;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
