@@ -14,16 +14,16 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 | Yu An Lu | yu-an-lu             |
 | Mona Kalaoun  | m-kln             |
 
-## Effort Table For Deliverable 1
+## Effort Table For Deliverables
 
-| Name          | Deliverable 1 - Total Hours | Deliverable 1 - Total Hours | Deliverable 3 - Total Hours |
+| Name          | Deliverable 1 - Total Hours | Deliverable 2 - Total Hours | Deliverable 3 - Total Hours |
 | ------------- | --------------- |--------------- |--------------- |
-| Nazia Chowdhury ||||
-| Samantha Perez Hoffman||||
-| Mona Kalaoun  ||||
-| Yu An Lu ||||
-| Nikolas Pasichnik ||||
-| Lucy Zhang ||||
+| Nazia Chowdhury |31.5 hours|||
+| Samantha Perez Hoffman|32 hours|||
+| Mona Kalaoun  |32 hours|||
+| Yu An Lu |35 hours|||
+| Nikolas Pasichnik |33 hours|||
+| Lucy Zhang |31.5 hours|||
 
 ## Project reports
 [Project Deliverable 1](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-1-Report#meeting-minutes)
