@@ -87,7 +87,7 @@ public class ManagerRepositoryTests {
         //  Checking for proper connection between museum and manager 
         assertNotNull(manager.getMuseumManagementSystem());
         assertEquals(museumID, manager.getMuseumManagementSystem().getSystemId());
-        assertEquals(name, manager.getMuseumManagementSystem().getName());
+        assertEquals(museumName, manager.getMuseumManagementSystem().getName());
         assertEquals(openTime, manager.getMuseumManagementSystem().getOpenTime());
         assertEquals(closeTime, manager.getMuseumManagementSystem().getCloseTime());
         assertEquals(maxLoanNumber, manager.getMuseumManagementSystem().getMaxLoanNumber());
