@@ -19,6 +19,9 @@ import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
 
+/**
+ * @author Lucy Zhang
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TicketRepositoryTests {
@@ -49,7 +52,7 @@ public class TicketRepositoryTests {
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
 
-        String name = "Tickets MMS";
+        String name = "Iconic MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
@@ -67,9 +70,9 @@ public class TicketRepositoryTests {
 
         // Create a client
         Client client = new Client();
-        String username = "Ticket Client";
-        String clientName = "Ticket ClientLastName";
-        String clientPassword = "TicketClient";
+        String username = "Iconic Client";
+        String clientName = "Iconic ClientName";
+        String clientPassword = "Iamiconicclient";
         int currentLoanNumber = 2;
 
         // Set the attributes of the client

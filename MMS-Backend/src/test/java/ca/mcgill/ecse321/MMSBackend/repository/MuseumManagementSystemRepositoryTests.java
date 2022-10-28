@@ -10,12 +10,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
+/**
+ * @author Lucy Zhang
+ */
 @ExtendWith(SpringExtension.class)
+@ContextConfiguration("/applicationContext.xml")
 @SpringBootTest
 public class MuseumManagementSystemRepositoryTests {
 
@@ -35,7 +40,7 @@ public class MuseumManagementSystemRepositoryTests {
 
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String name = "The Museum";
+        String name = "THE Museum";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 10;
