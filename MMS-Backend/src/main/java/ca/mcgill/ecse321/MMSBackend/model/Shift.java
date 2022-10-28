@@ -4,10 +4,7 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import java.sql.Time;
 
@@ -29,6 +26,7 @@ public class Shift
 
   //Shift Attributes
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int shiftId;
   private Time startTime;
   private Time endTime;
