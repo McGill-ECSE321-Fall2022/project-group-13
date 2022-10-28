@@ -48,6 +48,7 @@ public class LoanRequestRepositoryTests {
         loanRequestRepository.deleteAll();
 
         artifactRepository.deleteAll();
+        roomRepository.deleteAll();
         clientRepository.deleteAll();
         mmsRepository.deleteAll();
     }
