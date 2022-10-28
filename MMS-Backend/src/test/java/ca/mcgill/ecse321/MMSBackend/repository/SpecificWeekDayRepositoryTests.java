@@ -35,7 +35,7 @@ public class SpecificWeekDayRepositoryTests {
         // Delete the weekDayRepository first to avoid violating not-null constraint
         weekDayRepository.deleteAll();
 
-        // delete the employeeRepository and weekDayRepository  
+        // delete the museum mangement system repository   
         mmsRepository.deleteAll();
 
     }

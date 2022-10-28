@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
@@ -29,7 +27,7 @@ public class MuseumManagementSystemRepositoryTests {
     @AfterEach
     public void clearDatabase(){
         
-        // Delete the ticketRepository first to avoid violating not-null constraint
+        // Delete the museumMangementSystem first 
         mmsRepository.deleteAll();
 
     }
