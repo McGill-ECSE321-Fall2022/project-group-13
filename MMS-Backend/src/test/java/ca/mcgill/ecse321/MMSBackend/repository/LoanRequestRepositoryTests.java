@@ -22,6 +22,7 @@ import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Room;
+import ca.mcgill.ecse321.MMSBackend.model.LoanRequest.LoanStatus;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
 @ExtendWith(SpringExtension.class)
@@ -83,9 +84,11 @@ public class LoanRequestRepositoryTests {
         // Create storage room
         Room room = new Room();
         RoomType type = RoomType.Storage;
+        String roomName = "RoomRoom"; 
 
         room.setType(type);
         room.setMuseumManagementSystem(mms);
+        room.setName(roomName);
 
         // Save the room to the database
         roomRepository.save(room);
@@ -118,16 +121,23 @@ public class LoanRequestRepositoryTests {
 
         // Create a loan request
         LoanRequest loanRequest = new LoanRequest();
+        int loanDuration = 5;
+        double fee = 50;
+        LoanStatus status = LoanStatus.Approved;
+
         loanRequest.setArtifact(artifact);
         loanRequest.setClient(client);
         loanRequest.setMuseumManagementSystem(mms);
+        loanRequest.setLoanDuration(loanDuration);
+        loanRequest.setFee(fee);
+        loanRequest.setStatus(status);
 
         // Save the loan request to the database
         loanRequestRepository.save(loanRequest);
 
         // Check that everything was saved in the database
 
-        // Get ids of artifacts, clients, and donation requests
+        // Get ids of artifact, client, and loan request, room and museum management system
         Integer mmsId = mms.getSystemId();
         Integer artifactId = artifact.getArtifactId();
         Integer roomId = artifact.getRoomLocation().getRoomId();
@@ -147,6 +157,9 @@ public class LoanRequestRepositoryTests {
         // Assert values
         assertNotNull(loanRequest);
         assertEquals(loanRequestId, loanRequest.getRequestId());
+        assertEquals(loanDuration, loanRequest.getLoanDuration());
+        assertEquals(fee, loanRequest.getFee());
+        assertEquals(status, loanRequest.getStatus());
 
         assertNotNull(loanRequest.getArtifact());
         assertEquals(artifactId, loanRequest.getArtifact().getArtifactId());
@@ -159,6 +172,7 @@ public class LoanRequestRepositoryTests {
         assertNotNull(loanRequest.getArtifact().getRoomLocation());
         assertEquals(roomId, loanRequest.getArtifact().getRoomLocation().getRoomId());
         assertEquals(type, loanRequest.getArtifact().getRoomLocation().getType());
+        assertEquals(roomName, loanRequest.getArtifact().getRoomLocation().getName());
         assertEquals(mmsId, loanRequest.getArtifact().getRoomLocation().getMuseumManagementSystem().getSystemId());
 
         assertNotNull(loanRequest.getClient());
@@ -175,6 +189,5 @@ public class LoanRequestRepositoryTests {
         assertEquals(closeTime, loanRequest.getMuseumManagementSystem().getCloseTime());
         assertEquals(maxLoanNumber, loanRequest.getMuseumManagementSystem().getMaxLoanNumber());
         assertEquals(ticketFee, loanRequest.getMuseumManagementSystem().getTicketFee());
-        assertEquals(mmsId, loanRequest.getMuseumManagementSystem().getSystemId());
     }
 }
