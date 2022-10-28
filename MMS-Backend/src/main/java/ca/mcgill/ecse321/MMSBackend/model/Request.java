@@ -4,15 +4,15 @@
 package ca.mcgill.ecse321.MMSBackend.model;
 import java.util.*;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 
 // line 66 "MMS.ump"
 // line 159 "MMS.ump"
-@Entity
+@MappedSuperclass
 public abstract class Request
 {
 
