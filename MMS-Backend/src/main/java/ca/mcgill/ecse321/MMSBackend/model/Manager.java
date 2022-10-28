@@ -72,7 +72,7 @@ public class Manager extends Account
       wasSet = true;
       museumManagementSystem = aMuseumManagementSystem;
       return wasSet;
-    }
+}
     else
     {
       return wasSet;

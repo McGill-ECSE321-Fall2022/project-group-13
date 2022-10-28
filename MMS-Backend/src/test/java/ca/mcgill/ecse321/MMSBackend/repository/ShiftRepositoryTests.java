@@ -18,9 +18,10 @@ import ca.mcgill.ecse321.MMSBackend.dao.ShiftRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.SpecificWeekDayRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.Shift;
+import ca.mcgill.ecse321.MMSBackend.model.Shift.DayType;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
-import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
-import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
+// import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
+// import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -81,27 +82,19 @@ public class ShiftRepositoryTests {
         // Save the employee in the database
         employeeRepository.save(employee);
 
-        // Create a Specific Week Day 
-        SpecificWeekDay weekDay = new SpecificWeekDay();
-        Boolean weekDayIsClosed = false;
-        DayType type = DayType.Friday;
-
-        weekDay.setIsClosed(weekDayIsClosed);
-        weekDay.setDayType(type);
-        weekDay.setMuseumManagementSystem(mms);
-        
-        // Save the specific week day in the database
-        weekDayRepository.save(weekDay);
-
         //  Create a shift 
         Shift shift = new Shift();
         Time startTime = Time.valueOf("9:00:00");
         Time endTime = Time.valueOf("17:00:00");
+        DayType type = DayType.Friday;
+        Boolean dayIsClosed = false;
+
 
         shift.setStartTime(startTime);
         shift.setEndTime(endTime);
+        shift.setIsActive(dayIsClosed);
+        shift.setDayType(type);
         shift.setEmployee(employee);
-        shift.setDayOfTheWeek(weekDay);
         shift.setMuseumManagementSystem(mms);
 
         // Save the shift in the database
@@ -116,7 +109,6 @@ public class ShiftRepositoryTests {
         // Set shift, employee and weekDay to null 
         shift = null;
         employee = null;
-        weekDay = null;
         mms = null;
 
         // get the shift from the database
@@ -143,12 +135,6 @@ public class ShiftRepositoryTests {
         assertEquals(employeePassword, shift.getEmployee().getPassword());
         assertNotNull(shift.getEmployee().getMuseumManagementSystem());
         assertEquals(shift.getMuseumManagementSystem(), shift.getEmployee().getMuseumManagementSystem());
-
-        assertNotNull(shift.getDayOfTheWeek());
-        assertEquals(type, shift.getDayOfTheWeek().getDayType());
-        assertEquals(weekDayIsClosed, shift.getDayOfTheWeek().getIsClosed());
-        assertNotNull(shift.getDayOfTheWeek().getMuseumManagementSystem());
-        assertEquals(shift.getMuseumManagementSystem(), shift.getDayOfTheWeek().getMuseumManagementSystem());
 
     }
 }

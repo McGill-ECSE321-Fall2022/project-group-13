@@ -58,8 +58,6 @@ public class MuseumManagementSystem
   private List<Room> rooms;
   @OneToMany(mappedBy="museumManagementSystem")
   private List<Ticket> tickets;
-  @OneToMany(mappedBy="museumManagementSystem")
-  private List<SpecificWeekDay> weekDays;
 
   //------------------------
   // CONSTRUCTOR
@@ -74,35 +72,7 @@ public class MuseumManagementSystem
     artifacts = new ArrayList<Artifact>();
     rooms = new ArrayList<Room>();
     tickets = new ArrayList<Ticket>();
-    weekDays = new ArrayList<SpecificWeekDay>();
   }
-
-  // public MuseumManagementSystem(int aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, Manager aManager)
-  // {
-  //   name = aName;
-  //   openTime = aOpenTime;
-  //   closeTime = aCloseTime;
-  //   maxLoanNumber = aMaxLoanNumber;
-  //   ticketFee = aTicketFee;
-  //   if (!setSystemId(aSystemId))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate systemId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   if (aManager == null || aManager.getMuseumManagementSystem() != null)
-  //   {
-  //     throw new RuntimeException("Unable to create MuseumManagementSystem due to aManager. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   manager = aManager;
-  //   employees = new ArrayList<Employee>();
-  //   clients = new ArrayList<Client>();
-  //   shifts = new ArrayList<Shift>();
-  //   loanRequests = new ArrayList<LoanRequest>();
-  //   donationRequests = new ArrayList<DonationRequest>();
-  //   artifacts = new ArrayList<Artifact>();
-  //   rooms = new ArrayList<Room>();
-  //   tickets = new ArrayList<Ticket>();
-  //   weekDays = new ArrayList<SpecificWeekDay>();
-  // }
 
   // public MuseumManagementSystem(int aSystemId, String aName, Time aOpenTime, Time aCloseTime, int aMaxLoanNumber, double aTicketFee, String aUsernameForManager, String aNameForManager, String aPasswordForManager)
   // {
@@ -124,7 +94,6 @@ public class MuseumManagementSystem
   //   artifacts = new ArrayList<Artifact>();
   //   rooms = new ArrayList<Room>();
   //   tickets = new ArrayList<Ticket>();
-  //   weekDays = new ArrayList<SpecificWeekDay>();
   // }
 
   //------------------------
@@ -472,36 +441,6 @@ public class MuseumManagementSystem
   public int indexOfTicket(Ticket aTicket)
   {
     int index = tickets.indexOf(aTicket);
-    return index;
-  }
-  /* Code from template association_GetMany */
-  public SpecificWeekDay getWeekDay(int index)
-  {
-    SpecificWeekDay aWeekDay = weekDays.get(index);
-    return aWeekDay;
-  }
-
-  public List<SpecificWeekDay> getWeekDays()
-  {
-    List<SpecificWeekDay> newWeekDays = Collections.unmodifiableList(weekDays);
-    return newWeekDays;
-  }
-
-  public int numberOfWeekDays()
-  {
-    int number = weekDays.size();
-    return number;
-  }
-
-  public boolean hasWeekDays()
-  {
-    boolean has = weekDays.size() > 0;
-    return has;
-  }
-
-  public int indexOfWeekDay(SpecificWeekDay aWeekDay)
-  {
-    int index = weekDays.indexOf(aWeekDay);
     return index;
   }
   /* Code from template association_MinimumNumberOfMethod */
@@ -1080,95 +1019,6 @@ public class MuseumManagementSystem
     }
     return wasAdded;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfWeekDays()
-  {
-    return 0;
-  }
-  /* Code from template association_MaximumNumberOfMethod */
-  public static int maximumNumberOfWeekDays()
-  {
-    return 7;
-  }
-  // /* Code from template association_AddOptionalNToOne */
-  // public SpecificWeekDay addWeekDay(boolean aIsClosed, SpecificWeekDay.DayType aDayType)
-  // {
-  //   if (numberOfWeekDays() >= maximumNumberOfWeekDays())
-  //   {
-  //     return null;
-  //   }
-  //   else
-  //   {
-  //     return new SpecificWeekDay(aIsClosed, aDayType, this);
-  //   }
-  // }
-
-  public boolean addWeekDay(SpecificWeekDay aWeekDay)
-  {
-    boolean wasAdded = false;
-    if (weekDays.contains(aWeekDay)) { return false; }
-    if (numberOfWeekDays() >= maximumNumberOfWeekDays())
-    {
-      return wasAdded;
-    }
-
-    MuseumManagementSystem existingMuseumManagementSystem = aWeekDay.getMuseumManagementSystem();
-    boolean isNewMuseumManagementSystem = existingMuseumManagementSystem != null && !this.equals(existingMuseumManagementSystem);
-    if (isNewMuseumManagementSystem)
-    {
-      aWeekDay.setMuseumManagementSystem(this);
-    }
-    else
-    {
-      weekDays.add(aWeekDay);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeWeekDay(SpecificWeekDay aWeekDay)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aWeekDay, as it must always have a museumManagementSystem
-    if (!this.equals(aWeekDay.getMuseumManagementSystem()))
-    {
-      weekDays.remove(aWeekDay);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addWeekDayAt(SpecificWeekDay aWeekDay, int index)
-  {  
-    boolean wasAdded = false;
-    if(addWeekDay(aWeekDay))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfWeekDays()) { index = numberOfWeekDays() - 1; }
-      weekDays.remove(aWeekDay);
-      weekDays.add(index, aWeekDay);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveWeekDayAt(SpecificWeekDay aWeekDay, int index)
-  {
-    boolean wasAdded = false;
-    if(weekDays.contains(aWeekDay))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfWeekDays()) { index = numberOfWeekDays() - 1; }
-      weekDays.remove(aWeekDay);
-      weekDays.add(index, aWeekDay);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addWeekDayAt(aWeekDay, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
@@ -1233,13 +1083,6 @@ public class MuseumManagementSystem
       Ticket aTicket = tickets.get(tickets.size() - 1);
       aTicket.delete();
       tickets.remove(aTicket);
-    }
-    
-    while (weekDays.size() > 0)
-    {
-      SpecificWeekDay aWeekDay = weekDays.get(weekDays.size() - 1);
-      aWeekDay.delete();
-      weekDays.remove(aWeekDay);
     }
     
   }

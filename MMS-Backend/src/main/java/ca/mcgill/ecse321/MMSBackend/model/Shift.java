@@ -18,6 +18,12 @@ public class Shift
 {
 
   //------------------------
+  // ENUMERATIONS
+  //------------------------
+
+  public enum DayType { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+
+  //------------------------
   // STATIC VARIABLES
   //------------------------
 
@@ -32,12 +38,10 @@ public class Shift
   private int shiftId;
   private Time startTime;
   private Time endTime;
+  private DayType dayType;
+  private boolean isActive;
 
   //Shift Associations
-  @ManyToOne(optional=false)
-  private SpecificWeekDay dayOfTheWeek;
-  @ManyToOne(optional=false)
-  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
   @ManyToOne(optional=false)
   private Employee employee;
@@ -46,17 +50,15 @@ public class Shift
   // CONSTRUCTOR
   //------------------------
 
-  // public Shift(int aShiftId, Time aStartTime, Time aEndTime, SpecificWeekDay aDayOfTheWeek, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
+  // public Shift(int aShiftId, Time aStartTime, Time aEndTime, DayType aDayType, boolean aIsActive, MuseumManagementSystem aMuseumManagementSystem, Employee aEmployee)
   // {
   //   startTime = aStartTime;
   //   endTime = aEndTime;
+  //   dayType = aDayType;
+  //   isActive = aIsActive;
   //   if (!setShiftId(aShiftId))
   //   {
   //     throw new RuntimeException("Cannot create due to duplicate shiftId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   if (!setDayOfTheWeek(aDayOfTheWeek))
-  //   {
-  //     throw new RuntimeException("Unable to create Shift due to aDayOfTheWeek. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
   //   }
   //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
   //   if (!didAddMuseumManagementSystem)
@@ -108,6 +110,22 @@ public class Shift
     return wasSet;
   }
 
+  public boolean setDayType(DayType aDayType)
+  {
+    boolean wasSet = false;
+    dayType = aDayType;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setIsActive(boolean aIsActive)
+  {
+    boolean wasSet = false;
+    isActive = aIsActive;
+    wasSet = true;
+    return wasSet;
+  }
+
   public int getShiftId()
   {
     return shiftId;
@@ -132,10 +150,20 @@ public class Shift
   {
     return endTime;
   }
-  /* Code from template association_GetOne */
-  public SpecificWeekDay getDayOfTheWeek()
+
+  public DayType getDayType()
   {
-    return dayOfTheWeek;
+    return dayType;
+  }
+
+  public boolean getIsActive()
+  {
+    return isActive;
+  }
+  /* Code from template attribute_IsBoolean */
+  public boolean isIsActive()
+  {
+    return isActive;
   }
   /* Code from template association_GetOne */
   public MuseumManagementSystem getMuseumManagementSystem()
@@ -146,17 +174,6 @@ public class Shift
   public Employee getEmployee()
   {
     return employee;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setDayOfTheWeek(SpecificWeekDay aNewDayOfTheWeek)
-  {
-    boolean wasSet = false;
-    if (aNewDayOfTheWeek != null)
-    {
-      dayOfTheWeek = aNewDayOfTheWeek;
-      wasSet = true;
-    }
-    return wasSet;
   }
   /* Code from template association_SetOneToMany */
   public boolean setMuseumManagementSystem(MuseumManagementSystem aMuseumManagementSystem)
@@ -192,7 +209,6 @@ public class Shift
   public void delete()
   {
     shiftsByShiftId.remove(getShiftId());
-    dayOfTheWeek = null;
     MuseumManagementSystem placeholderMuseumManagementSystem = museumManagementSystem;
     this.museumManagementSystem = null;
     if(placeholderMuseumManagementSystem != null)
@@ -206,10 +222,11 @@ public class Shift
   public String toString()
   {
     return super.toString() + "["+
-            "shiftId" + ":" + getShiftId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "shiftId" + ":" + getShiftId()+ "," +
+            "isActive" + ":" + getIsActive()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "dayOfTheWeek = "+(getDayOfTheWeek()!=null?Integer.toHexString(System.identityHashCode(getDayOfTheWeek())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "dayType" + "=" + (getDayType() != null ? !getDayType().equals(this)  ? getDayType().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "museumManagementSystem = "+(getMuseumManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getMuseumManagementSystem())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "employee = "+(getEmployee()!=null?Integer.toHexString(System.identityHashCode(getEmployee())):"null");
   }
