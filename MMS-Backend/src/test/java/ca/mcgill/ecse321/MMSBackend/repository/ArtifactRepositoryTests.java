@@ -92,6 +92,7 @@ public class ArtifactRepositoryTests {
         artifact.setIsDamaged(aIsDamaged);
         artifact.setLoanFee(aLoanFee);
         artifact.setLoanStatus(status);
+        artifact.setRoomLocation(room);
 
         // Save the artifact to the database
         artifactRepository.save(artifact);
@@ -106,7 +107,6 @@ public class ArtifactRepositoryTests {
         // Make the variables null
         mms = null;
         artifact = null;
-        room = null;
         
         // Get artifact from database
         artifact = artifactRepository.findArtifactByArtifactId(artifactId);
@@ -120,7 +120,6 @@ public class ArtifactRepositoryTests {
         assertEquals(image, artifact.getImage());
         assertEquals(description, artifact.getDescription());
         assertEquals(worth, artifact.getWorth());
-        assertEquals(room, artifact.getRoomLocation());
         assertEquals(aIsDamaged, artifact.getIsDamaged());
         assertEquals(aLoanFee, artifact.getLoanFee());
         assertEquals(status, artifact.getLoanStatus());
