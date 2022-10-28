@@ -1,8 +1,5 @@
 package ca.mcgill.ecse321.MMSBackend.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.sql.Time;
 
 import org.junit.jupiter.api.AfterEach;
@@ -12,31 +9,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.ManagerRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.model.Manager;
+import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class ManagerRepositoryTests {
+public class EmployeeRepositoryTest {
 
     @Autowired
     private MuseumManagementSystemRepository mmsRepository;
 
     @Autowired
-    private ManagerRepository managerRepository;
+    private EmployeeRepository employeeRepository;
     
-
     @AfterEach
     public void clearDatabase() {
-        // Delete the manager first to avoid violating not-null constraints
-        managerRepository.deleteAll(); 
+        // Delete the employee first to avoid violating not-null constraints
+        employeeRepository.deleteAll(); 
         mmsRepository.deleteAll();
     }
 
     @Test
-    public void testManagerRepository() {
+    public void testEmployeeRepository() {
+        
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
         String museumName = "Marwan's MMS";
@@ -51,47 +51,51 @@ public class ManagerRepositoryTests {
         mms.setCloseTime(closeTime);
         mms.setMaxLoanNumber(maxLoanNumber);
         mms.setTicketFee(ticketFee);
-
+    
         // Saving the museum anagement system to the db 
         mmsRepository.save(mms);
 
-        // Creating a manager
-        Manager manager = new Manager(); 
-        String username = "MarwanManager"; 
-        String name = "Marwan Kanaan"; 
-        String password = "ecse321";
+        // Creating a employees
+        Employee employee = new Employee(); 
+        String username = "LucyZhang"; 
+        String name = "Lucy Zhang"; 
+        String password = "ecse223";
+        
+        employee.setUsername(username); 
+        employee.setName(name);
+        employee.setPassword(password);
+        employee.setMuseumManagementSystem(mms); 
 
-        manager.setUsername(username); 
-        manager.setName(name);
-        manager.setPassword(password); 
-
-
+    
         // Saving the manager to the database 
-        managerRepository.save(manager); 
+        employeeRepository.save(employee); 
 
         //  Getting ids of Manager and mms 
-        String managerUsername = manager.getUsername(); 
+        String employeeUsername = employee.getUsername(); 
         int museumID = mms.getSystemId(); 
 
         // Make the variables null 
         mms = null; 
-        manager = null; 
+        employee = null; 
 
+        
         // Fetching information from the database 
-        manager = managerRepository.findManagerByUsername(managerUsername);
+        employee = employeeRepository.findEmployeeByUsername(employeeUsername);
 
         // Checking for existence of manager and valid username 
-        assertNotNull(manager);
-        assertEquals(managerUsername, manager.getUsername()); 
-
+        assertNotNull(employee);
+        assertEquals(employeeUsername, employee.getUsername()); 
+        
         //  Checking for proper connection between museum and manager 
-        assertNotNull(manager.getMuseumManagementSystem());
-        assertEquals(museumID, manager.getMuseumManagementSystem().getSystemId());
-        assertEquals(name, manager.getMuseumManagementSystem().getName());
-        assertEquals(openTime, manager.getMuseumManagementSystem().getOpenTime());
-        assertEquals(closeTime, manager.getMuseumManagementSystem().getCloseTime());
-        assertEquals(maxLoanNumber, manager.getMuseumManagementSystem().getMaxLoanNumber());
-        assertEquals(ticketFee, manager.getMuseumManagementSystem().getTicketFee());
+        assertNotNull(employee.getMuseumManagementSystem());
+        assertEquals(museumID, employee.getMuseumManagementSystem().getSystemId());
+        assertEquals(museumName, employee.getMuseumManagementSystem().getName());
+        assertEquals(openTime, employee.getMuseumManagementSystem().getOpenTime());
+        assertEquals(closeTime, employee.getMuseumManagementSystem().getCloseTime());
+        assertEquals(maxLoanNumber, employee.getMuseumManagementSystem().getMaxLoanNumber());
+        assertEquals(ticketFee, employee.getMuseumManagementSystem().getTicketFee());
 
     }
+
 }
+    
