@@ -17,6 +17,9 @@ import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * @author Nikolas Pasichnik
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ClientRepositoryTests {

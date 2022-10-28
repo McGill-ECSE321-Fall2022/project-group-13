@@ -21,6 +21,9 @@ import ca.mcgill.ecse321.MMSBackend.model.Room;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact.LoanStatus;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
+/**
+ * @author Nazia Chowdhury
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ArtifactRepositoryTests {
