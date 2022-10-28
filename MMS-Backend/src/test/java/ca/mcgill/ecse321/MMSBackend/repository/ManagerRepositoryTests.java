@@ -39,7 +39,7 @@ public class ManagerRepositoryTests {
     public void testManagerRepository() {
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String museumName = "Marwan's MMS";
+        String museumName = "Manager's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;

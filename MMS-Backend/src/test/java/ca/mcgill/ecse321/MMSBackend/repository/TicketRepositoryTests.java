@@ -49,7 +49,7 @@ public class TicketRepositoryTests {
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
 
-        String name = "M's MMS";
+        String name = "Tickets MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
@@ -67,9 +67,9 @@ public class TicketRepositoryTests {
 
         // Create a client
         Client client = new Client();
-        String username = "Test Client";
-        String clientName = "ClientFirstName ClientLastName";
-        String clientPassword = "IamTestClient";
+        String username = "Ticket Client";
+        String clientName = "Ticket ClientLastName";
+        String clientPassword = "TicketClient";
         int currentLoanNumber = 2;
 
         // Set the attributes of the client

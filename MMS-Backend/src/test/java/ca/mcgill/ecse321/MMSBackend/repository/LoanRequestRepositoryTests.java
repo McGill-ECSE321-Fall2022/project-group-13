@@ -59,7 +59,7 @@ public class LoanRequestRepositoryTests {
 
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String name = "MMS";
+        String name = "Loan's MMS";
         Time openTime = Time.valueOf("8:00:00");
         Time closeTime = Time.valueOf("16:00:00");
         int maxLoanNumber = 5;
@@ -105,7 +105,7 @@ public class LoanRequestRepositoryTests {
 
         // Create a client
         Client client = new Client();
-        String username = "Test Client";
+        String username = "Loan Client";
         String clientName = "ClientName ClientLastName";
         String clientPassword = "IamClient";
         int currentLoanNumber = 1;

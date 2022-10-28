@@ -59,7 +59,7 @@ public class DonationRequestRepositoryTests {
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
 
-        String mmsName = "Marwan's MMS";
+        String mmsName = "Donation's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
@@ -106,7 +106,7 @@ public class DonationRequestRepositoryTests {
 
         // Create a client
         Client client = new Client();
-        String username = "client1";
+        String username = "Donationuse";
         String clientName = "Leonardo Da Vinci";
         String clientPassword = "123456";
         int currentLoanNumber = 1;

@@ -39,7 +39,7 @@ public class RoomRepositoryTests {
 
         MuseumManagementSystem mms = new MuseumManagementSystem();
 
-        String name = "MK's MMS";
+        String name = "Room's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;

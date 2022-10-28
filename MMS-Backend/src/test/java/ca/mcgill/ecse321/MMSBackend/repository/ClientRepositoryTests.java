@@ -38,7 +38,7 @@ public class ClientRepositoryTests {
 
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String museumName = "Marwan's MMS";
+        String museumName = "Client's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
@@ -56,9 +56,9 @@ public class ClientRepositoryTests {
 
         // Creating a employees
         Client client = new Client(); 
-        String username = "XoeyZhang"; 
-        String name = "Xoey Zhang"; 
-        String password = "ecse223";
+        String username = "ClientZhang"; 
+        String name = "Client Zhang"; 
+        String password = "clientpass";
         
         client.setUsername(username); 
         client.setName(name);

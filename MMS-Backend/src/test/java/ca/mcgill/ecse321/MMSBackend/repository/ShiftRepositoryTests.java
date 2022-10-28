@@ -42,9 +42,9 @@ public class ShiftRepositoryTests {
         // Delete the shiftRepository first to avoid violating not-null constraint
         shiftRepository.deleteAll();
 
-        // delete the employeeRepository and weekDayRepository   
+        // delete the employeeRepository and weekDayRepository  
+        weekDayRepository.deleteAll(); 
         employeeRepository.deleteAll();
-        weekDayRepository.deleteAll();
         mmsRepository.deleteAll();
     }
 
@@ -52,7 +52,7 @@ public class ShiftRepositoryTests {
     public void testPersistAndLoadShift(){
         // Create a museum management system 
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String mmsName = "Marwan's MMS";
+        String mmsName = "Shift's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
@@ -69,9 +69,9 @@ public class ShiftRepositoryTests {
 
         // Create an Employee
         Employee employee = new Employee();
-        String employeeUsername = "CoolUsername";
-        String employeeName = "Lucy Zhang";
-        String employeePassword = "654321";
+        String employeeUsername = "ShiftUsername";
+        String employeeName = "Shift Zhang";
+        String employeePassword = "ShiftPass";
 
         employee.setUsername(employeeUsername);
         employee.setName(employeeName);

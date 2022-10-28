@@ -39,7 +39,7 @@ public class EmployeeRepositoryTest {
         
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String museumName = "Marwan's MMS";
+        String museumName = "Employee's MMS";
         Time openTime = Time.valueOf("9:00:00");
         Time closeTime = Time.valueOf("17:00:00");
         int maxLoanNumber = 5;
@@ -57,9 +57,9 @@ public class EmployeeRepositoryTest {
 
         // Creating a employees
         Employee employee = new Employee(); 
-        String username = "XoeyZhang"; 
-        String name = "Xoey Zhang"; 
-        String password = "ecse223";
+        String username = "EmployeeZhang"; 
+        String name = "Employee Zhang"; 
+        String password = "employee223";
         
         employee.setUsername(username); 
         employee.setName(name);

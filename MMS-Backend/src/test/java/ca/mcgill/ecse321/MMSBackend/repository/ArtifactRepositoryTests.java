@@ -46,7 +46,7 @@ public class ArtifactRepositoryTests {
     public void testPersistAndLoadArtifact() {
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
-        String museumName = "MMS";
+        String museumName = "Artifact's MMS";
         Time openTime = Time.valueOf("8:00:00");
         Time closeTime = Time.valueOf("16:00:00");
         int maxLoanNumber = 5;
