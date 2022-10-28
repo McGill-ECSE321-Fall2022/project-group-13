@@ -18,6 +18,9 @@ import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
 import java.sql.Time;
 
+/**
+ * @author Mona Kalaoun (m-kln)
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class RoomRepositoryTests {
@@ -37,6 +40,7 @@ public class RoomRepositoryTests {
     @Test
     public void testPersistAndLoadRoom(){
 
+        //create a new museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
 
         String name = "Room's MMS";
@@ -51,6 +55,7 @@ public class RoomRepositoryTests {
         mms.setMaxLoanNumber(maxLoanNumber);
         mms.setTicketFee(ticketFee);
 
+        //save mms
         mmsRepository.save(mms);
 
         //Create a room
@@ -64,16 +69,21 @@ public class RoomRepositoryTests {
 
         room.setMuseumManagementSystem(mms);
 
+        //save room
         room = roomRepository.save(room);
-        int id = room.getRoomId();
 
+        //get id for room and mms
+        Integer id = room.getRoomId();
         Integer mmsId = mms.getSystemId();
 
+        //set mms and room to null to test
         mms = null;
         room = null;
 
+        //read room from database
         room = roomRepository.findRoomByRoomId(id);
 
+        //assertions check
         assertNotNull(room);
         assertEquals(roomName, room.getName());
         assertEquals(type, room.getType());
