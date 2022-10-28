@@ -115,7 +115,7 @@ public class ArtifactRepositoryTests {
         assertNotNull(artifact);
 
         // Check if that artifact has the correct attributes
-        assertEquals(artifact, artifact.getArtifactId());
+        assertEquals(artifactId, artifact.getArtifactId());
         assertEquals(artifactName, artifact.getName());
         assertEquals(image, artifact.getImage());
         assertEquals(description, artifact.getDescription());
