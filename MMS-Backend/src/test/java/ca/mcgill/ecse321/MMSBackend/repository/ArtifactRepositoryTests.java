@@ -44,7 +44,7 @@ public class ArtifactRepositoryTests {
 
     @Test
     public void testPersistAndLoadArtifact() {
-         // Create a museum management system
+        // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
         String museumName = "MMS";
         Time openTime = Time.valueOf("8:00:00");
@@ -120,7 +120,6 @@ public class ArtifactRepositoryTests {
         assertEquals(image, artifact.getImage());
         assertEquals(description, artifact.getDescription());
         assertEquals(worth, artifact.getWorth());
-        assertEquals(mms, artifact.getMuseumManagementSystem());
         assertEquals(room, artifact.getRoomLocation());
         assertEquals(aIsDamaged, artifact.getIsDamaged());
         assertEquals(aLoanFee, artifact.getLoanFee());
