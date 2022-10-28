@@ -31,7 +31,7 @@ public class MuseumManagementSystemRepositoryTests {
     }
 
     @Test
-    public void testPersistAndLoadDonationRequest() {
+    public void testPersistAndLoadMMS() {
 
         // Create a museum management system
         MuseumManagementSystem mms = new MuseumManagementSystem();
