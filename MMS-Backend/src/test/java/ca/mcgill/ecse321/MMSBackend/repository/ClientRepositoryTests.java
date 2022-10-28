@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.model.Employee;
+import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,24 +19,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class EmployeeRepositoryTest {
-
+public class ClientRepositoryTests {
     @Autowired
     private MuseumManagementSystemRepository mmsRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private ClientRepository clientRepository;
     
     @AfterEach
     public void clearDatabase() {
-        // Delete the employee first to avoid violating not-null constraints
-        employeeRepository.deleteAll(); 
+        // Delete the client first to avoid violating not-null constraints
+        clientRepository.deleteAll(); 
         mmsRepository.deleteAll();
     }
 
     @Test
-    public void testEmployeeRepository() {
-        
+    public void testClientRepository(){
+
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
         String museumName = "Marwan's MMS";
@@ -56,46 +55,41 @@ public class EmployeeRepositoryTest {
         mmsRepository.save(mms);
 
         // Creating a employees
-        Employee employee = new Employee(); 
+        Client client = new Client(); 
         String username = "XoeyZhang"; 
         String name = "Xoey Zhang"; 
         String password = "ecse223";
         
-        employee.setUsername(username); 
-        employee.setName(name);
-        employee.setPassword(password);
-        employee.setMuseumManagementSystem(mms); 
+        client.setUsername(username); 
+        client.setName(name);
+        client.setPassword(password);
+        client.setMuseumManagementSystem(mms); 
 
-    
         // Saving the manager to the database 
-        employeeRepository.save(employee); 
+        clientRepository.save(client); 
 
         //  Getting ids of Manager and mms 
-        String employeeUsername = employee.getUsername(); 
+        String clientUsername = client.getUsername(); 
         int museumID = mms.getSystemId(); 
 
         // Make the variables null 
         mms = null; 
-        employee = null; 
+        client = null; 
 
-        
         // Fetching information from the database 
-        employee = employeeRepository.findEmployeeByUsername(employeeUsername);
+        client = clientRepository.findClientByUsername(clientUsername);
 
         // Checking for existence of manager and valid username 
-        assertNotNull(employee);
-        assertEquals(employeeUsername, employee.getUsername()); 
+        assertNotNull(client);
+        assertEquals(clientUsername, client.getUsername()); 
         
         //  Checking for proper connection between museum and manager 
-        assertNotNull(employee.getMuseumManagementSystem());
-        assertEquals(museumID, employee.getMuseumManagementSystem().getSystemId());
-        assertEquals(museumName, employee.getMuseumManagementSystem().getName());
-        assertEquals(openTime, employee.getMuseumManagementSystem().getOpenTime());
-        assertEquals(closeTime, employee.getMuseumManagementSystem().getCloseTime());
-        assertEquals(maxLoanNumber, employee.getMuseumManagementSystem().getMaxLoanNumber());
-        assertEquals(ticketFee, employee.getMuseumManagementSystem().getTicketFee());
-
+        assertNotNull(client.getMuseumManagementSystem());
+        assertEquals(museumID, client.getMuseumManagementSystem().getSystemId());
+        assertEquals(museumName, client.getMuseumManagementSystem().getName());
+        assertEquals(openTime, client.getMuseumManagementSystem().getOpenTime());
+        assertEquals(closeTime, client.getMuseumManagementSystem().getCloseTime());
+        assertEquals(maxLoanNumber, client.getMuseumManagementSystem().getMaxLoanNumber());
+        assertEquals(ticketFee, client.getMuseumManagementSystem().getTicketFee());
     }
-
 }
-    
