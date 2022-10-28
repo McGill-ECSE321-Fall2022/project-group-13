@@ -22,6 +22,7 @@ import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Room;
+import ca.mcgill.ecse321.MMSBackend.model.DonationRequest.DonationStatus;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
 @ExtendWith(SpringExtension.class)
@@ -119,6 +120,8 @@ public class DonationRequestRepositoryTests {
 
         // Create a donation request
         DonationRequest donationRequest = new DonationRequest();
+        DonationStatus status = DonationStatus.Pending;
+        donationRequest.setStatus(status);
         donationRequest.setArtifact(artifact);
         donationRequest.setClient(client);
         donationRequest.setMuseumManagementSystem(mms);
@@ -148,6 +151,7 @@ public class DonationRequestRepositoryTests {
         // Assert values
         assertNotNull(donationRequest);
         assertEquals(donationRequestId, donationRequest.getRequestId());
+        assertEquals(status, donationRequest.getStatus());
 
         assertNotNull(donationRequest.getArtifact());
         assertEquals(artifactId, donationRequest.getArtifact().getArtifactId());
