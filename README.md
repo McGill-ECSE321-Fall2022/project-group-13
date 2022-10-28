@@ -14,9 +14,9 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 | Yu An Lu | yu-an-lu             |
 | Mona Kalaoun  | m-kln             |
 
-## Effort Table 
+## Effort Table For Deliverable 1
 
-| Name          | Deliverable 1 - Total Hours | Deliverable 2 - Total Hours | Deliverable 3 - Total Hours |
+| Name          | Deliverable 1 - Total Hours | Deliverable 1 - Total Hours | Deliverable 3 - Total Hours |
 | ------------- | --------------- |--------------- |--------------- |
 | Nazia Chowdhury ||||
 | Samantha Perez Hoffman||||
@@ -26,4 +26,4 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 | Lucy Zhang ||||
 
 ## Project reports
-[Project Deliverable 1](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Sprint-1#meeting-minutes)
+[Project Deliverable 1](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-1-Report#meeting-minutes)
