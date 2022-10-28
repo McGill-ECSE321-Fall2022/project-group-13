@@ -68,7 +68,7 @@ public class Manager extends Account
   public boolean setMuseumManagementSystem(MuseumManagementSystem aMuseumManagementSystem)
   {
     boolean wasSet = false;
-    if (museumManagementSystem != null && aMuseumManagementSystem != null) {
+    if (museumManagementSystem == null && aMuseumManagementSystem != null) {
       wasSet = true;
       museumManagementSystem = aMuseumManagementSystem;
       return wasSet;
