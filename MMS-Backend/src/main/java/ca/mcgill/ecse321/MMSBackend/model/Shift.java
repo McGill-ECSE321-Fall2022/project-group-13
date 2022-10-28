@@ -42,6 +42,8 @@ public class Shift
   private boolean isActive;
 
   //Shift Associations
+  @ManyToOne(optional = false)
+  @JoinColumn(name="museum_fk")
   private MuseumManagementSystem museumManagementSystem;
   @ManyToOne(optional=false)
   private Employee employee;

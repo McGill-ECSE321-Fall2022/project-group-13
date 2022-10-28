@@ -44,20 +44,20 @@ public class Room
   // CONSTRUCTOR
   //------------------------
 
-  public Room(String aName, RoomType aType, int aRoomId, MuseumManagementSystem aMuseumManagementSystem)
-  {
-    name = aName;
-    type = aType;
-    if (!setRoomId(aRoomId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate roomId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
-    if (!didAddMuseumManagementSystem)
-    {
-      throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
+  // public Room(String aName, RoomType aType, int aRoomId, MuseumManagementSystem aMuseumManagementSystem)
+  // {
+  //   name = aName;
+  //   type = aType;
+  //   if (!setRoomId(aRoomId))
+  //   {
+  //     throw new RuntimeException("Cannot create due to duplicate roomId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+  //   }
+  //   boolean didAddMuseumManagementSystem = setMuseumManagementSystem(aMuseumManagementSystem);
+  //   if (!didAddMuseumManagementSystem)
+  //   {
+  //     throw new RuntimeException("Unable to create room due to museumManagementSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+  //   }
+  // }
 
   //------------------------
   // INTERFACE

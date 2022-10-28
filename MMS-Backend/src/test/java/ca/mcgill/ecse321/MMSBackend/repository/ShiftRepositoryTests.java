@@ -15,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.ShiftRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.SpecificWeekDayRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.Shift;
 import ca.mcgill.ecse321.MMSBackend.model.Shift.DayType;
@@ -33,9 +32,6 @@ public class ShiftRepositoryTests {
     private EmployeeRepository employeeRepository; 
 
     @Autowired
-    private SpecificWeekDayRepository weekDayRepository;
-
-    @Autowired
     private ShiftRepository shiftRepository;
 
     @AfterEach
@@ -44,7 +40,6 @@ public class ShiftRepositoryTests {
         shiftRepository.deleteAll();
 
         // delete the employeeRepository and weekDayRepository  
-        weekDayRepository.deleteAll(); 
         employeeRepository.deleteAll();
         mmsRepository.deleteAll();
     }
