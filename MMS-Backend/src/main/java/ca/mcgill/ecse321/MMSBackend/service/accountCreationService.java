@@ -152,6 +152,33 @@ public class accountCreationService {
 
     }
 
+    @Transactional
+    public boolean signInManagerAccount(String username, String password){
+
+        // Checking if an manager with that username exists 
+        if (managerRepository.existsById(username)){
+
+            // Getting manager with the username 
+            Manager manager = managerRepository.findManagerByUsername(username); 
+
+            // Case where the password is correct, manager is signed in
+            if (manager.getPassword().equals(password)){
+                return true; 
+            }
+            
+            // Case where the password is incorrect, manager is not signed in 
+            else{
+                return false; 
+            }
+        }
+
+        // Case where a manager with said username doesn't exist
+        else{
+            return false;
+        }
+
+    }
+
     // toList helper method (@author eventRegistration authors) 
 
     private <T> List<T> toList(Iterable<T> iterable){
