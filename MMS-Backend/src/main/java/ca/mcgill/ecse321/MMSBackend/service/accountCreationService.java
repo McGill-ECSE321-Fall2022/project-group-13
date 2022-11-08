@@ -17,7 +17,7 @@ import ca.mcgill.ecse321.MMSBackend.model.Manager;
 
 
 @Service 
-public class accountCreationService {
+public class AccountCreationService {
 
     @Autowired
     ClientRepository clientRepository; 
@@ -26,8 +26,11 @@ public class accountCreationService {
     @Autowired
     ManagerRepository managerRepository; 
 
-    // Create account methods 
-
+    /**
+     * Create a Manager account 
+     * @param - Username: string that will be used as the unique identifier of the account 
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
 	public Manager createManager(String username) {
 		Manager manager = new Manager();
@@ -36,6 +39,11 @@ public class accountCreationService {
 		return manager;
 	}
 
+    /**
+     * Create a Client account 
+     * @param - Username: string that will be used as the unique identifier of the account 
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
 	public Client createClient(String username) {
 		Client client = new Client();
@@ -44,6 +52,11 @@ public class accountCreationService {
 		return client;
 	}
 
+    /**
+     * Create a Emlpoyee account 
+     * @param - Username: string that will be used as the unique identifier of the account 
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
     public Employee createEmployee(String username) { 
         Employee employee = new Employee(); 
@@ -51,53 +64,85 @@ public class accountCreationService {
         employeeRepository.save(employee); 
         return employee; 
     }
-
-    // Get account methods 
-
+    
+    /**
+     * get a Manager account 
+     * @param - Username: string that will be used to locate the account associated to that unique ID  
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
 	public Manager getManager(String username) {
 		Manager manager = managerRepository.findManagerByUsername(username);
 		return manager;
 	}
 
+    /**
+     * get a Client account 
+     * @param - Username: string that will be used to locate the account associated to that unique ID  
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
 	public Client getClient(String username) {
 		Client client = clientRepository.findClientByUsername(username);
 		return client;
 	}
 
+    /**
+     * get an Employee account 
+     * @param - Username: string that will be used to locate the account associated to that unique ID  
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
 	public Employee getEmployee(String username) {
 		Employee employee = employeeRepository.findEmployeeByUsername(username);
 		return employee;
 	}
 
-    // Get account list methods 
-    
+
+    /**
+     * get a list of all Client accounts 
+     * @author - Nikolas Pasichnik 
+     */
 	@Transactional
 	public List<Client> getAllClients() {
 		return toList(clientRepository.findAll());
 	}
 
+    /**
+     * get a list of all Employee accounts
+     * @author - Nikolas Pasichnik 
+     */
 	@Transactional
 	public List<Employee> getAllEmployees() {
 		return toList(employeeRepository.findAll());
 	}
 
-    // Delete account
-
+    /**
+     * delete an Employee account 
+     * @param - Username: string that will be used to locate the account associated to that unique ID  
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
     public void deleteEmployee(String username){
         employeeRepository.deleteById(username);   
     }
 
+    /**
+     * delete a Client account 
+     * @param - Username: string that will be used to locate the account associated to that unique ID  
+     * @author - Nikolas Pasichnik 
+     */
     @Transactional
     public void deleteClient(String username){
         clientRepository.deleteById(username);   
     }
 
-    // Signing in accounts (NOT SURE)
-
+    /**
+     * Signing into an Client account 
+     * @param username - String that will be used to locate the account associated to that unique ID  
+     * @param password - String that is used to verify that it is the correct client signing in 
+     * @return - false if failed to sign in, true if succesfully signed in
+     */
     @Transactional
     public boolean signInClientAccount(String username, String password){
 
@@ -125,6 +170,12 @@ public class accountCreationService {
 
     }
 
+    /**
+     * Signing into an Employee account 
+     * @param username - String that will be used to locate the account associated to that unique ID  
+     * @param password - String that is used to verify that it is the correct employee signing in 
+     * @return - false if failed to sign in, true if succesfully signed in
+     */
     @Transactional
     public boolean signInEmployeeAccount(String username, String password){
 
@@ -152,6 +203,12 @@ public class accountCreationService {
 
     }
 
+    /**
+     * Signing into a manager account 
+     * @param username - String that will be used to locate the account associated to that unique ID  
+     * @param password - String that is used to verify that it is in fact the manager signing in 
+     * @return - false if failed to sign in, true if succesfully signed in
+     */
     @Transactional
     public boolean signInManagerAccount(String username, String password){
 
@@ -179,8 +236,11 @@ public class accountCreationService {
 
     }
 
-    // toList helper method (@author eventRegistration authors) 
-
+    /**
+     * Helper method to create a list of type T
+     * @param - iterable: An iterable object of type T 
+     * @author - EventRegistration Authors  
+     */
     private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
