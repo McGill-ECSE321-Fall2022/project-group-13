@@ -19,6 +19,15 @@ import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Room;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact.LoanStatus;
 
+/**
+ * @author Yu An Lu (yu-an-lu)
+ * The DonationRequestService class implements the use case based on the requirement:
+ * 
+ * “FREQ09: The museum management system shall allow clients to make an artifact donation request to the museum 
+ * by recording the name of the artifact, a picture, a description, the worth and allow the manager and the employees 
+ * to modify the donation request status from pending to either approved or rejected.”
+ * 
+ */
 @Service
 public class DonationRequestService {
 
@@ -34,12 +43,13 @@ public class DonationRequestService {
     MuseumManagementSystemRepository mmsRepository;
 
     /**
-     * Create a donation request
+     * Creates an artifact to be donated
      * 
      * @param artifactId
      * @param roomId
      * @param clientId
-     * @return
+     * @return artifact object
+     * 
      */
     @Transactional
     public Artifact createArtifact(String name, String image, String description, boolean isDamaged, Double worth, MuseumManagementSystem mms) {
@@ -55,18 +65,36 @@ public class DonationRequestService {
         return artifact;
     }
 
+    /**
+     * Gets a single client by its username
+     * @param username
+     * @return client object
+     * 
+     */
     @Transactional
     public Client getClient(String username){
         Client client = clientRepository.findClientByUsername(username);
         return client;
     }
 
+    /**
+     * Gets a single room by its id to store/display the donated artifact
+     * @param roomId
+     * @return room object
+     * 
+     */
     @Transactional
     public Room getRoom(int roomId){
         Room room = roomRepository.findRoomByRoomId(roomId);
         return room;
     }
 
+    /**
+     * Gets all rooms registered in the specific museum
+     * @param systemId
+     * @return a list of room objects
+     * 
+     */
     @Transactional
     public List<Room> getAllRoomsBySystem(int systemId){
         List<Room> rooms = new ArrayList<Room>();
@@ -78,12 +106,26 @@ public class DonationRequestService {
         return rooms;
     }
     
+    /**
+     * Gets the museum management system by its id
+     * @param systemId
+     * @return museum management system object
+     * 
+     */
     @Transactional
     public MuseumManagementSystem getMuseumManagementSystem(int systemId){
         MuseumManagementSystem mms = mmsRepository.findMuseumManagementSystemBySystemId(systemId);
         return mms;
     }
 
+    /**
+     * Creates a donation request pending for approval
+     * @param client
+     * @param artifact
+     * @param mms
+     * @return donation request object
+     * 
+     */
     @Transactional
     public DonationRequest createDonationRequest(Client client, Artifact artifact, MuseumManagementSystem mms) {
         DonationRequest donationRequest = new DonationRequest();
@@ -96,6 +138,14 @@ public class DonationRequestService {
         return donationRequest;
     }
 
+    /**
+     * Approves a donation request and stores the donated artifact in the specified room
+     * @param requestId
+     * @param room
+     * @param loanStatus
+     * @param loanFee
+     * @return donation request object
+     */
     @Transactional
     public DonationRequest approveDonationRequest(int requestId, Room room, LoanStatus loanStatus, double loanFee) {
         DonationRequest donationRequest = null;
@@ -116,24 +166,42 @@ public class DonationRequestService {
         return donationRequest;
     }
 
+    /**
+     * Rejects a donation request
+     * @param requestId
+     * @return donation request object
+     * 
+     */
     @Transactional
     public DonationRequest rejectDonationRequest(int requestId) {
         DonationRequest donationRequest = null;
         if (donationRequestRepository.existsById(requestId)) {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             donationRequest.setStatus(DonationRequest.DonationStatus.Rejected);
-            
+
             donationRequestRepository.save(donationRequest);
         }
         
         return donationRequest;
     }
 
+    /**
+     * Gets a donation request by its id
+     * @param requestId
+     * @return donation request object
+     * 
+     */
     @Transactional
     public DonationRequest getDonationRequest(int requestId) {
         return donationRequestRepository.findDonationRequestByRequestId(requestId);
     }
 
+    /**
+     * Gets all donation requests registered in the specific museum
+     * @param systemId
+     * @return a list of donation request objects
+     * 
+     */
     @Transactional
     public List<DonationRequest> getAllDonationRequestsBySystem(int systemId) {
         List<DonationRequest> donationRequests = new ArrayList<DonationRequest>();
@@ -145,17 +213,30 @@ public class DonationRequestService {
         return donationRequests;
     }
 
+    /**
+     * Gets all donation requests registered in the specified museum by its status
+     * @param systemId
+     * @param status
+     * @return a list of donation request objects
+     * 
+     */
     @Transactional
-    public List<DonationRequest> getAllDonationRequestsByStatus(DonationRequest.DonationStatus status) {
+    public List<DonationRequest> getAllDonationRequestsByStatus(DonationRequest.DonationStatus status, int systemId) {
         List<DonationRequest> donationRequestsByStatus = new ArrayList<DonationRequest>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
-            if (donationRequest.getStatus().equals(status)) {
+            if (donationRequest.getStatus().equals(status) && donationRequest.getMuseumManagementSystem().getSystemId() == systemId) {
                 donationRequestsByStatus.add(donationRequest);
             }
         }
         return donationRequestsByStatus;
     }
 
+    /**
+     * Gets all donation requests registered by its client
+     * @param client
+     * @return a list of donation request objects
+     * 
+     */
     @Transactional
     public List<DonationRequest> getAllDonationRequestsByClient(Client client) {
         List<DonationRequest> donationRequestsByClient = new ArrayList<DonationRequest>();
