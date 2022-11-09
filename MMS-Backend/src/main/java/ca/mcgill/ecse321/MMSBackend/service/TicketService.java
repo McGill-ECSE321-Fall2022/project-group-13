@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
@@ -13,6 +15,8 @@ public class TicketService {
 
     @Autowired
     TicketRepository ticketRepository;
+
+    ClientRepository clientRepository;
 
     /**
      * Create ticket
@@ -102,18 +106,26 @@ public class TicketService {
     /**
      * Get all tickets by client
      */
-    public List<Ticket> getAllTicketsByClient(Client client){
+    public List<Ticket> getAllTicketsByClient(String clientUsername){
         
-        List<Ticket> ticketsByClient = new ArrayList<>();
-        Iterable<Ticket> tickets = ticketRepository.findAll();
-        
-        for(Ticket ticket : tickets){
-            if(ticket.getClient().equals(client)){
-                ticketsByClient.add(ticket);
-            }
-        }
+        Client client = clientRepository.findClientByUsername(clientUsername); 
 
-        return ticketsByClient;
+        if(client == null) {
+            throw new IllegalArgumentException("Client does not exist");
+        }else{
+
+            List<Ticket> ticketsByClient = new ArrayList<>();
+            Iterable<Ticket> tickets = ticketRepository.findAll();
+            
+            for(Ticket ticket : tickets){
+                if(ticket.getClient().equals(client)){
+                    ticketsByClient.add(ticket);
+                }
+            }
+
+            return ticketsByClient;
+
+        }
     }
 
 }
