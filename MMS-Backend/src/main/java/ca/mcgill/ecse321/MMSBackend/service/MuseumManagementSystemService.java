@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.MMSBackend.service;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -154,6 +156,35 @@ public class MuseumManagementSystemService {
         storageRoom.setMuseumManagementSystem(museumManagementSystem);
         roomRepository.save(storageRoom);
 
+    }
+
+    /**
+     * Gets a single room by its id to store/display the donated artifact
+     * @param roomId
+     * @return room object
+     * 
+     */
+    @Transactional
+    public Room getRoom(int roomId){
+        Room room = roomRepository.findRoomByRoomId(roomId);
+        return room;
+    }
+
+    /**
+     * Gets all rooms registered in the specific museum
+     * @param systemId
+     * @return a list of room objects
+     * 
+     */
+    @Transactional
+    public List<Room> getAllRoomsBySystem(int systemId){
+        List<Room> rooms = new ArrayList<Room>();
+        for (Room room : roomRepository.findAll()){
+            if (room.getMuseumManagementSystem().getSystemId() == systemId){
+                rooms.add(room);
+            }
+        }
+        return rooms;
     }
 
 }
