@@ -27,6 +27,10 @@ public class LoanRequestService {
     LoanRequestRepository loanRequestRepository;
     @Autowired
     ArtifactRepository artifactRepository;
+    @Autowired
+    ClientRepository clientRepository;
+    @Autowired
+    MuseumManagementSystemRepository mmsRepository;
 
     /**
      * Creates a loan request pending for approval
@@ -34,10 +38,10 @@ public class LoanRequestService {
      * @param fee
      * @param artifact
      * @param client
-     * @param mms
+     * @param systemId
      */
     @Transactional
-    public LoanRequest createLoanRequest(int loanDuration, double fee, Artifact artifact, Client client, MuseumManagementSystem mms){
+    public LoanRequest createLoanRequest(int loanDuration, double fee, Artifact artifact, Client client, int systemId){
         LoanRequest loanRequest;
         if (artifact.getLoanStatus().equals(Artifact.LoanStatus.Available)){
             loanRequest = new LoanRequest();
@@ -46,10 +50,10 @@ public class LoanRequestService {
             loanRequest.setLoanDuration(loanDuration);
             loanRequest.setFee(fee);
             loanRequest.setStatus(LoanRequest.LoanStatus.Pending);
-            loanRequest.setMuseumManagementSystem(mms);
+            loanRequest.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(systemId));
             loanRequestRepository.save(loanRequest);
         } else {
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Artifact cannot be loaned.");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request cannot be created.");
         }
         return loanRequest;
     }
@@ -102,6 +106,23 @@ public class LoanRequestService {
     }
 
     /**
+     * Gets all loan requests than can be approved/rejected
+     * @param systemId
+     * @return a list of loan request objects for a specific client than can be approved/rejected
+     */
+    @Transactional
+    public List<LoanRequest> getAllLoanRequestsThatCanBeApprovedOrRejected(int systemId) {
+        List<LoanRequest> loanRequestsByStatus = new ArrayList<LoanRequest>();
+        for (LoanRequest loanRequest : loanRequestRepository.findAll()) {
+            if (loanRequest.getStatus().equals(LoanRequest.LoanStatus.Pending) && loanRequest.getMuseumManagementSystem().getSystemId() == systemId
+                    && loanRequest.getClient().getCurrentLoanNumber() < 5) {
+                loanRequestsByStatus.add(loanRequest);
+            }
+        }
+        return loanRequestsByStatus;
+    }
+
+    /**
      * Gets all loan requests registered by its client
      * @param client
      * @return a list of loan request objects
@@ -130,12 +151,19 @@ public class LoanRequestService {
             // Approving loan request
             loanRequest = loanRequestRepository.findLoanRequestByRequestId(requestId);
             Artifact artifact = loanRequest.getArtifact();
+            Client client = loanRequest.getClient();
 
-            artifact.setLoanStatus(Artifact.LoanStatus.Unavailable);
-            loanRequest.setStatus(LoanRequest.LoanStatus.Approved);
+            if (client.getCurrentLoanNumber() < 5){
+                loanRequest.setStatus(LoanRequest.LoanStatus.Approved);
+                artifact.setLoanStatus(Artifact.LoanStatus.Loaned);
+                client.setCurrentLoanNumber(client.getCurrentLoanNumber()+1);
 
-            artifactRepository.save(artifact);
-            loanRequestRepository.save(loanRequest);
+                loanRequestRepository.save(loanRequest);
+                artifactRepository.save(artifact);
+                clientRepository.save(client);
+            } else {
+                throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Client has reached maximum number of loans.");
+            }
         }
         return loanRequest;
     }
@@ -164,19 +192,22 @@ public class LoanRequestService {
      * @return loan request object
      */
     @Transactional
-    public LoanRequest returnLoanArtifact(Integer requestId){
+    public LoanRequest returnLoanedArtifact(Integer requestId){
         // Checking if loan request exists
         LoanRequest loanRequest=null;
         if (loanRequestRepository.existsById(requestId)){
             // Returned artifact
             loanRequest = loanRequestRepository.findLoanRequestByRequestId(requestId);
             Artifact artifact = loanRequest.getArtifact();
+            Client client = loanRequest.getClient();
 
-            artifact.setLoanStatus(Artifact.LoanStatus.Available);
             loanRequest.setStatus(LoanRequest.LoanStatus.Returned);
+            artifact.setLoanStatus(Artifact.LoanStatus.Available);
+            client.setCurrentLoanNumber(client.getCurrentLoanNumber()-1);
 
-            artifactRepository.save(artifact);
             loanRequestRepository.save(loanRequest);
+            artifactRepository.save(artifact);
+            clientRepository.save(client);
         }
         return loanRequest;
     }

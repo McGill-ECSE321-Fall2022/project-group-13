@@ -213,4 +213,18 @@ public class MuseumManagementSystemService {
         return rooms;
     }
 
+    /**
+     * Set museum management system max loan number for clients
+     * @param museumManagementSystemId
+     */
+    @Transactional
+    public void setMaxLoanNumber(int museumManagementSystemId) {
+        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
+        if(museumManagementSystem == null) {
+            throw new IllegalArgumentException("Museum Management System does not exist");
+        } else {
+            museumManagementSystem.setMaxLoanNumber(5);
+            museumManagementSystemRepository.save(museumManagementSystem);
+        }
+    }
 }
