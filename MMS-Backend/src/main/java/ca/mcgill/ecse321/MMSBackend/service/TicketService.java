@@ -16,6 +16,7 @@ public class TicketService {
     @Autowired
     TicketRepository ticketRepository;
 
+    @Autowired
     ClientRepository clientRepository;
 
     /**
