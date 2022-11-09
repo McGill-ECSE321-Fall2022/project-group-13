@@ -26,6 +26,9 @@ public class MuseumManagementSystemService {
 
     /**
      * Create museum management system
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * 
      */
     @Transactional
     public MuseumManagementSystem createMuseumManagementSystem() {
@@ -40,7 +43,11 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Get museum management system
+     * Get museum management system through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystem
+     * 
      */
     @Transactional
     public MuseumManagementSystem getMuseumManagementSystem(int museumManagementSystemId) {
@@ -55,7 +62,10 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Delete museum management system
+     * Delete museum management system through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystem
      *
      */
     @Transactional
@@ -70,7 +80,10 @@ public class MuseumManagementSystemService {
     }
     
     /**
-     * Set museum management system name
+     * Set museum management system name through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystem, name
      *
      */
     @Transactional
@@ -86,6 +99,8 @@ public class MuseumManagementSystemService {
 
     /**
      * Get all museum management systems
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
      *
      */
     @Transactional
@@ -94,7 +109,11 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Set current museum ticket price
+     * Set current museum ticket price through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystemId, price
+     * 
      */
     @Transactional
     public void setMuseumTicketPrice(int museumManagementSystemId, double price) {
@@ -108,7 +127,10 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Get current museum ticket price
+     * Get current museum ticket price through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystemId
      */
     @Transactional
     public void getMuseumTicketPrice(int museumManagementSystemId) {
@@ -122,7 +144,11 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * create museum rooms
+     * Create museum rooms through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystemId
+     *
      */
     @Transactional
     public void createMuseumRooms(int museumManagementSystemId){

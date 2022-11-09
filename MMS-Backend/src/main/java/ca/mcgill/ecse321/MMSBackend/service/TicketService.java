@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
+import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
 
 public class TicketService {
@@ -19,11 +21,18 @@ public class TicketService {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    MuseumManagementSystemRepository museumManagementSystemRepository;
+
     /**
-     * Create ticket
+     * Create ticket for a client
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param clientUsername
      */
     @Transactional
-    public Ticket createTicket(Client client) {
+    public Ticket createTicket(String clientUsername) {
+        Client client = clientRepository.findClientByUsername(clientUsername);
         Ticket ticket = new Ticket();
         ticket.setFee(client.getMuseumManagementSystem().getTicketFee());
         ticket.setClient(client);
@@ -34,7 +43,11 @@ public class TicketService {
     }
 
     /**
-     * Get ticket
+     * Get ticket through id
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param ticketId
+     *
      *
      */
     @Transactional
@@ -52,6 +65,8 @@ public class TicketService {
 
     /**
      * Get all tickets
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
      */
     @Transactional
     public Iterable<Ticket> getAllTickets() {
@@ -59,7 +74,40 @@ public class TicketService {
     }
 
     /**
+     * Get all tickets for a specific museum
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param museumSystemId
+     *
+     */
+
+    public List<Ticket> getAllTicketsByMuseum(int museumSystemId){
+        
+        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumSystemId);
+
+        if(museumManagementSystem == null) {
+            throw new IllegalArgumentException("Museum management system does not exist");
+        }else{
+
+            List<Ticket> ticketsByMuseum = new ArrayList<>();
+            Iterable<Ticket> tickets = ticketRepository.findAll();
+            
+            for(Ticket ticket : tickets){
+                if(ticket.getMuseumManagementSystem().equals(museumManagementSystem)){
+                    ticketsByMuseum.add(ticket);
+                }
+            }
+
+            return ticketsByMuseum;
+
+        }
+    }
+
+    /**
      * Delete ticket
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param ticketId
      */
     @Transactional
     public void deleteTicket(int ticketId) {
@@ -75,6 +123,9 @@ public class TicketService {
 
     /**
      * Set ticket status
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param ticketId, status
      */
     @Transactional
     public void setTicketStatus(int ticketId, boolean status) {
@@ -90,6 +141,9 @@ public class TicketService {
 
     /**
      * Get ticket status
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param ticketId
      */
     @Transactional
     public void getTicketStatus(int ticketId) {
@@ -106,6 +160,9 @@ public class TicketService {
 
     /**
      * Get all tickets by client
+     * 
+     * @Author : Lucy Zhang (Lucy-Zh)
+     * @param clientUsername
      */
     public List<Ticket> getAllTicketsByClient(String clientUsername){
         
