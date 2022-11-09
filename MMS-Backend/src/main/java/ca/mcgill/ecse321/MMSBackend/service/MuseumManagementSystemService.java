@@ -7,9 +7,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
+import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Room;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
@@ -55,7 +57,7 @@ public class MuseumManagementSystemService {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if(museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
         }else{
             return museumManagementSystem;
         }
@@ -73,7 +75,7 @@ public class MuseumManagementSystemService {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
     
         if(museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
         }else{
             museumManagementSystemRepository.delete(museumManagementSystem);
         }
@@ -91,7 +93,7 @@ public class MuseumManagementSystemService {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
         
         if(museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
         }else{
             museumManagementSystem.setName(name);
         }
@@ -120,7 +122,7 @@ public class MuseumManagementSystemService {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
         
         if(museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
         }else{
             museumManagementSystem.setTicketFee(price);
         }
@@ -137,7 +139,7 @@ public class MuseumManagementSystemService {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
        
         if(museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
         }else{
             museumManagementSystem.getTicketFee();;
         }

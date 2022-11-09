@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.MMSBackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
+import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
@@ -32,6 +34,11 @@ public class TicketService {
      */
     @Transactional
     public Ticket createTicket(String clientUsername) {
+
+        if (clientUsername.equals("") || clientUsername.contains(" ")) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
+        }
+
         Client client = clientRepository.findClientByUsername(clientUsername);
         Ticket ticket = new Ticket();
         ticket.setFee(client.getMuseumManagementSystem().getTicketFee());
@@ -56,7 +63,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
 
         if(ticket == null) {
-            throw new IllegalArgumentException("Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
         }else{
             return ticket;
         }
@@ -69,8 +76,8 @@ public class TicketService {
      * @Author : Lucy Zhang (Lucy-Zh)
      */
     @Transactional
-    public Iterable<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
+    public List<Ticket> getAllTickets() {
+        return toList(ticketRepository.findAll());
     }
 
     /**
@@ -81,24 +88,24 @@ public class TicketService {
      *
      */
 
+    @Transactional
     public List<Ticket> getAllTicketsByMuseum(int museumSystemId){
         
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumSystemId);
 
         if(museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum management system does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
         }else{
 
-            List<Ticket> ticketsByMuseum = new ArrayList<>();
-            Iterable<Ticket> tickets = ticketRepository.findAll();
+            List<Ticket> tickets = getAllTickets();
             
             for(Ticket ticket : tickets){
-                if(ticket.getMuseumManagementSystem().equals(museumManagementSystem)){
-                    ticketsByMuseum.add(ticket);
+                if(!ticket.getMuseumManagementSystem().equals(museumManagementSystem)){
+                    tickets.remove(ticket);
                 }
             }
 
-            return ticketsByMuseum;
+            return tickets;
 
         }
     }
@@ -115,7 +122,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
 
         if(ticket == null) {
-            throw new IllegalArgumentException("Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
         }else{
             ticketRepository.delete(ticket);
         }
@@ -133,7 +140,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
         
         if(ticket == null) {
-            throw new IllegalArgumentException("Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
         }else{
             ticket.setIsActive(status);
         }
@@ -151,7 +158,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
 
         if(ticket == null) {
-            throw new IllegalArgumentException("Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
         }else{
             ticket.getIsActive();
         }
@@ -164,26 +171,38 @@ public class TicketService {
      * @Author : Lucy Zhang (Lucy-Zh)
      * @param clientUsername
      */
+
+    @Transactional
     public List<Ticket> getAllTicketsByClient(String clientUsername){
         
         Client client = clientRepository.findClientByUsername(clientUsername); 
 
         if(client == null) {
-            throw new IllegalArgumentException("Client does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
         }else{
 
-            List<Ticket> ticketsByClient = new ArrayList<>();
-            Iterable<Ticket> tickets = ticketRepository.findAll();
+            List<Ticket> tickets = getAllTickets();
             
             for(Ticket ticket : tickets){
-                if(ticket.getClient().equals(client)){
-                    ticketsByClient.add(ticket);
+                if(!ticket.getClient().equals(client)){
+                    tickets.remove(ticket);
                 }
             }
 
-            return ticketsByClient;
+            return tickets;
 
         }
+    }
+
+    /**
+     * toList helper method (@author eventRegistration authors)
+     */
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
     }
 
 }
