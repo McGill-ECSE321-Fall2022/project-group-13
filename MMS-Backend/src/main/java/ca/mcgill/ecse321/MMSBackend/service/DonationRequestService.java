@@ -17,7 +17,6 @@ import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Room;
-import ca.mcgill.ecse321.MMSBackend.model.Artifact.LoanStatus;
 
 /**
  * @author Yu An Lu (yu-an-lu)
@@ -65,58 +64,58 @@ public class DonationRequestService {
         return artifact;
     }
 
-    /**
-     * Gets a single client by its username
-     * @param username
-     * @return client object
-     * 
-     */
-    @Transactional
-    public Client getClient(String username){
-        Client client = clientRepository.findClientByUsername(username);
-        return client;
-    }
+    // /**
+    //  * Gets a single client by its username
+    //  * @param username
+    //  * @return client object
+    //  * 
+    //  */
+    // @Transactional
+    // public Client getClient(String username){
+    //     Client client = clientRepository.findClientByUsername(username);
+    //     return client;
+    // }
 
-    /**
-     * Gets a single room by its id to store/display the donated artifact
-     * @param roomId
-     * @return room object
-     * 
-     */
-    @Transactional
-    public Room getRoom(int roomId){
-        Room room = roomRepository.findRoomByRoomId(roomId);
-        return room;
-    }
+    // /**
+    //  * Gets a single room by its id to store/display the donated artifact
+    //  * @param roomId
+    //  * @return room object
+    //  * 
+    //  */
+    // @Transactional
+    // public Room getRoom(int roomId){
+    //     Room room = roomRepository.findRoomByRoomId(roomId);
+    //     return room;
+    // }
 
-    /**
-     * Gets all rooms registered in the specific museum
-     * @param systemId
-     * @return a list of room objects
-     * 
-     */
-    @Transactional
-    public List<Room> getAllRoomsBySystem(int systemId){
-        List<Room> rooms = new ArrayList<Room>();
-        for (Room room : roomRepository.findAll()){
-            if (room.getMuseumManagementSystem().getSystemId() == systemId){
-                rooms.add(room);
-            }
-        }
-        return rooms;
-    }
+    // /**
+    //  * Gets all rooms registered in the specific museum
+    //  * @param systemId
+    //  * @return a list of room objects
+    //  * 
+    //  */
+    // @Transactional
+    // public List<Room> getAllRoomsBySystem(int systemId){
+    //     List<Room> rooms = new ArrayList<Room>();
+    //     for (Room room : roomRepository.findAll()){
+    //         if (room.getMuseumManagementSystem().getSystemId() == systemId){
+    //             rooms.add(room);
+    //         }
+    //     }
+    //     return rooms;
+    // }
     
-    /**
-     * Gets the museum management system by its id
-     * @param systemId
-     * @return museum management system object
-     * 
-     */
-    @Transactional
-    public MuseumManagementSystem getMuseumManagementSystem(int systemId){
-        MuseumManagementSystem mms = mmsRepository.findMuseumManagementSystemBySystemId(systemId);
-        return mms;
-    }
+    // /**
+    //  * Gets the museum management system by its id
+    //  * @param systemId
+    //  * @return museum management system object
+    //  * 
+    //  */
+    // @Transactional
+    // public MuseumManagementSystem getMuseumManagementSystem(int systemId){
+    //     MuseumManagementSystem mms = mmsRepository.findMuseumManagementSystemBySystemId(systemId);
+    //     return mms;
+    // }
 
     /**
      * Creates a donation request pending for approval
@@ -147,15 +146,14 @@ public class DonationRequestService {
      * @return donation request object
      */
     @Transactional
-    public DonationRequest approveDonationRequest(int requestId, Room room, LoanStatus loanStatus, double loanFee) {
+    public DonationRequest approveDonationRequest(int requestId, Room room) {
         DonationRequest donationRequest = null;
         if (donationRequestRepository.existsById(requestId)) {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             Artifact artifact = donationRequest.getArtifact();
 
             artifact.setRoomLocation(room);
-            artifact.setLoanStatus(loanStatus);
-            artifact.setLoanFee(loanFee);
+            artifact.setLoanStatus(Artifact.LoanStatus.Unavailable);
 
             artifactRepository.save(artifact);
 
