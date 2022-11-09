@@ -14,10 +14,9 @@ import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.Manager;
 
-
-
-@Service 
+@Service
 public class AccountCreationService {
+    
 
     @Autowired
     ClientRepository clientRepository; 
