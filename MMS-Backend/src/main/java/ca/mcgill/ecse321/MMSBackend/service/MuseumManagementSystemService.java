@@ -259,6 +259,33 @@ public class MuseumManagementSystemService {
     }
 
     /**
+     * Get specificWeekDay by dayType
+     * 
+     * @Author : Samantha Perez Hoffman (samperezh)
+     * @param dayType
+     */
+    @Transactional
+    public SpecificWeekDay getSpecificWeekDayByDayType(DayType dayType) {
+        SpecificWeekDay specificWeekDay = specificWeekDayRepository.findSpecificWeekDayByDayType(dayType);
+        if(specificWeekDay == null) {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Specific Week Day does not exist.");
+        }
+        return specificWeekDay;
+    }
+
+    /**
+     * Get all specificWeekDays
+     * 
+     * @Author : Samantha Perez Hoffman (samperezh)
+     * @param dayType
+     */
+    @Transactional
+    public List<SpecificWeekDay> getAllSpecificWeekDays(){
+        return toList(specificWeekDayRepository.findAll());
+    }
+
+
+    /**
      * Helper method that creates the 7 specific week days of the museum management system
      * 
      * @Author : Samantha Perez Hoffman (samperezh)
@@ -344,5 +371,18 @@ public class MuseumManagementSystemService {
         storageRoom.setMuseumManagementSystem(museumManagementSystem);
         roomRepository.save(storageRoom);
     }
+
+
+    /**
+     * toList helper method (@author eventRegistration authors)
+     */
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
+    }
+
 
 }
