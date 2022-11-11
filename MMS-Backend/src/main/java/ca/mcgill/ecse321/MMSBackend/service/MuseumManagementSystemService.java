@@ -38,6 +38,11 @@ public class MuseumManagementSystemService {
      */
     @Transactional
     public MuseumManagementSystem createMuseumManagementSystem() {
+
+        if(museumManagementSystemRepository.count() == 1) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Museum Management System already exists");
+        }
+
         MuseumManagementSystem museumManagementSystem = new MuseumManagementSystem();
         museumManagementSystem.setName("Museum Management System Default Name");
         museumManagementSystem.setTicketFee(0.00);
@@ -114,13 +119,13 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Get all museum management systems
+     * Get museum management system
      * 
      * @Author : Lucy Zhang (Lucy-Zh)
      *
      */
     @Transactional
-    public Iterable<MuseumManagementSystem> getAllMuseumManagementSystems() {
+    public Iterable<MuseumManagementSystem> getMuseumManagementSystem() {
         return museumManagementSystemRepository.findAll();
     }
 
@@ -158,7 +163,6 @@ public class MuseumManagementSystemService {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
         } else {
             museumManagementSystem.getTicketFee();
-            ;
         }
     }
 
