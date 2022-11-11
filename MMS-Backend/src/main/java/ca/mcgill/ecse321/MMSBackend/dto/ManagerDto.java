@@ -7,6 +7,13 @@ public class ManagerDto {
     private String name;
     private String password;
     
+    // /**
+    //  * Empty constructor 
+    //  */
+    // public ManagerDto(){
+
+    // }
+
     /**
      * Constructor of a EmployeeDto
      * 
@@ -46,5 +53,23 @@ public class ManagerDto {
      */
     public String getPassword() {
         return password; 
+    }
+
+    /**
+     * Setter for the name
+     * 
+     * @param managerName
+     */
+    public void setName(String managerName) {
+        this.name = managerName; 
+    }
+
+    /**
+     * Setter for the password 
+     * 
+     * @param managerPassword
+     */
+    public void setPassword(String managerPassword) {
+        this.password = managerPassword; 
     }
 }

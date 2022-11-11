@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
+
 public class EmployeeDto {
 
     //Account Attributes
@@ -7,6 +8,14 @@ public class EmployeeDto {
     private String name;
     private String password;
     
+
+    // /**
+    //  * Empty Constructor 
+    //  */
+    // public EmployeeDto(){
+
+    // }
+
     /**
      * Constructor of a EmployeeDto
      * 
@@ -47,4 +56,23 @@ public class EmployeeDto {
     public String getPassword() {
         return password; 
     }
+
+    // /**
+    //  * Setter for the name
+    //  * 
+    //  * @param employeeName
+    //  */
+    // public void setName(String employeeName) {
+    //     this.name = employeeName; 
+    // }
+
+    // /**
+    //  * Setter for the password 
+    //  * 
+    //  * @param employeePassword
+    //  */
+    // public void setPassword(String employeePassword) {
+    //     this.password = employeePassword; 
+    // }
 }
+

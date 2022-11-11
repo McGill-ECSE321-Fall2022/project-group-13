@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
+
 public class ClientDto {
 
     //Account Attributes
@@ -7,6 +8,14 @@ public class ClientDto {
     private String name;
     private String password;
     private int currentLoanNumber;
+
+
+    // /**
+    //  * Empty Constructor 
+    //  */
+    // public ClientDto(){
+
+    // }
 
     /**
      * Constructor of a ClientDto
@@ -58,5 +67,32 @@ public class ClientDto {
     public int getCurrentLoanNumber() {
         return currentLoanNumber;
     }
+
+    // /**
+    //  * Setter for the loan number 
+    //  * 
+    //  * @param loanNumber
+    //  */
+    // public void setCurrentLoanNumber(int loanNumber){
+    //     this.currentLoanNumber = loanNumber; 
+    // }
+
+    // /**
+    //  * Setter for the name
+    //  * 
+    //  * @param clientName
+    //  */
+    // public void setName(String clientName) {
+    //     this.name = clientName; 
+    // }
+
+    // /**
+    //  * Setter for the password 
+    //  * 
+    //  * @param clientPassword
+    //  */
+    // public void setPassword(String clientPassword) {
+    //     this.password = clientPassword; 
+    // }
 
 }
