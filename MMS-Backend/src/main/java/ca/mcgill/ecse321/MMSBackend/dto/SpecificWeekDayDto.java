@@ -30,10 +30,6 @@ public class SpecificWeekDayDto {
         return isClosed;
     }
 
-    public void setIsClosed(boolean isClosed) {
-        this.isClosed = isClosed;
-    }
-
     public MuseumManagementSystemDto getMuseumManagementSystem() {
         return museumManagementSystem;
     }
