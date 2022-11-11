@@ -76,7 +76,7 @@ public class ArtifactService {
     @Transactional
     public List<Artifact> getAllArtifactsByRoomType(Room.RoomType r) {
         List<Artifact> all = toList(artifactRepository.findAll());
-        List<Artifact> result = null;
+        List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
             if(a.getRoomLocation().getType().equals(r)){
@@ -98,7 +98,7 @@ public class ArtifactService {
     @Transactional
     public List<Artifact> getAllArtifactsByRoomId(int roomId) {
         List<Artifact> all = toList(artifactRepository.findAll());
-        List<Artifact> result = null;
+        List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
             if(a.getRoomLocation().getRoomId() == roomId){
@@ -120,7 +120,7 @@ public class ArtifactService {
     @Transactional
     public List<Artifact> getAllArtifactsByLoanStatus(Artifact.LoanStatus status) {
         List<Artifact> all = toList(artifactRepository.findAll());
-        List<Artifact> result = null;
+        List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
             if(a.getLoanStatus().equals(status)){
@@ -142,7 +142,7 @@ public class ArtifactService {
     @Transactional
     public List<Artifact> getAllArtifactsByState(boolean state) {
         List<Artifact> all = toList(artifactRepository.findAll());
-        List<Artifact> result = null;
+        List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
             if(a.getIsDamaged() == state){
@@ -274,8 +274,6 @@ public class ArtifactService {
         Room r = roomRepository.findRoomByRoomId(roomId);
         if(r == null) throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "The room with id: " +
                 roomId + " was not found.");
-
-        Room.RoomType roomType = r.getType();
 
         int count = 0;
 
