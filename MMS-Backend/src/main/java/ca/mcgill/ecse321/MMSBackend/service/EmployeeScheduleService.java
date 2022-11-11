@@ -19,11 +19,12 @@ import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
 /**
  * @author Samantha Perez Hoffman (samaperezh)
- * The EmployeeScheduleService class implements the use case based on the requirement:
- * “FREQ04: The museum management system shall only allow the manager to
- *          update the opening hours, the list of working employees, their start
- *          and end times on a particular day as well as mark a certain day as
- *          closed.”
+ *         The EmployeeScheduleService class implements the use case based on
+ *         the requirement:
+ *         “FREQ04: The museum management system shall only allow the manager to
+ *         update the opening hours, the list of working employees, their start
+ *         and end times on a particular day as well as mark a certain day as
+ *         closed.”
  */
 @Service
 public class EmployeeScheduleService {
@@ -198,6 +199,7 @@ public class EmployeeScheduleService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values are not allowed!");
         }
 
+        // checks if newStartTime is after newEndTime
         if (newStartTime.after(newEndTime)) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Start time cannot be after end time.");
         }
@@ -263,6 +265,8 @@ public class EmployeeScheduleService {
 
         List<Shift> allShifts = getAllShiftsForDay(specificWeekDay.getDayType());
 
+        // checks if the user is trying to set a specificWeekDay as closed but there are
+        // shifts scheduled for that day.
         if ((!allShifts.isEmpty()) && isClosed) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST,
                     "Cannot close day with that has scheduled shifts.");
@@ -292,7 +296,6 @@ public class EmployeeScheduleService {
      * @param dayType
      */
     private boolean doesNewShiftOverlap(Shift newShift, DayType dayType) {
-        // check if employee already has shift that overlaps with updated shift
         Employee employee = newShift.getEmployee();
         Time newStartTime = newShift.getStartTime();
         Time newEndTime = newShift.getEndTime();

@@ -7,10 +7,10 @@ import java.sql.Time;
  */
 public class ShiftDto {
 
-   // private int shiftId; 
+    private int shiftId; 
     private Time startTime;
     private Time endTime;
-    private SpecificWeekDayDto specificWeekDay;
+    private SpecificWeekDayDto dayOfTheWeek;
     private MuseumManagementSystemDto museumManagementSystem;
     private EmployeeDto employee;
 
@@ -18,18 +18,18 @@ public class ShiftDto {
 
     }
 
-    public ShiftDto(Time startTime, Time endTime, SpecificWeekDayDto specificWeekDay, MuseumManagementSystemDto museumManagementSystem, EmployeeDto employee) {
-        //this.shiftId = shiftId;
+    public ShiftDto(int shiftId, Time startTime, Time endTime, SpecificWeekDayDto specificWeekDay, MuseumManagementSystemDto museumManagementSystem, EmployeeDto employee) {
+        this.shiftId = shiftId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.specificWeekDay = specificWeekDay;
+        this.dayOfTheWeek = specificWeekDay;
         this.museumManagementSystem = museumManagementSystem;
         this.employee = employee;
     }
 
-    // public int getShiftId() {
-    //     return shiftId;
-    // }
+    public int getShiftId() {
+        return shiftId;
+    }
 
     public Time getStartTime() {
         return startTime;
@@ -40,7 +40,7 @@ public class ShiftDto {
     }
 
     public SpecificWeekDayDto getSpecificWeekDay() {
-        return specificWeekDay;
+        return dayOfTheWeek;
     }
 
     public MuseumManagementSystemDto getMuseumManagementSystem() {
