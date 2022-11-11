@@ -45,10 +45,12 @@ public class DonationRequestService {
 
     /**
      * Creates an artifact to be donated
-     * 
-     * @param artifactId
-     * @param roomId
-     * @param clientId
+     * @param name
+     * @param image
+     * @param description
+     * @param isDamaged
+     * @param worth
+     * @param mms
      * @return artifact object
      * 
      */
@@ -96,8 +98,6 @@ public class DonationRequestService {
      * Approves a donation request and stores the donated artifact in the specified room
      * @param requestId
      * @param room
-     * @param loanStatus
-     * @param loanFee
      * @return donation request object
      */
     @Transactional
@@ -178,8 +178,8 @@ public class DonationRequestService {
 
     /**
      * Gets all donation requests registered in the specified museum by its status
-     * @param systemId
      * @param status
+     * @param systemId
      * @return a list of donation request objects
      * 
      */
@@ -207,7 +207,7 @@ public class DonationRequestService {
     public List<DonationRequest> getAllDonationRequestsByClient(Client client) {
         if (client == null)
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
-            
+
         List<DonationRequest> donationRequestsByClient = new ArrayList<DonationRequest>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
             if (donationRequest.getClient().equals(client)) {
