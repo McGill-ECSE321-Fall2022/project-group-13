@@ -53,7 +53,7 @@ public class ToDtoHelper {
      * @param client
      * @return
      */
-    private ClientDto convertToDto(Client client){
+    public ClientDto convertToDto(Client client){
         if (client == null) {
             throw new IllegalArgumentException("There is no such Client"); 
         }
@@ -68,7 +68,7 @@ public class ToDtoHelper {
      * @param manager
      * @return
      */
-    private ManagerDto convertToDto(Manager manager){
+    public ManagerDto convertToDto(Manager manager){
 
         if (manager == null) {
             throw new IllegalArgumentException("There is no such Manager"); 
@@ -84,7 +84,7 @@ public class ToDtoHelper {
      * @param employee
      * @return
      */
-    private EmployeeDto convertToDto(Employee employee){
+    public EmployeeDto convertToDto(Employee employee){
 
         if (employee == null) {
             throw new IllegalArgumentException("There is no such Employee"); 
