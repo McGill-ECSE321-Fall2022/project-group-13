@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.MMSBackend.dao.ArtifactRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.DonationRequestRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
@@ -36,12 +33,6 @@ public class DonationRequestService {
     DonationRequestRepository donationRequestRepository;
     @Autowired
     ArtifactRepository artifactRepository;
-    @Autowired
-    RoomRepository roomRepository;
-    @Autowired
-    ClientRepository clientRepository;
-    @Autowired
-    MuseumManagementSystemRepository mmsRepository;
 
     /**
      * Creates an artifact to be donated
@@ -160,37 +151,29 @@ public class DonationRequestService {
     }
 
     /**
-     * Gets all donation requests registered in the specific museum
-     * @param systemId
+     * Gets all donation requests
      * @return a list of donation request objects
      * 
      */
     @Transactional
-    public List<DonationRequest> getAllDonationRequestsBySystem(int systemId) {
-        List<DonationRequest> donationRequests = new ArrayList<DonationRequest>();
-        for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
-            if (donationRequest.getMuseumManagementSystem().getSystemId() == systemId) {
-                donationRequests.add(donationRequest);
-            }
-        }
-        return donationRequests;
+    public List<DonationRequest> getAllDonationRequests() {
+        return toList(donationRequestRepository.findAll());
     }
 
     /**
-     * Gets all donation requests registered in the specified museum by its status
+     * Gets all donation requests registered by its status
      * @param status
-     * @param systemId
      * @return a list of donation request objects
      * 
      */
     @Transactional
-    public List<DonationRequest> getAllDonationRequestsByStatus(DonationRequest.DonationStatus status, int systemId) {
+    public List<DonationRequest> getAllDonationRequestsByStatus(DonationRequest.DonationStatus status) {
         if (status == null)
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
 
         List<DonationRequest> donationRequestsByStatus = new ArrayList<DonationRequest>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
-            if (donationRequest.getStatus().equals(status) && donationRequest.getMuseumManagementSystem().getSystemId() == systemId) {
+            if (donationRequest.getStatus().equals(status)) {
                 donationRequestsByStatus.add(donationRequest);
             }
         }
@@ -216,5 +199,13 @@ public class DonationRequestService {
         }
         return donationRequestsByClient;
     }
+
+    private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+	}
 
 }
