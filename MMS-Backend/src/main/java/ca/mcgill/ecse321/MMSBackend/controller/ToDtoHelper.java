@@ -6,7 +6,7 @@ import ca.mcgill.ecse321.MMSBackend.dto.*;
 public class ToDtoHelper {
 
     //to be completed
-    public MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms){
+    public static MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms){
         if (mms == null) {
             throw new IllegalArgumentException("There is no such Museum Management System!");
         }
@@ -19,7 +19,7 @@ public class ToDtoHelper {
      * @param r
      * @return
      */
-    public RoomDto convertToDto(Room r){
+    public static RoomDto convertToDto(Room r){
         if (r == null) {
             throw new IllegalArgumentException("There is no such Room!");
         }
@@ -33,7 +33,7 @@ public class ToDtoHelper {
      * @param a
      * @return
      */
-    public ArtifactDto convertToDto(Artifact a) {
+    public static ArtifactDto convertToDto(Artifact a) {
         if (a == null) {
             throw new IllegalArgumentException("There is no such Artifact!");
         }
@@ -53,7 +53,7 @@ public class ToDtoHelper {
      * @param client
      * @return
      */
-    public ClientDto convertToDto(Client client){
+    public static ClientDto convertToDto(Client client){
         if (client == null) {
             throw new IllegalArgumentException("There is no such Client"); 
         }
@@ -68,7 +68,7 @@ public class ToDtoHelper {
      * @param manager
      * @return
      */
-    public ManagerDto convertToDto(Manager manager){
+    public static ManagerDto convertToDto(Manager manager){
 
         if (manager == null) {
             throw new IllegalArgumentException("There is no such Manager"); 
@@ -84,7 +84,7 @@ public class ToDtoHelper {
      * @param employee
      * @return
      */
-    public EmployeeDto convertToDto(Employee employee){
+    public static EmployeeDto convertToDto(Employee employee){
 
         if (employee == null) {
             throw new IllegalArgumentException("There is no such Employee"); 
