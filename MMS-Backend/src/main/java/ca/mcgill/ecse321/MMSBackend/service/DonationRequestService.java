@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.DonationRequestRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
+import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest;
@@ -64,59 +66,6 @@ public class DonationRequestService {
         return artifact;
     }
 
-    // /**
-    //  * Gets a single client by its username
-    //  * @param username
-    //  * @return client object
-    //  * 
-    //  */
-    // @Transactional
-    // public Client getClient(String username){
-    //     Client client = clientRepository.findClientByUsername(username);
-    //     return client;
-    // }
-
-    // /**
-    //  * Gets a single room by its id to store/display the donated artifact
-    //  * @param roomId
-    //  * @return room object
-    //  * 
-    //  */
-    // @Transactional
-    // public Room getRoom(int roomId){
-    //     Room room = roomRepository.findRoomByRoomId(roomId);
-    //     return room;
-    // }
-
-    // /**
-    //  * Gets all rooms registered in the specific museum
-    //  * @param systemId
-    //  * @return a list of room objects
-    //  * 
-    //  */
-    // @Transactional
-    // public List<Room> getAllRoomsBySystem(int systemId){
-    //     List<Room> rooms = new ArrayList<Room>();
-    //     for (Room room : roomRepository.findAll()){
-    //         if (room.getMuseumManagementSystem().getSystemId() == systemId){
-    //             rooms.add(room);
-    //         }
-    //     }
-    //     return rooms;
-    // }
-    
-    // /**
-    //  * Gets the museum management system by its id
-    //  * @param systemId
-    //  * @return museum management system object
-    //  * 
-    //  */
-    // @Transactional
-    // public MuseumManagementSystem getMuseumManagementSystem(int systemId){
-    //     MuseumManagementSystem mms = mmsRepository.findMuseumManagementSystemBySystemId(systemId);
-    //     return mms;
-    // }
-
     /**
      * Creates a donation request pending for approval
      * @param client
@@ -148,7 +97,7 @@ public class DonationRequestService {
     @Transactional
     public DonationRequest approveDonationRequest(int requestId, Room room) {
         DonationRequest donationRequest = null;
-        if (donationRequestRepository.existsById(requestId)) {
+        if (!donationRequestRepository.existsById(requestId)) {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             Artifact artifact = donationRequest.getArtifact();
 
@@ -160,6 +109,8 @@ public class DonationRequestService {
             donationRequest.setStatus(DonationRequest.DonationStatus.Approved);
 
             donationRequestRepository.save(donationRequest);
+        } else {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         }
         return donationRequest;
     }
@@ -178,6 +129,8 @@ public class DonationRequestService {
             donationRequest.setStatus(DonationRequest.DonationStatus.Rejected);
 
             donationRequestRepository.save(donationRequest);
+        } else {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         }
         
         return donationRequest;
@@ -191,6 +144,8 @@ public class DonationRequestService {
      */
     @Transactional
     public DonationRequest getDonationRequest(int requestId) {
+        if (!donationRequestRepository.existsById(requestId)) 
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         return donationRequestRepository.findDonationRequestByRequestId(requestId);
     }
 
