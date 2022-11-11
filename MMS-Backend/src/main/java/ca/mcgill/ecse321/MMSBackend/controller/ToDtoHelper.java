@@ -6,7 +6,7 @@ import ca.mcgill.ecse321.MMSBackend.dto.*;
 public class ToDtoHelper {
 
     //to be completed
-    private MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms){
+    public MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms){
         if (mms == null) {
             throw new IllegalArgumentException("There is no such Museum Management System!");
         }
@@ -19,7 +19,7 @@ public class ToDtoHelper {
      * @param r
      * @return
      */
-    private RoomDto convertToDto(Room r){
+    public RoomDto convertToDto(Room r){
         if (r == null) {
             throw new IllegalArgumentException("There is no such Room!");
         }
@@ -33,7 +33,7 @@ public class ToDtoHelper {
      * @param a
      * @return
      */
-    private ArtifactDto convertToDto(Artifact a) {
+    public ArtifactDto convertToDto(Artifact a) {
         if (a == null) {
             throw new IllegalArgumentException("There is no such Artifact!");
         }
