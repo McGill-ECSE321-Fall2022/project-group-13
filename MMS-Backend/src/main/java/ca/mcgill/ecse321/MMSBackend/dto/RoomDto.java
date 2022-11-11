@@ -8,9 +8,9 @@ import ca.mcgill.ecse321.MMSBackend.model.Room;
  */
 public class RoomDto {
 
-    public enum RoomType { Small, Large, Storage }
+    //public enum RoomType { Small, Large, Storage }
 
-    private RoomType type;
+    private Room.RoomType type;
     private String name;
     private MuseumManagementSystemDto museumManagementSystem;
 
@@ -18,7 +18,7 @@ public class RoomDto {
 
     }
 
-    public RoomDto(String name, RoomType type, MuseumManagementSystemDto museumManagementSystem){
+    public RoomDto(String name, Room.RoomType type, MuseumManagementSystemDto museumManagementSystem){
         this.name = name;
         this.type = type;
         this.museumManagementSystem = museumManagementSystem;
@@ -28,7 +28,7 @@ public class RoomDto {
         return name;
     }
 
-    public RoomType getType() {
+    public Room.RoomType getType() {
         return type;
     }
 

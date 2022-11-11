@@ -6,12 +6,12 @@ import ca.mcgill.ecse321.MMSBackend.model.Room;
 
 public class ArtifactDto {
 
-    public enum LoanStatus { Available, Unavailable, Loaned }
+    //public enum LoanStatus { Available, Unavailable, Loaned }
    // private int artifactId;
     private String name;
     private String image;
     private String description;
-    private LoanStatus loanStatus;
+    private Artifact.LoanStatus loanStatus;
     private boolean isDamaged;
     private double loanFee;
     private double worth;
@@ -22,7 +22,7 @@ public class ArtifactDto {
 
     }
 
-    public ArtifactDto(String name, String image, String description, LoanStatus loanStatus, boolean isDamaged, double
+    public ArtifactDto(String name, String image, String description, Artifact.LoanStatus loanStatus, boolean isDamaged, double
             loanFee, double worth, RoomDto roomLocation, MuseumManagementSystemDto museumManagementSystem){
         this.name = name;
         this.image = image;
@@ -47,7 +47,7 @@ public class ArtifactDto {
         return description;
     }
 
-    public LoanStatus getLoanStatus(){
+    public Artifact.LoanStatus getLoanStatus(){
         return loanStatus;
     }
 
