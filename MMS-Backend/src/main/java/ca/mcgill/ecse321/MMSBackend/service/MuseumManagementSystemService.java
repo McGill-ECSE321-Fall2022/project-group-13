@@ -41,8 +41,8 @@ public class MuseumManagementSystemService {
     @Transactional
     public MuseumManagementSystem createMuseumManagementSystem() {
 
-        if(museumManagementSystemRepository.count() == 1) {
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Museum Management System already exists");
+        if(museumManagementSystemRepository.count() != 0) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System already exists");
         }
 
         MuseumManagementSystem museumManagementSystem = new MuseumManagementSystem();
