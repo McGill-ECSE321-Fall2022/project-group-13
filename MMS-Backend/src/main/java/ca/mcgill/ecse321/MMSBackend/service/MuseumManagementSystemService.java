@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
@@ -19,6 +20,7 @@ import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
+@Service
 public class MuseumManagementSystemService {
 
     @Autowired
