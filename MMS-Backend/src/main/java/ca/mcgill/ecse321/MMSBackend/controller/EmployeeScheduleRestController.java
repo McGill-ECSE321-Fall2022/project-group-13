@@ -88,7 +88,7 @@ public class EmployeeScheduleRestController {
      * @param dayTypeDto
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = { "/shift", "/shift/" })
+    @DeleteMapping(value = { "/shift/day", "/shift/day/" })
     public void deleteAllShiftsForDay(@RequestParam(name = "dayType") DayTypeDto dayTypeDto)
             throws IllegalArgumentException {
         employeeScheduleService.deleteAllShiftsForDay(ToDtoHelper.convertToDomainObject(dayTypeDto));
@@ -101,7 +101,7 @@ public class EmployeeScheduleRestController {
      * @param employeeDto
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = { "/shift", "/shift/" })
+    @DeleteMapping(value = { "/shift/employee", "/shift/employee/" })
     public void deleteAllShiftsForEmployee(@RequestParam(name = "employee") EmployeeDto employeeDto)
             throws IllegalArgumentException {
         Employee employee = accountManagementService.getEmployee(employeeDto.getUsername());
@@ -132,7 +132,7 @@ public class EmployeeScheduleRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/shift", "/shift/" })
+    @GetMapping(value = { "/shift/employee", "/shift/employee/" })
     public List<ShiftDto> getAllShiftsForEmployee(@RequestParam(name = "employee") EmployeeDto employeeDto)
             throws IllegalArgumentException {
         Employee employee = accountManagementService.getEmployee(employeeDto.getUsername());
@@ -151,7 +151,7 @@ public class EmployeeScheduleRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/shift", "/shift/" })
+    @GetMapping(value = { "/shift/day", "/shift/day/" })
     public List<ShiftDto> getAllShiftsForDay(@RequestParam(name = "dayType") DayTypeDto dayTypeDto)
             throws IllegalArgumentException {
         DayType dayType = ToDtoHelper.convertToDomainObject(dayTypeDto);
@@ -172,7 +172,7 @@ public class EmployeeScheduleRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/shift/{shiftId}", "/shift/{shiftId}/" })
+    @PutMapping(value = { "/shift/times/{shiftId}", "/shift/times/{shiftId}/" })
     public ShiftDto updateShiftStartEndTime(@PathVariable("shiftId") int shiftId, @RequestParam Time startTime,
             @RequestParam Time endTime) throws IllegalArgumentException {
         Shift shift = employeeScheduleService.updateShiftStartEndTime(shiftId, startTime, endTime);
@@ -188,7 +188,7 @@ public class EmployeeScheduleRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/shift/{shiftId}", "/shift/{shiftId}/" })
+    @PutMapping(value = { "/shift/day/{shiftId}", "/shift/day/{shiftId}/" })
     public ShiftDto updateShiftDay(@PathVariable("shiftId") int shiftId,
             @RequestParam(name = "dayOfTheWeek") SpecificWeekDayDto specificWeekDayDto)
             throws IllegalArgumentException {
