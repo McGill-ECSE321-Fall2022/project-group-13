@@ -45,4 +45,53 @@ public class ToDtoHelper {
 
         return artifactDto;
     }
+
+    
+
+    /**
+     * @author Nikolas Pasichnik
+     * @param client
+     * @return
+     */
+    private ClientDto convertToDto(Client client){
+        if (client == null) {
+            throw new IllegalArgumentException("There is no such Client"); 
+        }
+
+        ClientDto clientDto = new ClientDto(client.getUsername(), client.getName(), client.getPassword(), client.getCurrentLoanNumber());
+        
+        return clientDto; 
+    }
+
+    /**
+     * @author Nikolas Pasichnik
+     * @param manager
+     * @return
+     */
+    private ManagerDto convertToDto(Manager manager){
+
+        if (manager == null) {
+            throw new IllegalArgumentException("There is no such Manager"); 
+        }
+
+        ManagerDto managerDto = new ManagerDto(manager.getUsername(), manager.getName(), manager.getPassword()); 
+
+        return managerDto; 
+    }
+
+    /**
+     * @author Nikolas Pasichnik
+     * @param employee
+     * @return
+     */
+    private EmployeeDto convertToDto(Employee employee){
+
+        if (employee == null) {
+            throw new IllegalArgumentException("There is no such Employee"); 
+        }
+
+        EmployeeDto employeeDto = new EmployeeDto(employee.getUsername(), employee.getName(), employee.getPassword()); 
+
+        return employeeDto; 
+    }
 }
