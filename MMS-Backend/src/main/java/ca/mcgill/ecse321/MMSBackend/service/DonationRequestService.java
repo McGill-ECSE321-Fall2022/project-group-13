@@ -53,7 +53,10 @@ public class DonationRequestService {
      * 
      */
     @Transactional
-    public Artifact createArtifact(String name, String image, String description, boolean isDamaged, Double worth, MuseumManagementSystem mms) {
+    public Artifact createArtifact(String name, String image, String description, boolean isDamaged, double worth, MuseumManagementSystem mms) {
+        if (name == null || image == null || description == null || mms == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+
         Artifact artifact = new Artifact();
         artifact.setName(name);
         artifact.setImage(image);
@@ -76,6 +79,9 @@ public class DonationRequestService {
      */
     @Transactional
     public DonationRequest createDonationRequest(Client client, Artifact artifact, MuseumManagementSystem mms) {
+        if (client == null || artifact == null || mms == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+
         DonationRequest donationRequest = new DonationRequest();
         donationRequest.setClient(client);
         donationRequest.setArtifact(artifact);
@@ -96,8 +102,11 @@ public class DonationRequestService {
      */
     @Transactional
     public DonationRequest approveDonationRequest(int requestId, Room room) {
+        if (room == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+
         DonationRequest donationRequest = null;
-        if (!donationRequestRepository.existsById(requestId)) {
+        if (donationRequestRepository.existsById(requestId)) {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             Artifact artifact = donationRequest.getArtifact();
 
@@ -146,6 +155,7 @@ public class DonationRequestService {
     public DonationRequest getDonationRequest(int requestId) {
         if (!donationRequestRepository.existsById(requestId)) 
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
+
         return donationRequestRepository.findDonationRequestByRequestId(requestId);
     }
 
@@ -175,6 +185,9 @@ public class DonationRequestService {
      */
     @Transactional
     public List<DonationRequest> getAllDonationRequestsByStatus(DonationRequest.DonationStatus status, int systemId) {
+        if (status == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+
         List<DonationRequest> donationRequestsByStatus = new ArrayList<DonationRequest>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
             if (donationRequest.getStatus().equals(status) && donationRequest.getMuseumManagementSystem().getSystemId() == systemId) {
@@ -192,6 +205,9 @@ public class DonationRequestService {
      */
     @Transactional
     public List<DonationRequest> getAllDonationRequestsByClient(Client client) {
+        if (client == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+            
         List<DonationRequest> donationRequestsByClient = new ArrayList<DonationRequest>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
             if (donationRequest.getClient().equals(client)) {
