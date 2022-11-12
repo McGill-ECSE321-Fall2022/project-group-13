@@ -252,8 +252,6 @@ public class MuseumManagementSystemService {
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
         }
-        museumManagementSystem.getOpenTime();
-        museumManagementSystem.getCloseTime();
         List<Time> openingHours = new ArrayList<Time>();
         openingHours.add(museumManagementSystem.getOpenTime());
         openingHours.add(museumManagementSystem.getCloseTime());
@@ -273,17 +271,6 @@ public class MuseumManagementSystemService {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Specific Week Day does not exist.");
         }
         return specificWeekDay;
-    }
-
-    /**
-     * Get all specificWeekDays
-     * 
-     * @author : Samantha Perez Hoffman (samperezh)
-     * @param dayType
-     */
-    @Transactional
-    public List<SpecificWeekDay> getAllSpecificWeekDays(){
-        return toList(specificWeekDayRepository.findAll());
     }
 
 
