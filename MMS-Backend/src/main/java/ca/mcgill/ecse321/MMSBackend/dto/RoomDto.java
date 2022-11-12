@@ -11,6 +11,7 @@ public class RoomDto {
     //public enum RoomType { Small, Large, Storage }
 
     private Room.RoomType type;
+    private int roomId;
     private String name;
     private MuseumManagementSystemDto museumManagementSystem;
 
@@ -18,10 +19,15 @@ public class RoomDto {
 
     }
 
-    public RoomDto(String name, Room.RoomType type, MuseumManagementSystemDto museumManagementSystem){
+    public RoomDto(int roomId, String name, Room.RoomType type, MuseumManagementSystemDto museumManagementSystem){
+        this.roomId = roomId;
         this.name = name;
         this.type = type;
         this.museumManagementSystem = museumManagementSystem;
+    }
+
+    public int getRoomId() {
+        return roomId;
     }
 
     public String getName() {
