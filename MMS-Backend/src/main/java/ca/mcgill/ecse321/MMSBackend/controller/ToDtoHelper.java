@@ -29,7 +29,7 @@ public class ToDtoHelper {
             throw new IllegalArgumentException("There is no such Room!");
         }
         MuseumManagementSystemDto systemDto = convertToDto(r.getMuseumManagementSystem());
-        RoomDto room = new RoomDto(r.getName(), r.getType(), systemDto);
+        RoomDto room = new RoomDto(r.getRoomId(), r.getName(), r.getType(), systemDto);
         return room;
     }
 
