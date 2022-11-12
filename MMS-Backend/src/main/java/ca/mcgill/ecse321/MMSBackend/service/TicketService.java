@@ -28,6 +28,8 @@ public class TicketService {
     @Autowired
     MuseumManagementSystemRepository museumManagementSystemRepository;
 
+    
+
     /**
      * Create ticket for a client
      * 
@@ -83,36 +85,6 @@ public class TicketService {
     }
 
     /**
-     * Get all tickets for a specific museum
-     * 
-     * @Author : Lucy Zhang (Lucy-Zh)
-     * @param museumSystemId
-     *
-     */
-
-    @Transactional
-    public List<Ticket> getAllTicketsByMuseum(int museumSystemId){
-        
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumSystemId);
-
-        if(museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
-        }else{
-
-            List<Ticket> tickets = getAllTickets();
-            
-            for(Ticket ticket : tickets){
-                if(!ticket.getMuseumManagementSystem().equals(museumManagementSystem)){
-                    tickets.remove(ticket);
-                }
-            }
-
-            return tickets;
-
-        }
-    }
-
-    /**
      * Delete ticket
      * 
      * @Author : Lucy Zhang (Lucy-Zh)
@@ -146,25 +118,6 @@ public class TicketService {
         }else{
             ticket.setIsActive(status);
         }
-    }
-
-    /**
-     * Get ticket status
-     * 
-     * @Author : Lucy Zhang (Lucy-Zh)
-     * @param ticketId
-     */
-    @Transactional
-    public void getTicketStatus(int ticketId) {
-
-        Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
-
-        if(ticket == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
-        }else{
-            ticket.getIsActive();
-        }
-     
     }
 
     /**
