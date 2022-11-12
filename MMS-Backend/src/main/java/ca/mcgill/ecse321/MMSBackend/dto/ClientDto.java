@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
+import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 public class ClientDto {
 
@@ -8,6 +9,7 @@ public class ClientDto {
     private String name;
     private String password;
     private int currentLoanNumber;
+    private MuseumManagementSystem MMS; 
 
 
     // /**
@@ -25,11 +27,12 @@ public class ClientDto {
      * @param password
      * @param currentLoanNumber
      */
-    public ClientDto(String username, String name, String password, int currentLoanNumber){
+    public ClientDto(String username, String name, String password, int currentLoanNumber, MuseumManagementSystem MMS){
         this.username = username; 
         this.name = name; 
         this.password = password; 
         this.currentLoanNumber = currentLoanNumber; 
+        this.MMS = MMS; 
     }
 
     /**
@@ -67,6 +70,16 @@ public class ClientDto {
     public int getCurrentLoanNumber() {
         return currentLoanNumber;
     }
+
+    /**
+     * MuseumManagementSystem getter
+     * 
+     * @return
+     */
+    public MuseumManagementSystem getMuseumManagementSystem() {
+        return MMS; 
+    }
+
 
     // /**
     //  * Setter for the loan number 

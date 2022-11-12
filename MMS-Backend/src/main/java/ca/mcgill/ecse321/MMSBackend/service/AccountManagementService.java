@@ -226,6 +226,16 @@ public class AccountManagementService {
 	}
 
     /**
+     * get the manager of the system 
+     * @author - Nikolas Pasichnik 
+     */
+	@Transactional
+	public List<Manager> getManager() {
+		return toList(managerRepository.findAll());
+	}
+    
+
+    /**
      * delete an Employee account 
      * @param - Username: string that will be used to locate the account associated to that unique ID  
      * @author - Nikolas Pasichnik 

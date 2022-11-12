@@ -58,11 +58,11 @@ public class ToDtoHelper {
      */
     public static ClientDto convertToDto(Client client) {
         if (client == null) {
-            throw new IllegalArgumentException("There is no such Client");
+            throw new IllegalArgumentException("There is no such Client!");
         }
 
         ClientDto clientDto = new ClientDto(client.getUsername(), client.getName(), client.getPassword(),
-                client.getCurrentLoanNumber());
+                client.getCurrentLoanNumber(), client.getMuseumManagementSystem());
 
         return clientDto;
     }
@@ -75,26 +75,28 @@ public class ToDtoHelper {
     public static ManagerDto convertToDto(Manager manager) {
 
         if (manager == null) {
-            throw new IllegalArgumentException("There is no such Manager");
+            throw new IllegalArgumentException("There is no such Manager!");
         }
 
-        ManagerDto managerDto = new ManagerDto(manager.getUsername(), manager.getName(), manager.getPassword());
+        ManagerDto managerDto = new ManagerDto(manager.getUsername(), manager.getName(),
+        manager.getPassword(), manager.getMuseumManagementSystem());
 
         return managerDto;
     }
 
     /**
-     * @author Nikolas Pasichnik
+     * @author Nikolas Pasichnik 
      * @param employee
      * @return
      */
     public static EmployeeDto convertToDto(Employee employee) {
 
         if (employee == null) {
-            throw new IllegalArgumentException("There is no such Employee");
+            throw new IllegalArgumentException("There is no such Employee!");
         }
 
-        EmployeeDto employeeDto = new EmployeeDto(employee.getUsername(), employee.getName(), employee.getPassword());
+        EmployeeDto employeeDto = new EmployeeDto(employee.getUsername(), employee.getName(), 
+        employee.getPassword(), employee.getMuseumManagementSystem());
 
         return employeeDto;
     }
