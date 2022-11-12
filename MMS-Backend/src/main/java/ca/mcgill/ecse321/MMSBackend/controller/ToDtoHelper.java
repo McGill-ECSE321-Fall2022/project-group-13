@@ -44,7 +44,7 @@ public class ToDtoHelper {
         }
         RoomDto roomDto = convertToDto(a.getRoomLocation());
         MuseumManagementSystemDto mmsDto = convertToDto(a.getMuseumManagementSystem());
-
+        //hi
         ArtifactDto artifactDto = new ArtifactDto(a.getArtifactId(), a.getName(), a.getImage(), a.getDescription(), a.getLoanStatus(),
                 a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
 
