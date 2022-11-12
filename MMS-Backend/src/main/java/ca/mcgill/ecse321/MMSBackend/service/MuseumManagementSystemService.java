@@ -151,24 +151,6 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Get current museum ticket price through id
-     * 
-     * @Author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystemId
-     */
-    @Transactional
-    public void getMuseumTicketPrice(int museumManagementSystemId) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
-
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
-        } else {
-            museumManagementSystem.getTicketFee();
-        }
-    }
-
-    /**
      * Gets a single room by its id to store/display the donated artifact
      * 
      * @param roomId
