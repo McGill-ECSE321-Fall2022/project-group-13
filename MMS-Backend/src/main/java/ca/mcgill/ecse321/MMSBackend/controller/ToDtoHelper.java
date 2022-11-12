@@ -215,4 +215,23 @@ public class ToDtoHelper {
 
     }
 
+    /**
+     * @author Yu An Lu (yu-an-lu)
+     * @param donationRequest
+     * @return a DonationRequestDto
+     */
+    public static DonationRequestDto convertToDto(DonationRequest donationRequest) {
+        if (donationRequest == null) {
+            throw new IllegalArgumentException("Donation request cannot be null!");
+        }
+
+        DonationRequestDto donationRequestDto = new DonationRequestDto(donationRequest.getRequestId(),
+                convertToDto(donationRequest.getClient()), 
+                convertToDto(donationRequest.getArtifact()),
+                donationRequest.getStatus(),
+                convertToDto(donationRequest.getMuseumManagementSystem()));
+
+        return donationRequestDto;
+    }
+
 }

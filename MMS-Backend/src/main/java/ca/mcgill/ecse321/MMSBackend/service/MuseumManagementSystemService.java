@@ -153,6 +153,7 @@ public class MuseumManagementSystemService {
     /**
      * Gets a single room by its id to store/display the donated artifact
      * 
+     * @author Yu An Lu (yu-an-lu)
      * @param roomId
      * @return room object
      * 
@@ -164,21 +165,15 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Gets all rooms registered in the specific museum
+     * Gets all rooms registered in the museum
      * 
-     * @param systemId
+     * @author Yu An Lu (yu-an-lu)
      * @return a list of room objects
      * 
      */
     @Transactional
-    public List<Room> getAllRoomsBySystem(int systemId) {
-        List<Room> rooms = new ArrayList<Room>();
-        for (Room room : roomRepository.findAll()) {
-            if (room.getMuseumManagementSystem().getSystemId() == systemId) {
-                rooms.add(room);
-            }
-        }
-        return rooms;
+    public List<Room> getAllRooms() {
+        return toList(roomRepository.findAll());
     }
 
     /**
