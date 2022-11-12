@@ -7,13 +7,16 @@ import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto.DayTypeDto;
 
 public class ToDtoHelper {
 
-    // TODO: to be completed
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     * @param mms
+     * @return
+     */
     public static MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
         if (mms == null) {
             throw new IllegalArgumentException("There is no such Museum Management System!");
         }
-        MuseumManagementSystemDto system = new MuseumManagementSystemDto();
-        return system;
+        return new MuseumManagementSystemDto(mms.getSystemId(), mms.getName(), mms.getOpenTime(), mms.getCloseTime(), mms.getMaxLoanNumber(), mms.getTicketFee());
     }
 
     /**
@@ -180,6 +183,20 @@ public class ToDtoHelper {
                 convertToDto(shift.getDayOfTheWeek()), convertToDto(shift.getMuseumManagementSystem()),
                 convertToDto(shift.getEmployee()));
 
+    }
+
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     * @param ticket
+     * @return
+     */
+    public static TicketDto convertToDto(Ticket ticket)
+    {
+        if(ticket == null)
+        {
+            throw new IllegalArgumentException("There is no such Ticket!");
+        }
+        return new TicketDto(ticket.getTicketId(), ticket.getFee(), ticket.getIsActive(), convertToDto(ticket.getMuseumManagementSystem()), convertToDto(ticket.getClient()));
     }
 
 }
