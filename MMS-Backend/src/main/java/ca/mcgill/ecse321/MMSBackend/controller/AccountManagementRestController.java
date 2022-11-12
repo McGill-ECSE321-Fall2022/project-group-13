@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,17 +37,17 @@ public class AccountManagementRestController {
 
     // -----------------------------GetAllAccount(might not need throws)-------------------------------
 
-    @GetMapping(value = { "/client", "/client/" })
+    @GetMapping(value = { "/clients", "/clients/" })
     public List<ClientDto> getAllClients() throws IllegalArgumentException {
         return service.getAllClients().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = { "/employee", "/employee/" })
+    @GetMapping(value = { "/employees", "/employees/" })
     public List<EmployeeDto> getAllEmployees() throws IllegalArgumentException {
         return service.getAllEmployees().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = { "/manager", "/manager/" })
+    @GetMapping(value = { "/managers", "/managers/" })
     public List<ManagerDto> getManager() throws IllegalArgumentException {
         return service.getManager().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList());
     }
@@ -108,12 +109,51 @@ public class AccountManagementRestController {
 
     // -------------------------------SignInAccount----------------------------------------------
     
-    
 
+    @GetMapping(value = {"/client/signin/{username}", "/client/signin/{username}/"})
+    public ClientDto signInClientAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
+        Client client = service.signInClientAccount(username, password);
 
+        return ToDtoHelper.convertToDto(client);
+    }   
+
+    @GetMapping(value = {"/employee/signin/{username}", "/employee/signin/{username}/"})
+    public EmployeeDto signInEmployeeAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
+        Employee employee = service.signInEmployeeAccount(username, password);
+
+        return ToDtoHelper.convertToDto(employee);
+    }   
+
+    @GetMapping(value = {"/manager/signin/{username}", "/manager/signin/{username}/"})
+    public ManagerDto signInManagerAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
+        Manager manager = service.signInManagerAccount(username, password);
+
+        return ToDtoHelper.convertToDto(manager);
+    }   
 
     // --------------------------------EditAccount-----------------------------------------------
 
+    @PutMapping(value = { "/client/{id}", "/client/{id}/" })
+    public ClientDto editClient(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
+        password) throws IllegalArgumentException{
 
+        Client client = service.editClientAccount(username, name, password);
+        return ToDtoHelper.convertToDto(client);
+    }
 
+    @PutMapping(value = { "/employee/{id}", "/employee/{id}/" })
+    public EmployeeDto editEmployee(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
+        password) throws IllegalArgumentException{
+
+        Employee employee = service.editEmployeeAccount(username, name, password);
+        return ToDtoHelper.convertToDto(employee);
+    }
+
+    @PutMapping(value = { "/manager/{id}", "/manager/{id}/" })
+    public ManagerDto editManager(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
+        password) throws IllegalArgumentException{
+
+        Manager manager = service.editManagerAccount(username, name, password);
+        return ToDtoHelper.convertToDto(manager);
+    }
 }
