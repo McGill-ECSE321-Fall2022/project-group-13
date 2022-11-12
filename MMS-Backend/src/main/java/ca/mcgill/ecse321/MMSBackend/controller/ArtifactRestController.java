@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.MMSBackend.controller;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.dto.*;
 import ca.mcgill.ecse321.MMSBackend.service.ArtifactService;
-import ca.mcgill.ecse321.MMSBackend.controller.ToDtoHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  */
 @CrossOrigin(origins = "*")
 @RestController
-public class ArtifactController {
+public class ArtifactRestController {
 
     @Autowired
     private ArtifactService service;
