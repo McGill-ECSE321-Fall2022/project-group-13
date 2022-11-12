@@ -54,6 +54,10 @@ public class AccountManagementService {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
 
+        if (getManager() == null) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A Manager already exists");
+        }
+
         // Creating a manager
 		Manager manager = new Manager();
 		manager.setUsername(username);
@@ -391,7 +395,7 @@ public class AccountManagementService {
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
-    public void editClientAccount(String username, String name, String password){
+    public Client editClientAccount(String username, String name, String password){
         // Case where the username is empty or if it contains whitespaces
         if (username.equals("") || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
@@ -417,6 +421,8 @@ public class AccountManagementService {
 
         client.setName(username); 
         client.setPassword(password); 
+
+        return client; 
     }
 
 
@@ -426,7 +432,7 @@ public class AccountManagementService {
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
-    public void editEmployeeAccount(String username, String name, String password){
+    public Employee editEmployeeAccount(String username, String name, String password){
         // Case where the username is empty or if it contains whitespaces
         if (username.equals("") || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
@@ -452,6 +458,8 @@ public class AccountManagementService {
 
         employee.setName(username); 
         employee.setPassword(password); 
+
+        return employee; 
     }
 
     /**
@@ -460,7 +468,7 @@ public class AccountManagementService {
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
-    public void editManagerAccount(String username, String name, String password){
+    public Manager editManagerAccount(String username, String name, String password){
         // Case where the username is empty or if it contains whitespaces
         if (username.equals("") || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
@@ -486,6 +494,8 @@ public class AccountManagementService {
 
         manager.setName(username); 
         manager.setPassword(password); 
+
+        return manager; 
     }
 
     /**
