@@ -25,7 +25,7 @@ import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
  */
 @CrossOrigin(origins = "*")
 @RestController
-public class MmsRestController {
+public class MuseumManagementSystemRestController {
     
     @Autowired
     private MuseumManagementSystemService mmsService;
