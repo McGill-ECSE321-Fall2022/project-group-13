@@ -111,7 +111,7 @@ public class LoanRequestService {
      * @return a list of loan request objects for a specific client than can be approved/rejected
      */
     @Transactional
-    public List<LoanRequest> getAllLoanRequestsThatCanBeApprovedOrRejected(int systemId) {
+    public List<LoanRequest> getAllActiveLoanRequests(int systemId) {
         List<LoanRequest> loanRequestsByStatus = new ArrayList<LoanRequest>();
         for (LoanRequest loanRequest : loanRequestRepository.findAll()) {
             if (loanRequest.getStatus().equals(LoanRequest.LoanStatus.Pending) && loanRequest.getMuseumManagementSystem().getSystemId() == systemId

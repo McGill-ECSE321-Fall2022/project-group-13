@@ -45,7 +45,7 @@ public class ToDtoHelper {
         RoomDto roomDto = convertToDto(a.getRoomLocation());
         MuseumManagementSystemDto mmsDto = convertToDto(a.getMuseumManagementSystem());
 
-        ArtifactDto artifactDto = new ArtifactDto(a.getName(), a.getImage(), a.getDescription(), a.getLoanStatus(),
+        ArtifactDto artifactDto = new ArtifactDto(a.getArtifactId(), a.getName(), a.getImage(), a.getDescription(), a.getLoanStatus(),
                 a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
 
         return artifactDto;
@@ -199,6 +199,20 @@ public class ToDtoHelper {
             throw new IllegalArgumentException("There is no such Ticket!");
         }
         return new TicketDto(ticket.getTicketId(), ticket.getFee(), ticket.getIsActive(), convertToDto(ticket.getMuseumManagementSystem()), convertToDto(ticket.getClient()));
+    }
+
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     * @param loanRequest
+     * @return a LoanRequestDto
+     */
+    public static LoanRequestDto convertToDto(LoanRequest loanRequest) {
+        if (loanRequest == null) {
+            throw new IllegalArgumentException("Loan request cannot be null!");
+        }
+        return new LoanRequestDto(loanRequest.getRequestId(), loanRequest.getLoanDuration(), loanRequest.getFee(),
+                loanRequest.getStatus(), convertToDto(loanRequest.getMuseumManagementSystem()));
+
     }
 
 }
