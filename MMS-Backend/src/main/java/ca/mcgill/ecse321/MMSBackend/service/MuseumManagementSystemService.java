@@ -35,7 +35,7 @@ public class MuseumManagementSystemService {
     /**
      * Create museum management system
      * 
-     * @Author : Lucy Zhang (Lucy-Zh) and Samantha Perez Hoffman (samperezh)
+     * @author : Lucy Zhang (Lucy-Zh) and Samantha Perez Hoffman (samperezh)
      * 
      */
     @Transactional
@@ -65,8 +65,8 @@ public class MuseumManagementSystemService {
     /**
      * Get museum management system through id
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystem
+     * @author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystemId
      * 
      */
     @Transactional
@@ -85,8 +85,8 @@ public class MuseumManagementSystemService {
     /**
      * Delete museum management system through id
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystem
+     * @author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystemId
      *
      */
     @Transactional
@@ -104,8 +104,8 @@ public class MuseumManagementSystemService {
     /**
      * Set museum management system name through id
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystem, name
+     * @author : Lucy Zhang (Lucy-Zh)
+     * @param museumManagementSystemId, name
      *
      */
     @Transactional
@@ -123,7 +123,7 @@ public class MuseumManagementSystemService {
     /**
      * Get museum management system
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @author : Lucy Zhang (Lucy-Zh)
      *
      */
     @Transactional
@@ -134,7 +134,7 @@ public class MuseumManagementSystemService {
     /**
      * Set current museum ticket price through id
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @author : Lucy Zhang (Lucy-Zh)
      * @param museumManagementSystemId, price
      * 
      */
@@ -182,13 +182,26 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Set museum management system max loan number for clients
+     * get museum management system's max loan number for clients
      *
-     * @Author : Nazia Chowdhury (naziaC)
+     * @author : Nazia Chowdhury (naziaC)
      * @param museumManagementSystemId
      */
     @Transactional
-    public void setMaxLoanNumber(int museumManagementSystemId) {
+    public int getMaxLoanNumberOfSystem(int museumManagementSystemId) {
+        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
+        int maxLoanNumber = museumManagementSystem.getMaxLoanNumber();
+        return maxLoanNumber;
+    }
+
+    /**
+     * Set museum management system's max loan number for clients
+     *
+     * @author : Nazia Chowdhury (naziaC)
+     * @param museumManagementSystemId
+     */
+    @Transactional
+    public void setMaxLoanNumberOfSystem(int museumManagementSystemId) {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
         if (museumManagementSystem == null) {
@@ -202,7 +215,7 @@ public class MuseumManagementSystemService {
     /**
      * Set museum management system opening hours
      * 
-     * @Author : Samantha Perez Hoffman (samperezh)
+     * @author : Samantha Perez Hoffman (samperezh)
      * @param newOpenTime
      * @param newCloseTime
      * @param museumManagementSystemId
@@ -229,7 +242,7 @@ public class MuseumManagementSystemService {
     /**
      * Get museum management system opening hours
      * 
-     * @Author : Samantha Perez Hoffman (samperezh)
+     * @author : Samantha Perez Hoffman (samperezh)
      * @param museumManagementSystemId
      */
     @Transactional
@@ -250,7 +263,7 @@ public class MuseumManagementSystemService {
     /**
      * Get specificWeekDay by dayType
      * 
-     * @Author : Samantha Perez Hoffman (samperezh)
+     * @author : Samantha Perez Hoffman (samperezh)
      * @param dayType
      */
     @Transactional
@@ -265,7 +278,7 @@ public class MuseumManagementSystemService {
     /**
      * Get all specificWeekDays
      * 
-     * @Author : Samantha Perez Hoffman (samperezh)
+     * @author : Samantha Perez Hoffman (samperezh)
      * @param dayType
      */
     @Transactional
@@ -277,7 +290,7 @@ public class MuseumManagementSystemService {
     /**
      * Helper method that creates the 7 specific week days of the museum management system
      * 
-     * @Author : Samantha Perez Hoffman (samperezh)
+     * @author : Samantha Perez Hoffman (samperezh)
      * @param museumManagementSystem
      */
     private void createMuseumSpecificWeekDays(MuseumManagementSystem museumManagementSystem){
@@ -328,7 +341,7 @@ public class MuseumManagementSystemService {
     /**
      * helper method that creates the rooms of the museum management system
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @author : Lucy Zhang (Lucy-Zh)
      * @param museumManagementSystem
      *
      */

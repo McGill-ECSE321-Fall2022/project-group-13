@@ -60,12 +60,13 @@ public class LoanRequestRestController {
         return ToDtoHelper.convertToDto(loanRequest);
     }
 
+    // TODO ask about id for system
     /**
      * Gets all loan requests registered in the specific museum
      * @param museumManagementSystemDto
      * @return a list of loan request objects
      */
-    @GetMapping(value = { "/loanRequest/{mmsSystem}", "/loanRequest/{mmsSystem}/" })
+    @GetMapping(value = { "/loanRequests/{mmsSystem}", "/loanRequests/{mmsSystem}/" })
     public List<LoanRequestDto> getAllLoanRequestsBySystem(@RequestParam(name="mmsSystem") MuseumManagementSystemDto museumManagementSystemDto) throws IllegalArgumentException {
         MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
         List<LoanRequestDto> loanRequestsDto = new ArrayList<LoanRequestDto>();
@@ -100,7 +101,7 @@ public class LoanRequestRestController {
      * @param museumManagementSystemDto
      * @return a list of loan request objects for a specific client than can be approved/rejected
      */
-    @GetMapping(value = { "/loanRequest/{mmsSystem}", "/loanRequest/{mmsSystem}/" })
+    @GetMapping(value = { "/activeLoanRequest/{mmsSystem}", "/activeLoanRequest/{mmsSystem}/" })
     public List<LoanRequestDto> getAllActiveLoanRequests(@RequestParam(name="mmsSystem") MuseumManagementSystemDto museumManagementSystemDto) throws IllegalArgumentException {
         MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
         List<LoanRequestDto> loanRequestsByStatusDto = new ArrayList<LoanRequestDto>();
@@ -135,7 +136,7 @@ public class LoanRequestRestController {
      * @param requestId
      * @return loan request object
      */
-    @PutMapping(value = { "/loanRequest/approveStatus/{requestId}", "/loanRequest/approveStatus/{requestId}/" })
+    @PutMapping(value = { "/loanRequest/approval/{requestId}", "/loanRequest/approval/{requestId}/" })
     public LoanRequestDto approveLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest=loanRequestService.approveLoanRequest(requestId);
         return ToDtoHelper.convertToDto(loanRequest);
@@ -146,7 +147,7 @@ public class LoanRequestRestController {
      * @param requestId
      * @return loan request object
      */
-    @PutMapping(value = { "/loanRequest/rejectStatus/{requestId}", "/loanRequest/rejectStatus/{requestId}/" })
+    @PutMapping(value = { "/loanRequest/rejection/{requestId}", "/loanRequest/rejection/{requestId}/" })
     public LoanRequestDto rejectLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest=loanRequestService.rejectLoanRequest(requestId);
         return ToDtoHelper.convertToDto(loanRequest);
@@ -157,7 +158,7 @@ public class LoanRequestRestController {
      * @param requestId
      * @return loan request object
      */
-    @PutMapping(value = { "/loanRequest/returnStatus/{requestId}", "/loanRequest/returnStatus/{requestId}/" })
+    @PutMapping(value = { "/loanRequest/returning/{requestId}", "/loanRequest/returning/{requestId}/" })
     public LoanRequestDto returnLoanedArtifact(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest=loanRequestService.returnLoanedArtifact(requestId);
         return ToDtoHelper.convertToDto(loanRequest);
