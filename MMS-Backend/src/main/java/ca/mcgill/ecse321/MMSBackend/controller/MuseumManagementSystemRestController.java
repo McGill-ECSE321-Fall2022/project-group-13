@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.MMSBackend.dto.MuseumManagementSystemDto;
-import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
+import ca.mcgill.ecse321.MMSBackend.dto.*;
+import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
 /**
@@ -129,4 +129,37 @@ public class MuseumManagementSystemRestController {
 
     }
 
+    /**
+     * Gets a room by its id
+     * 
+     * @author Yu An Lu (yu-an-lu)
+     * @param roomId
+     * @return the room dto
+     * @throws IllegalArgumentException
+     */
+    @GetMapping(value = { "/mms/{roomId}", "/mms/{roomId}/"})
+    public RoomDto getRoom(@PathVariable("roomId") int roomId) throws IllegalArgumentException {
+        
+        return ToDtoHelper.convertToDto(mmsService.getRoom(roomId));
+
+    }
+
+    /**
+     * Gets all rooms in the mms
+     * 
+     * @author Yu An Lu (yu-an-lu)
+     * @return a list of room dtos
+     * @throws IllegalArgumentException
+     */
+    @GetMapping(value = { "/mms/rooms", "/mms/rooms/"})
+    public List<RoomDto> getAllRooms() throws IllegalArgumentException {
+        
+        List<RoomDto> roomDtos = new ArrayList<RoomDto>();
+        
+        for (Room room : mmsService.getAllRooms()) {
+            roomDtos.add(ToDtoHelper.convertToDto(room));
+        }
+        
+        return roomDtos;
+    }
 }
