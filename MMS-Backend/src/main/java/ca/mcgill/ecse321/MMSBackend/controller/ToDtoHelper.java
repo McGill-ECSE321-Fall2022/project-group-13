@@ -217,7 +217,7 @@ public class ToDtoHelper {
 
     }
 
-      /**
+    /**
      * @author Yu An Lu (yu-an-lu) 
      * @param status
      * @return a DonationStatusDto
@@ -226,7 +226,7 @@ public class ToDtoHelper {
         if (status == null) {
             throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
         }
-        
+
         switch (status) {
             case Approved:
                 return DonationStatusDto.Approved;
