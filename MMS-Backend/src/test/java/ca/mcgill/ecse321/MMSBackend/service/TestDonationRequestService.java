@@ -12,7 +12,6 @@ import static org.mockito.Mockito.lenient;
 import java.sql.Time;
 import java.util.List;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
