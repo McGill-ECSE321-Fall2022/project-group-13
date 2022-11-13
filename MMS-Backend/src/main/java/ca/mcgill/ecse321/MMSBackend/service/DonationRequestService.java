@@ -47,9 +47,18 @@ public class DonationRequestService {
      */
     @Transactional
     public Artifact createDonationArtifact(String name, String image, String description, boolean isDamaged, double worth, MuseumManagementSystem mms) {
-        if (name == null || image == null || description == null || mms == null)
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+        if (mms == null) 
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "MuseumManagementSystem does not exist");
 
+        if (name == null || image == null || description == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
+        
+        if (name == "" || image == "" || description == "")
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
+
+        if (name == " " || image == " " || description == " ")
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
+        
         Artifact artifact = new Artifact();
         artifact.setName(name);
         artifact.setImage(image);
@@ -73,8 +82,12 @@ public class DonationRequestService {
      */
     @Transactional
     public DonationRequest createDonationRequest(Client client, Artifact artifact, MuseumManagementSystem mms) {
-        if (client == null || artifact == null || mms == null)
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+        if (client == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Client does not exist");
+        else if (artifact == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Artifact does not exist");
+        else if (mms == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Museum Management System does not exist");
 
         DonationRequest donationRequest = new DonationRequest();
         donationRequest.setClient(client);
@@ -87,7 +100,7 @@ public class DonationRequestService {
     }
 
     /**
-     * Approves a donation request and stores the donated artifact in the specified room
+     * Approves a donation request and stores the donated artifact in the storage room
      * @param requestId
      * @param room
      * @return donation request object
@@ -95,10 +108,19 @@ public class DonationRequestService {
     @Transactional
     public DonationRequest approveDonationRequest(int requestId, Room room) {
         if (room == null)
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Selected room does not exist");
+
+        else if (!room.getType().equals(Room.RoomType.Storage))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Selected room is not a storage room");
 
         DonationRequest donationRequest = null;
-        if (donationRequestRepository.existsById(requestId)) {
+        if (!donationRequestRepository.existsById(requestId))
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
+        
+        else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Approved))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Donation request already approved");
+        
+        else {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             Artifact artifact = donationRequest.getArtifact();
 
@@ -110,8 +132,6 @@ public class DonationRequestService {
             donationRequest.setStatus(DonationRequest.DonationStatus.Approved);
 
             donationRequestRepository.save(donationRequest);
-        } else {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         }
         return donationRequest;
     }
@@ -125,13 +145,17 @@ public class DonationRequestService {
     @Transactional
     public DonationRequest rejectDonationRequest(int requestId) {
         DonationRequest donationRequest = null;
-        if (donationRequestRepository.existsById(requestId)) {
+        if (!donationRequestRepository.existsById(requestId))
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
+        else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Rejected))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Donation request already rejected");
+        else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Approved))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Donation request already approved");
+        else {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             donationRequest.setStatus(DonationRequest.DonationStatus.Rejected);
 
             donationRequestRepository.save(donationRequest);
-        } else {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         }
         
         return donationRequest;
@@ -170,7 +194,7 @@ public class DonationRequestService {
     @Transactional
     public List<DonationRequest> getAllDonationRequestsByStatus(DonationRequest.DonationStatus status) {
         if (status == null)
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Please select a donation status");
 
         List<DonationRequest> donationRequestsByStatus = new ArrayList<DonationRequest>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
@@ -206,20 +230,27 @@ public class DonationRequestService {
      * @param requestId
      */
     @Transactional
-    public void deleteDonationRequest(int requestId) {
+    public void deleteRejectedDonationRequest(int requestId) {
         if (!donationRequestRepository.existsById(requestId))
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
 
-        DonationRequest donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
-        Artifact artifact = donationRequest.getArtifact();
+        if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Pending))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot delete a donation request that is pending");
 
-        donationRequestRepository.deleteById(requestId);
+        else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Approved))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot delete a donation request that has been approved");
+        
+        else {
+            DonationRequest donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
+            Artifact artifact = donationRequest.getArtifact();
 
-        if (!artifactRepository.existsById(artifact.getArtifactId()))
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donated artifact not found");
+            donationRequestRepository.deleteById(requestId);
 
-        if (donationRequest.getStatus().equals(DonationRequest.DonationStatus.Pending))
-            artifactRepository.deleteById(artifact.getArtifactId());
+            if (!artifactRepository.existsById(artifact.getArtifactId()))
+                throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donated artifact not found");
+            else 
+                artifactRepository.deleteById(artifact.getArtifactId());
+        }
     }
 
     private <T> List<T> toList(Iterable<T> iterable){

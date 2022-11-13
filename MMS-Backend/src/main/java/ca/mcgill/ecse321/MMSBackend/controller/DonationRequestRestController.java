@@ -219,7 +219,7 @@ public class DonationRequestRestController {
         @PathVariable("requestId") int requestId)
 
         throws IllegalArgumentException {
-        donationRequestService.deleteDonationRequest(requestId);
+        donationRequestService.deleteRejectedDonationRequest(requestId);
     }
     
 }
