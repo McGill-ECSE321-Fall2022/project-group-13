@@ -212,10 +212,50 @@ public class ToDtoHelper {
         if (loanRequest == null) {
             throw new IllegalArgumentException("Loan request cannot be null!");
         }
-        return new LoanRequestDto(loanRequest.getRequestId(), loanRequest.getLoanDuration(), loanRequest.getFee(),
-                loanRequest.getStatus(), convertToDto(loanRequest.getMuseumManagementSystem()));
-
+        return new LoanRequestDto(loanRequest.getRequestId(),
+                loanRequest.getLoanDuration(),
+                loanRequest.getFee(),
+                convertToDto(loanRequest.getClient()),
+                convertToDto(loanRequest.getArtifact()),
+                convertToDto(loanRequest.getStatus()),
+                convertToDto(loanRequest.getMuseumManagementSystem()));
     }
+
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     * @param statusDto
+     * @return a LoanRequestStatus
+     */
+    public static LoanRequest.LoanStatus convertToDomainObject(LoanRequestDto.LoanRequestStatusDto statusDto) {
+        if (statusDto == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (statusDto) {
+            case Approved -> LoanRequest.LoanStatus.Approved;
+            case Rejected -> LoanRequest.LoanStatus.Rejected;
+            case Pending -> LoanRequest.LoanStatus.Pending;
+            default -> throw new IllegalArgumentException("Unexpected value: " + statusDto);
+        };
+    }
+
+    /** @author Nazia Chowdhury (naziaC)
+     * @param status
+     * @return a LoanRequestStatusDto
+     */
+    public static LoanRequestDto.LoanRequestStatusDto convertToDto(LoanRequest.LoanStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case Approved -> LoanRequestDto.LoanRequestStatusDto.Approved;
+            case Rejected -> LoanRequestDto.LoanRequestStatusDto.Rejected;
+            case Pending -> LoanRequestDto.LoanRequestStatusDto.Pending;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
 
     /**
      * @author Yu An Lu (yu-an-lu) 

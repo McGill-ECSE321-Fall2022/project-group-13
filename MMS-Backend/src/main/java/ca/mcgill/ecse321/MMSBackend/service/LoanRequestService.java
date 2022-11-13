@@ -38,10 +38,13 @@ public class LoanRequestService {
      * @param fee
      * @param artifact
      * @param client
-     * @param systemId
+     * @param mms
      */
     @Transactional
-    public LoanRequest createLoanRequest(int loanDuration, double fee, Artifact artifact, Client client, int systemId){
+    public LoanRequest createLoanRequest(int loanDuration, double fee, Artifact artifact, Client client, MuseumManagementSystem mms){
+        if (client == null || artifact == null || mms == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+
         LoanRequest loanRequest;
         if (artifact.getLoanStatus().equals(Artifact.LoanStatus.Available)){
             loanRequest = new LoanRequest();
@@ -50,7 +53,7 @@ public class LoanRequestService {
             loanRequest.setLoanDuration(loanDuration);
             loanRequest.setFee(fee);
             loanRequest.setStatus(LoanRequest.LoanStatus.Pending);
-            loanRequest.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(systemId));
+            loanRequest.setMuseumManagementSystem(mms);
             loanRequestRepository.save(loanRequest);
         } else {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request cannot be created.");
@@ -70,6 +73,15 @@ public class LoanRequestService {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Loan request not found.");
         }
         return loanRequest;
+    }
+
+    /**
+     * Gets all loan requests registered
+     * @return a list of loan request objects
+     */
+    @Transactional
+    public List<LoanRequest> getAllLoanRequests() {
+        return toList(loanRequestRepository.findAll());
     }
 
     /**

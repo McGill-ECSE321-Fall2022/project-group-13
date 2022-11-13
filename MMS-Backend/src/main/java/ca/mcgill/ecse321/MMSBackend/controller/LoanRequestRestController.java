@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -43,7 +44,7 @@ public class LoanRequestRestController {
         Artifact artifact = artifactService.getArtifact(artifactDto.getArtifactId());
         Client client = accountManagementService.getClient(clientDto.getUsername());
         MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
-        LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, fee, artifact, client, museumManagementSystem.getSystemId());
+        LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, fee, artifact, client, museumManagementSystem);
 
         return ToDtoHelper.convertToDto(loanRequest);
     }
@@ -76,6 +77,11 @@ public class LoanRequestRestController {
             }
         }
         return loanRequestsDto;
+    }
+
+    @GetMapping(value = { "/loanRequests", "/loanRequests/" })
+    public List<LoanRequestDto> getAllLoanRequests(){
+        return loanRequestService.getAllLoanRequests().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList());
     }
 
     /**

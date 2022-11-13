@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
+import ca.mcgill.ecse321.MMSBackend.model.Artifact;
+import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
 
 /**
@@ -8,20 +10,27 @@ import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
  */
 public class LoanRequestDto {
 
+    public enum LoanRequestStatusDto { Approved, Rejected, Pending };
+
     private int requestId;
     private int loanDuration;
     private double fee;
-    private LoanRequest.LoanStatus status;
+    private ClientDto client;
+    private ArtifactDto artifact;
+    private LoanRequestStatusDto status;
     private MuseumManagementSystemDto museumManagementSystem;
+
 
     public LoanRequestDto() {
 
     }
 
-    public LoanRequestDto(int requestId, int loanDuration, double fee, LoanRequest.LoanStatus status, MuseumManagementSystemDto museumManagementSystem) {
+    public LoanRequestDto(int requestId, int loanDuration, double fee, ClientDto client, ArtifactDto artifact, LoanRequestStatusDto status, MuseumManagementSystemDto museumManagementSystem) {
 
         this.requestId = requestId;
         this.loanDuration = loanDuration;
+        this.client = client;
+        this.artifact = artifact;
         this.fee = fee;
         this.status = status;
         this.museumManagementSystem = museumManagementSystem;
@@ -39,7 +48,7 @@ public class LoanRequestDto {
         return fee;
     }
 
-    public LoanRequest.LoanStatus getStatus() {
+    public LoanRequestStatusDto getStatus() {
         return status;
     }
 
