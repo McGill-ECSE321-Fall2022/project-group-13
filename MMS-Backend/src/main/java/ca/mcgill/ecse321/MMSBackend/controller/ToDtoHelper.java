@@ -31,8 +31,26 @@ public class ToDtoHelper {
             throw new IllegalArgumentException("There is no such Room!");
         }
         MuseumManagementSystemDto systemDto = convertToDto(r.getMuseumManagementSystem());
-        RoomDto room = new RoomDto(r.getRoomId(), r.getName(), r.getType(), systemDto);
+        RoomDto.RoomTypeDto typeDto = convertToDto(r.getType());
+        RoomDto room = new RoomDto(r.getRoomId(), r.getName(), typeDto, systemDto);
         return room;
+    }
+
+    /** @author Mona Kalaoun (m-kln)
+     * @param type
+     * @return a LoanStatusDto
+     */
+    public static RoomDto.RoomTypeDto convertToDto(Room.RoomType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Room type cannot be null.");
+        }
+
+        return switch (type) {
+            case Small -> RoomDto.RoomTypeDto.Small;
+            case Large -> RoomDto.RoomTypeDto.Large;
+            case Storage -> RoomDto.RoomTypeDto.Storage;
+            default -> throw new IllegalArgumentException("Unexpected value: " + type);
+        };
     }
 
     /**
@@ -52,24 +70,6 @@ public class ToDtoHelper {
                 statusDto, a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
 
         return artifactDto;
-    }
-
-    /**
-     * @author Mona Kalaoun (m-kln)
-     * @param statusDto
-     * @return a LoanStatus
-     */
-    public static Artifact.LoanStatus convertToDomainObject(ArtifactDto.LoanStatusDto statusDto) {
-        if (statusDto == null) {
-            throw new IllegalArgumentException("Status cannot be null.");
-        }
-
-        return switch (statusDto) {
-            case Available -> Artifact.LoanStatus.Available;
-            case Unavailable -> Artifact.LoanStatus.Unavailable;
-            case Loaned -> Artifact.LoanStatus.Loaned;
-            default -> throw new IllegalArgumentException("Unexpected value: " + statusDto);
-        };
     }
 
     /** @author Mona Kalaoun (m-kln)
