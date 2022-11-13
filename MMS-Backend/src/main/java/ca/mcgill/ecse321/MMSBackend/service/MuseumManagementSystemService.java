@@ -177,6 +177,50 @@ public class MuseumManagementSystemService {
     }
 
     /**
+     * Gets all rooms of a specific type
+     * 
+     * @author Yu An Lu (yu-an-lu)
+     * @param roomType
+     * @return a list of room objects
+     * 
+     */
+    @Transactional
+    public List<Room> getAllRoomsByType(RoomType roomType) {
+        if (roomType == null) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Room type cannot be null");
+        }
+
+        List<Room> roomsByType = new ArrayList<Room>();
+        for (Room room : roomRepository.findAll()) {
+            if (room.getType().equals(roomType)) {
+                roomsByType.add(room);
+            }
+        }
+        return roomsByType;
+    }
+
+    /**
+     * Gets the room with the specified name
+     * 
+     * @author Yu An Lu (yu-an-lu)
+     * @param roomName
+     * @return the room object, if not found, return null
+     */
+    @Transactional
+    public Room getRoomByName(String roomName) {
+        if (roomName == null) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Room name cannot be null");
+        }
+
+        for (Room room : roomRepository.findAll()) {
+            if (room.getName().equals(roomName)) {
+                return room;
+            }
+        }
+        return null;
+    }
+
+    /**
      * get museum management system's max loan number for clients
      *
      * @author : Nazia Chowdhury (naziaC)
