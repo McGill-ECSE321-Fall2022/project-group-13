@@ -74,10 +74,9 @@ public class EmployeeScheduleRestController {
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
      * @param shiftId
-     * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/shift/{shiftId}", "/shift/{shiftId}/" })
-    public void deleteShift(@PathVariable("shiftId") int shiftId) throws IllegalArgumentException {
+    public void deleteShift(@PathVariable("shiftId") int shiftId) {
         employeeScheduleService.deleteShift(shiftId);
     }
 
@@ -113,10 +112,9 @@ public class EmployeeScheduleRestController {
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
      * @return
-     * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/shift", "/shift/" })
-    public List<ShiftDto> getAllShifts() throws IllegalArgumentException {
+    public List<ShiftDto> getAllShifts() {
         List<ShiftDto> shiftsDto = new ArrayList<ShiftDto>();
         for (Shift shift : employeeScheduleService.getAllShifts()) {
             shiftsDto.add(ToDtoHelper.convertToDto(shift));

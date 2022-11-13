@@ -150,13 +150,15 @@ public class EmployeeScheduleService {
         }
 
         List<Shift> allShifts = getAllShifts();
+        List<Shift> employeeShifts = new ArrayList<Shift>();
         for (Shift shift : allShifts) {
-            if (shift.getEmployee() != employee) {
-                allShifts.remove(shift);
+            if (shift.getEmployee() == employee) {
+                employeeShifts.add(shift);
             }
         }
 
-        return allShifts;
+        //return allShifts;
+        return employeeShifts;
     }
 
     /**
@@ -171,13 +173,14 @@ public class EmployeeScheduleService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values are not allowed!");
         }
         List<Shift> allShifts = getAllShifts();
+        List<Shift> dayShifts = new ArrayList<Shift>();
         for (Shift shift : allShifts) {
-            if (shift.getDayOfTheWeek().getDayType() != dayType) {
-                allShifts.remove(shift);
+            if (shift.getDayOfTheWeek().getDayType() == dayType) {
+                dayShifts.add(shift);
             }
         }
 
-        return allShifts;
+        return dayShifts;
     }
 
     /**
