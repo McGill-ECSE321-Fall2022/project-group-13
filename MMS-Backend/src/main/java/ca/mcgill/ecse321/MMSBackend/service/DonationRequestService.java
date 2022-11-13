@@ -114,7 +114,7 @@ public class DonationRequestService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Selected room is not a storage room");
 
         DonationRequest donationRequest = null;
-        if (!donationRequestRepository.existsById(requestId))
+        if (donationRequestRepository.findDonationRequestByRequestId(requestId) == null)
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         
         else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Approved))
@@ -145,7 +145,7 @@ public class DonationRequestService {
     @Transactional
     public DonationRequest rejectDonationRequest(int requestId) {
         DonationRequest donationRequest = null;
-        if (!donationRequestRepository.existsById(requestId))
+        if (donationRequestRepository.findDonationRequestByRequestId(requestId) == null)
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
         else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Rejected))
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Donation request already rejected");
@@ -169,7 +169,7 @@ public class DonationRequestService {
      */
     @Transactional
     public DonationRequest getDonationRequest(int requestId) {
-        if (!donationRequestRepository.existsById(requestId)) 
+        if (donationRequestRepository.findDonationRequestByRequestId(requestId) == null) 
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
 
         return donationRequestRepository.findDonationRequestByRequestId(requestId);
@@ -230,8 +230,8 @@ public class DonationRequestService {
      * @param requestId
      */
     @Transactional
-    public void deleteRejectedDonationRequest(int requestId) {
-        if (!donationRequestRepository.existsById(requestId))
+    public boolean deleteRejectedDonationRequest(int requestId) {
+        if (donationRequestRepository.findDonationRequestByRequestId(requestId) == null)
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donation request not found");
 
         if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Pending))
@@ -246,10 +246,12 @@ public class DonationRequestService {
 
             donationRequestRepository.deleteById(requestId);
 
-            if (!artifactRepository.existsById(artifact.getArtifactId()))
-                throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donated artifact not found");
-            else 
+            // if (artifactRepository.findArtifactByArtifactId(artifact.getArtifactId()) == null)
+            //     throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donated artifact not found");
+            // else {
                 artifactRepository.deleteById(artifact.getArtifactId());
+                return true;
+            // }
         }
     }
 
