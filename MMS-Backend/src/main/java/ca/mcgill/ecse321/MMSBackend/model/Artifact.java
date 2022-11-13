@@ -46,7 +46,7 @@ public class Artifact
   private double worth;
 
   //Artifact Associations
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = true)
   private Room roomLocation;
   @ManyToOne(optional = false)
   @JoinColumn(name="museum_fk")
