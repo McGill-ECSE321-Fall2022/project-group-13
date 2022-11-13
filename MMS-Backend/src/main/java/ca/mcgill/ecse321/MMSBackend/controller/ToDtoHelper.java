@@ -46,11 +46,47 @@ public class ToDtoHelper {
         }
         RoomDto roomDto = convertToDto(a.getRoomLocation());
         MuseumManagementSystemDto mmsDto = convertToDto(a.getMuseumManagementSystem());
-        //hi
-        ArtifactDto artifactDto = new ArtifactDto(a.getArtifactId(), a.getName(), a.getImage(), a.getDescription(), a.getLoanStatus(),
-                a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
+        ArtifactDto.LoanStatusDto statusDto = convertToDto(a.getLoanStatus());
+
+        ArtifactDto artifactDto = new ArtifactDto(a.getArtifactId(), a.getName(), a.getImage(), a.getDescription(),
+                statusDto, a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
 
         return artifactDto;
+    }
+
+    /**
+     * @author Mona Kalaoun (m-kln)
+     * @param statusDto
+     * @return a LoanStatus
+     */
+    public static Artifact.LoanStatus convertToDomainObject(ArtifactDto.LoanStatusDto statusDto) {
+        if (statusDto == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (statusDto) {
+            case Available -> Artifact.LoanStatus.Available;
+            case Unavailable -> Artifact.LoanStatus.Unavailable;
+            case Loaned -> Artifact.LoanStatus.Loaned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + statusDto);
+        };
+    }
+
+    /** @author Mona Kalaoun (m-kln)
+     * @param status
+     * @return a LoanStatusDto
+     */
+    public static ArtifactDto.LoanStatusDto convertToDto(Artifact.LoanStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case Available -> ArtifactDto.LoanStatusDto.Available;
+            case Unavailable -> ArtifactDto.LoanStatusDto.Unavailable;
+            case Loaned -> ArtifactDto.LoanStatusDto.Loaned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
     }
 
     /**
