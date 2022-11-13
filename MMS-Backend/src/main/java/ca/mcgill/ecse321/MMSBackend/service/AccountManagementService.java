@@ -34,27 +34,27 @@ public class AccountManagementService {
     @Transactional
 	public Manager createManager(String username, String name, String password, MuseumManagementSystem mms) {
 
-        // Case where the mms is null 
-        if (mms == null){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The MuseumManagementSystem is null");
+        // Case where any of the parameters are null
+        if (mms.equals(null) || username.equals(null) || name.equals(null) || password.equals(null)){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
         }
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
+        // Case where the username contains whitespaces
+        if (username.contains(" ")) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The username cannot have spaces");
         }
 
-        // Case where the name is empty or if it contains whitespaces
-        if (name.equals("") || name.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
+        // Case where the name consists of only whitespaces
+        if (name.trim().isEmpty() == true) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid name");
         }
 
-        // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
+        // Case where the password contains whitespaces 
+        if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
         }
 
-        if (getManager() == null) {
+        if (getManager().size() == 0) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A Manager already exists");
         }
 
@@ -76,24 +76,34 @@ public class AccountManagementService {
     @Transactional
 	public Client createClient(String username, String name, String password, MuseumManagementSystem mms) {
         
-        // Case where the mms is null 
-        if (mms == null){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The MuseumManagementSystem is null");
+        // Case where any of the parameters are null
+        if (mms == null || username == null || name == null || password == null){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
+        }
+        
+        // Case where any of the parameters are empty strings
+        if (username == "" || name == "" || password == ""){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
         }
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
+        // Case where the username contains whitespaces
+        if (username.contains(" ")) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The username cannot have spaces");
         }
 
-        // Case where the name is empty or if it contains whitespaces
-        if (name.equals("") || name.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
+        // Case where the name consists of only whitespaces
+        if (name.trim().isEmpty() == true) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid name");
         }
 
-        // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
+        // Case where the password contains whitespaces 
+        if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
+        }
+
+        // The username is already in use 
+        if (clientRepository.existsById(username) == true){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
 
         // Creating a client
@@ -115,24 +125,29 @@ public class AccountManagementService {
     @Transactional
     public Employee createEmployee(String username, String name, String password, MuseumManagementSystem mms) { 
 
-        // Case where the mms is null 
-        if (mms == null){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The MuseumManagementSystem is null");
+        // Case where any of the parameters are null
+        if (mms.equals(null) || username.equals(null) || name.equals(null) || password.equals(null)){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
         }
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
+        // Case where the username contains whitespaces
+        if (username.contains(" ")) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The username cannot have spaces");
         }
 
-        // Case where the name is empty or if it contains whitespaces
-        if (name.equals("") || name.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
+        // Case where the name consists of only whitespaces
+        if (name.trim().isEmpty() == true) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid name");
         }
 
-        // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
+        // Case where the password contains whitespaces 
+        if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
+        }
+
+        // The username is already in use 
+        if (employeeRepository.existsById(username)){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
 
         // Creating an employee
@@ -176,7 +191,7 @@ public class AccountManagementService {
 	public Client getClient(String username) {
 
         // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
+        if (username == "" || username == null || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
         }
 
@@ -269,7 +284,7 @@ public class AccountManagementService {
     public void deleteClient(String username){
 
         // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
+        if (username == "" || username == null || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
         }
 
@@ -292,12 +307,12 @@ public class AccountManagementService {
     public Client signInClientAccount(String username, String password){
 
         // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
+        if (username == "" || username == null || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
         }
 
         // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
+        if (password == "" || password == null || password.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
 
@@ -397,17 +412,17 @@ public class AccountManagementService {
      */
     public Client editClientAccount(String username, String name, String password){
         // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
+        if (username == "" || username == null || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
         }
 
         // Case where the name is empty or if it contains whitespaces
-        if (name.equals("") || name.contains(" ")) {
+        if (name == "" || name == null || name.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
         }
 
         // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
+        if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
         
