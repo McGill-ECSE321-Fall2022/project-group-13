@@ -35,15 +35,20 @@ public class LoanRequestService {
     /**
      * Creates a loan request pending for approval
      * @param loanDuration
-     * @param fee
      * @param artifact
      * @param client
      * @param mms
      */
     @Transactional
-    public LoanRequest createLoanRequest(int loanDuration, double fee, Artifact artifact, Client client, MuseumManagementSystem mms){
-        if (client == null || artifact == null || mms == null)
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
+    public LoanRequest createLoanRequest(int loanDuration, Artifact artifact, Client client, MuseumManagementSystem mms){
+        if (client == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Client does not exist");
+        else if (artifact == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Artifact does not exist");
+        else if (mms == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Museum Management System does not exist");
+        else if (loanDuration == 0)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan duration must be indicated");
 
         LoanRequest loanRequest;
         if (artifact.getLoanStatus().equals(Artifact.LoanStatus.Available)){
@@ -51,7 +56,7 @@ public class LoanRequestService {
             loanRequest.setArtifact(artifact);
             loanRequest.setClient(client);
             loanRequest.setLoanDuration(loanDuration);
-            loanRequest.setFee(fee);
+            loanRequest.setFee(artifact.getLoanFee());
             loanRequest.setStatus(LoanRequest.LoanStatus.Pending);
             loanRequest.setMuseumManagementSystem(mms);
             loanRequestRepository.save(loanRequest);
@@ -68,11 +73,16 @@ public class LoanRequestService {
      */
     @Transactional
     public LoanRequest getLoanRequest(Integer requestId){
-        LoanRequest loanRequest  = loanRequestRepository.findLoanRequestByRequestId(requestId);
-        if (loanRequest == null) {
+        if (loanRequestRepository.findLoanRequestByRequestId(requestId) == null)
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Loan request not found.");
-        }
-        return loanRequest;
+
+        return loanRequestRepository.findLoanRequestByRequestId(requestId);
+
+//        LoanRequest loanRequest  = loanRequestRepository.findLoanRequestByRequestId(requestId);
+//        if (loanRequest == null) {
+//            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Loan request not found.");
+//        }
+//        return loanRequest;
     }
 
     /**
@@ -82,22 +92,6 @@ public class LoanRequestService {
     @Transactional
     public List<LoanRequest> getAllLoanRequests() {
         return toList(loanRequestRepository.findAll());
-    }
-
-    /**
-     * Gets all loan requests registered in the specific museum
-     * @param systemId
-     * @return a list of loan request objects
-     */
-    @Transactional
-    public List<LoanRequest> getAllLoanRequestsBySystem(int systemId) {
-        List<LoanRequest> loanRequests = new ArrayList<LoanRequest>();
-        for (LoanRequest loanRequest : loanRequestRepository.findAll()) {
-            if (loanRequest.getMuseumManagementSystem().getSystemId() == systemId) {
-                loanRequests.add(loanRequest);
-            }
-        }
-        return loanRequests;
     }
 
     /**
@@ -158,8 +152,16 @@ public class LoanRequestService {
     @Transactional
     public LoanRequest approveLoanRequest(Integer requestId){
         // Checking if loan request exists
-        LoanRequest loanRequest=null;
-        if (loanRequestRepository.existsById(requestId)){
+        LoanRequest loanRequest;
+        if (loanRequestRepository.findLoanRequestByRequestId(requestId) == null) {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Loan request not found.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Approved)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request was already approved.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Rejected)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request was already rejected.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Returned)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan was already returned.");
+        } else {
             // Approving loan request
             loanRequest = loanRequestRepository.findLoanRequestByRequestId(requestId);
             Artifact artifact = loanRequest.getArtifact();
@@ -188,8 +190,16 @@ public class LoanRequestService {
     @Transactional
     public LoanRequest rejectLoanRequest(Integer requestId){
         // Checking if loan request exists
-        LoanRequest loanRequest = null;
-        if (loanRequestRepository.existsById(requestId)){
+        LoanRequest loanRequest;
+        if (loanRequestRepository.findLoanRequestByRequestId(requestId) == null) {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Loan request not found.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Approved)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request was already approved.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Rejected)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request was already rejected.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Returned)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan was already returned.");
+        } else {
             // Rejecting loan request
             loanRequest = loanRequestRepository.findLoanRequestByRequestId(requestId);
             loanRequest.setStatus(LoanRequest.LoanStatus.Rejected);
@@ -206,9 +216,16 @@ public class LoanRequestService {
     @Transactional
     public LoanRequest returnLoanedArtifact(Integer requestId){
         // Checking if loan request exists
-        LoanRequest loanRequest=null;
-        if (loanRequestRepository.existsById(requestId)){
-            // Returned artifact
+        LoanRequest loanRequest;
+        if (loanRequestRepository.findLoanRequestByRequestId(requestId) == null) {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Loan request not found.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Rejected)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan request was rejected.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Returned)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan was already returned.");
+        } else if (loanRequestRepository.findLoanRequestByRequestId(requestId).getStatus().equals(LoanRequest.LoanStatus.Pending)) {
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan needs to be approved or rejected first.");
+        } else {
             loanRequest = loanRequestRepository.findLoanRequestByRequestId(requestId);
             Artifact artifact = loanRequest.getArtifact();
             Client client = loanRequest.getClient();
