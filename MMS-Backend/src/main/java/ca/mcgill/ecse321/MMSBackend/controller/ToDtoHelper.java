@@ -1,8 +1,10 @@
 package ca.mcgill.ecse321.MMSBackend.controller;
 
 import ca.mcgill.ecse321.MMSBackend.model.*;
+import ca.mcgill.ecse321.MMSBackend.model.DonationRequest.DonationStatus;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 import ca.mcgill.ecse321.MMSBackend.dto.*;
+import ca.mcgill.ecse321.MMSBackend.dto.DonationRequestDto.DonationStatusDto;
 import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto.DayTypeDto;
 
 public class ToDtoHelper {
@@ -215,6 +217,50 @@ public class ToDtoHelper {
 
     }
 
+      /**
+     * @author Yu An Lu (yu-an-lu) 
+     * @param status
+     * @return a DonationStatusDto
+     */
+    public static DonationStatusDto convertToDto(DonationStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
+        }
+        
+        switch (status) {
+            case Approved:
+                return DonationStatusDto.Approved;
+            case Rejected:
+                return DonationStatusDto.Rejected;
+            case Pending:
+                return DonationStatusDto.Pending;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + status);
+        }
+    }
+
+    /**
+     * @author Yu An Lu (yu-an-lu) 
+     * @param statusDto
+     * @return a DonationStatus
+     */
+    public static DonationStatus convertToDomainObject(DonationStatusDto statusDto) {
+        if (statusDto == null) {
+            throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
+        }
+
+        switch (statusDto) {
+            case Approved:
+                return DonationStatus.Approved;
+            case Rejected:
+                return DonationStatus.Rejected;
+            case Pending:
+                return DonationStatus.Pending;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + statusDto);
+        }
+    }
+
     /**
      * @author Yu An Lu (yu-an-lu)
      * @param donationRequest
@@ -228,7 +274,7 @@ public class ToDtoHelper {
         DonationRequestDto donationRequestDto = new DonationRequestDto(donationRequest.getRequestId(),
                 convertToDto(donationRequest.getClient()), 
                 convertToDto(donationRequest.getArtifact()),
-                donationRequest.getStatus(),
+                convertToDto(donationRequest.getStatus()),
                 convertToDto(donationRequest.getMuseumManagementSystem()));
 
         return donationRequestDto;

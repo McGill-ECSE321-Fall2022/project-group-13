@@ -99,10 +99,10 @@ public class DonationRequest extends Request
   }
 
 
-  public String toString()
-  {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "status" + "=" + (getStatus() != null ? !getStatus().equals(this)  ? getStatus().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "museumManagementSystem = "+(getMuseumManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getMuseumManagementSystem())):"null");
-  }
+  // public String toString()
+  // {
+  //   return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
+  //           "  " + "status" + "=" + (getStatus() != null ? !getStatus().equals(this)  ? getStatus().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+  //           "  " + "museumManagementSystem = "+(getMuseumManagementSystem()!=null?Integer.toHexString(System.identityHashCode(getMuseumManagementSystem())):"null");
+  // }
 }

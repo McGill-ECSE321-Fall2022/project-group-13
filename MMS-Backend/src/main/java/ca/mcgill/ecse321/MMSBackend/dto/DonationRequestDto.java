@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
-import ca.mcgill.ecse321.MMSBackend.model.DonationRequest;
-
 /**
  * @author Yu An Lu (yu-an-lu)
  * 
@@ -10,17 +8,19 @@ import ca.mcgill.ecse321.MMSBackend.model.DonationRequest;
  */
 public class DonationRequestDto {
 
+    public enum DonationStatusDto { Approved, Rejected, Pending };
+
     private int requestId;
     private ClientDto client;
     private ArtifactDto artifact;
-    private DonationRequest.DonationStatus status;
+    private DonationStatusDto status;
     private MuseumManagementSystemDto museumManagementSystem;
 
     public DonationRequestDto() {
 
     }
 
-    public DonationRequestDto(int requestId, ClientDto client, ArtifactDto artifact, DonationRequest.DonationStatus status, MuseumManagementSystemDto museumManagementSystem) {
+    public DonationRequestDto(int requestId, ClientDto client, ArtifactDto artifact, DonationStatusDto status, MuseumManagementSystemDto museumManagementSystem) {
         this.requestId = requestId;
         this.client = client;
         this.artifact = artifact;
@@ -40,7 +40,7 @@ public class DonationRequestDto {
         return artifact;
     }
 
-    public DonationRequest.DonationStatus getStatus() {
+    public DonationStatusDto getStatus() {
         return status;
     }
 
