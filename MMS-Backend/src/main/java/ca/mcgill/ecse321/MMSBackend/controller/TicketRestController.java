@@ -71,7 +71,7 @@ public class TicketRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/ticket", "/ticket/" })
+    @GetMapping(value = { "/tickets", "/tickets/" })
     public List<TicketDto> getAllTickets() throws IllegalArgumentException
     {
         List<Ticket> tickets = ticketService.getAllTickets();
@@ -128,8 +128,8 @@ public class TicketRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/ticket/{ticketId}/{clientUsername}", "/ticket/{ticketId}/{clientUsername}/" })
-    public List<TicketDto> getTicketsByClient(@PathVariable("ticketId") int ticketId, @PathVariable("clientUsername") String clientUsername) throws IllegalArgumentException
+    @GetMapping(value = { "/tickets/{clientUsername}", "/tickets/{clientUsername}/" })
+    public List<TicketDto> getTicketsByClient(@PathVariable("clientUsername") String clientUsername) throws IllegalArgumentException
     {
         List<Ticket> tickets = ticketService.getAllTicketsByClient(clientUsername);
 

@@ -28,8 +28,6 @@ public class TicketService {
     @Autowired
     MuseumManagementSystemRepository museumManagementSystemRepository;
 
-    
-
     /**
      * Create ticket for a client
      * 
