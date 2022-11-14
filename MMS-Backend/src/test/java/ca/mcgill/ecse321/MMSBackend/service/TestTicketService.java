@@ -129,27 +129,27 @@ public class TestTicketService {
         }
 
         assertNotNull(ticket);
-        assertEquals(TICKET_FEE, ticket.getFee());
         checkTicketValidness(ticket);
 
     }
 
-    // @Test
-    // public void testCreateTicketNullMms()
-    // {
-    //     String error = "";
-    //     Ticket ticket = null;
+    @Test
+    public void testCreateTicketNullClient(){
+    
+        String error = "";
+        Ticket ticket = null;
 
-    //     try {
-    //         ticket = ticketService.createTicket(CLIENT_USERNAME);
-    //     } catch (MuseumManagementSystemException e) {
-    //         error = e.getMessage();
-    //     }
+        try {
+            ticket = ticketService.createTicket("");
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
 
-    //     assertNull(ticket);
-    //     assertEquals("MuseumManagementSystem does not exist", error);
+        assertNull(ticket);
+        assertEquals("This username is invalid", error);
 
-    // }
+    }
+
 
     @Test
     public void testGetTicket(){
@@ -166,6 +166,23 @@ public class TestTicketService {
     }
 
     @Test
+    public void testGetTicketNullTicket(){
+
+        String error = "";
+        Ticket ticket = null;
+
+        try {
+            ticket = ticketService.getTicket(-1);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertNull(ticket);
+        assertEquals("Ticket does not exist", error);
+
+    }
+
+    @Test
     public void testDeleteTicket(){
 
         Ticket ticket = null;
@@ -179,12 +196,26 @@ public class TestTicketService {
         assertNull(ticket);
     }
 
+    @Test
+    public void testDeleteTicketNullTicket(){
+
+        String error = "";
+
+        try {
+            ticketService.deleteTicket(-1);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Ticket does not exist", error);
+    }
+
     //this doesn't work yet
     @Test
     public void testSetTicketStatus(){
             
             Ticket ticket = ticketService.getTicket(TICKET_ID);
-            boolean status = !ticket.getIsActive();
+            boolean status = !(ticket.getIsActive());
     
             try {
                 ticketService.setTicketStatus(TICKET_ID, status);
@@ -194,6 +225,20 @@ public class TestTicketService {
     
             assertNotNull(ticket);
             assertEquals(status, ticket.getIsActive());
+    }
+
+    @Test
+    public void testSetTicketStatusNullTicket(){
+
+        String error = "";
+
+        try {
+            ticketService.setTicketStatus(-1, false);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Ticket does not exist", error);
     }
 
     public void checkTicketValidness(Ticket ticket){
