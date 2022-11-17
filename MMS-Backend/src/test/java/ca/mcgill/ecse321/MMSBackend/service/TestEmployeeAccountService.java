@@ -121,7 +121,7 @@ public class TestEmployeeAccountService {
 
     lenient().when(mmsDao.save(any(MuseumManagementSystem.class))).thenAnswer(returnParameterAsAnswer);
     lenient().when(employeeDao.save(any(Employee.class))).thenAnswer(returnParameterAsAnswer);
-}
+    }
 
     //-----------------------------------------------Testing createEmployee()--------------------------------------------------
 

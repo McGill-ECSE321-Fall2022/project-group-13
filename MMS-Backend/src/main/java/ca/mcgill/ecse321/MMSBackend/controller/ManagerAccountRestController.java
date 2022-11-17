@@ -40,12 +40,6 @@ public class ManagerAccountRestController {
         Manager manager = service.createManager(username, name, password, mms); 
         return ToDtoHelper.convertToDto(manager); 
     }
-    
-    @GetMapping(value = {"/manager/{username}", "/manager/{username}/"})
-    public ManagerDto getManager(@PathVariable("username") String username) throws IllegalArgumentException {
-        Manager manager = service.getManager(username);
-        return ToDtoHelper.convertToDto(manager); 
-    }
 
     @GetMapping(value = {"/manager/signin/{username}", "/manager/signin/{username}/"})
     public ManagerDto signInManagerAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
@@ -58,7 +52,7 @@ public class ManagerAccountRestController {
     public ManagerDto editManager(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
         password) throws IllegalArgumentException{
 
-        Manager manager = service.editManagerAccount(username, name, password);
+        Manager manager = service.editManagerAccount(name, password);
         return ToDtoHelper.convertToDto(manager);
     }
 }

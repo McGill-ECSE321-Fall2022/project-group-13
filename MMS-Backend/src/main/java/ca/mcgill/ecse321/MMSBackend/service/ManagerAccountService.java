@@ -52,10 +52,9 @@ public class ManagerAccountService {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
         }
 
-        // The username is already in use 
-        if (managerRepository.existsById(username) == true){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
-        }
+        if (getManager() != null){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A manager already exists");  
+        } 
 
         // Creating a manager
 		Manager manager = new Manager();
@@ -68,34 +67,20 @@ public class ManagerAccountService {
 	}
 
     /**
-     * get a Manager account 
-     * @param - Username: string that will be used to locate the account associated to that unique ID  
-     * @author - Nikolas Pasichnik 
-     */
-    @Transactional
-	public Manager getManager(String username) {
-
-        // Case where the username is empty or if it contains whitespaces
-        if (username == "" || username == null || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
-
-		Manager manager = managerRepository.findManagerByUsername(username);
-
-        if (manager == null){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This manager account does not exist");
-        }
-
-		return manager;
-	}
-
-    /**
      * get the manager of the system 
      * @author - Nikolas Pasichnik 
      */
 	@Transactional
 	public Manager getManager() {
-		return toList(managerRepository.findAll()).get(0);
+		List<Manager> list = toList(managerRepository.findAll());
+
+        if (list.isEmpty()) {
+            return null; 
+        }
+
+        else{
+            return list.get(0); 
+        }
 	}
 
     /**
@@ -115,6 +100,10 @@ public class ManagerAccountService {
 
         Manager manager = getManager(); 
 
+        if (getManager() == null){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A manager account doesn't exist");  
+        } 
+
         // Case where the entered password does not match with the one in the system 
         if (manager.getPassword().equals(password) == false || password.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is incorrect");
@@ -124,13 +113,12 @@ public class ManagerAccountService {
     }
 
     /**
-     * @param username - String that will be used to locate the account associated to that unique ID  
      * @param name - Sring that is the name of the user 
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
     @Transactional
-    public Manager editManagerAccount(String username, String newName, String newPassword){
+    public Manager editManagerAccount(String newName, String newPassword){
 
         // Case where the name is empty or if it contains whitespaces
         if (newName == "" || newName == null) {
@@ -143,6 +131,10 @@ public class ManagerAccountService {
         }
 
         Manager manager = getManager();
+
+        if (getManager() == null){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A manager account doesn't exist");  
+        } 
 
         manager.setName(newName); 
         manager.setPassword(newPassword); 
