@@ -52,7 +52,7 @@ public class ClientAccountService {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
         }
 
-        // The username is already in use (maybe swap for findByUsername) 
+        // The username is already in use 
         if (clientRepository.existsById(username) == true){
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
@@ -107,15 +107,7 @@ public class ClientAccountService {
     @Transactional
     public void deleteClient(String username){
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username == "" || username == null || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
-
-        // Case where the client doesn't exist 
-        if (clientRepository.existsById(username) == false){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A client with that username does not exist");
-        }
+        Client client = getClient(username);
 
         clientRepository.deleteById(username);   
     }
@@ -130,25 +122,15 @@ public class ClientAccountService {
     @Transactional
     public Client signInClientAccount(String username, String password){
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username == "" || username == null || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
-
         // Case where the password is empty or if it contains whitespaces
-        if (password == "" || password == null || password.contains(" ")) {
+        if (password == "" || password == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
 
-        // Case where a client with the entered ID doesn't exist
-        if (clientRepository.existsById(username) == false) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A client with this username does not exist");
-        }
-
-        Client client = clientRepository.findClientByUsername(username); 
+        Client client = getClient(username); 
 
         // Case where the entered password does not match with the one in the system 
-        if (client.getPassword().equals(password) == false) {
+        if (client.getPassword().equals(password) == false || password.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is incorrect");
         }
 
@@ -161,32 +143,22 @@ public class ClientAccountService {
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
-    public Client editClientAccount(String username, String name, String password){
-        // Case where the username is empty or if it contains whitespaces
-        if (username == "" || username == null || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
+    public Client editClientAccount(String username, String newName, String newPassword){
 
         // Case where the name is empty or if it contains whitespaces
-        if (name == "" || name == null || name.contains(" ")) {
+        if (newName == "" || newName == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
         }
 
         // Case where the password is empty or if it contains whitespaces
-        if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
+        if (newPassword.contains(" ") || newPassword.length() < 8 || newPassword.length() > 30) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
-        
-        // Case where a client with the entered ID doesn't exist
-        if (clientRepository.existsById(username) == false) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A client with this username does not exist");
-        }
 
-        // Getting the client 
-        Client client = clientRepository.findClientByUsername(username); 
+        Client client = getClient(username);
 
-        client.setName(username); 
-        client.setPassword(password); 
+        client.setName(newName); 
+        client.setPassword(newPassword); 
 
         return client; 
     }
