@@ -42,30 +42,21 @@ public class TestClientAccountService {
     private ClientAccountService service;
 
     private static final String CLIENT_USERNAME = "ClientUsername";
+    private static final String CLIENT_USERNAME_A = "ClientUsername_A";
+    private static final String CLIENT_USERNAME_B = "ClientUsername_B";
+    private static final String CLIENT_USERNAME_C = "ClientUsername_C";
+    private static final String CLIENT_USERNAME_D = "ClientUsername_D";
+    private static final String EXISTING_CLIENT_USERNAME = "ExistingClientUsername";
+    private static final String FAKE_CLIENT_USERNAME = "FakeClientUsername";
+
     private static final String CLIENT_NAME = "ClientName";
     private static final String CLIENT_PASSWORD = "ClientPassword"; 
+    private static final String CLIENT_NEW_NAME = "NewClientName";
+    private static final String CLIENT_NEW_PASSWORD = "NewClientPasword"; 
+    private static final String CLIENT_INCORRECT_PASSWORD = "IncorrectEmployeePassword"; 
+
     private static final int CLIENT_LOAN_NUMBER = 0; 
 
-    private static final String CLIENT_USERNAME_A = "ClientUsername_A";
-    private static final String CLIENT_NAME_A = "ClientName_A";
-    private static final String CLIENT_PASSWORD_A = "ClientPassword_A"; 
-
-    private static final String CLIENT_USERNAME_B = "ClientUsername_B";
-    private static final String CLIENT_NAME_B = "ClientName_B";
-    private static final String CLIENT_PASSWORD_B = "ClientPassword_B";
-
-    private static final String CLIENT_USERNAME_C = "ClientUsername_C";
-    private static final String CLIENT_NAME_C = "ClientName_C";
-    private static final String CLIENT_PASSWORD_C = "ClientPassword_C"; 
-
-    private static final String CLIENT_USERNAME_D = "ClientUsername_D";
-    private static final String CLIENT_NAME_D = "ClientName_D";
-    private static final String CLIENT_PASSWORD_D = "ClientPassword_D"; 
-
-    private static final String EXISTING_CLIENT_USERNAME = "ExistingClientUsername";
-
-    private static final String FAKE_CLIENT_USERNAME = "FakeClientUsername";
-    
     private static final int MMS_ID = 8;
     private static final String MMS_NAME = "Louvre";
     private static final Time OPEN_TIME = Time.valueOf("9:00:00");
@@ -73,7 +64,6 @@ public class TestClientAccountService {
     private static final int MAX_LOAN_NUMBER = 5;
     private static final double TICKET_FEE = 10.0;
 
- 
     @BeforeEach
     public void setMockOutput() {
 
@@ -94,17 +84,14 @@ public class TestClientAccountService {
     });
 
         lenient().when(clientDao.findClientByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(CLIENT_USERNAME)) {
-                return client(CLIENT_USERNAME,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(CLIENT_USERNAME_B)){
-                return client(CLIENT_USERNAME_B,CLIENT_NAME_B,CLIENT_PASSWORD_B,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            if(invocation.getArgument(0).equals(CLIENT_USERNAME_B)) {
+                return client(CLIENT_USERNAME_B,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
             }
             else if (invocation.getArgument(0).equals(CLIENT_USERNAME_C)){
-                return client(CLIENT_USERNAME_C,CLIENT_NAME_C,CLIENT_PASSWORD_C,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+                return client(CLIENT_USERNAME_C,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
             }
             else if (invocation.getArgument(0).equals(CLIENT_USERNAME_D)){
-                return client(CLIENT_USERNAME_D,CLIENT_NAME_D,CLIENT_PASSWORD_D,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+                return client(CLIENT_USERNAME_D,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
             }
             else if (invocation.getArgument(0).equals(FAKE_CLIENT_USERNAME)){
                 return null; 
@@ -378,8 +365,8 @@ public class TestClientAccountService {
 
         assertNotNull(a);
         assertEquals(CLIENT_USERNAME_B, a.getUsername());
-        assertEquals(CLIENT_NAME_B, a.getName());
-        assertEquals(CLIENT_PASSWORD_B, a.getPassword());
+        assertEquals(CLIENT_NAME, a.getName());
+        assertEquals(CLIENT_PASSWORD, a.getPassword());
     }
 
     @Test
@@ -453,7 +440,7 @@ public class TestClientAccountService {
     @Test
     public void testGetAllClients(){
 
-        Client client_1 = service.createClient(CLIENT_USERNAME_A, CLIENT_NAME_A, CLIENT_PASSWORD_A, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Client client_1 = service.createClient(CLIENT_USERNAME_A, CLIENT_NAME, CLIENT_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(clientDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
 
@@ -497,15 +484,15 @@ public class TestClientAccountService {
         Client a = null; 
 
         try{
-            a = service.signInClientAccount(CLIENT_USERNAME_C, CLIENT_PASSWORD_C);
+            a = service.signInClientAccount(CLIENT_USERNAME_C, CLIENT_PASSWORD);
         }catch (IllegalArgumentException e){
             fail();
         }
 
         assertNotNull(a);
         assertEquals(CLIENT_USERNAME_C, a.getUsername());
-        assertEquals(CLIENT_NAME_C, a.getName());
-        assertEquals(CLIENT_PASSWORD_C, a.getPassword());
+        assertEquals(CLIENT_NAME, a.getName());
+        assertEquals(CLIENT_PASSWORD, a.getPassword());
 
     } 
 
@@ -549,7 +536,7 @@ public class TestClientAccountService {
         String error = ""; 
 
         try{
-            a = service.signInClientAccount(CLIENT_USERNAME_C, CLIENT_PASSWORD_B);
+            a = service.signInClientAccount(CLIENT_USERNAME_C, CLIENT_INCORRECT_PASSWORD);
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
@@ -581,16 +568,16 @@ public class TestClientAccountService {
         Client a = null; 
 
         try{
-            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME_A, CLIENT_PASSWORD_A);
+            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NEW_NAME, CLIENT_NEW_PASSWORD);
         }catch (IllegalArgumentException e){
             fail();
         }
 
         assertNotNull(a);
-        assertEquals(CLIENT_NAME_A, a.getName());
-        assertEquals(CLIENT_PASSWORD_A, a.getPassword());
-        assertNotEquals(CLIENT_NAME_D, a.getName());
-        assertNotEquals(CLIENT_PASSWORD_D, a.getName());
+        assertEquals(CLIENT_NEW_NAME, a.getName());
+        assertEquals(CLIENT_NEW_PASSWORD, a.getPassword());
+        assertNotEquals(CLIENT_NAME, a.getName());
+        assertNotEquals(CLIENT_PASSWORD, a.getName());
     }
 
     @Test
@@ -600,7 +587,7 @@ public class TestClientAccountService {
         String error = ""; 
 
         try{
-            a = service.editClientAccount(CLIENT_USERNAME_D, "", CLIENT_PASSWORD_A);
+            a = service.editClientAccount(CLIENT_USERNAME_D, "", CLIENT_PASSWORD);
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
@@ -617,7 +604,7 @@ public class TestClientAccountService {
         String error = ""; 
 
         try{
-            a = service.editClientAccount(CLIENT_USERNAME_D, null, CLIENT_PASSWORD_A);
+            a = service.editClientAccount(CLIENT_USERNAME_D, null, CLIENT_PASSWORD);
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
@@ -633,7 +620,7 @@ public class TestClientAccountService {
         String error = ""; 
 
         try{
-            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME_A, "   ");
+            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME, "   ");
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
@@ -649,7 +636,7 @@ public class TestClientAccountService {
         String error = ""; 
 
         try{
-            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME_A, "123");
+            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME, "123");
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
@@ -665,7 +652,7 @@ public class TestClientAccountService {
         String error = ""; 
 
         try{
-            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME_A, "abcdefghijklmnopqrstuvwxyz12345678");
+            a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME, "abcdefghijklmnopqrstuvwxyz12345678");
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
