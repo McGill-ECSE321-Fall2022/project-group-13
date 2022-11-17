@@ -27,7 +27,12 @@ public class EmployeeAccountService {
     public Employee createEmployee(String username, String name, String password, MuseumManagementSystem mms) { 
 
         // Case where any of the parameters are null
-        if (mms.equals(null) || username.equals(null) || name.equals(null) || password.equals(null)){
+        if (mms == null || username == null || name == null || password == null){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
+        }
+        
+        // Case where any of the parameters are empty strings
+        if (username == "" || name == "" || password == ""){
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
         }
 
@@ -47,7 +52,7 @@ public class EmployeeAccountService {
         }
 
         // The username is already in use 
-        if (employeeRepository.existsById(username)){
+        if (employeeRepository.existsById(username) == true){
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
 
@@ -70,7 +75,7 @@ public class EmployeeAccountService {
 	public Employee getEmployee(String username) {
 
         // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
+        if (username == "" || username == null || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
         }
 
@@ -100,17 +105,9 @@ public class EmployeeAccountService {
     @Transactional
     public void deleteEmployee(String username){
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
+        Employee employee = getEmployee(username);
 
-        // Case where the employee doesn't exist 
-        if (employeeRepository.existsById(username) == false){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "An employee with that username does not exist");
-        }
-
-        employeeRepository.deleteById(username);   
+        employeeRepository.deleteById(username);    
     }
 
     /**
@@ -123,30 +120,19 @@ public class EmployeeAccountService {
     @Transactional
     public Employee signInEmployeeAccount(String username, String password){
 
-        // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
-
         // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
+        if (password == "" || password == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
 
-        // Case where an employee with the entered ID doesn't exist
-        if (employeeRepository.existsById(username) == false) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "An employee with this username does not exist");
-        }
-
-        Employee employee = employeeRepository.findEmployeeByUsername(username); 
+        Employee employee = getEmployee(username); 
 
         // Case where the entered password does not match with the one in the system 
-        if (employee.getPassword().equals(password) == false) {
+        if (employee.getPassword().equals(password) == false || password.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is incorrect");
         }
 
         return employee; 
-
     }
 
     /**
@@ -155,32 +141,22 @@ public class EmployeeAccountService {
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
-    public Employee editEmployeeAccount(String username, String name, String password){
-        // Case where the username is empty or if it contains whitespaces
-        if (username.equals("") || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
-        }
+    public Employee editEmployeeAccount(String username, String newName, String newPassword){
 
         // Case where the name is empty or if it contains whitespaces
-        if (name.equals("") || name.contains(" ")) {
+        if (newName == "" || newName == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
         }
 
         // Case where the password is empty or if it contains whitespaces
-        if (password.equals("") || password.contains(" ")) {
+        if (newPassword.contains(" ") || newPassword.length() < 8 || newPassword.length() > 30) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
-        
-        // Case where a client with the entered ID doesn't exist
-        if (employeeRepository.existsById(username) == false) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "An employee with this username does not exist");
-        }
 
-        // Getting the client 
-        Employee employee = employeeRepository.findEmployeeByUsername(username); 
+        Employee employee = getEmployee(username);
 
-        employee.setName(username); 
-        employee.setPassword(password); 
+        employee.setName(newName); 
+        employee.setPassword(newPassword); 
 
         return employee; 
     }
