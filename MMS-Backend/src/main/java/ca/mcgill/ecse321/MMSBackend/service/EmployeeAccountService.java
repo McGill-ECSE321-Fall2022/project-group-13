@@ -141,6 +141,7 @@ public class EmployeeAccountService {
      * @param password - String that is used to verify that it is the correct employee signing in 
      * @author - Nikolas Pasichnik 
      */
+    @Transactional
     public Employee editEmployeeAccount(String username, String newName, String newPassword){
 
         // Case where the name is empty or if it contains whitespaces
