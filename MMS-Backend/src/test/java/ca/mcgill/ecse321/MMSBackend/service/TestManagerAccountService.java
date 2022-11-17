@@ -42,7 +42,6 @@ public class TestManagerAccountService {
     private ManagerAccountService service; 
 
     private static final String MANAGER_USERNAME = "ManagerUsername";
-    private static final String MANAGER_USERNAME_A = "ManagerUsername_A";
     private static final String MANAGER_USERNAME_B = "ManagerUsername_B";
     private static final String MANAGER_USERNAME_C = "ManagerUsername_C";
     private static final String MANAGER_USERNAME_D = "ManagerUsername_D";
