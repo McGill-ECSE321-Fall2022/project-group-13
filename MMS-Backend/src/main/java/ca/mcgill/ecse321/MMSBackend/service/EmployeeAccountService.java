@@ -107,7 +107,7 @@ public class EmployeeAccountService {
 
         Employee employee = getEmployee(username);
 
-        employeeRepository.deleteById(username);    
+        employeeRepository.deleteById(employee.getUsername());    
     }
 
     /**

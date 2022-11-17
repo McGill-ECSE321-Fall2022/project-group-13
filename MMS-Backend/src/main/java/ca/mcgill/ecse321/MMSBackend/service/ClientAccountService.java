@@ -109,7 +109,7 @@ public class ClientAccountService {
 
         Client client = getClient(username);
 
-        clientRepository.deleteById(username);   
+        clientRepository.deleteById(client.getUsername());   
     }
 
     /**
