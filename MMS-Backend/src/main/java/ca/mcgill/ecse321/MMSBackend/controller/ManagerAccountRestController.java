@@ -30,8 +30,8 @@ public class ManagerAccountRestController {
     private ManagerAccountService service ; 
 
     @GetMapping(value = { "/managers", "/managers/" })
-    public List<ManagerDto> getManager() throws IllegalArgumentException {
-        return service.getManager().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList());
+    public ManagerDto getManager() throws IllegalArgumentException {
+        return ToDtoHelper.convertToDto(service.getManager()); 
     }
 
     @PostMapping(value = {"/manager", "/manager/"})
