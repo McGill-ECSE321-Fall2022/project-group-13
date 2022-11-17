@@ -83,13 +83,7 @@ public class TestEmployeeAccountService {
     });
 
         lenient().when(employeeDao.findEmployeeByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(EMPLOYEE_USERNAME)) {
-                return employee(EMPLOYEE_USERNAME,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_A)){
-                return employee(EMPLOYEE_USERNAME_A,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_B)){
+            if(invocation.getArgument(0).equals(EMPLOYEE_USERNAME_B)) {
                 return employee(EMPLOYEE_USERNAME_B,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
             }
             else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)){
