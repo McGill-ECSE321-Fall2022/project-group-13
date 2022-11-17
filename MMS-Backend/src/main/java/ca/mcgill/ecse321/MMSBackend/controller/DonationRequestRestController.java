@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.dto.*;
 import ca.mcgill.ecse321.MMSBackend.dto.DonationRequestDto.DonationStatusDto;
-import ca.mcgill.ecse321.MMSBackend.service.AccountManagementService;
 import ca.mcgill.ecse321.MMSBackend.service.ArtifactService;
+import ca.mcgill.ecse321.MMSBackend.service.ClientAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.DonationRequestService;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
@@ -32,7 +32,7 @@ public class DonationRequestRestController {
     private ArtifactService artifactService;
 
     @Autowired
-    private AccountManagementService accountManagementService;
+    private ClientAccountService clientAccountService;
 
     @Autowired
     private MuseumManagementSystemService mmsService;
@@ -83,7 +83,7 @@ public class DonationRequestRestController {
         @RequestParam(name = "mmsSystem") MuseumManagementSystemDto museumManagementSystemDto)
         
         throws IllegalArgumentException {
-        Client client = accountManagementService.getClient(clientDto.getUsername());
+        Client client = clientAccountService.getClient(clientDto.getUsername());
         Artifact artifact = artifactService.getArtifact(artifactDto.getArtifactId());
         MuseumManagementSystem museumManagementSystem = mmsService
                 .getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
@@ -198,7 +198,7 @@ public class DonationRequestRestController {
         @PathVariable("client") ClientDto clientDto)
 
         throws IllegalArgumentException {
-        Client client = accountManagementService.getClient(clientDto.getUsername());
+        Client client = clientAccountService.getClient(clientDto.getUsername());
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByClient(client)) {

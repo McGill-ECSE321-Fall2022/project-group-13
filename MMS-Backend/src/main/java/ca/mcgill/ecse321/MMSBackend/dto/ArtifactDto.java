@@ -1,9 +1,4 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
-
-import ca.mcgill.ecse321.MMSBackend.model.Artifact;
-import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
-import ca.mcgill.ecse321.MMSBackend.model.Room;
-
 public class ArtifactDto {
 
     public enum LoanStatusDto { Available, Unavailable, Loaned }

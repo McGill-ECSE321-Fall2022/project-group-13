@@ -19,7 +19,7 @@ import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.Shift;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
-import ca.mcgill.ecse321.MMSBackend.service.AccountManagementService;
+import ca.mcgill.ecse321.MMSBackend.service.EmployeeAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.EmployeeScheduleService;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
@@ -41,7 +41,7 @@ public class EmployeeScheduleRestController {
     private EmployeeScheduleService employeeScheduleService;
 
     @Autowired
-    private AccountManagementService accountManagementService;
+    private EmployeeAccountService employeeAccountService;
 
     @Autowired
     private MuseumManagementSystemService mmsService;
@@ -61,7 +61,7 @@ public class EmployeeScheduleRestController {
     public ShiftDto createShift(@RequestParam(name = "employee") EmployeeDto employeeDto,
             @RequestParam(name = "dayOfTheWeek") SpecificWeekDayDto specificWeekDayDto, @RequestParam Time startTime,
             @RequestParam Time endTime) throws IllegalArgumentException {
-        Employee employee = accountManagementService.getEmployee(employeeDto.getUsername());
+        Employee employee = employeeAccountService.getEmployee(employeeDto.getUsername());
         DayType dayType = ToDtoHelper.convertToDomainObject(specificWeekDayDto.getDayType());
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         Shift shift = employeeScheduleService.createShift(employee, specificWeekDay, startTime, endTime);
@@ -103,7 +103,7 @@ public class EmployeeScheduleRestController {
     @DeleteMapping(value = { "/shift/employee", "/shift/employee/" })
     public void deleteAllShiftsForEmployee(@RequestParam(name = "employee") EmployeeDto employeeDto)
             throws IllegalArgumentException {
-        Employee employee = accountManagementService.getEmployee(employeeDto.getUsername());
+        Employee employee = employeeAccountService.getEmployee(employeeDto.getUsername());
         employeeScheduleService.deleteAllShiftsForEmployee(employee);
     }
 
@@ -133,7 +133,7 @@ public class EmployeeScheduleRestController {
     @GetMapping(value = { "/shift/employee", "/shift/employee/" })
     public List<ShiftDto> getAllShiftsForEmployee(@RequestParam(name = "employee") EmployeeDto employeeDto)
             throws IllegalArgumentException {
-        Employee employee = accountManagementService.getEmployee(employeeDto.getUsername());
+        Employee employee = employeeAccountService.getEmployee(employeeDto.getUsername());
         List<ShiftDto> shiftsDto = new ArrayList<ShiftDto>();
         for (Shift shift : employeeScheduleService.getAllShiftsForEmployee(employee)) {
             shiftsDto.add(ToDtoHelper.convertToDto(shift));

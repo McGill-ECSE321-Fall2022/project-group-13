@@ -8,8 +8,8 @@ import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
-import ca.mcgill.ecse321.MMSBackend.service.AccountManagementService;
 import ca.mcgill.ecse321.MMSBackend.service.ArtifactService;
+import ca.mcgill.ecse321.MMSBackend.service.ClientAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.LoanRequestService;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class LoanRequestRestController {
     @Autowired
     private ArtifactService artifactService;
     @Autowired
-    private AccountManagementService accountManagementService;
+    private ClientAccountService clientAccountService;
     @Autowired
     private MuseumManagementSystemService mmsService;
 
@@ -47,7 +47,7 @@ public class LoanRequestRestController {
                                             @RequestParam(name = "client") ClientDto clientDto, @RequestParam(name = "mmsSystem") MuseumManagementSystemDto museumManagementSystemDto) throws IllegalArgumentException {
 
         Artifact artifact = artifactService.getArtifact(artifactDto.getArtifactId());
-        Client client = accountManagementService.getClient(clientDto.getUsername());
+        Client client = clientAccountService.getClient(clientDto.getUsername());
         MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
         LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, artifact, client, museumManagementSystem);
 
@@ -111,7 +111,7 @@ public class LoanRequestRestController {
      */
     @GetMapping(value = {"/loanRequests/{client}", "/loanRequests/{client}/"})
     public List<LoanRequestDto> getAllLoanRequestsByClient(@RequestParam(name = "client") ClientDto clientDto) throws IllegalArgumentException {
-        Client client = accountManagementService.getClient(clientDto.getUsername());
+        Client client = clientAccountService.getClient(clientDto.getUsername());
         List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<LoanRequestDto>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByClient(client)) {
             loanRequestsByClientDto.add(ToDtoHelper.convertToDto(loanRequest));
