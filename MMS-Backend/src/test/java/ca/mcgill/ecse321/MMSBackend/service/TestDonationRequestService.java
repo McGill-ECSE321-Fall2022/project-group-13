@@ -183,14 +183,6 @@ public class TestDonationRequestService {
         checkCreatedDonationArtifact(artifact);
     }
 
-    public void checkCreatedDonationArtifact(Artifact artifact){
-        assertEquals(ARTIFACT_NAME, artifact.getName());
-        assertEquals(ARTIFACT_IMAGE, artifact.getImage());
-        assertEquals(ARTIFACT_DESCRIPTION, artifact.getDescription());
-        assertEquals(ARTIFACT_IS_DAMAGED, artifact.getIsDamaged());
-        assertEquals(ARTIFACT_WORTH, artifact.getWorth());
-    }
-
     @Test
     public void testCreateDonationArtifactNullMms(){
         String error = null;
@@ -364,20 +356,6 @@ public class TestDonationRequestService {
         assertEquals(DonationRequest.DonationStatus.Pending, donationRequest.getStatus());
         checkCreatedDonationRequest(donationRequest);
         
-    }
-
-    private void checkCreatedDonationRequest(DonationRequest donationRequest){
-        assertEquals(CLIENT_NAME, donationRequest.getClient().getName());
-        assertEquals(CLIENT_PASSWORD, donationRequest.getClient().getPassword());
-        assertEquals(CLIENT_CURRENT_LOAN_NUMBER, donationRequest.getClient().getCurrentLoanNumber());
-
-        checkCreatedDonationArtifact(donationRequest.getArtifact());
-
-        assertEquals(MMS_NAME, donationRequest.getMuseumManagementSystem().getName());
-        assertEquals(OPEN_TIME, donationRequest.getMuseumManagementSystem().getOpenTime());
-        assertEquals(CLOSE_TIME, donationRequest.getMuseumManagementSystem().getCloseTime());
-        assertEquals(MAX_LOAN_NUMBER, donationRequest.getMuseumManagementSystem().getMaxLoanNumber());
-        assertEquals(TICKET_FEE, donationRequest.getMuseumManagementSystem().getTicketFee());
     }
 
     @Test
@@ -746,7 +724,7 @@ public class TestDonationRequestService {
 
     // Helper methods
 
-    public static MuseumManagementSystem createMms(int id, String name, Time openTime, Time closeTime, int maxLoanNumber, double ticketFee) {
+    private static MuseumManagementSystem createMms(int id, String name, Time openTime, Time closeTime, int maxLoanNumber, double ticketFee) {
         MuseumManagementSystem mms = new MuseumManagementSystem();
         mms.setSystemId(id);
         mms.setName(name);
@@ -757,7 +735,7 @@ public class TestDonationRequestService {
         return mms;
     }
 
-    public static Client createClient(String username, String name, String password, int currentLoanNumber, MuseumManagementSystem mms) {
+    private static Client createClient(String username, String name, String password, int currentLoanNumber, MuseumManagementSystem mms) {
         Client client = new Client();
         client.setUsername(username);
         client.setName(name);
@@ -767,7 +745,7 @@ public class TestDonationRequestService {
         return client;
     }
 
-    public static Artifact createArtifact(int id, String name, String image, String description, boolean isDamaged, double worth, MuseumManagementSystem mms) {
+    private static Artifact createArtifact(int id, String name, String image, String description, boolean isDamaged, double worth, MuseumManagementSystem mms) {
         Artifact artifact = new Artifact();
         artifact.setArtifactId(id);
         artifact.setName(name);
@@ -779,7 +757,7 @@ public class TestDonationRequestService {
         return artifact;
     }
 
-    public static DonationRequest createDonationRequest(int id, Client client, Artifact artifact, DonationRequest.DonationStatus status, MuseumManagementSystem mms) {
+    private static DonationRequest createDonationRequest(int id, Client client, Artifact artifact, DonationRequest.DonationStatus status, MuseumManagementSystem mms) {
         DonationRequest donationRequest = new DonationRequest();
         donationRequest.setRequestId(id);
         donationRequest.setClient(client);
@@ -789,13 +767,35 @@ public class TestDonationRequestService {
         return donationRequest;
     }
 
-    public static Room createRoom(int id, String name, RoomType roomType, MuseumManagementSystem mms) {
+    private static Room createRoom(int id, String name, RoomType roomType, MuseumManagementSystem mms) {
         Room room = new Room();
         room.setRoomId(id);
         room.setName(name);
         room.setType(roomType);
         room.setMuseumManagementSystem(mms);
         return room;
+    }
+
+    private void checkCreatedDonationArtifact(Artifact artifact){
+        assertEquals(ARTIFACT_NAME, artifact.getName());
+        assertEquals(ARTIFACT_IMAGE, artifact.getImage());
+        assertEquals(ARTIFACT_DESCRIPTION, artifact.getDescription());
+        assertEquals(ARTIFACT_IS_DAMAGED, artifact.getIsDamaged());
+        assertEquals(ARTIFACT_WORTH, artifact.getWorth());
+    }
+
+    private void checkCreatedDonationRequest(DonationRequest donationRequest){
+        assertEquals(CLIENT_NAME, donationRequest.getClient().getName());
+        assertEquals(CLIENT_PASSWORD, donationRequest.getClient().getPassword());
+        assertEquals(CLIENT_CURRENT_LOAN_NUMBER, donationRequest.getClient().getCurrentLoanNumber());
+
+        checkCreatedDonationArtifact(donationRequest.getArtifact());
+
+        assertEquals(MMS_NAME, donationRequest.getMuseumManagementSystem().getName());
+        assertEquals(OPEN_TIME, donationRequest.getMuseumManagementSystem().getOpenTime());
+        assertEquals(CLOSE_TIME, donationRequest.getMuseumManagementSystem().getCloseTime());
+        assertEquals(MAX_LOAN_NUMBER, donationRequest.getMuseumManagementSystem().getMaxLoanNumber());
+        assertEquals(TICKET_FEE, donationRequest.getMuseumManagementSystem().getTicketFee());
     }
     
 }
