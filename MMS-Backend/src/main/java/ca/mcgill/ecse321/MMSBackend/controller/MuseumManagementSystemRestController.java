@@ -21,15 +21,17 @@ import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
 /**
- * @author Lucy Zhang (Lucy-Zh)
+ * @author Lucy Zhang (Lucy-Zh), Yu An Lu (yu-an-lu), Nazia Chowdhury (naziaC)
+ *         and Samantha Perez Hoffman (samperezh)
  *         The MmsRestController class is responsible for exposing
- *         the business logic declared in MuseumManagementSystemService using a REST
+ *         the business logic declared in MuseumManagementSystemService using a
+ *         REST
  *         API.
  */
 @CrossOrigin(origins = "*")
 @RestController
 public class MuseumManagementSystemRestController {
-    
+
     @Autowired
     private MuseumManagementSystemService mmsService;
 
@@ -42,7 +44,7 @@ public class MuseumManagementSystemRestController {
      */
     @PostMapping(value = { "/mms", "/mms/" })
     public MuseumManagementSystemDto createMms() throws IllegalArgumentException {
-        
+
         return ToDtoHelper.convertToDto(mmsService.createMuseumManagementSystem());
 
     }
@@ -55,9 +57,9 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/{systemId}", "/mms/{systemId}/"})
+    @GetMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
     public MuseumManagementSystemDto getMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        
+
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
 
     }
@@ -70,14 +72,14 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = { "/mms/{systemId}", "/mms/{systemId}/"})
+    @DeleteMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
     public void deleteMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        
+
         mmsService.deleteMuseumManagementSystem(systemId);
 
     }
 
-     /**
+    /**
      * Update mms name by id
      * 
      * @Author: Lucy Zhang (Lucy-Zh)
@@ -86,9 +88,10 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/mms/{systemId}", "/mms/{systemId}/"})
-    public MuseumManagementSystemDto updateMmsName(@PathVariable("systemId") int systemId, @RequestParam String name) throws IllegalArgumentException {
-        
+    @PutMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
+    public MuseumManagementSystemDto updateMmsName(@PathVariable("systemId") int systemId, @RequestParam String name)
+            throws IllegalArgumentException {
+
         mmsService.setMuseumManagementSystemName(systemId, name);
 
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
@@ -104,13 +107,13 @@ public class MuseumManagementSystemRestController {
      */
     @GetMapping(value = { "/mms", "/mms/" })
     public List<MuseumManagementSystemDto> getAllMms() throws IllegalArgumentException {
-        
+
         List<MuseumManagementSystemDto> mmsDto = new ArrayList<MuseumManagementSystemDto>();
-        
+
         for (MuseumManagementSystem mms : mmsService.getAllMuseumManagementSystem()) {
             mmsDto.add(ToDtoHelper.convertToDto(mms));
         }
-        
+
         return mmsDto;
     }
 
@@ -123,9 +126,10 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/mms/{systemId}/fee", "/mms/{systemId}/fee/"})
-    public MuseumManagementSystemDto updateMmsTicketFee(@PathVariable("systemId") int systemId, @RequestParam double ticketFee) throws IllegalArgumentException {
-        
+    @PutMapping(value = { "/mms/{systemId}/fee", "/mms/{systemId}/fee/" })
+    public MuseumManagementSystemDto updateMmsTicketFee(@PathVariable("systemId") int systemId,
+            @RequestParam double ticketFee) throws IllegalArgumentException {
+
         mmsService.setMuseumTicketPrice(systemId, ticketFee);
 
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
@@ -140,9 +144,9 @@ public class MuseumManagementSystemRestController {
      * @return the room dto
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/{roomId}", "/mms/{roomId}/"})
+    @GetMapping(value = { "/mms/{roomId}", "/mms/{roomId}/" })
     public RoomDto getRoom(@PathVariable("roomId") int roomId) throws IllegalArgumentException {
-        
+
         return ToDtoHelper.convertToDto(mmsService.getRoom(roomId));
 
     }
@@ -154,15 +158,15 @@ public class MuseumManagementSystemRestController {
      * @return a list of room dtos
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/rooms", "/mms/rooms/"})
+    @GetMapping(value = { "/mms/rooms", "/mms/rooms/" })
     public List<RoomDto> getAllRooms() throws IllegalArgumentException {
-        
+
         List<RoomDto> roomDtos = new ArrayList<RoomDto>();
-        
+
         for (Room room : mmsService.getAllRooms()) {
             roomDtos.add(ToDtoHelper.convertToDto(room));
         }
-        
+
         return roomDtos;
     }
 
@@ -172,7 +176,7 @@ public class MuseumManagementSystemRestController {
      * @author : Nazia Chowdhury (naziaC)
      * @param systemId
      */
-    @GetMapping(value = { "/mms/maxLoanNumber/{systemId}", "/mms/maxLoanNumber/{systemId}/"})
+    @GetMapping(value = { "/mms/maxLoanNumber/{systemId}", "/mms/maxLoanNumber/{systemId}/" })
     public int getMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
         return mmsService.getMaxLoanNumberOfMms(systemId);
     }
@@ -184,13 +188,14 @@ public class MuseumManagementSystemRestController {
      * @param systemId
      */
     @PutMapping(value = { "/mms/setMaxLoanNumber/{systemId}", "/mms/setMaxLoanNumber/{systemId}/" })
-    public MuseumManagementSystemDto setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
+    public MuseumManagementSystemDto setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId)
+            throws IllegalArgumentException {
         mmsService.setMaxLoanNumberOfMms(systemId);
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
     }
 
     /**
-     * Set museum management system's opening hours 
+     * Set museum management system's opening hours
      * 
      * @author : Samantha Perez Hoffman (samperezh)
      * @param systemId
@@ -199,21 +204,22 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @PutMapping(value={"mms/setOpeningHours/{systemId}", "mms/setOpeningHours/{systemId}/"})
-    public MuseumManagementSystemDto setOpeningHours(@PathVariable("systemId") int systemId, @RequestParam Time openTime, @RequestParam Time closeTime) throws IllegalArgumentException {
+    @PutMapping(value = { "mms/setOpeningHours/{systemId}", "mms/setOpeningHours/{systemId}/" })
+    public MuseumManagementSystemDto setOpeningHours(@PathVariable("systemId") int systemId,
+            @RequestParam Time openTime, @RequestParam Time closeTime) throws IllegalArgumentException {
         mmsService.setOpeningHours(openTime, closeTime, systemId);
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
     }
 
     /**
-     * Get museum management system's opening hours 
+     * Get museum management system's opening hours
      * 
      * @author : Samantha Perez Hoffman (samperezh)
      * @param systemId
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value={"mms/getOpeningHours/{systemId}", "mms/getOpeningHours/{systemId}/"})
+    @GetMapping(value = { "mms/getOpeningHours/{systemId}", "mms/getOpeningHours/{systemId}/" })
     public List<Time> getOpeningHours(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
         return mmsService.getOpeningHours(systemId);
     }
@@ -226,8 +232,9 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/DayByDayTime", "/mms/DayByDayTime/"})
-    public SpecificWeekDayDto getSpecificWeekDayByDayType(@RequestParam(name = "dayType") DayTypeDto dayTypeDto ) throws IllegalArgumentException {
+    @GetMapping(value = { "/mms/DayByDayTime", "/mms/DayByDayTime/" })
+    public SpecificWeekDayDto getSpecificWeekDayByDayType(@RequestParam(name = "dayType") DayTypeDto dayTypeDto)
+            throws IllegalArgumentException {
         DayType dayType = ToDtoHelper.convertToDomainObject(dayTypeDto);
         return ToDtoHelper.convertToDto(mmsService.getSpecificWeekDayByDayType(dayType));
     }
