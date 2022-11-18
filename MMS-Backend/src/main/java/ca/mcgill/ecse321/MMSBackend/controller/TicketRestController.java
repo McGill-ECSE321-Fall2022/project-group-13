@@ -111,9 +111,8 @@ public class TicketRestController {
     @PutMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
     public TicketDto updateTicket(@PathVariable("ticketId") int ticketId, @RequestParam boolean isActive) throws IllegalArgumentException
     {
-        ticketService.setTicketStatus(ticketId, isActive);
-
         Ticket ticket = ticketService.getTicket(ticketId);
+        ticketService.setTicketStatus(ticket, isActive);
 
         return ToDtoHelper.convertToDto(ticket);
 

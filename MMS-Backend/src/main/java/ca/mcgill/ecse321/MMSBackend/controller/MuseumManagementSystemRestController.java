@@ -104,7 +104,7 @@ public class MuseumManagementSystemRestController {
         
         List<MuseumManagementSystemDto> mmsDto = new ArrayList<MuseumManagementSystemDto>();
         
-        for (MuseumManagementSystem mms : mmsService.getMuseumManagementSystem()) {
+        for (MuseumManagementSystem mms : mmsService.getAllMuseumManagementSystem()) {
             mmsDto.add(ToDtoHelper.convertToDto(mms));
         }
         

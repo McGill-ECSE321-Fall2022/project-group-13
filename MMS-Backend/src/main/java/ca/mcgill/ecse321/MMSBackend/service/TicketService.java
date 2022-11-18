@@ -106,9 +106,7 @@ public class TicketService {
      * @param ticketId, status
      */
     @Transactional
-    public void setTicketStatus(int ticketId, boolean status) {
-
-        Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
+    public void setTicketStatus(Ticket ticket, boolean status) {
         
         if(ticket == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");

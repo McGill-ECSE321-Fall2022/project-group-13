@@ -127,8 +127,8 @@ public class MuseumManagementSystemService {
      *
      */
     @Transactional
-    public Iterable<MuseumManagementSystem> getMuseumManagementSystem() {
-        return museumManagementSystemRepository.findAll();
+    public List<MuseumManagementSystem> getAllMuseumManagementSystem() {
+        return toList(museumManagementSystemRepository.findAll());
     }
 
     /**
