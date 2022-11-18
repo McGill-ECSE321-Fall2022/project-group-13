@@ -2,13 +2,18 @@ package ca.mcgill.ecse321.MMSBackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.sql.Time;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import org.springframework.http.HttpStatus;
 
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
@@ -65,8 +71,10 @@ public class TestMuseumManagementService {
 
     private static final int SYSTEM_ID = 54321;
     private static final String MMS_NAME = "Cool Museum";
-    private static final Time OPEN_TIME = Time.valueOf("9:00:00");
-    private static final Time CLOSE_TIME = Time.valueOf("17:00:00");
+    private static final Time OPEN_TIME_1 = Time.valueOf("9:00:00");
+    private static final Time CLOSE_TIME_1 = Time.valueOf("17:00:00");
+    private static final Time OPEN_TIME_2 = Time.valueOf("12:00:00");
+    private static final Time CLOSE_TIME_2 = Time.valueOf("21:00:00");
     private static final int MMS_MAX_LOAN_NUMBER = 5;
     private static final double MMS_TICKET_FEE = 96.96;
 
@@ -91,8 +99,8 @@ public class TestMuseumManagementService {
                 MuseumManagementSystem mms = new MuseumManagementSystem();
                 mms.setSystemId(SYSTEM_ID);
                 mms.setName(MMS_NAME);
-                mms.setOpenTime(OPEN_TIME);
-                mms.setCloseTime(CLOSE_TIME);
+                mms.setOpenTime(OPEN_TIME_1);
+                mms.setCloseTime(CLOSE_TIME_1);
                 mms.setMaxLoanNumber(MMS_MAX_LOAN_NUMBER);
                 mms.setTicketFee(MMS_TICKET_FEE);
                 return mms;
@@ -129,11 +137,6 @@ public class TestMuseumManagementService {
             }
         });
 
-        SPECIFIC_WEEK_DAY1.setIsClosed(false);
-        SPECIFIC_WEEK_DAY1.setDayType(MONDAY);
-        SPECIFIC_WEEK_DAY2.setIsClosed(false);
-        SPECIFIC_WEEK_DAY2.setDayType(TUESDAY);
-
         lenient().when(roomRepository.findRoomByRoomId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
                 if (invocation.getArgument(0).equals(STORAGE_ROOM_ID)) {
                     Room room = new Room();
@@ -153,6 +156,21 @@ public class TestMuseumManagementService {
                     return null;
                 }
         });
+
+        initializeSpecificWeekDay(SPECIFIC_WEEK_DAY1, MONDAY, false);
+        initializeSpecificWeekDay(SPECIFIC_WEEK_DAY2, TUESDAY, true);
+        lenient().when(specificWeekDayRepository.findSpecificWeekDayByDayType(any())).thenAnswer((InvocationOnMock invocation) -> {
+            System.out.println("invocation " + invocation.getArgument(0));
+            if (invocation.getArgument(0) == null) {
+                return null;
+            } else if (invocation.getArgument(0).equals(MONDAY)) {
+                return SPECIFIC_WEEK_DAY1;
+            } else if (invocation.getArgument(0).equals(TUESDAY)) {
+                return SPECIFIC_WEEK_DAY2;
+            } else {
+                return null;
+            }
+         });
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
@@ -185,13 +203,105 @@ public class TestMuseumManagementService {
 
     }
 
+    @Test
+    public void testSetOpeningHours(){
+        MuseumManagementSystem museumManagementSystem = museumManagementSystemService.setOpeningHours(OPEN_TIME_2, CLOSE_TIME_2, SYSTEM_ID);
+
+        assertNotNull(museumManagementSystem);
+        assert(museumManagementSystem.getOpenTime().equals(OPEN_TIME_2));
+        assert(museumManagementSystem.getCloseTime().equals(CLOSE_TIME_2));
+        verify(mmsRepository, times(1)).save(museumManagementSystem);
+    }
+
+    @Test 
+    public void testSetOpeningHoursWithInvalidMMS(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            museumManagementSystemService.setOpeningHours(OPEN_TIME_1, OPEN_TIME_2, 0);
+        });
+
+        assertEquals("Museum Management System does not exist.", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        verify(mmsRepository, times(1)).findMuseumManagementSystemBySystemId(0);
+        verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
+    }
+
+    @Test 
+    public void testSetOpeningHoursWithNullTimes(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            museumManagementSystemService.setOpeningHours(null, null , SYSTEM_ID);
+        });
+
+        assertEquals("Opening and closing times cannot be null.", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
+    }
+
+    @Test 
+    public void testSetOpeningHoursWithInvalidTimes(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            museumManagementSystemService.setOpeningHours(CLOSE_TIME_2, OPEN_TIME_2 , SYSTEM_ID);
+        });
+
+        assertEquals("Opening time cannot be after closing time.", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
+    }
+
+    @Test
+    public void testGetOpeningHours(){
+        List<Time> openingHours = museumManagementSystemService.getOpeningHours(SYSTEM_ID);
+    
+        assertNotNull(openingHours);
+        assertEquals(OPEN_TIME_1, openingHours.get(0));
+        assertEquals(CLOSE_TIME_1, openingHours.get(1));
+        verify(mmsRepository, times(1)).findMuseumManagementSystemBySystemId(0);
+    }
+
+    @Test
+    public void testGetOpeningHoursWithInvalidMMS(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            museumManagementSystemService.getOpeningHours(0);
+        });
+
+        assertEquals("Museum Management System does not exist.", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        verify(mmsRepository, times(1)).findMuseumManagementSystemBySystemId(0);
+    }
+
+    @Test
+    public void testGetSpecificWeekDayByDayType(){
+        SpecificWeekDay specificWeekDay =  museumManagementSystemService.getSpecificWeekDayByDayType(MONDAY);
+        assertNotNull(specificWeekDay);
+        assertEquals(MONDAY, specificWeekDay.getDayType());
+        assertEquals(false, specificWeekDay.getIsClosed());
+        assertEquals(SYSTEM_ID, specificWeekDay.getMuseumManagementSystem().getSystemId());
+        verify(specificWeekDayRepository, times(1)).findSpecificWeekDayByDayType(MONDAY);
+    }
+
+    @Test
+    public void testGetSpecificWeekDayByDayTypeWithNullDay(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            museumManagementSystemService.getSpecificWeekDayByDayType(null);
+        });
+
+        assertEquals("Specific Week Day does not exist.", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        verify(specificWeekDayRepository, never()).findAll();
+    }
+
     public void checkMuseumManagementSystemValidness(MuseumManagementSystem museumManagementSystem){
 
         assertEquals(MMS_NAME, museumManagementSystem.getName());
-        assertEquals(OPEN_TIME, museumManagementSystem.getOpenTime());
-        assertEquals(CLOSE_TIME, museumManagementSystem.getCloseTime());
+        assertEquals(OPEN_TIME_1, museumManagementSystem.getOpenTime());
+        assertEquals(CLOSE_TIME_1, museumManagementSystem.getCloseTime());
         assertEquals(MMS_MAX_LOAN_NUMBER, museumManagementSystem.getMaxLoanNumber());
         assertEquals(MMS_TICKET_FEE, museumManagementSystem.getTicketFee());
 
+    }
+
+    public void initializeSpecificWeekDay(SpecificWeekDay specificWeekDay, DayType dayType, boolean isClosed){
+        specificWeekDay.setDayType(dayType);
+        specificWeekDay.setIsClosed(isClosed);
+        specificWeekDay.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
     }
 }

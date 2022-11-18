@@ -260,21 +260,22 @@ public class MuseumManagementSystemService {
      * @param museumManagementSystemId
      */
     @Transactional
-    public void setOpeningHours(Time newOpenTime, Time newCloseTime, int museumManagementSystemId) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
-        }
+    public MuseumManagementSystem setOpeningHours(Time newOpenTime, Time newCloseTime, int museumManagementSystemId) {
         if(newOpenTime == null || newCloseTime == null) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Opening and closing times cannot be null.");
         }
         if (newOpenTime.after(newCloseTime)) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Opening time cannot be after closing time.");
         }
+        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
+                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+        if (museumManagementSystem == null) {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
+        }
         museumManagementSystem.setOpenTime(newOpenTime);
         museumManagementSystem.setCloseTime(newCloseTime);
-        museumManagementSystemRepository.save(museumManagementSystem);
+        museumManagementSystem = museumManagementSystemRepository.save(museumManagementSystem);
+        return museumManagementSystem;
 
     }
 
@@ -306,7 +307,9 @@ public class MuseumManagementSystemService {
     @Transactional
     public SpecificWeekDay getSpecificWeekDayByDayType(DayType dayType) {
         SpecificWeekDay specificWeekDay = specificWeekDayRepository.findSpecificWeekDayByDayType(dayType);
+        System.out.println("specificWeekDay: " + specificWeekDay);
         if(specificWeekDay == null) {
+            System.out.println("specificWeekDay is null");
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Specific Week Day does not exist.");
         }
         return specificWeekDay;

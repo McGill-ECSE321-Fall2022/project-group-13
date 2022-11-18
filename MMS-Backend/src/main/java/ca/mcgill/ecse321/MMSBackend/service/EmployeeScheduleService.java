@@ -81,7 +81,7 @@ public class EmployeeScheduleService {
         shift.setStartTime(startTime);
         shift.setEndTime(endTime);
         shift.setMuseumManagementSystem(employee.getMuseumManagementSystem());
-        shiftRepository.save(shift);
+        shift = shiftRepository.save(shift);
         return shift;
     }
 
@@ -215,7 +215,7 @@ public class EmployeeScheduleService {
 
         shift.setStartTime(newStartTime);
         shift.setEndTime(newEndTime);
-        shiftRepository.save(shift);
+        shift = shiftRepository.save(shift);
         return shift;
     }
 
@@ -249,7 +249,7 @@ public class EmployeeScheduleService {
         }
 
         shift.setDayOfTheWeek(specificWeekDay);
-        shiftRepository.save(shift);
+        shift = shiftRepository.save(shift);
         return shift;
     }
 
@@ -276,7 +276,7 @@ public class EmployeeScheduleService {
         }
 
         specificWeekDay.setIsClosed(isClosed);
-        specificWeekDayRepository.save(specificWeekDay);
+        specificWeekDay = specificWeekDayRepository.save(specificWeekDay);
         return specificWeekDay;
     }
 
