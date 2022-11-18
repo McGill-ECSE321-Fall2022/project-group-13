@@ -162,4 +162,27 @@ public class MuseumManagementSystemRestController {
         
         return roomDtos;
     }
+
+    /**
+     * get museum management system's max loan number for clients
+     *
+     * @author : Nazia Chowdhury (naziaC)
+     * @param systemId
+     */
+    @GetMapping(value = { "/mms/maxLoanNumber/{systemId}", "/mms/maxLoanNumber/{systemId}/"})
+    public int getMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
+        return mmsService.getMaxLoanNumberOfMms(systemId);
+    }
+
+    /**
+     * Set museum management system's max loan number for clients
+     *
+     * @author : Nazia Chowdhury (naziaC)
+     * @param systemId
+     */
+    @PutMapping(value = { "/mms/setMaxLoanNumber/{systemId}", "/mms/setMaxLoanNumber/{systemId}/" })
+    public MuseumManagementSystemDto setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
+        mmsService.setMaxLoanNumberOfMms(systemId);
+        return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
+    }
 }

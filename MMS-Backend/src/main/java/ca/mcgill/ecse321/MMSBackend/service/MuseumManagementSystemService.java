@@ -227,10 +227,9 @@ public class MuseumManagementSystemService {
      * @param museumManagementSystemId
      */
     @Transactional
-    public int getMaxLoanNumberOfSystem(int museumManagementSystemId) {
+    public int getMaxLoanNumberOfMms(int museumManagementSystemId) {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
-        int maxLoanNumber = museumManagementSystem.getMaxLoanNumber();
-        return maxLoanNumber;
+        return museumManagementSystem.getMaxLoanNumber();
     }
 
     /**
@@ -240,7 +239,7 @@ public class MuseumManagementSystemService {
      * @param museumManagementSystemId
      */
     @Transactional
-    public void setMaxLoanNumberOfSystem(int museumManagementSystemId) {
+    public void setMaxLoanNumberOfMms(int museumManagementSystemId) {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
         if (museumManagementSystem == null) {

@@ -215,7 +215,7 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/donationRequest/{requestId}", "/donationRequest/{requestId}/" })
-    public void deleteDonationRequest(
+    public void deleteRejectedDonationRequest(
         @PathVariable("requestId") int requestId)
 
         throws IllegalArgumentException {

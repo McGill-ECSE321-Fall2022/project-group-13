@@ -120,6 +120,9 @@ public class DonationRequestService {
         else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Approved))
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Donation request already approved");
         
+        else if (donationRequestRepository.findDonationRequestByRequestId(requestId).getStatus().equals(DonationRequest.DonationStatus.Rejected))
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Donation request already rejected");
+        
         else {
             donationRequest = donationRequestRepository.findDonationRequestByRequestId(requestId);
             Artifact artifact = donationRequest.getArtifact();
