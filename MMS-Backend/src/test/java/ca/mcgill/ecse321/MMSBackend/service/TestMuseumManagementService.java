@@ -9,7 +9,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
 import java.sql.Time;
+import java.util.List;
 
+import ca.mcgill.ecse321.MMSBackend.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,11 +27,6 @@ import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.SpecificWeekDayRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
-import ca.mcgill.ecse321.MMSBackend.model.Client;
-import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
-import ca.mcgill.ecse321.MMSBackend.model.Room;
-import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
-import ca.mcgill.ecse321.MMSBackend.model.Ticket;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
@@ -183,6 +180,12 @@ public class TestMuseumManagementService {
         assertNotNull(museumManagementSystem);
         checkMuseumManagementSystemValidness(museumManagementSystem);
 
+    }
+
+    @Test
+    public void testGetMaxLoanNumberOfMms(){
+        int maxLoanNumber = museumManagementSystemService.getMaxLoanNumberOfMms(SYSTEM_ID);
+        assertEquals(maxLoanNumber, MMS_MAX_LOAN_NUMBER);
     }
 
     public void checkMuseumManagementSystemValidness(MuseumManagementSystem museumManagementSystem){
