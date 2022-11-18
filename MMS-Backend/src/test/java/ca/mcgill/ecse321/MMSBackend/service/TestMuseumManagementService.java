@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.MMSBackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -187,14 +188,151 @@ public class TestMuseumManagementService {
         int maxLoanNumber = museumManagementSystemService.getMaxLoanNumberOfMms(SYSTEM_ID);
         assertEquals(maxLoanNumber, MMS_MAX_LOAN_NUMBER);
     }
+    
+    @Test
+    public void testCreateMuseumManagementSystemWithExistingSystemId() {
+
+        lenient().when(mmsRepository.count()).thenAnswer((InvocationOnMock invocation) -> {
+            return (long)1;
+        });
+
+        MuseumManagementSystem newMuseumManagementSystem = null;
+
+        String error = "";
+
+        try {
+            newMuseumManagementSystem = museumManagementSystemService.createMuseumManagementSystem();
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Museum Management System already exists", error);
+
+    }
+
+    @Test
+    public void testGetMuseumManagementSystem() {
+
+        MuseumManagementSystem museumManagementSystem = null;
+
+        try {
+            museumManagementSystem = museumManagementSystemService.getMuseumManagementSystem(SYSTEM_ID);
+        } catch (MuseumManagementSystemException e) {
+            fail();
+        }
+
+        assertNotNull(museumManagementSystem);
+
+    }
+
+    @Test
+    public void testGetMuseumManagementSystemNull(){
+
+        MuseumManagementSystem museumManagementSystem = null;
+
+        String error = "";
+
+        try {
+            museumManagementSystem = museumManagementSystemService.getMuseumManagementSystem(-1);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertNull(museumManagementSystem);
+        assertEquals("Museum Management System does not exist", error);
+
+    }
+
+    @Test
+    public void testDeleteMuseumManagementSystem(){
+    
+            try {
+                museumManagementSystemService.deleteMuseumManagementSystem(SYSTEM_ID);
+            } catch (MuseumManagementSystemException e) {
+                fail();
+            }
+    }
+
+    @Test
+    public void testDeleteMuseumManagementSystemNull(){
+
+        String error = "";
+
+        try {
+            museumManagementSystemService.deleteMuseumManagementSystem(-1);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Museum Management System does not exist", error);
+
+    }
+
+    @Test
+    public void testSetMuseumManagementSystemName(){
+
+            try {
+                museumManagementSystemService.setMuseumManagementSystemName(SYSTEM_ID, "Not Cool Museum");
+            } catch (MuseumManagementSystemException e) {
+                fail();
+            }
+    
+    }
+
+    @Test
+    public void testSetMuseumManagementSystemNameNull(){
+
+        String error = "";
+
+        try {
+            museumManagementSystemService.setMuseumManagementSystemName(-1, "Not Cool Museum");
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Museum Management System does not exist", error);
+
+    }
+
+    @Test
+    public void testGetAllMuseumManagementSystem(){
+
+        
+    }
+
+    @Test
+    public void testSetMuseumTicketPrice(){
+
+        try {
+            museumManagementSystemService.setMuseumTicketPrice(SYSTEM_ID, 10.0);
+        } catch (MuseumManagementSystemException e) {
+            fail();
+        }
+
+    }
+
+    @Test   
+    public void testSetMuseumTicketPriceNull(){
+
+        String error = "";
+
+        try {
+            museumManagementSystemService.setMuseumTicketPrice(-1, 10.0);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Museum Management System does not exist", error);
+
+    }
 
     public void checkMuseumManagementSystemValidness(MuseumManagementSystem museumManagementSystem){
 
-        assertEquals(MMS_NAME, museumManagementSystem.getName());
-        assertEquals(OPEN_TIME, museumManagementSystem.getOpenTime());
-        assertEquals(CLOSE_TIME, museumManagementSystem.getCloseTime());
-        assertEquals(MMS_MAX_LOAN_NUMBER, museumManagementSystem.getMaxLoanNumber());
-        assertEquals(MMS_TICKET_FEE, museumManagementSystem.getTicketFee());
+        assertEquals("Museum Management System Default Name", museumManagementSystem.getName());
+        assertEquals(Time.valueOf("9:00:00"), museumManagementSystem.getOpenTime());
+        assertEquals(Time.valueOf("17:00:00"), museumManagementSystem.getCloseTime());
+        assertEquals(5, museumManagementSystem.getMaxLoanNumber());
+        assertEquals(0.00, museumManagementSystem.getTicketFee());
 
     }
 }

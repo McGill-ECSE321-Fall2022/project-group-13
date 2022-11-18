@@ -132,14 +132,15 @@ public class TicketService {
         }else{
 
             List<Ticket> tickets = getAllTickets();
+            List<Ticket> returnedTickets = new ArrayList<Ticket>();
             
             for(Ticket ticket : tickets){
-                if(!ticket.getClient().equals(client)){
-                    tickets.remove(ticket);
+                if(ticket.getClient().equals(client)){
+                    returnedTickets.add(ticket);
                 }
             }
 
-            return tickets;
+            return returnedTickets;
 
         }
     }
