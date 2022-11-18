@@ -14,6 +14,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse321.MMSBackend.model.*;
@@ -181,7 +182,6 @@ public class TestMuseumManagementService {
 
     }
 
-    //this isn't working yet
     @Test
     public void testCreateMuseumManagementSystem(){
 
@@ -199,7 +199,7 @@ public class TestMuseumManagementService {
         checkMuseumManagementSystemValidness(museumManagementSystem);
 
     }
-    
+
     @Test
     public void testCreateMuseumManagementSystemWithExistingSystemId() {
 
@@ -208,7 +208,6 @@ public class TestMuseumManagementService {
         });
 
         MuseumManagementSystem newMuseumManagementSystem = null;
-
         String error = "";
 
         try {
@@ -308,6 +307,21 @@ public class TestMuseumManagementService {
     @Test
     public void testGetAllMuseumManagementSystem(){
 
+        MuseumManagementSystem museum_1 = museumManagementSystemService.createMuseumManagementSystem();
+
+        lenient().when(mmsRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+
+            List<MuseumManagementSystem> mmsList = new ArrayList<MuseumManagementSystem>();
+            mmsList.add(museum_1);
+            return mmsList;
+
+        });
+
+        List<MuseumManagementSystem> testMms = museumManagementSystemService.getAllMuseumManagementSystem();
+
+        assertNotNull(testMms);
+        assertEquals(1, testMms.size());
+        assertEquals(museum_1, testMms.get(0));
         
     }
 
