@@ -29,6 +29,13 @@ import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest.DonationStatus;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 
+/**
+ * @author Yu An Lu (yu-an-lu)
+ * 
+ * The TestDonationRequestService class tests the business logic declared in
+ * DonationRequestService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestDonationRequestService {
 
@@ -182,7 +189,6 @@ public class TestDonationRequestService {
         assertEquals(ARTIFACT_DESCRIPTION, artifact.getDescription());
         assertEquals(ARTIFACT_IS_DAMAGED, artifact.getIsDamaged());
         assertEquals(ARTIFACT_WORTH, artifact.getWorth());
-        // assertEquals(MMS_ID, artifact.getMuseumManagementSystem().getSystemId());
     }
 
     @Test
@@ -361,15 +367,12 @@ public class TestDonationRequestService {
     }
 
     private void checkCreatedDonationRequest(DonationRequest donationRequest){
-        // assertEquals(CLIENT_USERNAME, donationRequest.getClient().getUsername());
         assertEquals(CLIENT_NAME, donationRequest.getClient().getName());
         assertEquals(CLIENT_PASSWORD, donationRequest.getClient().getPassword());
         assertEquals(CLIENT_CURRENT_LOAN_NUMBER, donationRequest.getClient().getCurrentLoanNumber());
-        // assertEquals(MMS_ID, donationRequest.getClient().getMuseumManagementSystem().getSystemId());
 
         checkCreatedDonationArtifact(donationRequest.getArtifact());
 
-        // assertEquals(MMS_ID, donationRequest.getMuseumManagementSystem().getSystemId());
         assertEquals(MMS_NAME, donationRequest.getMuseumManagementSystem().getName());
         assertEquals(OPEN_TIME, donationRequest.getMuseumManagementSystem().getOpenTime());
         assertEquals(CLOSE_TIME, donationRequest.getMuseumManagementSystem().getCloseTime());
