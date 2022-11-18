@@ -185,15 +185,12 @@ public class TestTicketService {
     @Test
     public void testDeleteTicket(){
 
-        Ticket ticket = null;
-
         try {
             ticketService.deleteTicket(TICKET_ID);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
 
-        assertNull(ticket);
     }
 
     @Test
@@ -210,7 +207,6 @@ public class TestTicketService {
         assertEquals("Ticket does not exist", error);
     }
 
-    //this doesn't work yet
     @Test
     public void testSetTicketStatus(){
             
@@ -218,7 +214,7 @@ public class TestTicketService {
             boolean status = !(ticket.getIsActive());
     
             try {
-                ticketService.setTicketStatus(TICKET_ID, status);
+                ticketService.setTicketStatus(ticket, status);
             } catch (MuseumManagementSystemException e) {
                 fail();
             }
@@ -233,7 +229,7 @@ public class TestTicketService {
         String error = "";
 
         try {
-            ticketService.setTicketStatus(-1, false);
+            ticketService.setTicketStatus(null, false);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
