@@ -195,7 +195,7 @@ public class EmployeeScheduleService {
     public Shift updateShiftStartEndTime(int shiftId, Time newStartTime, Time newEndTime) {
         Shift shift = shiftRepository.findShiftByShiftId(shiftId);
         if (shift == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "No shift with id " + shiftId + " exists.");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "No shift with given id exists.");
         }
 
         if (newStartTime == null || newEndTime == null) {
@@ -208,7 +208,7 @@ public class EmployeeScheduleService {
         }
 
         // check if employee already has shift that overlaps with updated shift
-        if (doesNewShiftOverlap(shift, shift.getDayOfTheWeek().getDayType())) {
+        if (doesNewShiftOverlap(shift,newStartTime, newEndTime, shift.getDayOfTheWeek().getDayType())) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST,
                     "Employee already has a shift that overlaps with this new shift");
         }
@@ -230,7 +230,7 @@ public class EmployeeScheduleService {
     public Shift updateShiftDay(int shiftId, SpecificWeekDay specificWeekDay) {
         Shift shift = shiftRepository.findShiftByShiftId(shiftId);
         if (shift == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "No shift with id " + shiftId + " exists.");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "No shift with given id exists.");
         }
         if (specificWeekDay == null) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values are not allowed!");
@@ -243,7 +243,7 @@ public class EmployeeScheduleService {
         }
 
         // check if employee already has shift that overlaps with updated shift
-        if (doesNewShiftOverlap(shift, specificWeekDay.getDayType())) {
+        if (doesNewShiftOverlap(shift, shift.getStartTime(), shift.getEndTime(), specificWeekDay.getDayType())) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST,
                     "Employee already has a shift that overlaps with this new shift");
         }
@@ -298,11 +298,9 @@ public class EmployeeScheduleService {
      * @param newShift
      * @param dayType
      */
-    private boolean doesNewShiftOverlap(Shift newShift, DayType dayType) {
-        Employee employee = newShift.getEmployee();
-        Time newStartTime = newShift.getStartTime();
-        Time newEndTime = newShift.getEndTime();
-        int newShiftId = newShift.getShiftId();
+    private boolean doesNewShiftOverlap(Shift shift, Time newStartTime, Time newEndTime, DayType dayType) {
+        Employee employee = shift.getEmployee();
+        int shiftId = shift.getShiftId();
 
         List<Shift> employeeShifts = getAllShiftsForEmployee(employee);
 
@@ -311,7 +309,8 @@ public class EmployeeScheduleService {
                 if ((currentShift.getStartTime().before(newEndTime) && currentShift.getEndTime().after(newStartTime))
                         || currentShift.getStartTime().equals(newStartTime)
                         || currentShift.getEndTime().equals(newEndTime)) {
-                    if (currentShift.getShiftId() != newShiftId) {
+                    
+                    if (currentShift.getShiftId() != shiftId) {
                         return true;
                     }
                 }

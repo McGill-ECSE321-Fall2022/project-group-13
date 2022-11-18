@@ -58,8 +58,11 @@ public class TestEmployeeScheduleService {
     private static final String USERNAME2 = "username2";
 
     private MuseumManagementSystem MMS = new MuseumManagementSystem();
-    Employee EMPLOYEE1 = new Employee();
-    Employee EMPLOYEE2 = new Employee();
+    private Employee EMPLOYEE1 = new Employee();
+    private Employee EMPLOYEE2 = new Employee();
+
+    private Shift SHIFT1 = new Shift();
+
 
     @BeforeEach
     public void setMockOutput() {
@@ -67,20 +70,25 @@ public class TestEmployeeScheduleService {
         SPECIFIC_WEEK_DAY1.setDayType(MONDAY);
         SPECIFIC_WEEK_DAY2.setIsClosed(false);
         SPECIFIC_WEEK_DAY2.setDayType(TUESDAY);
-        EMPLOYEE1.setMuseumManagementSystem(MMS);
         MMS.setOpenTime(OPEN_TIME);
         MMS.setCloseTime(CLOSE_TIME);
         EMPLOYEE1 = initializeEmployee(USERNAME1, MMS);
         EMPLOYEE2 = initializeEmployee(USERNAME2, MMS);
+        SHIFT1 = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
 
-        // lenient().when(shiftRepository.findShiftByShiftId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-        //     if (invocation.getArgument(0).equals(VALID_SHIFT_ID)) {
-        //         return SHIFT1;
-        //     } else {
-        //         return null;
-        //     }
-        // });
-
+        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            //Shift existingShift = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
+            List<Shift> shifts = new ArrayList<Shift>();
+            shifts.add(SHIFT1);
+            return shifts;
+        });
+        lenient().when(shiftRepository.findShiftByShiftId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(VALID_SHIFT_ID)) {
+                return SHIFT1;
+            } else {
+                return null;
+            }
+        });
         // Whenever anything is saved, just return the parameter object
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
             return invocation.getArgument(0);
@@ -91,6 +99,9 @@ public class TestEmployeeScheduleService {
 
     @Test
     public void testCreateShift() {
+        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            return new ArrayList<Shift>();
+        });
         Shift shift = null;
         shift = service.createShift(EMPLOYEE1, SPECIFIC_WEEK_DAY1, OPEN_TIME, CLOSE_TIME);
 
@@ -99,9 +110,7 @@ public class TestEmployeeScheduleService {
         assertEquals(SPECIFIC_WEEK_DAY1, shift.getDayOfTheWeek());
         assertEquals(OPEN_TIME, shift.getStartTime());
         assertEquals(CLOSE_TIME, shift.getEndTime());
-
-        // assert save was only called once
-        verify(shiftRepository, times(1)).save(any(Shift.class));
+        verify(shiftRepository, times(1)).save(shift);
 
     }
 
@@ -142,12 +151,6 @@ public class TestEmployeeScheduleService {
     @Test
     public void testCreateShiftThatOverlapsWithExistingShift() {
         // existing shift Monday 10:00-12:00 overlaps with new shift Monday 9:00-17:00
-        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            Shift existingShift = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
-            List<Shift> shifts = new ArrayList<Shift>();
-            shifts.add(existingShift);
-            return shifts;
-        });
         MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
             service.createShift(EMPLOYEE1, SPECIFIC_WEEK_DAY1, OPEN_TIME, CLOSE_TIME);
         });
@@ -166,14 +169,6 @@ public class TestEmployeeScheduleService {
     @Test
     public void testDeleteAllShiftsForDay() {
         // create shift on that day
-        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            System.out.println("initialize shift");
-            Shift existingShift = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
-            List<Shift> shifts = new ArrayList<Shift>();
-            shifts.add(existingShift);
-            return shifts;
-        });
-        System.out.println("deleteAllShiftsForDay");
         service.deleteAllShiftsForDay(MONDAY);
         verify(shiftRepository, times(1)).findAll();
         verify(shiftRepository, times(1)).deleteById(VALID_SHIFT_ID); 
@@ -192,31 +187,28 @@ public class TestEmployeeScheduleService {
 
     @Test
     public void testGetAllShifts(){
-        Shift existingShift = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
-        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Shift> shifts = new ArrayList<Shift>();
-            shifts.add(existingShift);
-            return shifts;
-        });
         List<Shift> allShifts = service.getAllShifts();
+
+        assertNotNull(allShifts);
         assertEquals(1, allShifts.size());
-        assertEquals(existingShift, allShifts.get(0));
+        assertEquals(SHIFT1, allShifts.get(0));
         verify(shiftRepository, times(1)).findAll();
     }
 
     @Test
     public void testGetAllShiftsForEmployee(){
-        Shift shift1 = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
-        Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE2, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
+       Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE2, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
         lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Shift> shifts = new ArrayList<Shift>();
-            shifts.add(shift1);
+            shifts.add(SHIFT1);
             shifts.add(shift2);
             return shifts;
         });
         List<Shift> allShifts = service.getAllShiftsForEmployee(EMPLOYEE1);
+
+        assertNotNull(allShifts);
         assertEquals(1, allShifts.size());
-        assertEquals(shift1, allShifts.get(0));
+        assertEquals(SHIFT1, allShifts.get(0));
         verify(shiftRepository, times(1)).findAll();
     }
 
@@ -228,23 +220,23 @@ public class TestEmployeeScheduleService {
 
         assertEquals("Employee does not exist!", exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-
         verify(shiftRepository, never()).findAll();
     }
 
     @Test
     public void testGetAllShiftsForDay(){
-        Shift shift1 = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
         Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE2, SPECIFIC_WEEK_DAY2, START_TIME, END_TIME);
         lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Shift> shifts = new ArrayList<Shift>();
-            shifts.add(shift1);
+            shifts.add(SHIFT1);
             shifts.add(shift2);
             return shifts;
         });
         List<Shift> allShifts = service.getAllShiftsForDay(MONDAY);
+
+        assertNotNull(allShifts);
         assertEquals(1, allShifts.size());
-        assertEquals(shift1, allShifts.get(0));
+        assertEquals(SHIFT1, allShifts.get(0));
         verify(shiftRepository, times(1)).findAll();
     }
 
@@ -256,21 +248,195 @@ public class TestEmployeeScheduleService {
 
         assertEquals("Null values are not allowed!", exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-
         verify(shiftRepository, never()).findAll();
+    }
+
+    @Test
+    public void testUpdateShiftStartEndTime(){
+        Shift shift = service.updateShiftStartEndTime(VALID_SHIFT_ID, OPEN_TIME, CLOSE_TIME);
+
+        assertNotNull(shift);
+        assertEquals(EMPLOYEE1, shift.getEmployee());
+        assertEquals(SPECIFIC_WEEK_DAY1, shift.getDayOfTheWeek());
+        assertEquals(OPEN_TIME, shift.getStartTime());
+        assertEquals(CLOSE_TIME, shift.getEndTime());
+        verify(shiftRepository, times(1)).save(shift);
+    }
+
+    @Test
+    public void testUpdateShiftStartEndTimeWithInvalidShift(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftStartEndTime(0, OPEN_TIME, CLOSE_TIME);
+        });
+
+        assertEquals("No shift with given id exists.", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test 
+    public void testUpdateShiftStartEndTimeWithNullStartEndTimes(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftStartEndTime(VALID_SHIFT_ID, null, null);
+        });
+
+        assertEquals("Null values are not allowed!", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test
+    public void testUpdateShiftStartEndTimeWithInvalidStartEndTimes(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftStartEndTime(VALID_SHIFT_ID, CLOSE_TIME, OPEN_TIME);
+        });
+
+        assertEquals("Start time cannot be after end time.", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test
+    public void testUpdateShiftStartEndTimeThatOverlapsWithExistingShift(){
+        //set up overlapping shifts 
+        Shift shift1 = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, Time.valueOf("13:00:00"), Time.valueOf("14:00:00")); //old shift
+        Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME); //overlaps with newShift 
+        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            List<Shift> shifts = new ArrayList<Shift>();
+            shifts.add(shift1);
+            shifts.add(shift2);
+            return shifts;
+        });
+        lenient().when(shiftRepository.findShiftByShiftId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(VALID_SHIFT_ID)) {
+                return shift1;
+            } else {
+                return null;
+            }
+        });
+
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftStartEndTime(VALID_SHIFT_ID, OPEN_TIME, CLOSE_TIME);
+        });
+
+        assertEquals("Employee already has a shift that overlaps with this new shift", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test
+    public void testUpdateShiftDay(){
+        Shift shift = service.updateShiftDay(VALID_SHIFT_ID, SPECIFIC_WEEK_DAY2);
+
+        assertNotNull(shift);
+        assertEquals(VALID_SHIFT_ID, shift.getShiftId());
+        assertEquals(EMPLOYEE1, shift.getEmployee());
+        assertEquals(SPECIFIC_WEEK_DAY2, shift.getDayOfTheWeek());
+        assertEquals(START_TIME, shift.getStartTime());
+        assertEquals(END_TIME, shift.getEndTime());
+        verify(shiftRepository, times(1)).save(shift);
+    }
+
+    @Test 
+    public void testUpdateShiftDayWithInvalidShift(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftDay(0, SPECIFIC_WEEK_DAY2);
+        });
+
+        assertEquals("No shift with given id exists.", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test 
+    public void testUpdateShiftDayWithNullDay(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftDay(VALID_SHIFT_ID, null);
+        });
+
+        assertEquals("Null values are not allowed!", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test
+    public void testUpdateShiftDayWithClosedSpecificWeekDay(){
+        SPECIFIC_WEEK_DAY2.setIsClosed(true);
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftDay(VALID_SHIFT_ID, SPECIFIC_WEEK_DAY2);
+        });
+
+        assertEquals("This day is closed, cannot update shift", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test
+    public void testUpdateShiftDayThatOverlapsWithExistingShift(){
+        //set up overlapping shifts 
+        Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE1, SPECIFIC_WEEK_DAY2, OPEN_TIME, CLOSE_TIME); //overlaps with newShift 
+        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            List<Shift> shifts = new ArrayList<Shift>();
+            shifts.add(SHIFT1);
+            shifts.add(shift2);
+            return shifts;
+        });
+
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateShiftDay(VALID_SHIFT_ID, SPECIFIC_WEEK_DAY2);
+        });
+
+        assertEquals("Employee already has a shift that overlaps with this new shift", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(shiftRepository, never()).save(any(Shift.class));
+    }
+
+    @Test 
+    public void testUpdateSpecificWeekDayStatus(){
+        lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            return new ArrayList<Shift>();
+        });
+        SpecificWeekDay specificWeekDay = service.updateSpecificWeekDayStatus(SPECIFIC_WEEK_DAY1, true);
+
+        assertNotNull(specificWeekDay);
+        assertEquals(SPECIFIC_WEEK_DAY1.getDayType(), specificWeekDay.getDayType());
+        assertEquals(true, specificWeekDay.getIsClosed());
+    }
+
+    @Test 
+    public void testUpdateSpecificWeekDayStatusWithNullDay(){
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateSpecificWeekDayStatus(null, false);
+        });
+
+        assertEquals("No specificWeekDay exists.", exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        verify(specificWeekDayRepository, never()).save(any(SpecificWeekDay.class));
+    }
+
+    @Test
+    public void testUpdateSpecificWeekDayStatusWithExistingShifts() {
+        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
+            service.updateSpecificWeekDayStatus(SPECIFIC_WEEK_DAY1, true);
+        });  
+
+        assertEquals("Cannot close day with that has scheduled shifts.", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        verify(specificWeekDayRepository, never()).save(any(SpecificWeekDay.class)); 
+
     }
 
     private Shift initializeShift(int shiftId, Employee employee, SpecificWeekDay specificWeekDay, Time startTime, Time endTime){
         Shift shift = new Shift();
+        if(Shift.hasWithShiftId(shiftId)){
+            shift = Shift.getWithShiftId(shiftId);
+        } else {
+           shift.setShiftId(shiftId);
+        }
         shift.setStartTime(startTime);
         shift.setEndTime(endTime);
         shift.setDayOfTheWeek(specificWeekDay);
         shift.setEmployee(employee);
-        System.out.println("initializing shiftId to " + shiftId);
-        boolean isSet = shift.setShiftId(shiftId);
-        System.out.println(isSet);
-        System.out.println(shift.getShiftId());
-
         return shift;
     }
 
@@ -278,7 +444,6 @@ public class TestEmployeeScheduleService {
         Employee employee = new Employee();
         employee.setUsername(username);
         employee.setMuseumManagementSystem(mms);
-
         return employee;
     }
 }
