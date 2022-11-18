@@ -41,21 +41,25 @@ public abstract class Request
   // CONSTRUCTOR
   //------------------------
 
-  // public Request(int aRequestId, Client aClient, Artifact aArtifact)
-  // {
-  //   if (!setRequestId(aRequestId))
-  //   {
-  //     throw new RuntimeException("Cannot create due to duplicate requestId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-  //   }
-  //   if (!setClient(aClient))
-  //   {
-  //     throw new RuntimeException("Unable to create Request due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  //   if (!setArtifact(aArtifact))
-  //   {
-  //     throw new RuntimeException("Unable to create Request due to aArtifact. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-  //   }
-  // }
+   public Request(int aRequestId, Client aClient, Artifact aArtifact)
+   {
+     if (!setRequestId(aRequestId))
+     {
+       throw new RuntimeException("Cannot create due to duplicate requestId. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+     }
+     if (!setClient(aClient))
+     {
+       throw new RuntimeException("Unable to create Request due to aClient. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+     }
+     if (!setArtifact(aArtifact))
+     {
+       throw new RuntimeException("Unable to create Request due to aArtifact. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+     }
+   }
+
+  public Request() {
+
+  }
 
   //------------------------
   // INTERFACE
