@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.MMSBackend.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,7 @@ import ca.mcgill.ecse321.MMSBackend.dto.ClientDto;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.service.ClientAccountService;
+import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
 
 /**
@@ -32,6 +32,9 @@ public class ClientAccountRestController {
 
     @Autowired
     private ClientAccountService service; 
+
+    @Autowired
+    private MuseumManagementSystemService mmsService; 
     
     @GetMapping(value = { "/clients", "/clients/" })
     public ResponseEntity<List<ClientDto>> getAllClients() throws IllegalArgumentException {
@@ -39,8 +42,9 @@ public class ClientAccountRestController {
     }
 
     @PostMapping(value = {"/client", "/client/"})
-    public ResponseEntity<ClientDto> createClient(@PathVariable("username") String username, @RequestParam String name, @RequestParam String password, 
-    @RequestParam MuseumManagementSystem mms) throws IllegalArgumentException{
+    public ResponseEntity<ClientDto> createClient(@RequestParam String username, @RequestParam String name, @RequestParam String password, 
+    @RequestParam int systemId) throws IllegalArgumentException{
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         Client client = service.createClient(username, name, password, mms); 
         return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.CREATED); 
     }
@@ -50,9 +54,8 @@ public class ClientAccountRestController {
         Client client = service.getClient(username);
         return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.OK); 
     }
-
-    //NOT DONE 
-    @DeleteMapping(value = {"/client/{username}", "/client/{username}/"}) //Should i put id??? idk anymore 
+    
+    @DeleteMapping(value = {"/client/{username}", "/client/{username}/"})
     public void deleteClient(@PathVariable("username") String username) throws IllegalArgumentException {
         service.deleteClient(username);
     }
@@ -63,7 +66,7 @@ public class ClientAccountRestController {
         return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.OK); 
     }  
     
-    @PutMapping(value = { "/client/{id}", "/client/{id}/" })
+    @PutMapping(value = { "/client/edit/{username}", "/client/edit/{username}/" })
     public ResponseEntity<ClientDto> editClient(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
         password) throws IllegalArgumentException{
         Client client = service.editClientAccount(username, name, password);

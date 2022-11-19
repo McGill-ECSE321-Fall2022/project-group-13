@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.MMSBackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.MMSBackend.dto.ManagerDto;
 import ca.mcgill.ecse321.MMSBackend.model.Manager;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
-import ca.mcgill.ecse321.MMSBackend.service.ManagerAccountService;;
+import ca.mcgill.ecse321.MMSBackend.service.ManagerAccountService;
+import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;;
 
 
 /**
@@ -24,32 +27,34 @@ import ca.mcgill.ecse321.MMSBackend.service.ManagerAccountService;;
 public class ManagerAccountRestController {
 
     @Autowired
-    private ManagerAccountService service ; 
+    private ManagerAccountService service; 
+    
+    @Autowired
+    private MuseumManagementSystemService mmsService; 
 
     @GetMapping(value = { "/managers", "/managers/" })
-    public ManagerDto getManager() throws IllegalArgumentException {
-        return ToDtoHelper.convertToDto(service.getManager()); 
+    public ResponseEntity<ManagerDto> getManager() throws IllegalArgumentException {
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(service.getManager()), HttpStatus.OK);
     }
 
     @PostMapping(value = {"/manager", "/manager/"})
-    public ManagerDto createManager(@PathVariable("username") String username, @RequestParam String name, @RequestParam String password, 
-    @RequestParam MuseumManagementSystem mms) throws IllegalArgumentException{
+    public ResponseEntity<ManagerDto> createManager(@RequestParam String username, @RequestParam String name, @RequestParam String password, 
+    @RequestParam int systemId) throws IllegalArgumentException{
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         Manager manager = service.createManager(username, name, password, mms); 
-        return ToDtoHelper.convertToDto(manager); 
+        return new ResponseEntity<ManagerDto>(ToDtoHelper.convertToDto(manager), HttpStatus.OK); 
     }
 
     @GetMapping(value = {"/manager/signin/{username}", "/manager/signin/{username}/"})
-    public ManagerDto signInManagerAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
+    public ResponseEntity<ManagerDto> signInManagerAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
         Manager manager = service.signInManagerAccount(username, password);
-
-        return ToDtoHelper.convertToDto(manager);
+        return new ResponseEntity<ManagerDto>(ToDtoHelper.convertToDto(manager), HttpStatus.OK); 
     }   
 
-    @PutMapping(value = { "/manager/{id}", "/manager/{id}/" })
-    public ManagerDto editManager(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
+    @PutMapping(value = { "/manager/edit/{id}", "/manager/edit/{id}/" })
+    public ResponseEntity<ManagerDto> editManager(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
         password) throws IllegalArgumentException{
-
         Manager manager = service.editManagerAccount(name, password);
-        return ToDtoHelper.convertToDto(manager);
+        return new ResponseEntity<ManagerDto>(ToDtoHelper.convertToDto(manager), HttpStatus.OK); 
     }
 }
