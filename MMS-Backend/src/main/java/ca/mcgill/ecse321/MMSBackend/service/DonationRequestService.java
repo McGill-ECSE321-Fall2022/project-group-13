@@ -59,6 +59,9 @@ public class DonationRequestService {
         if (name == " " || image == " " || description == " ")
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
         
+        if (worth < 0)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Worth must be positive");
+        
         Artifact artifact = new Artifact();
         artifact.setName(name);
         artifact.setImage(image);
