@@ -82,11 +82,4 @@ public class ArtifactRestController {
     public void deleteArtifact(@PathVariable("id") int id) throws IllegalArgumentException {
         service.deleteArtifact(id);
     }
-
-
-
-
-
-
-
 }
