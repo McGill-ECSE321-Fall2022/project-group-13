@@ -28,7 +28,7 @@ public class ToDtoHelper {
      */
     public static RoomDto convertToDto(Room r) {
         if (r == null) {
-            throw new IllegalArgumentException("There is no such Room!");
+            return null;
         }
         MuseumManagementSystemDto systemDto = convertToDto(r.getMuseumManagementSystem());
         RoomDto.RoomTypeDto typeDto = convertToDto(r.getType());
@@ -78,7 +78,7 @@ public class ToDtoHelper {
      */
     public static ArtifactDto.LoanStatusDto convertToDto(Artifact.LoanStatus status) {
         if (status == null) {
-            throw new IllegalArgumentException("Status cannot be null.");
+            return null;
         }
 
         return switch (status) {

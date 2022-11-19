@@ -54,7 +54,7 @@ public class EmployeeAccountRestController {
         return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK); 
     }
 
-    @DeleteMapping(value = {"/employee/{username}", "/employee/{username}/"}) 
+    @DeleteMapping(value = {"/employee/delete/{username}", "/employee/delete/{username}/"}) 
     public void deleteEmployee(@PathVariable("username") String username) throws IllegalArgumentException {
         service.deleteEmployee(username);
     }
