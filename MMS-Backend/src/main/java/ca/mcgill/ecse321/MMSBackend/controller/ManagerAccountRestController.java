@@ -51,7 +51,7 @@ public class ManagerAccountRestController {
         return new ResponseEntity<ManagerDto>(ToDtoHelper.convertToDto(manager), HttpStatus.OK); 
     }   
 
-    @PutMapping(value = { "/manager/edit/{id}", "/manager/edit/{id}/" })
+    @PutMapping(value = { "/manager/edit/{username}", "/manager/edit/{username}/" })
     public ResponseEntity<ManagerDto> editManager(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
         password) throws IllegalArgumentException{
         Manager manager = service.editManagerAccount(name, password);

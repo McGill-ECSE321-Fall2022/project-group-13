@@ -56,7 +56,7 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
+    @GetMapping(value = { "/mms/getMms/{systemId}", "/mms/getMms/{systemId}/" })
     public ResponseEntity<MuseumManagementSystemDto> getMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
         return new ResponseEntity<>(ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
     }
