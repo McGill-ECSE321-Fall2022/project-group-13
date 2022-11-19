@@ -54,6 +54,24 @@ public class ToDtoHelper {
     }
 
     /**
+     * @author Yu An Lu (yu-an-lu)
+     * @param roomType
+     * @return a RoomTypeDto
+     */
+    public static Room.RoomType convertStringToRoomType(String roomType) {
+        if (roomType == null) {
+            throw new IllegalArgumentException("Room type cannot be null.");
+        }
+
+        return switch (roomType) {
+            case "Small" -> Room.RoomType.Small;
+            case "Large" -> Room.RoomType.Large;
+            case "Storage" -> Room.RoomType.Storage;
+            default -> throw new IllegalArgumentException("Unexpected value: " + roomType);
+        };
+    }
+
+    /**
      * @author Mona Kalaoun (m-kln)
      * @param a
      * @return
@@ -269,10 +287,13 @@ public class ToDtoHelper {
             throw new IllegalArgumentException("Status cannot be null.");
         }
 
+        System.out.println(status);
+
         return switch (status) {
             case Approved -> LoanRequestDto.LoanRequestStatusDto.Approved;
             case Rejected -> LoanRequestDto.LoanRequestStatusDto.Rejected;
             case Pending -> LoanRequestDto.LoanRequestStatusDto.Pending;
+            case Returned -> LoanRequestDto.LoanRequestStatusDto.Returned;
             default -> throw new IllegalArgumentException("Unexpected value: " + status);
         };
     }

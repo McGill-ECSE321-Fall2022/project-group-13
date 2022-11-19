@@ -146,6 +146,26 @@ public class MuseumManagementSystemRestController {
     }
 
     /**
+     * Gets all rooms in the mms of a certain type
+     * 
+     * @author Yu An Lu (yu-an-lu)
+     * @param roomType
+     * @return a list of room dtos of the given type
+     * @throws IllegalArgumentException
+     */
+    @GetMapping(value = { "/mms/rooms/type/{roomType}", "/mms/rooms/type/{roomType}/" })
+    public List<RoomDto> getAllRoomsByType(@PathVariable("roomType") String roomType) throws IllegalArgumentException {
+
+        List<RoomDto> roomDtos = new ArrayList<RoomDto>();
+
+        for (Room room : mmsService.getAllRoomsByType(ToDtoHelper.convertStringToRoomType(roomType))) {
+            roomDtos.add(ToDtoHelper.convertToDto(room));
+        }
+
+        return roomDtos;
+    }
+
+    /**
      * get museum management system's max loan number for clients
      *
      * @author : Nazia Chowdhury (naziaC)

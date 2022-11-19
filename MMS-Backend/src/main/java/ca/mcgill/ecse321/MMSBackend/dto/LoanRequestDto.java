@@ -7,7 +7,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
  */
 public class LoanRequestDto {
 
-    public enum LoanRequestStatusDto {Approved, Rejected, Pending}
+    public enum LoanRequestStatusDto {Approved, Rejected, Pending, Returned}
 
     private int requestId;
     private int loanDuration;

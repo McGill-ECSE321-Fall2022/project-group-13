@@ -60,7 +60,7 @@ public class LoanRequestRestController {
      * @param requestId
      * @return loan request object
      */
-    @GetMapping(value = {"/loanRequest/{id}", "/loanRequest/{id}/"})
+    @GetMapping(value = {"/loanRequest/{requestId}", "/loanRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> getLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.getLoanRequest(requestId);
         return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
@@ -82,7 +82,7 @@ public class LoanRequestRestController {
      * @return the list of loan request dtos with the specified status
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = {"/loanRequests/{status}", "/loanRequests/{status}/"})
+    @GetMapping(value = {"/loanRequests/Status/{status}", "/loanRequests/Status/{status}/"})
     public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByStatus(@PathVariable("status") String status) throws IllegalArgumentException {
         List<LoanRequestDto> loanRequestsDtos = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(ToDtoHelper.convertStringToLoanStatus(status))) {
@@ -112,7 +112,7 @@ public class LoanRequestRestController {
      * @return a list of loan request objects
      */
     @GetMapping(value = {"/loanRequests/{client}", "/loanRequests/{client}/"})
-    public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByClient(@RequestParam String username) throws IllegalArgumentException {
+    public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByClient(@PathVariable(name="client") String username) throws IllegalArgumentException {
         Client client = clientAccountService.getClient(username);
         List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<LoanRequestDto>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByClient(client)) {
