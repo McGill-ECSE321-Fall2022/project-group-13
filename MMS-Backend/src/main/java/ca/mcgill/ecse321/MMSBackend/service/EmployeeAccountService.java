@@ -109,9 +109,13 @@ public class EmployeeAccountService {
     @Transactional
     public void deleteEmployee(String username){
 
-        Employee employee = getEmployee(username);
-
-        employeeRepository.deleteById(employee.getUsername());    
+        if (employeeRepository.existsById(username)) {
+            employeeRepository.deleteById(username);  
+        }
+        else{
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Employee not found"); 
+        }
+  
     }
 
     /**

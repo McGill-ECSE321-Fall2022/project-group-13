@@ -110,10 +110,14 @@ public class ClientAccountService {
      */
     @Transactional
     public void deleteClient(String username){
-
-        Client client = getClient(username);
-
-        clientRepository.deleteById(client.getUsername());   
+        
+        if (clientRepository.existsById(username)) {
+            clientRepository.deleteById(username);  
+        }
+        else{
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Client not found"); 
+        }
+  
     }
 
     /**
