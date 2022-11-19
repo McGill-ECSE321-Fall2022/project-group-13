@@ -160,8 +160,10 @@ public class MuseumManagementSystemService {
      */
     @Transactional
     public Room getRoom(int roomId) {
-        Room room = roomRepository.findRoomByRoomId(roomId);
-        return room;
+        if (roomRepository.findRoomByRoomId(roomId) == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Room does not exist");
+        
+        return roomRepository.findRoomByRoomId(roomId);
     }
 
     /**
