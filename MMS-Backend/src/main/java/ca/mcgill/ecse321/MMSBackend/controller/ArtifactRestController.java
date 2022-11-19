@@ -39,19 +39,19 @@ public class ArtifactRestController {
         return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomType(roomType).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/artifacts/{roomId}", "/artifacts/{roomId}/" })
+    @GetMapping(value = { "/artifacts/getArtifactByRoom/{roomId}", "/artifacts/getArtifactByRoom/{roomId}/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByRoomId(@PathVariable("roomId") int roomId) throws
             IllegalArgumentException {
         return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomId(roomId).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/artifacts/{status}", "/artifacts/{status}/" })
+    @GetMapping(value = { "/artifacts/getByStatus/{status}", "/artifacts/{status}/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByLoanStatus(@PathVariable("status") Artifact.LoanStatus status) throws
             IllegalArgumentException {
         return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByLoanStatus(status).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/artifacts/{state}", "/artifacts/{state}/" })
+    @GetMapping(value = { "/artifacts/getByState/{state}", "/artifacts/{state}/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByState(@PathVariable("state") boolean state) throws
             IllegalArgumentException {
         return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByState(state).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
