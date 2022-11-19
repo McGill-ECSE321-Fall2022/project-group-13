@@ -173,30 +173,30 @@ public class ToDtoHelper {
 
     /**
      * @author Samantha Perez Hoffman (samperezh)
-     * @param dayTypeDto
+     * @param day
      * @return
      */
-    public static DayType convertToDomainObject(DayTypeDto dayTypeDto) {
-        if (dayTypeDto == null) {
+    public static DayType convertStringToDayType(String day){
+        if (day == null) {
             throw new IllegalArgumentException("DayType cannot be null!");
         }
-        switch (dayTypeDto) {
-            case Monday:
+        switch (day) {
+            case "Monday":
                 return DayType.Monday;
-            case Tuesday:
+            case "Tuesday":
                 return DayType.Tuesday;
-            case Wednesday:
+            case "Wednesday":
                 return DayType.Wednesday;
-            case Thursday:
+            case "Thursday":
                 return DayType.Thursday;
-            case Friday:
+            case "Friday":
                 return DayType.Friday;
-            case Saturday:
+            case "Saturday":
                 return DayType.Saturday;
-            case Sunday:
+            case "Sunday":
                 return DayType.Sunday;
             default:
-                throw new IllegalArgumentException("Unexpected value: " + dayTypeDto);
+                throw new IllegalArgumentException("Unexpected value: " + day);
         }
     }
 
