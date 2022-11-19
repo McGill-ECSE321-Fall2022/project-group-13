@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.dto.*;
-import ca.mcgill.ecse321.MMSBackend.dto.DonationRequestDto.DonationStatusDto;
 import ca.mcgill.ecse321.MMSBackend.service.ArtifactService;
 import ca.mcgill.ecse321.MMSBackend.service.ClientAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.DonationRequestService;
@@ -50,21 +51,19 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/donationArtifact", "/donationArtifact/" })
-    public ArtifactDto createDonationArtifact(
+    public ResponseEntity<ArtifactDto> createDonationArtifact(
         @RequestParam String name, 
         @RequestParam String image,
         @RequestParam String description,
         @RequestParam boolean isDamaged,
         @RequestParam double worth, 
-        @RequestParam (name = "mmsSystem") MuseumManagementSystemDto mmsDto)
+        @RequestParam int systemId)
         
         throws IllegalArgumentException {
-        MuseumManagementSystem mms = mmsService
-                .getMuseumManagementSystem(mmsDto.getMuseumManagementSystemId());
-        Artifact artifact = donationRequestService
-                .createDonationArtifact(name, image, description, isDamaged, worth, mms);
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
+        Artifact artifact = donationRequestService.createDonationArtifact(name, image, description, isDamaged, worth, mms);
 
-        return ToDtoHelper.convertToDto(artifact);
+        return new ResponseEntity<ArtifactDto> (ToDtoHelper.convertToDto(artifact), HttpStatus.CREATED);
     }
 
      /**
@@ -77,20 +76,18 @@ public class DonationRequestRestController {
       * @throws IllegalArgumentException
       */
     @PostMapping(value = { "/donationRequest", "/donationRequest/" })
-    public DonationRequestDto createDonationRequest(
-        @RequestParam(name = "client") ClientDto clientDto,
-        @RequestParam(name = "artifact") ArtifactDto artifactDto,
-        @RequestParam(name = "mmsSystem") MuseumManagementSystemDto museumManagementSystemDto)
+    public ResponseEntity<DonationRequestDto> createDonationRequest(
+        @RequestParam String clientUsername,
+        @RequestParam int artifactId,
+        @RequestParam int systemId)
         
         throws IllegalArgumentException {
-        Client client = clientAccountService.getClient(clientDto.getUsername());
-        Artifact artifact = artifactService.getArtifact(artifactDto.getArtifactId());
-        MuseumManagementSystem museumManagementSystem = mmsService
-                .getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
-        DonationRequest donationRequest = donationRequestService
-                .createDonationRequest(client, artifact, museumManagementSystem);
+        Client client = clientAccountService.getClient(clientUsername);
+        Artifact artifact = artifactService.getArtifact(artifactId);
+        MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(systemId);
+        DonationRequest donationRequest = donationRequestService.createDonationRequest(client, artifact, museumManagementSystem);
 
-        return ToDtoHelper.convertToDto(donationRequest);
+        return new ResponseEntity<DonationRequestDto> (ToDtoHelper.convertToDto(donationRequest), HttpStatus.CREATED);
     }
 
     /**
@@ -102,16 +99,16 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/donationRequest/approveRequest/{requestId}", "/donationRequest/approveRequest/{requestId}/" })
-    public DonationRequestDto approveDonationRequest(
+    public ResponseEntity<DonationRequestDto> approveDonationRequest(
         @PathVariable("requestId") int requestId,
         
-        @RequestParam(name = "room") RoomDto roomDto)
+        @RequestParam int roomId)
 
         throws IllegalArgumentException {
-        Room room = mmsService.getRoom(roomDto.getRoomId());
+        Room room = mmsService.getRoom(roomId);
         DonationRequest donationRequest = donationRequestService.approveDonationRequest(requestId, room);
         
-        return ToDtoHelper.convertToDto(donationRequest);
+        return new ResponseEntity<DonationRequestDto> (ToDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -122,13 +119,13 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/donationRequest/rejectRequest/{requestId}", "/donationRequest/rejectRequest/{requestId}/" })
-    public DonationRequestDto rejectDonationRequest(
+    public ResponseEntity<DonationRequestDto> rejectDonationRequest(
         @PathVariable("requestId") int requestId)
 
         throws IllegalArgumentException {
         DonationRequest donationRequest = donationRequestService.rejectDonationRequest(requestId);
         
-        return ToDtoHelper.convertToDto(donationRequest);
+        return new ResponseEntity<DonationRequestDto> (ToDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -139,13 +136,13 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/donationRequest/{requestId}", "/donationRequest/{requestId}/" })
-    public DonationRequestDto getDonationRequest(
+    public ResponseEntity<DonationRequestDto> getDonationRequest(
         @PathVariable("requestId") int requestId)
 
         throws IllegalArgumentException {
         DonationRequest donationRequest = donationRequestService.getDonationRequest(requestId);
         
-        return ToDtoHelper.convertToDto(donationRequest);
+        return new ResponseEntity<DonationRequestDto> (ToDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -155,14 +152,14 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/donationRequests", "/donationRequests/" })
-    public List<DonationRequestDto> getAllDonationRequests() throws IllegalArgumentException {
+    public ResponseEntity<List<DonationRequestDto>> getAllDonationRequests() throws IllegalArgumentException {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequests()) {
             donationRequestsDtos.add(ToDtoHelper.convertToDto(donationRequest));
         }
 
-        return donationRequestsDtos;
+        return new ResponseEntity<List<DonationRequestDto>> (donationRequestsDtos, HttpStatus.OK);
     }
 
     /**
@@ -173,17 +170,17 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/donationRequests/{status}", "/donationRequests/{status}/" })
-    public List<DonationRequestDto> getAllDonationRequestsByStatus(
-        @PathVariable("status") DonationStatusDto statusDto)
+    public ResponseEntity<List<DonationRequestDto>> getAllDonationRequestsByStatus(
+        @PathVariable("status") String status)
 
         throws IllegalArgumentException {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
-        for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByStatus(ToDtoHelper.convertToDomainObject(statusDto))) {
+        for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByStatus(ToDtoHelper.convertStringToDonationStatus(status))) {
             donationRequestsDtos.add(ToDtoHelper.convertToDto(donationRequest));
         }
 
-        return donationRequestsDtos;
+        return new ResponseEntity<List<DonationRequestDto>> (donationRequestsDtos, HttpStatus.OK);
     }
 
     /**
@@ -194,18 +191,18 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
      @GetMapping(value = { "/donationRequests/{client}", "/donationRequests/{client}/" })
-     public List<DonationRequestDto> getAllDonationRequestsByClient(
-        @PathVariable("client") ClientDto clientDto)
+     public ResponseEntity<List<DonationRequestDto>> getAllDonationRequestsByClient(
+        @PathVariable("client") String clientUsername)
 
         throws IllegalArgumentException {
-        Client client = clientAccountService.getClient(clientDto.getUsername());
+        Client client = clientAccountService.getClient(clientUsername);
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByClient(client)) {
             donationRequestsDtos.add(ToDtoHelper.convertToDto(donationRequest));
         }
 
-        return donationRequestsDtos;
+        return new ResponseEntity<List<DonationRequestDto>> (donationRequestsDtos, HttpStatus.OK);
     }
 
     /**
@@ -215,11 +212,13 @@ public class DonationRequestRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/donationRequest/{requestId}", "/donationRequest/{requestId}/" })
-    public void deleteRejectedDonationRequest(
+    public ResponseEntity<Boolean> deleteRejectedDonationRequest(
         @PathVariable("requestId") int requestId)
 
         throws IllegalArgumentException {
-        donationRequestService.deleteRejectedDonationRequest(requestId);
+        boolean response = donationRequestService.deleteRejectedDonationRequest(requestId);
+
+        return new ResponseEntity<Boolean> (response, HttpStatus.OK);
     }
     
 }

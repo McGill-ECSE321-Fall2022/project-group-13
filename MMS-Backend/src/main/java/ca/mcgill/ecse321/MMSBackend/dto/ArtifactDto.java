@@ -32,6 +32,16 @@ public class ArtifactDto {
         this.museumManagementSystem = museumManagementSystem;
     }
 
+    public ArtifactDto(int artifactId, String name, String image, String description, boolean isDamaged, double worth, MuseumManagementSystemDto museumManagementSystem){
+        this.artifactId = artifactId;
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.isDamaged = isDamaged;
+        this.worth = worth;
+        this.museumManagementSystem = museumManagementSystem;
+    }
+
     public int getArtifactId() {return artifactId;}
 
     public String getName(){
