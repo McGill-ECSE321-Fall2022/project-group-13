@@ -344,6 +344,21 @@ public class TestDonationRequestService {
     }
 
     @Test
+    public void testCreateDonationArtifactNegativeWorth(){
+        String error = null;
+
+        Artifact artifact = null;
+        try {
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, -1, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertNull(artifact);
+        assertEquals("Worth must be positive", error);
+    }
+
+    @Test
     public void testCreateDonationRequest(){
         DonationRequest donationRequest = null;
         try {
@@ -703,7 +718,7 @@ public class TestDonationRequestService {
     
     @Test
     public void testGetAllDonationRequests(){
-        Iterable<DonationRequest> donationRequests = service.getAllDonationRequests();
+        List<DonationRequest> donationRequests = service.getAllDonationRequests();
         assertEquals(ALL_DONATION_REQUESTS, donationRequests);
     }
 

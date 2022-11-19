@@ -145,7 +145,9 @@ public class MuseumManagementSystemService {
 
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
-        } else {
+        } else if(price < 0){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket price is not valid");
+        }else {
             museumManagementSystem.setTicketFee(price);
         }
     }
@@ -160,8 +162,10 @@ public class MuseumManagementSystemService {
      */
     @Transactional
     public Room getRoom(int roomId) {
-        Room room = roomRepository.findRoomByRoomId(roomId);
-        return room;
+        if (roomRepository.findRoomByRoomId(roomId) == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Room does not exist");
+        
+        return roomRepository.findRoomByRoomId(roomId);
     }
 
     /**
@@ -218,13 +222,15 @@ public class MuseumManagementSystemService {
      * @param museumManagementSystemId
      */
     @Transactional
-    public void setMaxLoanNumberOfMms(int museumManagementSystemId) {
+    public void setMaxLoanNumberOfMms(int museumManagementSystemId, int maxLoanNumber) {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
         if (museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+        } else if(maxLoanNumber <= 0){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Maximum loan number is not valid");
         } else {
-            museumManagementSystem.setMaxLoanNumber(5);
+            museumManagementSystem.setMaxLoanNumber(maxLoanNumber);
             museumManagementSystemRepository.save(museumManagementSystem);
         }
     }

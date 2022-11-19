@@ -53,8 +53,8 @@ public class LoanRequestService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Artifact does not exist");
         else if (mms == null)
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Museum Management System does not exist");
-        else if (loanDuration == 0)
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan duration must be indicated");
+        else if (loanDuration <= 0)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Loan duration must be valid");
 
         LoanRequest loanRequest;
         if (artifact.getLoanStatus().equals(Artifact.LoanStatus.Available)) {

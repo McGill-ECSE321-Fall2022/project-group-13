@@ -188,9 +188,9 @@ public class MuseumManagementSystemRestController {
      * @param systemId
      */
     @PutMapping(value = { "/mms/setMaxLoanNumber/{systemId}", "/mms/setMaxLoanNumber/{systemId}/" })
-    public MuseumManagementSystemDto setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId)
+    public MuseumManagementSystemDto setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId, @RequestParam(name = "maxLoanNumber") int maxLoanNumber)
             throws IllegalArgumentException {
-        mmsService.setMaxLoanNumberOfMms(systemId);
+        mmsService.setMaxLoanNumberOfMms(systemId, maxLoanNumber);
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
     }
 
