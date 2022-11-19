@@ -45,7 +45,7 @@ public class ArtifactService {
      * @return artifact object
      */
     @Transactional
-    public Artifact getArtifact(Integer id){
+    public Artifact getArtifact(int id){
         Artifact artifact = artifactRepository.findArtifactByArtifactId(id);
         if (artifact == null){
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Artifact with id: " + id +
@@ -249,7 +249,7 @@ public class ArtifactService {
     public boolean deleteArtifact(int artifactId){
         boolean result = false;
         //check if artifact exists before deleting
-        if(artifactRepository.existsById(artifactId)) {
+        if(artifactRepository.findArtifactByArtifactId(artifactId) != null) {
             artifactRepository.deleteById(artifactId);
             result = true;
         }else {

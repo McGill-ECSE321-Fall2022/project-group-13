@@ -6,21 +6,19 @@ import static org.mockito.Mockito.*;
 
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.internal.matchers.Null;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.MMSBackend.dao.*;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 
-import java.nio.file.InvalidPathException;
 import java.sql.Time;
+import java.util.Arrays;
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class TestArtifactService {
@@ -43,7 +41,7 @@ public class TestArtifactService {
     private static final int MAX_LOAN_NUMBER = 5;
     private static final double TICKET_FEE = 25.0;
 
-    private static final int R_ID = 5;
+    private static final int R_ID = 3;
     private static final String R_NAME = "DaVinki Room";
     private static final Room.RoomType R_TYPE = Room.RoomType.Small;
 
@@ -55,6 +53,24 @@ public class TestArtifactService {
     private static final double LOAN_FEE = 10000000.00;
     private static final boolean IS_DAMAGED = false;
     private static final double WORTH = 500000000.00;
+
+    private static final MuseumManagementSystem system = createMms(MMS_ID,MMS_NAME,OPEN_TIME,CLOSE_TIME,MAX_LOAN_NUMBER,TICKET_FEE);
+
+    private static final Room r1 = createRoom(3,"Room 3", Room.RoomType.Small,system);
+    private static final Room r2 = createRoom(4,"Room 4", Room.RoomType.Large,system);
+    private static final Room r3 = createRoom(5,"Room 5", Room.RoomType.Storage,system);
+
+    private static final Artifact a1 = createArtifact(2,"La Joconde", "Mona Lisa but French",
+            "images/monalisa.jpg", Artifact.LoanStatus.Available, 5, false, 1000, 3, 1 );
+
+    private static final Artifact a2 = createArtifact(7,"Orange Couple", "Two-Sided",
+            "images/orange.PNG", Artifact.LoanStatus.Loaned, 100, true, 100000, 4, 1 );
+
+    private static final Artifact a3 = createArtifact(4,"Cat", "A royal cat",
+            "images/Cat.PNG", Artifact.LoanStatus.Unavailable, 10, false, 100, 5, 1 );
+
+    private static final List<Artifact> ALL_ARTIFACTS = Arrays.asList(a1,a2,a3);
+
 
 
     @BeforeEach
@@ -89,22 +105,24 @@ public class TestArtifactService {
                 });
         lenient().when(artifactDao.findArtifactByArtifactId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(A_KEY)) {
-                Artifact artifact = new Artifact();
+                Artifact artifact1 = new Artifact();
 
-                artifact.setArtifactId(A_KEY);
-                artifact.setName(A_NAME);
-                artifact.setImage(A_IMAGE);
-                artifact.setLoanStatus(LOAN_STATUS);
-                artifact.setLoanFee(LOAN_FEE);
-                artifact.setIsDamaged(IS_DAMAGED);
-                artifact.setWorth(WORTH);
-                artifact.setRoomLocation(roomDao.findRoomByRoomId(R_ID));
-                artifact.setMuseumManagementSystem(mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-                return artifact;
+                artifact1.setArtifactId(A_KEY);
+                artifact1.setName(A_NAME);
+                artifact1.setImage(A_IMAGE);
+                artifact1.setLoanStatus(LOAN_STATUS);
+                artifact1.setLoanFee(LOAN_FEE);
+                artifact1.setIsDamaged(IS_DAMAGED);
+                artifact1.setWorth(WORTH);
+                artifact1.setRoomLocation(roomDao.findRoomByRoomId(R_ID));
+                artifact1.setMuseumManagementSystem(mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+                return artifact1;
             } else {
                 return null;
             }
         });
+
+        lenient().when(artifactDao.findAll()).thenReturn(ALL_ARTIFACTS);
 
         // Whenever anything is saved, just return the parameter object
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -118,7 +136,6 @@ public class TestArtifactService {
 
     @Test
     public void testCreateArtifact() {
-        assertEquals(0, service.getAllArtifacts().size());
         Artifact a = null;
         try {
             a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID, MMS_ID);
@@ -244,6 +261,40 @@ public class TestArtifactService {
         assertEquals("The system id can not be negative.", error);
     }
 
+    @Test
+    public void testCreateArtifactInNonExistingMMS(){
+        int mmsId = 3;
+        Artifact a = null;
+        String error = null;
+
+        try{
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID, mmsId);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("The museum with id: " + mmsId + " was not found.", error);
+    }
+
+    @Test
+    public void testCreateArtifactInNonExistingRoom(){
+        int roomId = 9;
+        Artifact a = null;
+        String error = null;
+
+        try{
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, roomId, MMS_ID);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("The room with id: " + roomId + " was not found.", error);
+    }
+
+    @Test
+    public void testCreateArtifactInFullSmallRoom(){
+
+    }
 
     @Test
     public void testEditArtifact() {
@@ -304,13 +355,135 @@ public class TestArtifactService {
 
     @Test
     public void testDeleteArtifact(){
-        boolean result = service.deleteArtifact(A_KEY);
+        boolean result = false;
+
+        try {
+            result= service.deleteArtifact(A_KEY);
+        }catch (MuseumManagementSystemException e){
+            fail();
+        }
+
         assertTrue(result);
+    }
+
+    @Test
+    public void testGetAllArtifacts(){
+        List<Artifact> artifacts = service.getAllArtifacts();
+        assertEquals(ALL_ARTIFACTS, artifacts);
+
+    }
+
+    @Test
+    public void testGetArtifact(){
+        Artifact a = null;
+        try {
+            a = service.getArtifact(A_KEY);
+        } catch (MuseumManagementSystemException e) {
+            fail();
+        }
+        assertNotNull(a);
+
+    }
+
+    @Test
+    public void testGetAllArtifactsByRoomType(){
+        List<Artifact> aSmall = service.getAllArtifactsByRoomType(Room.RoomType.Small);
+        List<Artifact> aLarge = service.getAllArtifactsByRoomType(Room.RoomType.Large);
+        List<Artifact> aStorage = service.getAllArtifactsByRoomType(Room.RoomType.Storage);
+        assertNotNull(aSmall);
+        assertNotNull(aLarge);
+        assertNotNull(aStorage);
+        assertEquals(1, aSmall.size());
+        assertEquals(1, aLarge.size());
+        assertEquals(1, aStorage.size());
+    }
+
+    @Test
+    public void testGetAllArtifactsByRoomId(){
+        List<Artifact> room3 = service.getAllArtifactsByRoomId(3);
+        List<Artifact> room4 = service.getAllArtifactsByRoomId(4);
+        List<Artifact> room5 = service.getAllArtifactsByRoomId(5);
+        assertNotNull(room3);
+        assertNotNull(room4);
+        assertNotNull(room5);
+        assertEquals(1, room3.size());
+        assertEquals(1, room4.size());
+        assertEquals(1, room5.size());
+    }
+
+    @Test
+    public void testGetAllArtifactsByLoanStatus(){
+        List<Artifact> u = service.getAllArtifactsByLoanStatus(Artifact.LoanStatus.Unavailable);
+        List<Artifact> a = service.getAllArtifactsByLoanStatus(Artifact.LoanStatus.Available);
+        List<Artifact> l = service.getAllArtifactsByLoanStatus(Artifact.LoanStatus.Loaned);
+        assertNotNull(u);
+        assertNotNull(a);
+        assertNotNull(l);
+        assertEquals(1, u.size());
+        assertEquals(1, a.size());
+        assertEquals(1, l.size());
+    }
+
+    @Test
+    public void testGetAllArtifactsByState(){
+        List<Artifact> notDamaged = service.getAllArtifactsByState(false);
+        List<Artifact> damaged = service.getAllArtifactsByState(true);
+        assertNotNull(notDamaged);
+        assertNotNull(damaged);
+        assertEquals(2, notDamaged.size());
+        assertEquals(1, damaged.size());
     }
 
 
 
 
+    private static MuseumManagementSystem createMms(int id, String name, Time openTime, Time closeTime,
+                                                    int maxLoanNumber, double ticketFee) {
+        MuseumManagementSystem mms = new MuseumManagementSystem();
+        mms.setSystemId(id);
+        mms.setName(name);
+        mms.setOpenTime(openTime);
+        mms.setCloseTime(closeTime);
+        mms.setMaxLoanNumber(maxLoanNumber);
+        mms.setTicketFee(ticketFee);
+        return mms;
+    }
+
+
+    private static Room createRoom(int id, String name, Room.RoomType roomType, MuseumManagementSystem mms) {
+        Room room = new Room();
+        room.setRoomId(id);
+        room.setName(name);
+        room.setType(roomType);
+        room.setMuseumManagementSystem(mms);
+        return room;
+    }
+
+    /*private static void createSmallRooms(){
+        for (int i = 1; i <= 5; i++) {
+
+            Room currentRoom = new Room();
+            currentRoom.setName("Small Room " + i);
+            currentRoom.setType(Room.RoomType.Small);
+            currentRoom.setMuseumManagementSystem(museumManagementSystem);
+            room.save(currentRoom);
+        }
+    }*/
+
+    private static Artifact createArtifact(int id, String name, String description, String image, Artifact.LoanStatus
+            status, int loanFee, boolean isDamaged, double worth, int roomId, int mmsId) {
+        Artifact artifact = new Artifact();
+        artifact.setArtifactId(id);
+        artifact.setName(name);
+        artifact.setImage(image);
+        artifact.setLoanStatus(status);
+        artifact.setDescription(description);
+        artifact.setIsDamaged(isDamaged);
+        artifact.setWorth(worth);
+        artifact.setRoomLocation(Room.getWithRoomId(roomId));
+        artifact.setMuseumManagementSystem(MuseumManagementSystem.getWithSystemId(mmsId));
+        return artifact;
+    }
 
 
 
