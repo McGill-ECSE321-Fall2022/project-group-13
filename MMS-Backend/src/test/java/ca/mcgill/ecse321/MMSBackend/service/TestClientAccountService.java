@@ -14,7 +14,6 @@ import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
-import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -497,17 +496,28 @@ public class TestClientAccountService {
 
     //-----------------------------------------------Testing deleteClient()--------------------------------------------------
 
+    @Test
+    public void testDeleteClient(){
 
-    // // IDK how to test the succesful case?? Sam has verify 
+        try{
+            service.deleteClient(EXISTING_CLIENT_USERNAME);
+        }catch (MuseumManagementSystemException e){
+            fail(); 
+        }
+    }
 
-    // public void testDeleteClient(){
+    @Test
+    public void ttestDeleteClientNotFound(){
 
-    //     try{
-    //         service.deleteClient(EXISTING_CLIENT_USERNAME);
-    //     }catch (MuseumManagementSystemException e){
-    //         fail();
-    //     }
-    // }
+        String error = ""; 
+        try{
+            service.deleteClient(CLIENT_USERNAME);
+        }catch (MuseumManagementSystemException e){
+            error = e.getMessage(); 
+        }
+
+        assertEquals("Client not found", error);
+    }
 
     //-----------------------------------------------Testing signInClientAccount()--------------------------------------------------
 
@@ -710,23 +720,6 @@ public class TestClientAccountService {
         client.setCurrentLoanNumber(loanNumber); 
         client.setMuseumManagementSystem(mms);
         return client;
-    }
-
-    /**
-     * Private Constructor of a employee 
-     * @param username
-     * @param name
-     * @param password
-     * @param mms
-     * @return
-     */
-    private Employee employee(String username, String name, String password, MuseumManagementSystem mms){
-        Employee employee = new Employee(); 
-        employee.setUsername(username); 
-        employee.setName(name); 
-        employee.setPassword(password); 
-        employee.setMuseumManagementSystem(mms);
-        return employee;
     }
 
 }   

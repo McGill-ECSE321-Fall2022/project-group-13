@@ -104,6 +104,9 @@ public class TestEmployeeAccountService {
             else if (invocation.getArgument(0).equals(FAKE_EMPLOYEE_USERNAME)){
                 return null; 
             }
+            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)){
+                return employee(EXISTING_EMPLOYEE_USERNAME,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            }
             else {
                 return null;
         }
@@ -496,16 +499,28 @@ public class TestEmployeeAccountService {
 
     //-----------------------------------------------Testing deleteEmployee()--------------------------------------------------
 
-    // // IDK how to test the succesful case?? Sam has verify 
+    @Test
+    public void testDeleteEmployee(){
 
-    // public void testDeleteEmployee(){
+        try{
+            service.deleteEmployee(EXISTING_EMPLOYEE_USERNAME);
+        }catch (MuseumManagementSystemException e){
+            fail(); 
+        }
+    }
 
-    //     try{
-    //         service.deleteClient(EXISTING_EMPLOYEE_USERNAME);
-    //     }catch (MuseumManagementSystemException e){
-    //         fail();
-    //     }
-    // }
+    @Test
+    public void testDeleteEmployeeNotFound(){
+
+        String error = ""; 
+        try{
+            service.deleteEmployee(EMPLOYEE_USERNAME);
+        }catch (MuseumManagementSystemException e){
+            error = e.getMessage(); 
+        }
+
+        assertEquals("Employee not found", error);
+    }
 
     //-----------------------------------------------Testing signInClientAccount()--------------------------------------------------
 

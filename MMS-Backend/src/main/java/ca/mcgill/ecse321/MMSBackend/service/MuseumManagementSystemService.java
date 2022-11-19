@@ -42,7 +42,7 @@ public class MuseumManagementSystemService {
     public MuseumManagementSystem createMuseumManagementSystem() {
 
         if(museumManagementSystemRepository.count() != 0) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System already exists");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System already exists");
         }
 
         MuseumManagementSystem museumManagementSystem = new MuseumManagementSystem();
@@ -76,7 +76,7 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else {
             return museumManagementSystem;
         }
@@ -95,7 +95,7 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else {
             museumManagementSystemRepository.delete(museumManagementSystem);
         }
@@ -114,7 +114,7 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else {
             museumManagementSystem.setName(name);
         }
@@ -144,8 +144,10 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
-        } else {
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
+        } else if(price < 0){
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Ticket price is not valid");
+        }else {
             museumManagementSystem.setTicketFee(price);
         }
     }
@@ -160,8 +162,10 @@ public class MuseumManagementSystemService {
      */
     @Transactional
     public Room getRoom(int roomId) {
-        Room room = roomRepository.findRoomByRoomId(roomId);
-        return room;
+        if (roomRepository.findRoomByRoomId(roomId) == null)
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Room does not exist");
+        
+        return roomRepository.findRoomByRoomId(roomId);
     }
 
     /**
@@ -218,13 +222,15 @@ public class MuseumManagementSystemService {
      * @param museumManagementSystemId
      */
     @Transactional
-    public void setMaxLoanNumberOfMms(int museumManagementSystemId) {
+    public void setMaxLoanNumberOfMms(int museumManagementSystemId, int maxLoanNumber) {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
         if (museumManagementSystem == null) {
-            throw new IllegalArgumentException("Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
+        } else if(maxLoanNumber <= 0){
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Maximum loan number is not valid");
         } else {
-            museumManagementSystem.setMaxLoanNumber(5);
+            museumManagementSystem.setMaxLoanNumber(maxLoanNumber);
             museumManagementSystemRepository.save(museumManagementSystem);
         }
     }

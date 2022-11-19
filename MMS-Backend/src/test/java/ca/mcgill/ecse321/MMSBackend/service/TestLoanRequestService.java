@@ -168,7 +168,7 @@ public class TestLoanRequestService {
     }
 
     @Test
-    public void testCreateLoanRequestNullLoanDuration() {
+    public void testCreateLoanRequestInvalidLoanDuration() {
         String error = null;
         LoanRequest loanRequest = null;
         try {
@@ -180,7 +180,7 @@ public class TestLoanRequestService {
             error = e.getMessage();
         }
         assertNull(loanRequest);
-        assertEquals("Loan duration must be indicated", error);
+        assertEquals("Loan duration must be valid", error);
     }
 
     @Test
@@ -614,7 +614,6 @@ public class TestLoanRequestService {
      * Private Constructor of an artifact
      * @param artifactId
      * @param artifactStatus
-     * @return
      */
     private static Artifact artifactCreationHelper(int artifactId, Artifact.LoanStatus artifactStatus){
         Artifact artifact = new Artifact();
@@ -634,7 +633,6 @@ public class TestLoanRequestService {
      * Private Constructor of a client
      * @param username
      * @param loanNumber
-     * @return
      */
     private static Client clientCreationHelper(String username, int loanNumber){
         Client client = new Client();
@@ -650,7 +648,6 @@ public class TestLoanRequestService {
      * Private Constructor of a loan request
      * @param requestId
      * @param loanRequestStatus
-     * @return
      */
     private static LoanRequest loanRequestCreationHelper(int requestId, Artifact artifact, Client client, LoanRequest.LoanStatus loanRequestStatus){
         LoanRequest loanRequest = new LoanRequest();
@@ -666,7 +663,6 @@ public class TestLoanRequestService {
 
     /**
      * Private Constructor of a MuseumManagementSystem
-     * @return
      */
     private static MuseumManagementSystem createMms() {
         MuseumManagementSystem mms = new MuseumManagementSystem();

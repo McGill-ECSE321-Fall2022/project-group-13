@@ -37,7 +37,7 @@ public class TicketService {
     public Ticket createTicket(String clientUsername) {
 
         if (clientUsername.equals("") || clientUsername.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This username is invalid");
         }
 
         Client client = clientRepository.findClientByUsername(clientUsername);
@@ -64,7 +64,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
 
         if(ticket == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
         }else{
             return ticket;
         }
@@ -93,7 +93,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
 
         if(ticket == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
         }else{
             ticketRepository.delete(ticket);
         }
@@ -109,7 +109,7 @@ public class TicketService {
     public void setTicketStatus(Ticket ticket, boolean status) {
         
         if(ticket == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
         }else{
             ticket.setIsActive(status);
         }
@@ -128,7 +128,7 @@ public class TicketService {
         Client client = clientRepository.findClientByUsername(clientUsername); 
 
         if(client == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
         }else{
 
             List<Ticket> tickets = getAllTickets();
