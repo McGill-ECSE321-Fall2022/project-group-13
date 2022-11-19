@@ -169,7 +169,7 @@ public class DonationRequestRestController {
      * @return the list of donation request dtos with the specified status
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/donationRequests/{status}", "/donationRequests/{status}/" })
+    @GetMapping(value = { "/donationRequests/withRequestStatus/{status}", "/donationRequests/{status}/" })
     public ResponseEntity<List<DonationRequestDto>> getAllDonationRequestsByStatus(
         @PathVariable("status") String status)
 
@@ -190,7 +190,7 @@ public class DonationRequestRestController {
      * @return the list of donation request dtos of the client
      * @throws IllegalArgumentException
      */
-     @GetMapping(value = { "/donationRequests/{client}", "/donationRequests/{client}/" })
+     @GetMapping(value = { "/donationRequests/ofClient/{client}", "/donationRequests/{client}/" })
      public ResponseEntity<List<DonationRequestDto>> getAllDonationRequestsByClient(
         @PathVariable("client") String clientUsername)
 
@@ -211,7 +211,7 @@ public class DonationRequestRestController {
      * @param requestId
      * @throws IllegalArgumentException
      */
-    @DeleteMapping(value = { "/donationRequest/{requestId}", "/donationRequest/{requestId}/" })
+    @DeleteMapping(value = { "/donationRequest/delete/{requestId}", "/donationRequest/{requestId}/" })
     public ResponseEntity<Boolean> deleteRejectedDonationRequest(
         @PathVariable("requestId") int requestId)
 
