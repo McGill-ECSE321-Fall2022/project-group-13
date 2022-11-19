@@ -348,6 +348,20 @@ public class TestMuseumManagementService {
 
     }
 
+    @Test
+    public void testSetTicketPriceNegative(){
+            
+        String error = "";
+
+        try {
+            museumManagementSystemService.setMuseumTicketPrice(SYSTEM_ID, -1);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertEquals("Ticket price is not valid", error);
+}
+
     @Test   
     public void testSetMuseumTicketPriceNull(){
 

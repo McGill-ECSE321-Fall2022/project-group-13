@@ -145,7 +145,9 @@ public class MuseumManagementSystemService {
 
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
-        } else {
+        } else if(price < 0){
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket price is not valid");
+        }else {
             museumManagementSystem.setTicketFee(price);
         }
     }
