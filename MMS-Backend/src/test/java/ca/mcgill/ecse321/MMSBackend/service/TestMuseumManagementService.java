@@ -98,7 +98,6 @@ public class TestMuseumManagementService {
     private static final RoomType SMALL_ROOM_TYPE = RoomType.Small;
 
     private static final int NONEXISTING_ID = 0;
-    private static final String NONEXISTING_NAME = "Nonexisting Name";
 
     private static final MuseumManagementSystem MMS = new MuseumManagementSystem();
     private static final Room STORAGE_ROOM = createRoom(STORAGE_ROOM_ID, STORAGE_ROOM_NAME, STORAGE_ROOM_TYPE, MMS);
@@ -202,6 +201,9 @@ public class TestMuseumManagementService {
 
     }
 
+     /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testCreateMuseumManagementSystem(){
 
@@ -220,6 +222,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testCreateMuseumManagementSystemWithExistingSystemId() {
 
@@ -240,6 +245,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testGetMuseumManagementSystem() {
 
@@ -255,6 +263,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testGetMuseumManagementSystemNull(){
 
@@ -273,6 +284,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testDeleteMuseumManagementSystem(){
     
@@ -283,6 +297,9 @@ public class TestMuseumManagementService {
             }
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testDeleteMuseumManagementSystemNull(){
 
@@ -298,6 +315,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testSetMuseumManagementSystemName(){
 
@@ -309,6 +329,9 @@ public class TestMuseumManagementService {
     
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testSetMuseumManagementSystemNameNull(){
 
@@ -324,6 +347,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testGetAllMuseumManagementSystem(){
 
@@ -345,6 +371,9 @@ public class TestMuseumManagementService {
         
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testSetMuseumTicketPrice(){
 
@@ -356,6 +385,9 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test
     public void testSetTicketPriceNegative(){
             
@@ -368,8 +400,11 @@ public class TestMuseumManagementService {
         }
 
         assertEquals("Ticket price is not valid", error);
-}
+    }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     */
     @Test   
     public void testSetMuseumTicketPriceNull(){
 

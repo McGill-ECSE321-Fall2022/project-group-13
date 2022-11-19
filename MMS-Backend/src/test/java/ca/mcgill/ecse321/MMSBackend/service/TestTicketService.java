@@ -22,7 +22,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import ca.mcgill.ecse321.MMSBackend.MmsBackendApplication;
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
@@ -31,6 +30,12 @@ import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
 
+/**
+ * @author Lucy Zhang (Lucy-Zh)
+ * 
+ * The TestTicketService class tests the business logic declared in TicketService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestTicketService {
     
@@ -281,12 +286,26 @@ public class TestTicketService {
         assertEquals("Ticket does not exist", error);
     }
 
-    public void checkTicketValidness(Ticket ticket){
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     * 
+     * Helper method to check if the ticket is valid
+     * 
+     */
+    private void checkTicketValidness(Ticket ticket){
         assertEquals(TICKET_FEE, ticket.getFee());
         assertEquals(IS_ACTIVE, ticket.getIsActive());
         assertEquals(CLIENT_USERNAME_C, ticket.getClient().getUsername());
     }
 
+    /**
+     * @author Lucy Zhang (Lucy-Zh)
+     * 
+     * Helper method to set the attributes of a ticket
+     * @param ticket
+     * @param client
+     * 
+     */
     private void setTicketAttributes(Ticket ticket, Client client){
         ticket.setFee(TICKET_FEE);
         ticket.setIsActive(IS_ACTIVE);
@@ -294,6 +313,17 @@ public class TestTicketService {
         ticket.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
     }
 
+     /**
+     * @author Lucy Zhang (Lucy-Zh)
+     * 
+     * Helper method to create a client
+     * @param username
+     * @param name
+     * @param password
+     * @param loanNumber
+     * @param mms
+     * 
+     */
     private Client client(String username, String name, String password, int loanNumber, MuseumManagementSystem mms){
         Client client = new Client(); 
         client.setUsername(username); 
