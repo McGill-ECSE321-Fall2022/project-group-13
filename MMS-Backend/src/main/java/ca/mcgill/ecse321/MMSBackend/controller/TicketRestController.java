@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse321.MMSBackend.dto.ClientDto;
 import ca.mcgill.ecse321.MMSBackend.dto.TicketDto;
+import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
+import ca.mcgill.ecse321.MMSBackend.service.ClientAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.TicketService;
 
 /**
@@ -30,6 +32,9 @@ public class TicketRestController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private ClientAccountService clientService;
 
     /**
      * Create a new ticket
@@ -130,7 +135,8 @@ public class TicketRestController {
     @GetMapping(value = { "/tickets/{clientUsername}", "/tickets/{clientUsername}/" })
     public List<TicketDto> getTicketsByClient(@PathVariable("clientUsername") String clientUsername) throws IllegalArgumentException
     {
-        List<Ticket> tickets = ticketService.getAllTicketsByClient(clientUsername);
+        Client client = clientService.getClient(clientUsername);
+        List<Ticket> tickets = ticketService.getAllTicketsByClient(client);
 
         List<TicketDto> ticketDtos = new ArrayList<TicketDto>();
 

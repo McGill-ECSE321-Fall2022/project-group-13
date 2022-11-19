@@ -10,6 +10,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import ca.mcgill.ecse321.MMSBackend.MmsBackendApplication;
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
@@ -47,7 +50,9 @@ public class TestTicketService {
     private static final double TICKET_FEE = 69.69;
     private static final boolean IS_ACTIVE = true;
 
-    private static final String CLIENT_USERNAME = "TaylorSwift13";
+    private static final String CLIENT_USERNAME_A = "TaylorSwift13";
+    private static final String CLIENT_USERNAME_B = "KarlieKloss";
+    private static final String CLIENT_USERNAME_C = "SelenaGomez";
     private static final String CLIENT_NAME = "Taylor Swift";
     private static final String CLIENT_PASSWORD = "ReputationBestAlbum";
     private static final int CLIENT_LOAN_NUMBER = 0;
@@ -77,25 +82,25 @@ public class TestTicketService {
             }
         });
 
-        lenient().when(clientRepository.findClientByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(CLIENT_USERNAME)) {
-                Client client = new Client();
-                client.setUsername(CLIENT_USERNAME);
-                client.setName(CLIENT_NAME);
-                client.setPassword(CLIENT_PASSWORD);
-                client.setCurrentLoanNumber(CLIENT_LOAN_NUMBER);
-                client.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
-                return client;
-            } else {
+        lenient().when(clientRepository.findClientByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+            if(invocation.getArgument(0).equals(CLIENT_USERNAME_A)) {
+                return client(CLIENT_USERNAME_A, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_LOAN_NUMBER, mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
+            }
+            else if (invocation.getArgument(0).equals(CLIENT_USERNAME_B)){
+                return client(CLIENT_USERNAME_B,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
+            }
+            else if (invocation.getArgument(0).equals(CLIENT_USERNAME_C)){
+                return client(CLIENT_USERNAME_C,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
+            }else {
                 return null;
             }
-        });
+    });
 
         lenient().when(ticketRepository.findTicketByTicketId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(TICKET_ID)) {
                 Ticket ticket = new Ticket();
                 ticket.setTicketId(TICKET_ID);
-                ticket.setClient(clientRepository.findClientByUsername(CLIENT_USERNAME));
+                ticket.setClient(clientRepository.findClientByUsername(CLIENT_USERNAME_C));
                 ticket.setFee(TICKET_FEE);
                 ticket.setIsActive(IS_ACTIVE);
                 ticket.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
@@ -117,25 +122,20 @@ public class TestTicketService {
 
     @Test
     public void testCreateTicket() {
-
         assertEquals(0, ticketService.getAllTickets().size());
-
         Ticket ticket = null;
 
         try {
-            ticket = ticketService.createTicket(CLIENT_USERNAME);
+            ticket = ticketService.createTicket(CLIENT_USERNAME_C);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
-
         assertNotNull(ticket);
         checkTicketValidness(ticket);
-
     }
 
     @Test
     public void testCreateTicketNullClient(){
-    
         String error = "";
         Ticket ticket = null;
 
@@ -144,10 +144,8 @@ public class TestTicketService {
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
-
         assertNull(ticket);
         assertEquals("This username is invalid", error);
-
     }
 
 
@@ -155,13 +153,11 @@ public class TestTicketService {
     public void testGetTicket(){
 
         Ticket ticket = null;
-
         try {
             ticket = ticketService.getTicket(TICKET_ID);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
-
         assertNotNull(ticket);
     }
 
@@ -184,13 +180,11 @@ public class TestTicketService {
 
     @Test
     public void testDeleteTicket(){
-
         try {
             ticketService.deleteTicket(TICKET_ID);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
-
     }
 
     @Test
@@ -205,6 +199,56 @@ public class TestTicketService {
         }
 
         assertEquals("Ticket does not exist", error);
+    }
+
+    @Test
+    public void testGetAllTickets(){
+
+        Ticket ticket_1 = ticketService.createTicket(CLIENT_USERNAME_C);
+
+        lenient().when(ticketRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+
+            List<Ticket> tickets = new ArrayList<Ticket>();
+            tickets.add(ticket_1);
+            return tickets;
+
+        });
+
+        List<Ticket> testTickets = ticketService.getAllTickets();
+
+        assertNotNull(testTickets);
+        assertEquals(1, testTickets.size());
+        assertEquals(ticket_1, testTickets.get(0));
+    }
+
+    @Test
+    public void testGetAllTicketsByClient(){
+
+        Client client1 = client(CLIENT_USERNAME_A, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_LOAN_NUMBER, mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
+        Client client2 = client(CLIENT_USERNAME_B, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_LOAN_NUMBER, mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
+
+        Ticket ticket_1 = new Ticket();
+        setTicketAttributes(ticket_1, client1);
+        Ticket ticket_2 = new Ticket();
+        setTicketAttributes(ticket_2, client2);
+        Ticket ticket_3 = new Ticket();
+        setTicketAttributes(ticket_3, client1);
+
+        lenient().when(ticketRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+
+            List<Ticket> tickets = new ArrayList<Ticket>();
+            tickets.add(ticket_1);
+            tickets.add(ticket_2);
+            tickets.add(ticket_3);
+            return tickets;
+        });
+
+        List<Ticket> taylorSwiftTickets = ticketService.getAllTicketsByClient(client1);
+
+        assertNotNull(taylorSwiftTickets);
+        assertEquals(2, taylorSwiftTickets.size());
+        assertEquals(ticket_1, taylorSwiftTickets.get(0));
+
     }
 
     @Test
@@ -240,8 +284,24 @@ public class TestTicketService {
     public void checkTicketValidness(Ticket ticket){
         assertEquals(TICKET_FEE, ticket.getFee());
         assertEquals(IS_ACTIVE, ticket.getIsActive());
-        assertEquals(CLIENT_USERNAME, ticket.getClient().getUsername());
-        assertEquals(SYSTEM_ID, ticket.getMuseumManagementSystem().getSystemId());
+        assertEquals(CLIENT_USERNAME_C, ticket.getClient().getUsername());
+    }
+
+    private void setTicketAttributes(Ticket ticket, Client client){
+        ticket.setFee(TICKET_FEE);
+        ticket.setIsActive(IS_ACTIVE);
+        ticket.setClient(client);
+        ticket.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(SYSTEM_ID));
+    }
+
+    private Client client(String username, String name, String password, int loanNumber, MuseumManagementSystem mms){
+        Client client = new Client(); 
+        client.setUsername(username); 
+        client.setName(name); 
+        client.setPassword(password); 
+        client.setCurrentLoanNumber(loanNumber); 
+        client.setMuseumManagementSystem(mms);
+        return client;
     }
 
 }
