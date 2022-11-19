@@ -297,6 +297,24 @@ public class ToDtoHelper {
     }
 
     /**
+     * @author Nazia Chowdhury (naziaC), Lucy Zhang (Lucy-Zh), Mona Kalaoun (m-kln), Samantha Perez Hoffman (samperezh), Nikolas Pasichnik (NikolasPasichnik), and Yu An Lu (yu-an-lu)
+     * @param status
+     * @return a Artifact.LoanStatus
+     */
+    public static Artifact.LoanStatus convertArtifactStringToLoanStatus(String status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case "Available" -> Artifact.LoanStatus.Available;
+            case "Unavailable" -> Artifact.LoanStatus.Unavailable;
+            case "Loaned" -> Artifact.LoanStatus.Loaned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
+    /**
      * @author Yu An Lu (yu-an-lu) 
      * @param status
      * @return a DonationStatusDto

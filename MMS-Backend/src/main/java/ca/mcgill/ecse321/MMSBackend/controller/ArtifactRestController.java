@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.MMSBackend.controller;
 
 import ca.mcgill.ecse321.MMSBackend.model.*;
+import ca.mcgill.ecse321.MMSBackend.model.Artifact.LoanStatus;
 import ca.mcgill.ecse321.MMSBackend.dto.*;
 import ca.mcgill.ecse321.MMSBackend.service.ArtifactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class ArtifactRestController {
         return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifacts().stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/artifacts/{id}", "/artifacts/{id}/" })
-    public ResponseEntity<ArtifactDto> getArtifactById(@PathVariable("id") Integer id) throws IllegalArgumentException{
+    @GetMapping(value = { "/artifacts/getById", "/artifacts/getById/" })
+    public ResponseEntity<ArtifactDto> getArtifactById(@RequestParam Integer id) throws IllegalArgumentException{
         return new ResponseEntity<ArtifactDto> (ToDtoHelper.convertToDto(service.getArtifact(id)), HttpStatus.OK);
     }
 
@@ -45,10 +46,10 @@ public class ArtifactRestController {
         return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomId(roomId).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/artifacts/getByStatus/{status}", "/artifacts/{status}/" })
-    public ResponseEntity<List<ArtifactDto>> getArtifactsByLoanStatus(@PathVariable("status") Artifact.LoanStatus status) throws
+    @GetMapping(value = { "/artifacts/getByStatus", "/artifacts/getByStatus/" })
+    public ResponseEntity<List<ArtifactDto>> getArtifactsByLoanStatus(@RequestParam String status) throws
             IllegalArgumentException {
-        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByLoanStatus(status).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByLoanStatus(ToDtoHelper.convertArtifactStringToLoanStatus(status)).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping(value = { "/artifacts/getByState/{state}", "/artifacts/{state}/" })
