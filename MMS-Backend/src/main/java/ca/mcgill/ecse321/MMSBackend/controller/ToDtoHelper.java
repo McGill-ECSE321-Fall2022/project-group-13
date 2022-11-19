@@ -54,6 +54,24 @@ public class ToDtoHelper {
     }
 
     /**
+     * @author Yu An Lu (yu-an-lu)
+     * @param roomType
+     * @return a RoomTypeDto
+     */
+    public static Room.RoomType convertStringToRoomType(String roomType) {
+        if (roomType == null) {
+            throw new IllegalArgumentException("Room type cannot be null.");
+        }
+
+        return switch (roomType) {
+            case "Small" -> Room.RoomType.Small;
+            case "Large" -> Room.RoomType.Large;
+            case "Storage" -> Room.RoomType.Storage;
+            default -> throw new IllegalArgumentException("Unexpected value: " + roomType);
+        };
+    }
+
+    /**
      * @author Mona Kalaoun (m-kln)
      * @param a
      * @return
