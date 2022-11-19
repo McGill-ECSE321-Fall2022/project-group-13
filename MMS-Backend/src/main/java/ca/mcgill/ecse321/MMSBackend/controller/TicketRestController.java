@@ -40,8 +40,8 @@ public class TicketRestController {
      * Create a new ticket
      * 
      * @Author: Lucy Zhang (Lucy-Zh)
-     * @param clientDto
-     * @return
+     * @param clientUsername
+     * @return clientUsername
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/ticket", "/ticket/" })

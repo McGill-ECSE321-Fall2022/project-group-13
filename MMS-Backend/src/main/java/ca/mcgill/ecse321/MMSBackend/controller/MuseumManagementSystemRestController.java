@@ -37,15 +37,15 @@ public class MuseumManagementSystemRestController {
     private MuseumManagementSystemService mmsService;
 
     /**
-     * Create a new MMS
+     * Create a new museum management system
      * 
      * @Author: Lucy Zhang (Lucy-Zh)
      * @return
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/mms", "/mms/" })
-    public MuseumManagementSystemDto createMms() throws IllegalArgumentException {
-        return ToDtoHelper.convertToDto(mmsService.createMuseumManagementSystem());
+    public ResponseEntity<MuseumManagementSystemDto> createMms() throws IllegalArgumentException {
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(mmsService.createMuseumManagementSystem()), HttpStatus.CREATED);
     }
 
     /**
@@ -57,8 +57,8 @@ public class MuseumManagementSystemRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
-    public MuseumManagementSystemDto getMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
+    public ResponseEntity<MuseumManagementSystemDto> getMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
     }
 
     /**
@@ -84,10 +84,10 @@ public class MuseumManagementSystemRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
-    public MuseumManagementSystemDto updateMmsName(@PathVariable("systemId") int systemId, @RequestParam String name)
+    public ResponseEntity<MuseumManagementSystemDto> updateMmsName(@PathVariable("systemId") int systemId, @RequestParam String name)
             throws IllegalArgumentException {
         mmsService.setMuseumManagementSystemName(systemId, name);
-        return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
     }
 
     /**
@@ -98,14 +98,14 @@ public class MuseumManagementSystemRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/mms", "/mms/" })
-    public List<MuseumManagementSystemDto> getAllMms() throws IllegalArgumentException {
+    public ResponseEntity<List<MuseumManagementSystemDto>> getAllMms() throws IllegalArgumentException {
 
         List<MuseumManagementSystemDto> mmsDto = new ArrayList<>();
 
         for (MuseumManagementSystem mms : mmsService.getAllMuseumManagementSystem()) {
             mmsDto.add(ToDtoHelper.convertToDto(mms));
         }
-        return mmsDto;
+        return new ResponseEntity<>(mmsDto, HttpStatus.OK);
     }
 
     /**
@@ -118,12 +118,11 @@ public class MuseumManagementSystemRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/mms/{systemId}/fee", "/mms/{systemId}/fee/" })
-    public MuseumManagementSystemDto updateMmsTicketFee(@PathVariable("systemId") int systemId,
+    public ResponseEntity<MuseumManagementSystemDto> updateMmsTicketFee(@PathVariable("systemId") int systemId,
             @RequestParam double ticketFee) throws IllegalArgumentException {
 
         mmsService.setMuseumTicketPrice(systemId, ticketFee);
-
-        return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
 
     }
 
