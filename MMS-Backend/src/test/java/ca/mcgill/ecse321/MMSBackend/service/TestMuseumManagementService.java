@@ -38,6 +38,14 @@ import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
+/**
+ * @author Lucy Zhang (Lucy-Zh), Yu An Lu (yu-an-lu), Nazia Chowdhury (naziaC)
+ *         and Samantha Perez Hoffman (samperezh)
+ * 
+ * The TestMuseumManagementService class tests the business logic declared in
+ * MuseumManagementSystemService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestMuseumManagementService {
 
@@ -428,6 +436,9 @@ public class TestMuseumManagementService {
         assertEquals("Museum Management System does not exist", error);
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test
     public void testSetOpeningHours(){
         MuseumManagementSystem museumManagementSystem = museumManagementSystemService.setOpeningHours(OPEN_TIME_2, CLOSE_TIME_2, SYSTEM_ID);
@@ -438,6 +449,9 @@ public class TestMuseumManagementService {
         verify(mmsRepository, times(1)).save(museumManagementSystem);
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test 
     public void testSetOpeningHoursWithInvalidMMS(){
         MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
@@ -450,6 +464,9 @@ public class TestMuseumManagementService {
         verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test 
     public void testSetOpeningHoursWithNullTimes(){
         MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
@@ -461,6 +478,9 @@ public class TestMuseumManagementService {
         verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test 
     public void testSetOpeningHoursWithInvalidTimes(){
         MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
@@ -472,6 +492,9 @@ public class TestMuseumManagementService {
         verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test
     public void testGetOpeningHours(){
         List<Time> openingHours = museumManagementSystemService.getOpeningHours(SYSTEM_ID);
@@ -481,6 +504,9 @@ public class TestMuseumManagementService {
         assertEquals(CLOSE_TIME_1, openingHours.get(1));
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test
     public void testGetOpeningHoursWithInvalidMMS(){
         MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
@@ -492,6 +518,9 @@ public class TestMuseumManagementService {
         verify(mmsRepository, times(1)).findMuseumManagementSystemBySystemId(0);
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test
     public void testGetSpecificWeekDayByDayType(){
         SpecificWeekDay specificWeekDay =  museumManagementSystemService.getSpecificWeekDayByDayType(MONDAY);
@@ -501,6 +530,9 @@ public class TestMuseumManagementService {
         verify(specificWeekDayRepository, times(1)).findSpecificWeekDayByDayType(MONDAY);
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     */
     @Test
     public void testGetSpecificWeekDayByDayTypeWithNullDay(){
         MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
@@ -572,6 +604,12 @@ public class TestMuseumManagementService {
         assertEquals(0.00, museumManagementSystem.getTicketFee());
     }
 
+    /**
+     * @author Samantha Perez Hoffman (samperezh)
+     * @param specificWeekDay
+     * @param dayType
+     * @param isClosed
+     */
     public void initializeSpecificWeekDay(SpecificWeekDay specificWeekDay, DayType dayType, boolean isClosed){
         specificWeekDay.setDayType(dayType);
         specificWeekDay.setIsClosed(isClosed);
