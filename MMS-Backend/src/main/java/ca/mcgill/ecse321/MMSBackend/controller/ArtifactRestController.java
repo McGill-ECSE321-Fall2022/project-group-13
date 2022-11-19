@@ -68,14 +68,14 @@ public class ArtifactRestController {
         return new ResponseEntity<ArtifactDto> (ToDtoHelper.convertToDto(artifact), HttpStatus.OK);
     }
 
-    @PostMapping(value = { "/artifacts/{name}", "/artifacts/{name}/" })
-    public ResponseEntity<ArtifactDto> createArtifact(@PathVariable("name") String name, @RequestParam String description, @RequestParam
+    @PostMapping(value = { "/artifact/createArtifact", "/artifact/createArtifact/" })
+    public ResponseEntity<ArtifactDto> createArtifact(@RequestParam String name, @RequestParam String description, @RequestParam
             String image, @RequestParam Artifact.LoanStatus status, @RequestParam double loanFee, @RequestParam boolean
             isDamaged, @RequestParam double worth, @RequestParam int roomId, @RequestParam int systemId) throws
             IllegalArgumentException{
         Artifact artifact = service.createArtifact(name, description, image, status, loanFee, isDamaged, worth, roomId,
                 systemId);
-        return new ResponseEntity<ArtifactDto> (ToDtoHelper.convertToDto(artifact), HttpStatus.OK);
+        return new ResponseEntity<> (ToDtoHelper.convertToDto(artifact), HttpStatus.OK);
     }
 
     @DeleteMapping(value = { "/artifacts/{id}", "/artifacts/{id}/" })

@@ -80,7 +80,7 @@ public class ArtifactService {
         List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
-            if(a.getRoomLocation().getType().equals(r)){
+            if(a.getRoomLocation() != null && a.getRoomLocation().getType().equals(r)){
                 result.add(a);
             }
         }
@@ -102,7 +102,7 @@ public class ArtifactService {
         List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
-            if(a.getRoomLocation().getRoomId() == roomId){
+            if(a.getRoomLocation() != null && a.getRoomLocation().getRoomId() == roomId){
                 result.add(a);
             }
         }
@@ -191,7 +191,7 @@ public class ArtifactService {
             artifact.setIsDamaged(isDamaged);
             artifact.setLoanFee(loanFee);
             artifact.setWorth(worth);
-            artifact.setRoomLocation(Room.getWithRoomId(roomId));
+            artifact.setRoomLocation(roomRepository.findRoomByRoomId(roomId));
             artifact.setMuseumManagementSystem(MuseumManagementSystem.getWithSystemId(systemId));
         }else{
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Artifact with id: " + artifactId +
@@ -232,8 +232,8 @@ public class ArtifactService {
         artifact.setIsDamaged(isDamaged);
         artifact.setLoanFee(loanFee);
         artifact.setWorth(worth);
-        artifact.setRoomLocation(Room.getWithRoomId(roomId));
-        artifact.setMuseumManagementSystem(MuseumManagementSystem.getWithSystemId(systemId));
+        artifact.setRoomLocation(roomRepository.findRoomByRoomId(roomId));
+        artifact.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(systemId));
         artifact = artifactRepository.save(artifact);
         return artifact;
     }
@@ -284,7 +284,7 @@ public class ArtifactService {
 
         if(mms != null) {
             for (Artifact a : mms.getArtifacts()) {
-                if (a.getRoomLocation().getRoomId() == roomId) {
+                if (a.getRoomLocation() != null && a.getRoomLocation().getRoomId() == roomId) {
                     count++;
                 }
             }
