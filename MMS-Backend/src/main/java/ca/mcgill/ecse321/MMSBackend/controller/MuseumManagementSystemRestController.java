@@ -44,9 +44,7 @@ public class MuseumManagementSystemRestController {
      */
     @PostMapping(value = { "/mms", "/mms/" })
     public MuseumManagementSystemDto createMms() throws IllegalArgumentException {
-
         return ToDtoHelper.convertToDto(mmsService.createMuseumManagementSystem());
-
     }
 
     /**
@@ -59,9 +57,7 @@ public class MuseumManagementSystemRestController {
      */
     @GetMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
     public MuseumManagementSystemDto getMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
-
     }
 
     /**
@@ -74,9 +70,7 @@ public class MuseumManagementSystemRestController {
      */
     @DeleteMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
     public void deleteMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-
         mmsService.deleteMuseumManagementSystem(systemId);
-
     }
 
     /**
@@ -91,11 +85,8 @@ public class MuseumManagementSystemRestController {
     @PutMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
     public MuseumManagementSystemDto updateMmsName(@PathVariable("systemId") int systemId, @RequestParam String name)
             throws IllegalArgumentException {
-
         mmsService.setMuseumManagementSystemName(systemId, name);
-
         return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
-
     }
 
     /**
@@ -108,12 +99,11 @@ public class MuseumManagementSystemRestController {
     @GetMapping(value = { "/mms", "/mms/" })
     public List<MuseumManagementSystemDto> getAllMms() throws IllegalArgumentException {
 
-        List<MuseumManagementSystemDto> mmsDto = new ArrayList<MuseumManagementSystemDto>();
+        List<MuseumManagementSystemDto> mmsDto = new ArrayList<>();
 
         for (MuseumManagementSystem mms : mmsService.getAllMuseumManagementSystem()) {
             mmsDto.add(ToDtoHelper.convertToDto(mms));
         }
-
         return mmsDto;
     }
 

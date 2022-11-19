@@ -295,6 +295,23 @@ public class ToDtoHelper {
         };
     }
 
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     * @param status
+     * @return a LoanRequest.LoanStatus
+     */
+    public static LoanRequest.LoanStatus convertStringToLoanStatus(String status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case "Approved" -> LoanRequest.LoanStatus.Approved;
+            case "Rejected" -> LoanRequest.LoanStatus.Rejected;
+            case "Pending" -> LoanRequest.LoanStatus.Pending;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
 
     /**
      * @author Yu An Lu (yu-an-lu) 
