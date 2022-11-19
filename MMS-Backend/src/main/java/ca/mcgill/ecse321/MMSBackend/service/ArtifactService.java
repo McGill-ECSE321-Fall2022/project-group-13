@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -191,6 +192,7 @@ public class ArtifactService {
             artifact.setLoanFee(loanFee);
             artifact.setWorth(worth);
             artifact.setRoomLocation(Room.getWithRoomId(roomId));
+            artifact.setMuseumManagementSystem(MuseumManagementSystem.getWithSystemId(systemId));
         }else{
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Artifact with id: " + artifactId +
                     " was not found.");
@@ -231,7 +233,7 @@ public class ArtifactService {
         artifact.setLoanFee(loanFee);
         artifact.setWorth(worth);
         artifact.setRoomLocation(Room.getWithRoomId(roomId));
-        artifact.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(systemId));
+        artifact.setMuseumManagementSystem(MuseumManagementSystem.getWithSystemId(systemId));
         artifact = artifactRepository.save(artifact);
         return artifact;
     }
@@ -244,14 +246,17 @@ public class ArtifactService {
      * @param artifactId : int representing the unique id of an existing artifact that is to be deleted
      */
     @Transactional
-    public void deleteArtifact(Integer artifactId){
+    public boolean deleteArtifact(int artifactId){
+        boolean result = false;
         //check if artifact exists before deleting
         if(artifactRepository.existsById(artifactId)) {
             artifactRepository.deleteById(artifactId);
+            result = true;
         }else {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Artifact with id: " + artifactId +
                     " was not found.");
         }
+        return result;
     }
 
 
@@ -263,7 +268,7 @@ public class ArtifactService {
      * @param roomId : int representing the unique id of the room to be checked
      * @param systemId : int representing the unique id of the system where the room is located
      */
-    @Transactional
+
     public void checkRoom(int roomId, int systemId){
         //small , 5 with 200 art
         //large, 5 with 300 art
@@ -285,12 +290,12 @@ public class ArtifactService {
             }
 
             if (r.getType().equals(Room.RoomType.Small)) {
-                if (count >= 1000) {
+                if (count == 1000) {
                     throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The selected small room with id: "
                             + roomId + " is full.");
                 }
             } else if (r.getType().equals(Room.RoomType.Large)) {
-                if (count >= 1500) {
+                if (count == 1500) {
                     throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The selected large room with id: "
                             + roomId + " is full.");
                 }
@@ -317,19 +322,13 @@ public class ArtifactService {
     private void checkInput(String name, String description, String image, Artifact.LoanStatus status,
                             double loanFee, boolean isDamaged, double worth, int roomId, int systemId){
 
-        if( name == null|| description == null || image == null || status == null ||
-                Double.valueOf(loanFee) == null || Boolean.valueOf(isDamaged) == null || Double.valueOf(worth) == null
-                || Integer.valueOf(roomId) == null || Integer.valueOf(systemId) == null){
+        if( name == null|| name.trim().length() == 0 || description == null || description.trim().length() == 0
+                || image == null || image.trim().length() == 0 || status == null){
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "No null values are accepted.");
         }
 
-        checkRoom(roomId,systemId);
-
-        try {
-            Paths.get(image);
-        } catch(InvalidPathException e) {
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Image path" + image +" is not valid.");
-        }
+        File img = new File(image);
+        if(!img.exists()) throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND,"Image file does not exist.");
 
         if(loanFee<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The loan fee can not be " +
                 "a negative value.");
@@ -337,11 +336,13 @@ public class ArtifactService {
         if(worth<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The monetary value of the " +
                 "artifact can not be negative.");
 
-        if(roomId<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The roomId can not be " +
+        if(roomId<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The room id can not be " +
                 "negative.");
 
-        if(systemId<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The systemId can not be " +
+        if(systemId<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The system id can not be " +
                 "negative.");
+
+        checkRoom(roomId,systemId);
     }
 
     /**
