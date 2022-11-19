@@ -260,24 +260,6 @@ public class ToDtoHelper {
                 convertToDto(loanRequest.getMuseumManagementSystem()));
     }
 
-    /**
-     * @author Nazia Chowdhury (naziaC)
-     * @param statusDto
-     * @return a LoanRequestStatus
-     */
-    public static LoanRequest.LoanStatus convertToDomainObject(LoanRequestDto.LoanRequestStatusDto statusDto) {
-        if (statusDto == null) {
-            throw new IllegalArgumentException("Status cannot be null.");
-        }
-
-        return switch (statusDto) {
-            case Approved -> LoanRequest.LoanStatus.Approved;
-            case Rejected -> LoanRequest.LoanStatus.Rejected;
-            case Pending -> LoanRequest.LoanStatus.Pending;
-            default -> throw new IllegalArgumentException("Unexpected value: " + statusDto);
-        };
-    }
-
     /** @author Nazia Chowdhury (naziaC)
      * @param status
      * @return a LoanRequestStatusDto
@@ -309,6 +291,7 @@ public class ToDtoHelper {
             case "Approved" -> LoanRequest.LoanStatus.Approved;
             case "Rejected" -> LoanRequest.LoanStatus.Rejected;
             case "Pending" -> LoanRequest.LoanStatus.Pending;
+            case "Returned" -> LoanRequest.LoanStatus.Returned;
             default -> throw new IllegalArgumentException("Unexpected value: " + status);
         };
     }
@@ -336,25 +319,21 @@ public class ToDtoHelper {
     }
 
     /**
-     * @author Yu An Lu (yu-an-lu) 
-     * @param statusDto
-     * @return a DonationStatus
+     * @author Yu An Lu (yu-an-lu)
+     * @param status
+     * @return a DonationRequest.DonationStatus
      */
-    public static DonationStatus convertToDomainObject(DonationStatusDto statusDto) {
-        if (statusDto == null) {
-            throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
+    public static DonationRequest.DonationStatus convertStringToDonationStatus(String status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
         }
 
-        switch (statusDto) {
-            case Approved:
-                return DonationStatus.Approved;
-            case Rejected:
-                return DonationStatus.Rejected;
-            case Pending:
-                return DonationStatus.Pending;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + statusDto);
-        }
+        return switch (status) {
+            case "Pending" -> DonationRequest.DonationStatus.Pending;
+            case "Approved" -> DonationRequest.DonationStatus.Approved;
+            case "Rejected" -> DonationRequest.DonationStatus.Rejected;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
     }
 
     /**
