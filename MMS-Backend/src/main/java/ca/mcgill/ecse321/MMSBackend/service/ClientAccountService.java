@@ -58,7 +58,7 @@ public class ClientAccountService {
 
         // The username is already in use 
         if (clientRepository.existsById(username) == true || employeeRepository.existsById(username) == true){
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This username is already taken");  
+            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
 
         // Creating a client
