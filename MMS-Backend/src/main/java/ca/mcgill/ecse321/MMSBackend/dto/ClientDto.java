@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
-import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
-
 public class ClientDto {
 
     //Account Attributes
@@ -9,7 +7,7 @@ public class ClientDto {
     private String name;
     private String password;
     private int currentLoanNumber;
-    private MuseumManagementSystem MMS; 
+    private MuseumManagementSystemDto MMS; 
 
 
     // /**
@@ -27,7 +25,7 @@ public class ClientDto {
      * @param password
      * @param currentLoanNumber
      */
-    public ClientDto(String username, String name, String password, int currentLoanNumber, MuseumManagementSystem MMS){
+    public ClientDto(String username, String name, String password, int currentLoanNumber, MuseumManagementSystemDto MMS){
         this.username = username; 
         this.name = name; 
         this.password = password; 
@@ -76,7 +74,7 @@ public class ClientDto {
      * 
      * @return
      */
-    public MuseumManagementSystem getMuseumManagementSystem() {
+    public MuseumManagementSystemDto getMuseumManagementSystem() {
         return MMS; 
     }
 
