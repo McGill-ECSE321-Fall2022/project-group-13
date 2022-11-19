@@ -65,7 +65,7 @@ public class EmployeeAccountRestController {
         return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK); 
     }   
     
-    @PutMapping(value = { "/employee/edit/{id}", "/employee/edit/{id}/" })
+    @PutMapping(value = { "/employee/edit/{username}", "/employee/edit/{username}/" })
     public ResponseEntity<EmployeeDto> editEmployee(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
         password) throws IllegalArgumentException{
         Employee employee = service.editEmployeeAccount(username, name, password);

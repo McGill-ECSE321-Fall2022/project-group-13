@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import ca.mcgill.ecse321.MMSBackend.dto.ShiftDto;
+import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.Shift;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
@@ -204,12 +205,13 @@ public class EmployeeScheduleRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/specificWeekDay", "/specificWeekDay/" })
-    public ResponseEntity<SpecificWeekDay> updateSpecificWeekDayStatus(
+    public ResponseEntity<SpecificWeekDayDto> updateSpecificWeekDayStatus(
             @RequestParam String day, @RequestParam boolean isClosed)
             throws IllegalArgumentException {
         DayType dayType = ToDtoHelper.convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         specificWeekDay = employeeScheduleService.updateSpecificWeekDayStatus(specificWeekDay, isClosed);
-        return new ResponseEntity<SpecificWeekDay>(specificWeekDay, HttpStatus.OK);
+
+        return new ResponseEntity<SpecificWeekDayDto>(ToDtoHelper.convertToDto(specificWeekDay), HttpStatus.OK);
     }
 }

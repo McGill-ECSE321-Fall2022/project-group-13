@@ -121,7 +121,7 @@ public class MuseumManagementSystemRestController {
      * @return the room dto
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/{roomId}", "/mms/{roomId}/" })
+    @GetMapping(value = { "/mms/getRoom/{roomId}", "/mms/getRoom/{roomId}/" })
     public RoomDto getRoom(@PathVariable("roomId") int roomId) throws IllegalArgumentException {
 
         return ToDtoHelper.convertToDto(mmsService.getRoom(roomId));
@@ -208,7 +208,7 @@ public class MuseumManagementSystemRestController {
      * @return
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/DayByDayTime", "/mms/DayByDayTime/" })
+    @GetMapping(value = { "/mms/DayByDayType", "/mms/DayByDayType/" })
     public ResponseEntity<SpecificWeekDayDto> getSpecificWeekDayByDayType(@RequestParam String day)
             throws IllegalArgumentException {
         DayType dayType = ToDtoHelper.convertStringToDayType(day);
