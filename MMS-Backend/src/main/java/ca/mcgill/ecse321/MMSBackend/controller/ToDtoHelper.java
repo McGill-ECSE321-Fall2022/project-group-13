@@ -287,10 +287,13 @@ public class ToDtoHelper {
             throw new IllegalArgumentException("Status cannot be null.");
         }
 
+        System.out.println(status);
+
         return switch (status) {
             case Approved -> LoanRequestDto.LoanRequestStatusDto.Approved;
             case Rejected -> LoanRequestDto.LoanRequestStatusDto.Rejected;
             case Pending -> LoanRequestDto.LoanRequestStatusDto.Pending;
+            case Returned -> LoanRequestDto.LoanRequestStatusDto.Returned;
             default -> throw new IllegalArgumentException("Unexpected value: " + status);
         };
     }
