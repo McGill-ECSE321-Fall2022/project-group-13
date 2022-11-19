@@ -153,8 +153,8 @@ public class MuseumManagementSystemRestController {
      * @param systemId
      */
     @GetMapping(value = { "/mms/maxLoanNumber/{systemId}", "/mms/maxLoanNumber/{systemId}/" })
-    public int getMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        return mmsService.getMaxLoanNumberOfMms(systemId);
+    public ResponseEntity<Integer> getMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
+        return new ResponseEntity<Integer>(mmsService.getMaxLoanNumberOfMms(systemId), HttpStatus.OK);
     }
 
     /**
@@ -164,10 +164,10 @@ public class MuseumManagementSystemRestController {
      * @param systemId
      */
     @PutMapping(value = { "/mms/setMaxLoanNumber/{systemId}", "/mms/setMaxLoanNumber/{systemId}/" })
-    public MuseumManagementSystemDto setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId, @RequestParam int maxLoanNumber)
+    public ResponseEntity<MuseumManagementSystemDto> setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId, @RequestParam int maxLoanNumber)
             throws IllegalArgumentException {
         mmsService.setMaxLoanNumberOfMms(systemId, maxLoanNumber);
-        return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
+        return new ResponseEntity<MuseumManagementSystemDto>(ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
     }
 
     /**
