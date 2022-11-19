@@ -49,8 +49,8 @@ public class EmployeeScheduleRestController {
      * Create a new shift 
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
-     * @param employeeDto
-     * @param specificWeekDayDto
+     * @param employeeUsername
+     * @param day
      * @param startTime
      * @param endTime
      * @return
@@ -83,7 +83,7 @@ public class EmployeeScheduleRestController {
      * Delete all shifts for a specific day 
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
-     * @param dayTypeDto
+     * @param dayType
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/shift/day", "/shift/day/" })
@@ -96,7 +96,7 @@ public class EmployeeScheduleRestController {
      * Delete all shifts for an employee
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
-     * @param employeeDto
+     * @param employeeUsername
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/shift/employee", "/shift/employee/" })
@@ -125,7 +125,7 @@ public class EmployeeScheduleRestController {
      * Get all shifts for an employee
      *
      * @Author: Samantha Perez Hoffman (samperezh)
-     * @param employeeDto
+     * @param employeeUsername
      * @return
      * @throws IllegalArgumentException
      */
@@ -144,7 +144,7 @@ public class EmployeeScheduleRestController {
      * Get all shifts for a specific day 
      *
      * @Author: Samantha Perez Hoffman (samperezh)
-     * @param dayTypeDto
+     * @param day
      * @return
      * @throws IllegalArgumentException
      */
@@ -181,7 +181,7 @@ public class EmployeeScheduleRestController {
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
      * @param shiftId
-     * @param specificWeekDayDto
+     * @param day
      * @return
      * @throws IllegalArgumentException
      */
@@ -198,7 +198,7 @@ public class EmployeeScheduleRestController {
      * Update a specificWeekDay isClosed status
      * 
      * @Author: Samantha Perez Hoffman (samperezh)
-     * @param specificWeekDayDto
+     * @param day
      * @param isClosed
      * @return
      * @throws IllegalArgumentException

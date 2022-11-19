@@ -5,6 +5,8 @@ import java.util.List;
 import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.MMSBackend.dto.*;
-import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto.DayTypeDto;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
@@ -195,10 +196,10 @@ public class MuseumManagementSystemRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "mms/setOpeningHours/{systemId}", "mms/setOpeningHours/{systemId}/" })
-    public MuseumManagementSystemDto setOpeningHours(@PathVariable("systemId") int systemId,
+    public ResponseEntity<MuseumManagementSystemDto> setOpeningHours(@PathVariable("systemId") int systemId,
             @RequestParam Time openTime, @RequestParam Time closeTime) throws IllegalArgumentException {
         mmsService.setOpeningHours(openTime, closeTime, systemId);
-        return ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId));
+        return new ResponseEntity<MuseumManagementSystemDto>(ToDtoHelper.convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
     }
 
     /**
@@ -210,22 +211,22 @@ public class MuseumManagementSystemRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "mms/getOpeningHours/{systemId}", "mms/getOpeningHours/{systemId}/" })
-    public List<Time> getOpeningHours(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        return mmsService.getOpeningHours(systemId);
+    public ResponseEntity<List<Time>> getOpeningHours(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
+        return new ResponseEntity<>(mmsService.getOpeningHours(systemId), HttpStatus.OK);
     }
 
     /**
      * Get specificWeekDay by dayType
      * 
      * @author : Samantha Perez Hoffman (samperezh)
-     * @param dayTypeDto
+     * @param day
      * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/mms/DayByDayTime", "/mms/DayByDayTime/" })
-    public SpecificWeekDayDto getSpecificWeekDayByDayType(@RequestParam(name = "dayType") DayTypeDto dayTypeDto)
+    public ResponseEntity<SpecificWeekDayDto> getSpecificWeekDayByDayType(@RequestParam String day)
             throws IllegalArgumentException {
-        DayType dayType = ToDtoHelper.convertToDomainObject(dayTypeDto);
-        return ToDtoHelper.convertToDto(mmsService.getSpecificWeekDayByDayType(dayType));
+        DayType dayType = ToDtoHelper.convertStringToDayType(day);
+        return new ResponseEntity<SpecificWeekDayDto>(ToDtoHelper.convertToDto(mmsService.getSpecificWeekDayByDayType(dayType)), HttpStatus.OK);
     }
 }
