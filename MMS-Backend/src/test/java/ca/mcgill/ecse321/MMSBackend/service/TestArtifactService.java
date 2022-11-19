@@ -17,6 +17,7 @@ import ca.mcgill.ecse321.MMSBackend.dao.*;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,8 +42,8 @@ public class TestArtifactService {
     private static final int MAX_LOAN_NUMBER = 5;
     private static final double TICKET_FEE = 25.0;
 
-    private static final int R_ID = 3;
-    private static final String R_NAME = "DaVinki Room";
+    private static final int R_ID = 2;
+    private static final String R_NAME = "Room 2";
     private static final Room.RoomType R_TYPE = Room.RoomType.Small;
 
     private static final int A_KEY = 10;
@@ -69,9 +70,7 @@ public class TestArtifactService {
     private static final Artifact a3 = createArtifact(4,"Cat", "A royal cat",
             "images/Cat.PNG", Artifact.LoanStatus.Unavailable, 10, false, 100, 5, 1 );
 
-    private static final List<Artifact> ALL_ARTIFACTS = Arrays.asList(a1,a2,a3);
-
-
+    private final List<Artifact> ALL_ARTIFACTS = Arrays.asList(a1,a2,a3);
 
     @BeforeEach
     public void setMockOutput() {
@@ -99,7 +98,21 @@ public class TestArtifactService {
                         room.setType(R_TYPE);
                         room.setMuseumManagementSystem(mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
                         return room;
-                    } else {
+                    } else if (invocation.getArgument(0).equals(3)){
+                        Room room = new Room();
+                        room.setRoomId(3);
+                        room.setName("Room 3");
+                        room.setType(Room.RoomType.Small);
+                        room.setMuseumManagementSystem(mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+                        return room;
+                    } else if (invocation.getArgument(0).equals(4)){
+                        Room room = new Room();
+                        room.setRoomId(4);
+                        room.setName("Room 4");
+                        room.setType(Room.RoomType.Large);
+                        room.setMuseumManagementSystem(mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+                        return room;
+                    }else {
                         return null;
                     }
                 });
@@ -291,10 +304,6 @@ public class TestArtifactService {
         assertEquals("The room with id: " + roomId + " was not found.", error);
     }
 
-    @Test
-    public void testCreateArtifactInFullSmallRoom(){
-
-    }
 
     @Test
     public void testEditArtifact() {
@@ -367,6 +376,20 @@ public class TestArtifactService {
     }
 
     @Test
+    public void testDeleteNullArtifact(){
+        int aId = 12;
+        String error = "";
+
+        try {
+            service.deleteArtifact(aId);
+        }catch (MuseumManagementSystemException e){
+            error+=e.getMessage();
+        }
+
+        assertEquals("Artifact with id: " + aId + " was not found.",error);
+    }
+
+    @Test
     public void testGetAllArtifacts(){
         List<Artifact> artifacts = service.getAllArtifacts();
         assertEquals(ALL_ARTIFACTS, artifacts);
@@ -383,6 +406,19 @@ public class TestArtifactService {
         }
         assertNotNull(a);
 
+    }
+
+    @Test
+    public void testGetNullArtifact(){
+        int aId = 12;
+        Artifact a = null;
+        String error = "";
+        try {
+            a = service.getArtifact(aId);
+        } catch (MuseumManagementSystemException e) {
+            error += e.getMessage();
+        }
+        assertEquals("Artifact with id: " + aId + " was not found.", error);
     }
 
     @Test
@@ -458,17 +494,6 @@ public class TestArtifactService {
         room.setMuseumManagementSystem(mms);
         return room;
     }
-
-    /*private static void createSmallRooms(){
-        for (int i = 1; i <= 5; i++) {
-
-            Room currentRoom = new Room();
-            currentRoom.setName("Small Room " + i);
-            currentRoom.setType(Room.RoomType.Small);
-            currentRoom.setMuseumManagementSystem(museumManagementSystem);
-            room.save(currentRoom);
-        }
-    }*/
 
     private static Artifact createArtifact(int id, String name, String description, String image, Artifact.LoanStatus
             status, int loanFee, boolean isDamaged, double worth, int roomId, int mmsId) {
