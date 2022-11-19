@@ -50,7 +50,7 @@ public class TestArtifactService {
     private static final int A_KEY = 10;
     private static final String A_NAME = "Mona Lisa";
     private static final String A_DESCRIPTION = "Who painted the Mona Lisa, Mona Lisa haha? DaVinki?!";
-    private static final String A_IMAGE = "C:\\Users\\mona_\\project-group-13\\MMS-Backend\\ClassDiagram.png";
+    private static final String A_IMAGE = "images/monalisa.jpg";
     private static final Artifact.LoanStatus LOAN_STATUS = Artifact.LoanStatus.Unavailable;
     private static final double LOAN_FEE = 10000000.00;
     private static final boolean IS_DAMAGED = false;
@@ -307,6 +307,8 @@ public class TestArtifactService {
         boolean result = service.deleteArtifact(A_KEY);
         assertTrue(result);
     }
+
+
 
 
 
