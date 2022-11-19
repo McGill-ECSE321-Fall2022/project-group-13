@@ -83,25 +83,6 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Delete museum management system through id
-     * 
-     * @author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystemId
-     *
-     */
-    @Transactional
-    public void deleteMuseumManagementSystem(int museumManagementSystemId) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
-
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
-        } else {
-            museumManagementSystemRepository.delete(museumManagementSystem);
-        }
-    }
-
-    /**
      * Set museum management system name through id
      * 
      * @author : Lucy Zhang (Lucy-Zh)

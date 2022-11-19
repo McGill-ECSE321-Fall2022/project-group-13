@@ -288,37 +288,6 @@ public class TestMuseumManagementService {
      * @author Lucy Zhang (Lucy-Zh)
      */
     @Test
-    public void testDeleteMuseumManagementSystem(){
-    
-            try {
-                museumManagementSystemService.deleteMuseumManagementSystem(SYSTEM_ID);
-            } catch (MuseumManagementSystemException e) {
-                fail();
-            }
-    }
-
-    /**
-     * @author Lucy Zhang (Lucy-Zh)
-     */
-    @Test
-    public void testDeleteMuseumManagementSystemNull(){
-
-        String error = "";
-
-        try {
-            museumManagementSystemService.deleteMuseumManagementSystem(-1);
-        } catch (MuseumManagementSystemException e) {
-            error = e.getMessage();
-        }
-
-        assertEquals("Museum Management System does not exist", error);
-
-    }
-
-    /**
-     * @author Lucy Zhang (Lucy-Zh)
-     */
-    @Test
     public void testSetMuseumManagementSystemName(){
 
             try {

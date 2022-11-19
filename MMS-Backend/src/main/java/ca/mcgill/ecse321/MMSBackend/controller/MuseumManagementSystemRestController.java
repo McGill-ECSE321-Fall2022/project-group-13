@@ -62,19 +62,6 @@ public class MuseumManagementSystemRestController {
     }
 
     /**
-     * Delete mms by id
-     * 
-     * @Author: Lucy Zhang (Lucy-Zh)
-     * @param systemId
-     * @return
-     * @throws IllegalArgumentException
-     */
-    @DeleteMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
-    public void deleteMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        mmsService.deleteMuseumManagementSystem(systemId);
-    }
-
-    /**
      * Update mms name by id
      * 
      * @Author: Lucy Zhang (Lucy-Zh)
@@ -138,7 +125,6 @@ public class MuseumManagementSystemRestController {
     public RoomDto getRoom(@PathVariable("roomId") int roomId) throws IllegalArgumentException {
 
         return ToDtoHelper.convertToDto(mmsService.getRoom(roomId));
-
     }
 
     /**
