@@ -75,7 +75,7 @@ public class EmployeeScheduleRestController {
      * @Author: Samantha Perez Hoffman (samperezh)
      * @param shiftId
      */
-    @DeleteMapping(value = { "/shift/{shiftId}", "/shift/{shiftId}/" })
+    @DeleteMapping(value = { "/deleteShift/{shiftId}", "/deleteShift/{shiftId}/" })
     public void deleteShift(@PathVariable("shiftId") int shiftId) {
         employeeScheduleService.deleteShift(shiftId);
     }
