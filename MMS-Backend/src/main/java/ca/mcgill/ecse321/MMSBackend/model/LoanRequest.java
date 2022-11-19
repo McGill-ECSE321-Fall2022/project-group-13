@@ -37,16 +37,6 @@ public class LoanRequest extends Request
   // CONSTRUCTOR
   //------------------------
 
-  public LoanRequest()
-  {
-  }
-
-  public LoanRequest(int aRequestId, Client aClient, Artifact aArtifact, LoanStatus aStatus)
-  {
-    super(aRequestId, aClient, aArtifact);
-    status = aStatus;
-  }
-
 //   public LoanRequest(int aRequestId, Client aClient, Artifact aArtifact, int aLoanDuration, double aFee, LoanStatus aStatus, MuseumManagementSystem aMuseumManagementSystem)
 //   {
 //     super(aRequestId, aClient, aArtifact);

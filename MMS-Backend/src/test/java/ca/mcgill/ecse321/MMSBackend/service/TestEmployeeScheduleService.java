@@ -33,6 +33,13 @@ import ca.mcgill.ecse321.MMSBackend.model.Shift;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
+/**
+ * @author Samantha Perez Hoffman (samperezh)
+ * 
+ * The TestEmployeeScheduleService class tests the business logic declared in
+ * EmployeeScheduleService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestEmployeeScheduleService {
 

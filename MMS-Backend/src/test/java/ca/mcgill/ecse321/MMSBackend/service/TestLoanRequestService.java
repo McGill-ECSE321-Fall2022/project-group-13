@@ -62,7 +62,7 @@ public class TestLoanRequestService {
     private static final String CLIENT_USERNAME_AT_MAX_LOAN = "RegisteredUserWithFiveLoans";
     private static final String CLIENT_NAME = "Y/N";
     private static final String CLIENT_PASSWORD = "pas$word321";
-    private static final int CLIENT_CURRENT_LOAN_NUMBER = 0;
+    private static final int CLIENT_CURRENT_LOAN_NUMBER = 2;
     private static final int CLIENT_AT_MAX_LOAN_NUMBER = 5;
 
     private static final int MMS_ID = 13;
@@ -80,10 +80,12 @@ public class TestLoanRequestService {
     private static final Artifact.LoanStatus ARTIFACT_LOAN_STATUS_AVAILABLE = Artifact.LoanStatus.Available;
     private static final Artifact.LoanStatus ARTIFACT_LOAN_STATUS_UNAVAILABLE = Artifact.LoanStatus.Unavailable;
     private static final Artifact.LoanStatus ARTIFACT_LOAN_STATUS_LOANED = Artifact.LoanStatus.Loaned;
+    private static final MuseumManagementSystem museumManagementSystem = createMms();
+    private static final Client client = clientCreationHelper(CLIENT_USERNAME, CLIENT_CURRENT_LOAN_NUMBER);
+    private static final Artifact artifact = artifactCreationHelper(AVAILABLE_ARTIFACT_ID, ARTIFACT_LOAN_STATUS_AVAILABLE);
     private static final Iterable<LoanRequest> ALL_LOAN_REQUESTS = Arrays.asList(
-            new LoanRequest(9, new Client(), new Artifact(), LoanRequest.LoanStatus.Pending),
-            new LoanRequest(10, new Client(), new Artifact(), LoanRequest.LoanStatus.Approved),
-            new LoanRequest(11, new Client(), new Artifact(), LoanRequest.LoanStatus.Rejected)
+            loanRequestCreationHelper(9, artifact, client, LoanRequest.LoanStatus.Pending),
+            loanRequestCreationHelper(10, artifact, client, LoanRequest.LoanStatus.Approved)
     );
 
     @BeforeEach
@@ -91,14 +93,7 @@ public class TestLoanRequestService {
         lenient().when(mmsRepository.findMuseumManagementSystemBySystemId(anyInt()))
                 .thenAnswer((InvocationOnMock invocation) -> {
                     if (invocation.getArgument(0).equals(MMS_ID)) {
-                        MuseumManagementSystem mms = new MuseumManagementSystem();
-                        mms.setSystemId(MMS_ID);
-                        mms.setName(MMS_NAME);
-                        mms.setOpenTime(OPEN_TIME);
-                        mms.setCloseTime(CLOSE_TIME);
-                        mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
-                        mms.setTicketFee(TICKET_FEE);
-                        return mms;
+                        return createMms();
                     } else {
                         return null;
                     }
@@ -128,15 +123,20 @@ public class TestLoanRequestService {
         lenient().when(loanRequestDao.findLoanRequestByRequestId(anyInt()))
                 .thenAnswer((InvocationOnMock invocation) -> {
                     if (invocation.getArgument(0).equals(LOAN_REQUEST_ID)) {
-                        return loanRequestCreationHelper(LOAN_REQUEST_ID, LoanRequest.LoanStatus.Pending, CLIENT_USERNAME_AT_MAX_LOAN);
+                        return loanRequestCreationHelper(LOAN_REQUEST_ID, artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID),
+                                clientRepository.findClientByUsername(CLIENT_USERNAME_AT_MAX_LOAN), LoanRequest.LoanStatus.Pending);
                     } else if (invocation.getArgument(0).equals(PENDING_LOAN_REQUEST_ID)) {
-                        return loanRequestCreationHelper(PENDING_LOAN_REQUEST_ID, LoanRequest.LoanStatus.Pending, CLIENT_USERNAME);
+                        return loanRequestCreationHelper(PENDING_LOAN_REQUEST_ID, artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID),
+                                clientRepository.findClientByUsername(CLIENT_USERNAME), LoanRequest.LoanStatus.Pending);
                     } else if (invocation.getArgument(0).equals(APPROVED_LOAN_REQUEST_ID)) {
-                        return loanRequestCreationHelper(APPROVED_LOAN_REQUEST_ID, LoanRequest.LoanStatus.Approved, CLIENT_USERNAME);
+                        return loanRequestCreationHelper(APPROVED_LOAN_REQUEST_ID, artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID),
+                                clientRepository.findClientByUsername(CLIENT_USERNAME), LoanRequest.LoanStatus.Approved);
                     } else if (invocation.getArgument(0).equals(REJECTED_LOAN_REQUEST_ID)) {
-                        return loanRequestCreationHelper(REJECTED_LOAN_REQUEST_ID, LoanRequest.LoanStatus.Rejected, CLIENT_USERNAME);
+                        return loanRequestCreationHelper(REJECTED_LOAN_REQUEST_ID, artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID),
+                                clientRepository.findClientByUsername(CLIENT_USERNAME), LoanRequest.LoanStatus.Rejected);
                     } else if (invocation.getArgument(0).equals(RETURNED_LOAN_REQUEST_ID)) {
-                        return loanRequestCreationHelper(RETURNED_LOAN_REQUEST_ID, LoanRequest.LoanStatus.Returned, CLIENT_USERNAME);
+                        return loanRequestCreationHelper(RETURNED_LOAN_REQUEST_ID, artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID),
+                                clientRepository.findClientByUsername(CLIENT_USERNAME),LoanRequest.LoanStatus.Returned);
                     } else {
                         return null;
                     }
@@ -164,7 +164,7 @@ public class TestLoanRequestService {
 
         assertNotNull(loanRequest);
         assertEquals(LoanRequest.LoanStatus.Pending, loanRequest.getStatus());
-        checkCreatedLoanRequest(loanRequest);
+        checkLoanRequestInformation(loanRequest);
     }
 
     @Test
@@ -308,7 +308,7 @@ public class TestLoanRequestService {
         assertEquals(LoanRequest.LoanStatus.Approved, loanRequest.getStatus());
         assertEquals(Artifact.LoanStatus.Loaned, loanRequest.getArtifact().getLoanStatus());
         assertEquals(CLIENT_CURRENT_LOAN_NUMBER + 1, loanRequest.getClient().getCurrentLoanNumber());
-        checkCreatedLoanRequest(loanRequest);
+        checkLoanRequestInformation(loanRequest);
     }
 
     @Test
@@ -390,7 +390,7 @@ public class TestLoanRequestService {
 
         assertNotNull(loanRequest);
         assertEquals(LoanRequest.LoanStatus.Rejected, loanRequest.getStatus());
-        checkCreatedLoanRequest(loanRequest);
+        checkLoanRequestInformation(loanRequest);
     }
 
     @Test
@@ -461,7 +461,7 @@ public class TestLoanRequestService {
         assertEquals(LoanRequest.LoanStatus.Returned, loanRequest.getStatus());
         assertEquals(Artifact.LoanStatus.Available, loanRequest.getArtifact().getLoanStatus());
         assertEquals(CLIENT_CURRENT_LOAN_NUMBER - 1, loanRequest.getClient().getCurrentLoanNumber());
-        checkCreatedLoanRequest(loanRequest);
+        checkLoanRequestInformation(loanRequest);
     }
 
     @Test
@@ -546,7 +546,7 @@ public class TestLoanRequestService {
     }
 
     @Test
-    public void getAllLoanRequestsSuccessful() {
+    public void testGetAllLoanRequests() {
         Iterable<LoanRequest> loanRequests = loanRequestService.getAllLoanRequests();
         assertEquals(ALL_LOAN_REQUESTS, loanRequests);
     }
@@ -574,12 +574,23 @@ public class TestLoanRequestService {
 
     @Test
     public void testGetAllLoanRequestsByClient(){
-        List<LoanRequest> loanRequests = loanRequestService.getAllActiveLoanRequests();
+        List<LoanRequest> loanRequests = loanRequestService.getAllLoanRequestsByClient(client);
         assertNotNull(loanRequests);
-        assertEquals(1, loanRequests.size());
+        assertEquals(2, loanRequests.size());
     }
 
-    private void checkCreatedLoanRequest(LoanRequest loanRequest) {
+    @Test
+    public void testGetAllLoanRequestsByClientWhenThereIsNoLoanRequestsOfThatClient(){
+        List<LoanRequest> loanRequests = loanRequestService.getAllLoanRequestsByClient(clientCreationHelper(CLIENT_USERNAME_AT_MAX_LOAN, CLIENT_AT_MAX_LOAN_NUMBER));
+        assertNotNull(loanRequests);
+        assertEquals(0, loanRequests.size());
+    }
+
+    /**
+     * Checks the information in the loan request
+     * @param loanRequest
+     */
+    private void checkLoanRequestInformation(LoanRequest loanRequest) {
         assertEquals(LOAN_DURATION, loanRequest.getLoanDuration());
         assertEquals(LOAN_FEE, loanRequest.getFee());
 
@@ -605,7 +616,7 @@ public class TestLoanRequestService {
      * @param artifactStatus
      * @return
      */
-    private Artifact artifactCreationHelper(int artifactId, Artifact.LoanStatus artifactStatus){
+    private static Artifact artifactCreationHelper(int artifactId, Artifact.LoanStatus artifactStatus){
         Artifact artifact = new Artifact();
         artifact.setArtifactId(artifactId);
         artifact.setName(ARTIFACT_NAME);
@@ -615,7 +626,7 @@ public class TestLoanRequestService {
         artifact.setWorth(ARTIFACT_WORTH);
         artifact.setLoanFee(LOAN_FEE);
         artifact.setLoanStatus(artifactStatus);
-        artifact.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+        artifact.setMuseumManagementSystem(museumManagementSystem);
         return artifact;
     }
 
@@ -625,13 +636,13 @@ public class TestLoanRequestService {
      * @param loanNumber
      * @return
      */
-    private Client clientCreationHelper(String username, int loanNumber){
+    private static Client clientCreationHelper(String username, int loanNumber){
         Client client = new Client();
         client.setUsername(username);
         client.setName(CLIENT_NAME);
         client.setPassword(CLIENT_PASSWORD);
         client.setCurrentLoanNumber(loanNumber);
-        client.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+        client.setMuseumManagementSystem(museumManagementSystem);
         return client;
     }
 
@@ -639,18 +650,32 @@ public class TestLoanRequestService {
      * Private Constructor of a loan request
      * @param requestId
      * @param loanRequestStatus
-     * @param clientUsername
      * @return
      */
-    private LoanRequest loanRequestCreationHelper(int requestId, LoanRequest.LoanStatus loanRequestStatus, String clientUsername){
+    private static LoanRequest loanRequestCreationHelper(int requestId, Artifact artifact, Client client, LoanRequest.LoanStatus loanRequestStatus){
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setRequestId(requestId);
         loanRequest.setLoanDuration(LOAN_DURATION);
         loanRequest.setStatus(loanRequestStatus);
-        loanRequest.setFee(artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID).getLoanFee());
-        loanRequest.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-        loanRequest.setArtifact(artifactRepository.findArtifactByArtifactId(AVAILABLE_ARTIFACT_ID));
-        loanRequest.setClient(clientRepository.findClientByUsername(clientUsername));
+        loanRequest.setFee(artifact.getLoanFee());
+        loanRequest.setMuseumManagementSystem(museumManagementSystem);
+        loanRequest.setArtifact(artifact);
+        loanRequest.setClient(client);
         return loanRequest;
+    }
+
+    /**
+     * Private Constructor of a MuseumManagementSystem
+     * @return
+     */
+    private static MuseumManagementSystem createMms() {
+        MuseumManagementSystem mms = new MuseumManagementSystem();
+        mms.setSystemId(MMS_ID);
+        mms.setName(MMS_NAME);
+        mms.setOpenTime(OPEN_TIME);
+        mms.setCloseTime(CLOSE_TIME);
+        mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
+        mms.setTicketFee(TICKET_FEE);
+        return mms;
     }
 }

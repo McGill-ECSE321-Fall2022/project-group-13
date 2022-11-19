@@ -10,9 +10,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
+import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,11 +38,16 @@ public class TestClientAccountService {
     private ClientRepository clientDao;
 
     @Mock
+    private EmployeeRepository employeeDao;
+
+
+    @Mock
     private MuseumManagementSystemRepository mmsDao;
 
     @InjectMocks
     private ClientAccountService service;
 
+    private final static String EMPLOYEE_USERNAME = "EmployeeUsername";
     private static final String CLIENT_USERNAME = "ClientUsername";
     private static final String CLIENT_USERNAME_A = "ClientUsername_A";
     private static final String CLIENT_USERNAME_B = "ClientUsername_B";
@@ -111,6 +118,15 @@ public class TestClientAccountService {
             else {
                 return false;
             }
+    });
+
+    lenient().when(employeeDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+        if(invocation.getArgument(0).equals(EMPLOYEE_USERNAME)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     });
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -341,6 +357,22 @@ public class TestClientAccountService {
 
         try{
             a = service.createClient(EXISTING_CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        }catch (MuseumManagementSystemException e){
+            error = e.getMessage();
+        }
+
+        assertNull(a);
+        assertEquals("This username is already taken", error);
+    }
+
+    @Test
+    public void testCreateClientWithUsedEmployeeUsername(){
+        Client a = null; 
+
+        String error = ""; 
+
+        try{
+            a = service.createClient(EMPLOYEE_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
@@ -678,6 +710,23 @@ public class TestClientAccountService {
         client.setCurrentLoanNumber(loanNumber); 
         client.setMuseumManagementSystem(mms);
         return client;
+    }
+
+    /**
+     * Private Constructor of a employee 
+     * @param username
+     * @param name
+     * @param password
+     * @param mms
+     * @return
+     */
+    private Employee employee(String username, String name, String password, MuseumManagementSystem mms){
+        Employee employee = new Employee(); 
+        employee.setUsername(username); 
+        employee.setName(name); 
+        employee.setPassword(password); 
+        employee.setMuseumManagementSystem(mms);
+        return employee;
     }
 
 }   

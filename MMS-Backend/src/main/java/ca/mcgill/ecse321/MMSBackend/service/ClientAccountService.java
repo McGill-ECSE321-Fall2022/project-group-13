@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
+import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
@@ -18,6 +19,9 @@ public class ClientAccountService {
 
     @Autowired
     ClientRepository clientRepository; 
+
+    @Autowired
+    EmployeeRepository employeeRepository; 
 
     /**
      * Create a Client account 
@@ -53,7 +57,7 @@ public class ClientAccountService {
         }
 
         // The username is already in use 
-        if (clientRepository.existsById(username) == true){
+        if (clientRepository.existsById(username) == true || employeeRepository.existsById(username) == true){
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
 

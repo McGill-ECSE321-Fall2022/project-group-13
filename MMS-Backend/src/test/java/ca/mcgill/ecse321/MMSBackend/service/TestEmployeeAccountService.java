@@ -9,6 +9,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
@@ -34,12 +35,17 @@ import java.util.List;
 public class TestEmployeeAccountService {
     @Mock 
     private EmployeeRepository employeeDao; 
+
+    @Mock 
+    private ClientRepository clientDao; 
     
     @Mock 
     private MuseumManagementSystemRepository mmsDao; 
 
     @InjectMocks
     private EmployeeAccountService service; 
+
+    public static final String CLIENT_USERNAME = "ClientUsername";
     
     private static final String EMPLOYEE_USERNAME = "EmployeeUsername";
     private static final String EMPLOYEE_USERNAME_A = "EmployeeUsername_A";
@@ -102,6 +108,16 @@ public class TestEmployeeAccountService {
                 return null;
         }
     });
+
+    lenient().when(clientDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+        if(invocation.getArgument(0).equals(CLIENT_USERNAME)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+
 
         lenient().when(employeeDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(EXISTING_EMPLOYEE_USERNAME)) {
@@ -344,6 +360,22 @@ public class TestEmployeeAccountService {
 
         try{
             a = service.createEmployee(EXISTING_EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        }catch (MuseumManagementSystemException e){
+            error = e.getMessage();
+        }
+
+        assertNull(a);
+        assertEquals("This username is already taken", error);
+    }
+
+    @Test
+    public void testCreateEmployeeWithUsedClientUsername(){
+        Employee a = null; 
+
+        String error = ""; 
+
+        try{
+            a = service.createEmployee(CLIENT_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
         }catch (MuseumManagementSystemException e){
             error = e.getMessage();
         }
