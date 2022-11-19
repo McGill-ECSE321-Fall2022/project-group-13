@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
 import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
@@ -17,6 +18,9 @@ import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 public class EmployeeAccountService {
     @Autowired
     EmployeeRepository employeeRepository; 
+
+    @Autowired
+    ClientRepository clientRepository; 
 
     /**
      * Create a Emlpoyee account 
@@ -52,7 +56,7 @@ public class EmployeeAccountService {
         }
 
         // The username is already in use 
-        if (employeeRepository.existsById(username) == true){
+        if (employeeRepository.existsById(username) == true || clientRepository.existsById(username) == true){
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is already taken");  
         }
 
