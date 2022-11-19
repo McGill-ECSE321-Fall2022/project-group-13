@@ -42,7 +42,7 @@ public class MuseumManagementSystemService {
     public MuseumManagementSystem createMuseumManagementSystem() {
 
         if(museumManagementSystemRepository.count() != 0) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System already exists");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System already exists");
         }
 
         MuseumManagementSystem museumManagementSystem = new MuseumManagementSystem();
@@ -76,7 +76,7 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else {
             return museumManagementSystem;
         }
@@ -95,7 +95,7 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else {
             museumManagementSystemRepository.delete(museumManagementSystem);
         }
@@ -114,7 +114,7 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else {
             museumManagementSystem.setName(name);
         }
@@ -144,9 +144,9 @@ public class MuseumManagementSystemService {
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
 
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else if(price < 0){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Ticket price is not valid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Ticket price is not valid");
         }else {
             museumManagementSystem.setTicketFee(price);
         }
@@ -226,9 +226,9 @@ public class MuseumManagementSystemService {
         MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
                 .findMuseumManagementSystemBySystemId(museumManagementSystemId);
         if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Museum Management System does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else if(maxLoanNumber <= 0){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Maximum loan number is not valid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Maximum loan number is not valid");
         } else {
             museumManagementSystem.setMaxLoanNumber(maxLoanNumber);
             museumManagementSystemRepository.save(museumManagementSystem);
