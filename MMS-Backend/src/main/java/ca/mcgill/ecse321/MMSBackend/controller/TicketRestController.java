@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import ca.mcgill.ecse321.MMSBackend.dto.ClientDto;
 import ca.mcgill.ecse321.MMSBackend.dto.TicketDto;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
@@ -46,9 +45,8 @@ public class TicketRestController {
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/ticket", "/ticket/" })
-    public ResponseEntity<TicketDto> createTicket(@RequestParam(name = "client") ClientDto clientDto) throws IllegalArgumentException {
-
-        Ticket ticket = ticketService.createTicket(clientDto.getName());
+    public ResponseEntity<TicketDto> createTicket(@RequestParam String clientUsername) throws IllegalArgumentException {
+        Ticket ticket = ticketService.createTicket(clientUsername);
         return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.CREATED);
     }
     

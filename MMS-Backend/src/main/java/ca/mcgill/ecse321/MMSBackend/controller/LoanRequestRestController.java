@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.MMSBackend.controller;
 
-import ca.mcgill.ecse321.MMSBackend.dto.ArtifactDto;
-import ca.mcgill.ecse321.MMSBackend.dto.ClientDto;
 import ca.mcgill.ecse321.MMSBackend.dto.LoanRequestDto;
-import ca.mcgill.ecse321.MMSBackend.dto.MuseumManagementSystemDto;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
@@ -40,25 +37,26 @@ public class LoanRequestRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
+
     /**
      * Create a new loan request
+     * @param loanDuration
+     * @param artifactId
+     * @param username
+     * @param systemId
      */
     @PostMapping(value = {"/loanRequest", "/loanRequest/"})
-    public ResponseEntity<LoanRequestDto> createLoanRequest(
-            @RequestParam(name = "loanDuration") int loanDuration, @RequestParam(name = "artifact") ArtifactDto artifactDto,
-            @RequestParam(name = "client") ClientDto clientDto, @RequestParam(name = "mmsSystem") MuseumManagementSystemDto museumManagementSystemDto) throws IllegalArgumentException {
-
-        Artifact artifact = artifactService.getArtifact(artifactDto.getArtifactId());
-        Client client = clientAccountService.getClient(clientDto.getUsername());
-        MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(museumManagementSystemDto.getMuseumManagementSystemId());
-        LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, artifact, client, museumManagementSystem);
-
+    public ResponseEntity<LoanRequestDto> createLoanRequest(@RequestParam int loanDuration, @RequestParam int artifactId,
+            @RequestParam String username, @RequestParam int systemId) throws IllegalArgumentException {
+        Artifact artifact = artifactService.getArtifact(artifactId);
+        Client client = clientAccountService.getClient(username);
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
+        LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, artifact, client, mms);
         return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.CREATED);
     }
 
     /**
      * Gets a loan request by its id
-     *
      * @param requestId
      * @return loan request object
      */
@@ -70,7 +68,6 @@ public class LoanRequestRestController {
 
     /**
      * Gets all loan request
-     *
      * @return loan request object
      */
     @GetMapping(value = {"/loanRequests", "/loanRequests/"})
@@ -81,14 +78,14 @@ public class LoanRequestRestController {
     /**
      * Gets all loan requests registered by its status
      *
-     * @param statusDto
+     * @param status
      * @return the list of loan request dtos with the specified status
      * @throws IllegalArgumentException
      */
     @GetMapping(value = {"/loanRequests/{status}", "/loanRequests/{status}/"})
-    public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByStatus(@PathVariable("status") LoanRequestDto.LoanRequestStatusDto statusDto) throws IllegalArgumentException {
+    public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByStatus(@PathVariable("status") String status) throws IllegalArgumentException {
         List<LoanRequestDto> loanRequestsDtos = new ArrayList<>();
-        for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(ToDtoHelper.convertToDomainObject(statusDto))) {
+        for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(ToDtoHelper.convertStringToLoanStatus(status))) {
             loanRequestsDtos.add(ToDtoHelper.convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsDtos, HttpStatus.OK);
@@ -111,12 +108,12 @@ public class LoanRequestRestController {
     /**
      * Gets all loan requests registered by its client
      *
-     * @param clientDto
+     * @param username
      * @return a list of loan request objects
      */
     @GetMapping(value = {"/loanRequests/{client}", "/loanRequests/{client}/"})
-    public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByClient(@RequestParam(name = "client") ClientDto clientDto) throws IllegalArgumentException {
-        Client client = clientAccountService.getClient(clientDto.getUsername());
+    public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByClient(@RequestParam String username) throws IllegalArgumentException {
+        Client client = clientAccountService.getClient(username);
         List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<LoanRequestDto>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByClient(client)) {
             loanRequestsByClientDto.add(ToDtoHelper.convertToDto(loanRequest));

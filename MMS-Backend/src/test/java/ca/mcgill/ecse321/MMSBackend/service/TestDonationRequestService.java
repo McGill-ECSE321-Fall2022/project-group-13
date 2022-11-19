@@ -73,7 +73,7 @@ public class TestDonationRequestService {
 
     private static final String CLIENT_USERNAME = "LeonardoDaVinciUsername";
     private static final String CLIENT_NAME = "Leonardo Da Vinci";
-    private static final String CLIENT_PASSWORD = "I painted Mona Lisa";
+    private static final String CLIENT_PASSWORD = "IPaintedMonaLisa";
     private static final int CLIENT_CURRENT_LOAN_NUMBER = 3;
 
     private static final int MMS_ID = 8;
