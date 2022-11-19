@@ -377,10 +377,55 @@ public class TestMuseumManagementService {
 
     }
 
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     */
     @Test
     public void testGetMaxLoanNumberOfMms(){
         int maxLoanNumber = museumManagementSystemService.getMaxLoanNumberOfMms(SYSTEM_ID);
         assertEquals(maxLoanNumber, MMS_MAX_LOAN_NUMBER);
+    }
+
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     */
+    @Test
+    public void testSetMaxLoanNumberOfMms(){
+        try {
+            museumManagementSystemService.setMaxLoanNumberOfMms(SYSTEM_ID, 10);
+        } catch (MuseumManagementSystemException e) {
+            fail();
+        }
+    }
+
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     */
+    @Test
+    public void testSetMaxLoanNumberOfMmsNegative(){
+        String error = "";
+        try {
+            museumManagementSystemService.setMaxLoanNumberOfMms(SYSTEM_ID, -1);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+        assertEquals("Maximum loan number is not valid", error);
+    }
+
+    /**
+     * @author Nazia Chowdhury (naziaC)
+     */
+    @Test
+    public void testSetMaxLoanNumberOfMmsNull(){
+
+        String error = "";
+
+        try {
+            museumManagementSystemService.setMaxLoanNumberOfMms(-1, 13);
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+        assertEquals("Museum Management System does not exist", error);
     }
 
     @Test
