@@ -98,9 +98,10 @@ public class ToDtoHelper {
         if (client == null) {
             throw new IllegalArgumentException("There is no such Client!");
         }
+        MuseumManagementSystemDto mmsDto = convertToDto(client.getMuseumManagementSystem());
 
         ClientDto clientDto = new ClientDto(client.getUsername(), client.getName(), client.getPassword(),
-                client.getCurrentLoanNumber(), client.getMuseumManagementSystem());
+                client.getCurrentLoanNumber(), mmsDto);
 
         return clientDto;
     }
@@ -115,9 +116,10 @@ public class ToDtoHelper {
         if (manager == null) {
             throw new IllegalArgumentException("There is no such Manager!");
         }
+        MuseumManagementSystemDto mmsDto = convertToDto(manager.getMuseumManagementSystem());
 
         ManagerDto managerDto = new ManagerDto(manager.getUsername(), manager.getName(),
-        manager.getPassword(), manager.getMuseumManagementSystem());
+        manager.getPassword(), mmsDto);
 
         return managerDto;
     }
@@ -132,9 +134,10 @@ public class ToDtoHelper {
         if (employee == null) {
             throw new IllegalArgumentException("There is no such Employee!");
         }
+        MuseumManagementSystemDto mmsDto = convertToDto(employee.getMuseumManagementSystem());
 
         EmployeeDto employeeDto = new EmployeeDto(employee.getUsername(), employee.getName(), 
-        employee.getPassword(), employee.getMuseumManagementSystem());
+        employee.getPassword(), mmsDto);
 
         return employeeDto;
     }
