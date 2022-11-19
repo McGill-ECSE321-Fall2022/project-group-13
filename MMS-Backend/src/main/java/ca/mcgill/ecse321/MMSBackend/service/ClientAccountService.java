@@ -33,27 +33,27 @@ public class ClientAccountService {
         
         // Case where any of the parameters are null
         if (mms == null || username == null || name == null || password == null){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot have empty fields");
         }
         
         // Case where any of the parameters are empty strings
         if (username == "" || name == "" || password == ""){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot have empty fields");
         }
 
         // Case where the username contains whitespaces
         if (username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The username cannot have spaces");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The username cannot have spaces");
         }
 
         // Case where the name consists of only whitespaces
         if (name.trim().isEmpty() == true) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid name");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Invalid name");
         }
 
         // Case where the password contains whitespaces 
         if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Invalid password");
         }
 
         // The username is already in use 
@@ -82,13 +82,13 @@ public class ClientAccountService {
 
         // Case where the username is empty or if it contains whitespaces
         if (username == "" || username == null || username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This username is invalid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This username is invalid");
         }
 
 		Client client = clientRepository.findClientByUsername(username);
 
         if (client == null){
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This client account does not exist");
+            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "This client account does not exist");
         }
 
 		return client;
@@ -132,14 +132,14 @@ public class ClientAccountService {
 
         // Case where the password is empty or if it contains whitespaces
         if (password == "" || password == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This password is invalid");
         }
 
         Client client = getClient(username); 
 
         // Case where the entered password does not match with the one in the system 
         if (client.getPassword().equals(password) == false || password.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is incorrect");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This password is incorrect");
         }
 
         return client; 
@@ -156,12 +156,12 @@ public class ClientAccountService {
 
         // Case where the name is empty or if it contains whitespaces
         if (newName == "" || newName == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This name is invalid");
         }
 
         // Case where the password is empty or if it contains whitespaces
         if (newPassword.contains(" ") || newPassword.length() < 8 || newPassword.length() > 30) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
+            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This password is invalid");
         }
 
         Client client = getClient(username);
