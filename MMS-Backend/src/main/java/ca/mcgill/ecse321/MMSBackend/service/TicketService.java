@@ -123,9 +123,7 @@ public class TicketService {
      */
 
     @Transactional
-    public List<Ticket> getAllTicketsByClient(String clientUsername){
-        
-        Client client = clientRepository.findClientByUsername(clientUsername); 
+    public List<Ticket> getAllTicketsByClient(Client client){
 
         if(client == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
