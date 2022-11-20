@@ -31,22 +31,30 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nikolas Pasichnik (NikolasPasichnik)
+ * 
+ *         The TestEmployeeAccountService class tests the business logic
+ *         declared in
+ *         EmployeeAccountService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestEmployeeAccountService {
-    @Mock 
-    private EmployeeRepository employeeDao; 
+    @Mock
+    private EmployeeRepository employeeDao;
 
-    @Mock 
-    private ClientRepository clientDao; 
-    
-    @Mock 
-    private MuseumManagementSystemRepository mmsDao; 
+    @Mock
+    private ClientRepository clientDao;
+
+    @Mock
+    private MuseumManagementSystemRepository mmsDao;
 
     @InjectMocks
-    private EmployeeAccountService service; 
+    private EmployeeAccountService service;
 
     public static final String CLIENT_USERNAME = "ClientUsername";
-    
+
     private static final String EMPLOYEE_USERNAME = "EmployeeUsername";
     private static final String EMPLOYEE_USERNAME_A = "EmployeeUsername_A";
     private static final String EMPLOYEE_USERNAME_B = "EmployeeUsername_B";
@@ -58,9 +66,9 @@ public class TestEmployeeAccountService {
 
     private static final String EMPLOYEE_NAME = "EmployeeName";
     private static final String EMPLOYEE_NEW_NAME = "NewEmployeeName";
-    private static final String EMPLOYEE_NEW_PASSWORD = "NewEmployeePasword"; 
-    private static final String EMPLOYEE_PASSWORD = "EmployeePassword"; 
-    private static final String EMPLOYEE_INCORRECT_PASSWORD = "IncorrectEmployeePassword"; 
+    private static final String EMPLOYEE_NEW_PASSWORD = "NewEmployeePasword";
+    private static final String EMPLOYEE_PASSWORD = "EmployeePassword";
+    private static final String EMPLOYEE_INCORRECT_PASSWORD = "IncorrectEmployeePassword";
 
     private static final int MMS_ID = 8;
     private static final String MMS_NAME = "Louvre";
@@ -71,88 +79,83 @@ public class TestEmployeeAccountService {
 
     @BeforeEach
     public void setMockOutput() {
-        
+
         lenient().when(mmsDao.findMuseumManagementSystemBySystemId(anyInt()))
-        .thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(MMS_ID)) {
-            MuseumManagementSystem mms = new MuseumManagementSystem();
-            mms.setSystemId(MMS_ID);
-            mms.setName(MMS_NAME);
-            mms.setOpenTime(OPEN_TIME);
-            mms.setCloseTime(CLOSE_TIME);
-            mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
-            mms.setTicketFee(TICKET_FEE);
-            return mms;
-        } else {
-            return null;
-        }
-    });
+                .thenAnswer((InvocationOnMock invocation) -> {
+                    if (invocation.getArgument(0).equals(MMS_ID)) {
+                        MuseumManagementSystem mms = new MuseumManagementSystem();
+                        mms.setSystemId(MMS_ID);
+                        mms.setName(MMS_NAME);
+                        mms.setOpenTime(OPEN_TIME);
+                        mms.setCloseTime(CLOSE_TIME);
+                        mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
+                        mms.setTicketFee(TICKET_FEE);
+                        return mms;
+                    } else {
+                        return null;
+                    }
+                });
 
-        lenient().when(employeeDao.findEmployeeByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(EMPLOYEE_USERNAME_B)) {
-                return employee(EMPLOYEE_USERNAME_B,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)){
-                return employee(EMPLOYEE_USERNAME_C,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_D)){
-                return employee(EMPLOYEE_USERNAME_D,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_E)){
-                return employee(EMPLOYEE_USERNAME_E,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(FAKE_EMPLOYEE_USERNAME)){
-                return null; 
-            }
-            else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)){
-                return employee(EXISTING_EMPLOYEE_USERNAME,EMPLOYEE_NAME,EMPLOYEE_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else {
+        lenient().when(employeeDao.findEmployeeByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_B)) {
+                return employee(EMPLOYEE_USERNAME_B, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)) {
+                return employee(EMPLOYEE_USERNAME_C, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_D)) {
+                return employee(EMPLOYEE_USERNAME_D, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_E)) {
+                return employee(EMPLOYEE_USERNAME_E, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(FAKE_EMPLOYEE_USERNAME)) {
                 return null;
-        }
-    });
-
-    lenient().when(clientDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(CLIENT_USERNAME)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    });
-
-
-        lenient().when(employeeDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(EXISTING_EMPLOYEE_USERNAME)) {
-                return true;
+            } else if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)) {
+                return employee(EXISTING_EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else {
+                return null;
             }
-            if(invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)) {
+        });
+
+        lenient().when(clientDao.existsById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(CLIENT_USERNAME)) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-    });
+        });
 
-    Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-        return invocation.getArgument(0);
-    };
+        lenient().when(employeeDao.existsById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(EXISTING_EMPLOYEE_USERNAME)) {
+                return true;
+            }
+            if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME_C)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
-    lenient().when(mmsDao.save(any(MuseumManagementSystem.class))).thenAnswer(returnParameterAsAnswer);
-    lenient().when(employeeDao.save(any(Employee.class))).thenAnswer(returnParameterAsAnswer);
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+            return invocation.getArgument(0);
+        };
+
+        lenient().when(mmsDao.save(any(MuseumManagementSystem.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(employeeDao.save(any(Employee.class))).thenAnswer(returnParameterAsAnswer);
     }
 
-    //-----------------------------------------------Testing createEmployee()--------------------------------------------------
-
     @Test
-    public void testCreateEmployee(){
+    public void testCreateEmployee() {
         assertEquals(0, service.getAllEmployees().size());
 
-        Employee a = null; 
+        Employee a = null;
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (IllegalArgumentException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -163,14 +166,14 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeMMSNull(){
-        Employee a = null; 
+    public void testCreateEmployeeMMSNull() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME,EMPLOYEE_PASSWORD, null);
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD, null);
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -179,14 +182,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeUsernameNull(){
-        Employee a = null; 
+    public void testCreateEmployeeUsernameNull() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(null, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(null, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -195,14 +199,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeNameNull(){
-        Employee a = null; 
+    public void testCreateEmployeeNameNull() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, null, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, null, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -211,14 +216,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeePaswordNull(){
-        Employee a = null; 
+    public void testCreateEmployeePaswordNull() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, null,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, null,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -227,14 +233,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeUsernameEmpty(){
-        Employee a = null; 
+    public void testCreateEmployeeUsernameEmpty() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee("", EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee("", EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -243,14 +250,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeNameEmpty(){
-        Employee a = null; 
+    public void testCreateEmployeeNameEmpty() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, "", EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, "", EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -259,14 +267,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeePasswordEmpty(){
-        Employee a = null; 
+    public void testCreateEmployeePasswordEmpty() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -275,14 +284,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeUsernameWithWhitespaces(){
-        Employee a = null; 
+    public void testCreateEmployeeUsernameWithWhitespaces() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee("  ", EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee("  ", EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -291,14 +301,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeNameOnlyWhitespaces(){
-        Employee a = null; 
+    public void testCreateEmployeeNameOnlyWhitespaces() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, "  ", EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, "  ", EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -306,16 +317,16 @@ public class TestEmployeeAccountService {
         assertEquals("Invalid name", error);
     }
 
-
     @Test
-    public void testCreateEmployeePasswordWithWhitespaces(){
-        Employee a = null; 
+    public void testCreateEmployeePasswordWithWhitespaces() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "  ",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "  ",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -324,14 +335,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeePasswordLessThan8(){
-        Employee a = null; 
+    public void testCreateEmployeePasswordLessThan8() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "123",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "123",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -340,14 +352,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeePasswordMoreThan30(){
-        Employee a = null; 
+    public void testCreateEmployeePasswordMoreThan30() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "abcdefghijklmnopqrstuvwxyz12345678",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EMPLOYEE_USERNAME, EMPLOYEE_NAME, "abcdefghijklmnopqrstuvwxyz12345678",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -356,14 +369,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeWithUsedUsername(){
-        Employee a = null; 
+    public void testCreateEmployeeWithUsedUsername() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(EXISTING_EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(EXISTING_EMPLOYEE_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -372,14 +386,15 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testCreateEmployeeWithUsedClientUsername(){
-        Employee a = null; 
+    public void testCreateEmployeeWithUsedClientUsername() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createEmployee(CLIENT_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createEmployee(CLIENT_USERNAME, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -387,15 +402,13 @@ public class TestEmployeeAccountService {
         assertEquals("This username is already taken", error);
     }
 
-    //-----------------------------------------------Testing getEMPLOYEE()--------------------------------------------------
-
     @Test
-    public void testGetEmployee(){
-        Employee a = null; 
+    public void testGetEmployee() {
+        Employee a = null;
 
-        try{
+        try {
             a = service.getEmployee(EMPLOYEE_USERNAME_B);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -406,14 +419,14 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testGetEmployeeEmptyUsername(){
-        Employee a = null; 
+    public void testGetEmployeeEmptyUsername() {
+        Employee a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getEmployee("");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -422,14 +435,14 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testGetEmployeeNullUsername(){
-        Employee a = null; 
+    public void testGetEmployeeNullUsername() {
+        Employee a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getEmployee(null);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -438,14 +451,14 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testGetEmployeeUsernameWithWhitespaces(){
-        Employee a = null; 
+    public void testGetEmployeeUsernameWithWhitespaces() {
+        Employee a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getEmployee("   ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -454,14 +467,14 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testGetEmployeeNotFound(){
-        Employee a = null; 
+    public void testGetEmployeeNotFound() {
+        Employee a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getEmployee(FAKE_EMPLOYEE_USERNAME);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -469,12 +482,11 @@ public class TestEmployeeAccountService {
         assertEquals("This employee account does not exist", error);
     }
 
-    //-----------------------------------------------Testing getAllEmployee())--------------------------------------------------
-    
     @Test
-    public void testGetAllEmployees(){
+    public void testGetAllEmployees() {
 
-        Employee employee_1 = service.createEmployee(EMPLOYEE_USERNAME_A, EMPLOYEE_NAME, EMPLOYEE_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Employee employee_1 = service.createEmployee(EMPLOYEE_USERNAME_A, EMPLOYEE_NAME, EMPLOYEE_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(employeeDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
 
@@ -484,11 +496,11 @@ public class TestEmployeeAccountService {
 
         });
 
-        List<Employee> allEmployees = null; 
+        List<Employee> allEmployees = null;
 
-        try{
+        try {
             allEmployees = service.getAllEmployees();
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             fail();
         }
 
@@ -497,40 +509,36 @@ public class TestEmployeeAccountService {
         assertEquals(employee_1, allEmployees.get(0));
     }
 
-    //-----------------------------------------------Testing deleteEmployee()--------------------------------------------------
-
     @Test
-    public void testDeleteEmployee(){
+    public void testDeleteEmployee() {
 
-        try{
+        try {
             service.deleteEmployee(EXISTING_EMPLOYEE_USERNAME);
-        }catch (MuseumManagementSystemException e){
-            fail(); 
+        } catch (MuseumManagementSystemException e) {
+            fail();
         }
     }
 
     @Test
-    public void testDeleteEmployeeNotFound(){
+    public void testDeleteEmployeeNotFound() {
 
-        String error = ""; 
-        try{
+        String error = "";
+        try {
             service.deleteEmployee(EMPLOYEE_USERNAME);
-        }catch (MuseumManagementSystemException e){
-            error = e.getMessage(); 
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
         }
 
         assertEquals("Employee not found", error);
     }
 
-    //-----------------------------------------------Testing signInClientAccount()--------------------------------------------------
-
     @Test
-    public void testSignInEmployeeAccount(){
-        Employee a = null; 
+    public void testSignInEmployeeAccount() {
+        Employee a = null;
 
-        try{
+        try {
             a = service.signInEmployeeAccount(EMPLOYEE_USERNAME_D, EMPLOYEE_PASSWORD);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -539,84 +547,79 @@ public class TestEmployeeAccountService {
         assertEquals(EMPLOYEE_NAME, a.getName());
         assertEquals(EMPLOYEE_PASSWORD, a.getPassword());
 
-    } 
+    }
 
     @Test
-    public void testSignInEmployeeAccountEmptyPassword(){
-        
-        Employee a = null; 
-        String error = ""; 
+    public void testSignInEmployeeAccountEmptyPassword() {
 
-        try{
+        Employee a = null;
+        String error = "";
+
+        try {
             a = service.signInEmployeeAccount(EMPLOYEE_USERNAME_D, "");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
     @Test
-    public void testSignInEmployeeAccountNullPassword(){
-        
-        Employee a = null; 
-        String error = ""; 
+    public void testSignInEmployeeAccountNullPassword() {
 
-        try{
+        Employee a = null;
+        String error = "";
+
+        try {
             a = service.signInEmployeeAccount(EMPLOYEE_USERNAME_D, null);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
-
-    // This can cause the failure of testSignInEmployee() [Same problem, the username stuff]
     @Test
-    public void testSignInEmployeeAccountIncorrectPassword(){
-        
-        Employee a = null; 
-        String error = ""; 
+    public void testSignInEmployeeAccountIncorrectPassword() {
 
-        try{
+        Employee a = null;
+        String error = "";
+
+        try {
             a = service.signInEmployeeAccount(EMPLOYEE_USERNAME_E, EMPLOYEE_INCORRECT_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is incorrect", error); 
+        assertEquals("This password is incorrect", error);
     }
 
-    // This can cause the failure of testSignInEmployee() [Same problem, the username stuff]
     @Test
-    public void testSignInEmployeeAccountPasswordWithWhitespaces(){
-        
-        Employee a = null; 
-        String error = ""; 
+    public void testSignInEmployeeAccountPasswordWithWhitespaces() {
 
-        try{
+        Employee a = null;
+        String error = "";
+
+        try {
             a = service.signInEmployeeAccount(EMPLOYEE_USERNAME_E, "   ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is incorrect", error); 
+        assertEquals("This password is incorrect", error);
     }
 
-    //-----------------------------------------------Testing editEmployeeAccount()--------------------------------------------------
-
     @Test
-    public void testEditEmployeeAccount(){
-        Employee a = null; 
+    public void testEditEmployeeAccount() {
+        Employee a = null;
 
-        try{
+        try {
             a = service.editEmployeeAccount(EMPLOYEE_USERNAME_C, EMPLOYEE_NEW_NAME, EMPLOYEE_NEW_PASSWORD);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -628,92 +631,93 @@ public class TestEmployeeAccountService {
     }
 
     @Test
-    public void testEditEmployeeAccountEmptyName(){
-        Employee a = null; 
+    public void testEditEmployeeAccountEmptyName() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editEmployeeAccount(EMPLOYEE_USERNAME_C, "", EMPLOYEE_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This name is invalid", error); 
-    
+        assertEquals("This name is invalid", error);
+
     }
 
     @Test
-    public void testEditEmployeeAccountNullName(){
-        Employee a = null; 
+    public void testEditEmployeeAccountNullName() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editEmployeeAccount(EMPLOYEE_USERNAME_C, null, EMPLOYEE_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This name is invalid", error); 
-    
+        assertEquals("This name is invalid", error);
+
     }
 
     @Test
-    public void testEditEmployeeAccountPasswordContainsWhitespaces(){
-        Employee a = null; 
+    public void testEditEmployeeAccountPasswordContainsWhitespaces() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editEmployeeAccount(EMPLOYEE_USERNAME_C, EMPLOYEE_NAME, "  ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
-    
+        assertEquals("This password is invalid", error);
+
     }
 
     @Test
-    public void testEditEmployeeAccountPasswordLessThan8(){
-        Employee a = null; 
+    public void testEditEmployeeAccountPasswordLessThan8() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editEmployeeAccount(EMPLOYEE_USERNAME_C, EMPLOYEE_NAME, "123");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
-    
+        assertEquals("This password is invalid", error);
+
     }
 
     @Test
-    public void testEditEmployeeAccountPasswordGreaterThan30(){
-        Employee a = null; 
+    public void testEditEmployeeAccountPasswordGreaterThan30() {
+        Employee a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editEmployeeAccount(EMPLOYEE_USERNAME_C, EMPLOYEE_NAME, "abcdefghijklmnopqrstuvwxyz12345678");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
-    
+        assertEquals("This password is invalid", error);
+
     }
 
     /**
-     * Private Constructor of a EMPLOYEE 
+     * Private Constructor of a EMPLOYEE
+     * 
      * @param username
      * @param name
      * @param password
@@ -721,11 +725,11 @@ public class TestEmployeeAccountService {
      * @param mms
      * @return
      */
-    private Employee employee(String username, String name, String password, MuseumManagementSystem mms){
-        Employee employee = new Employee(); 
-        employee.setUsername(username); 
-        employee.setName(name); 
-        employee.setPassword(password); 
+    private Employee employee(String username, String name, String password, MuseumManagementSystem mms) {
+        Employee employee = new Employee();
+        employee.setUsername(username);
+        employee.setName(name);
+        employee.setPassword(password);
         employee.setMuseumManagementSystem(mms);
         return employee;
     }

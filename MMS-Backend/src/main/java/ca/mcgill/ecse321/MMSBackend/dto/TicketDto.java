@@ -1,25 +1,25 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
-
 /**
  * TicketDto class
+ * 
  * @author Lucy Zhang (Lucy-Zh)
  */
 public class TicketDto {
-    
-    //Ticket attributes
+
+    // Ticket attributes
     private int ticketId;
     private double fee;
     private boolean isActive;
     private ClientDto client;
     private MuseumManagementSystemDto museumManagementSystem;
 
-
     public TicketDto() {
 
     }
 
-    public TicketDto(int ticketId, double fee, boolean isActive, MuseumManagementSystemDto museumManagementSystem, ClientDto client) {
+    public TicketDto(int ticketId, double fee, boolean isActive, MuseumManagementSystemDto museumManagementSystem,
+            ClientDto client) {
 
         this.ticketId = ticketId;
         this.fee = fee;

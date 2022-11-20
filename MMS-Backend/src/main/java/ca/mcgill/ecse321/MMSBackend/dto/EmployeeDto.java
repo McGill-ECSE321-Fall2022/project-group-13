@@ -1,6 +1,10 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
-
+/**
+ * DTO Employee class
+ * 
+ * @Author: Nikolas Pasichnik (NikolasPasichnik)
+ */
 public class EmployeeDto {
 
     //Account Attributes
@@ -9,13 +13,12 @@ public class EmployeeDto {
     private String password;
     private MuseumManagementSystemDto MMS; 
     
+    /**
+     * Empty Constructor 
+     */
+    public EmployeeDto(){
 
-    // /**
-    //  * Empty Constructor 
-    //  */
-    // public EmployeeDto(){
-
-    // }
+    }
 
     /**
      * Constructor of a EmployeeDto
@@ -68,22 +71,5 @@ public class EmployeeDto {
         return MMS; 
     }
 
-    // /**
-    //  * Setter for the name
-    //  * 
-    //  * @param employeeName
-    //  */
-    // public void setName(String employeeName) {
-    //     this.name = employeeName; 
-    // }
-
-    // /**
-    //  * Setter for the password 
-    //  * 
-    //  * @param employeePassword
-    //  */
-    // public void setPassword(String employeePassword) {
-    //     this.password = employeePassword; 
-    // }
 }
 

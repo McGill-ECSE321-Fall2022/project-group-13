@@ -49,8 +49,8 @@ public class TicketRestController {
         Ticket ticket = ticketService.createTicket(clientUsername);
         return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.CREATED);
     }
-    
-     /**
+
+    /**
      * Get a ticket by id
      * 
      * @Author: Lucy Zhang (Lucy-Zh)
@@ -59,8 +59,7 @@ public class TicketRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
-    public ResponseEntity<TicketDto> getTicket(@PathVariable("ticketId") int ticketId) throws IllegalArgumentException
-    {
+    public ResponseEntity<TicketDto> getTicket(@PathVariable("ticketId") int ticketId) throws IllegalArgumentException {
         Ticket ticket = ticketService.getTicket(ticketId);
         return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.OK);
     }
@@ -74,8 +73,7 @@ public class TicketRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/tickets", "/tickets/" })
-    public ResponseEntity<List<TicketDto>> getAllTickets() throws IllegalArgumentException
-    {
+    public ResponseEntity<List<TicketDto>> getAllTickets() throws IllegalArgumentException {
         List<Ticket> tickets = ticketService.getAllTickets();
         List<TicketDto> ticketDtos = new ArrayList<>();
 
@@ -94,12 +92,11 @@ public class TicketRestController {
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
-    public void deleteTicket(@PathVariable("ticketId") int ticketId) throws IllegalArgumentException
-    {
+    public void deleteTicket(@PathVariable("ticketId") int ticketId) throws IllegalArgumentException {
         ticketService.deleteTicket(ticketId);
     }
 
-     /**
+    /**
      * Update a ticket status
      * 
      * @Author: Lucy Zhang (Lucy-Zh)
@@ -109,8 +106,8 @@ public class TicketRestController {
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
-    public ResponseEntity<TicketDto> updateTicket(@PathVariable("ticketId") int ticketId, @RequestParam boolean isActive) throws IllegalArgumentException
-    {
+    public ResponseEntity<TicketDto> updateTicket(@PathVariable("ticketId") int ticketId,
+            @RequestParam boolean isActive) throws IllegalArgumentException {
         Ticket ticket = ticketService.getTicket(ticketId);
         ticketService.setTicketStatus(ticket, isActive);
         return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.OK);
@@ -126,8 +123,8 @@ public class TicketRestController {
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/tickets/{clientUsername}", "/tickets/{clientUsername}/" })
-    public ResponseEntity<List<TicketDto>> getTicketsByClient(@PathVariable("clientUsername") String clientUsername) throws IllegalArgumentException
-    {
+    public ResponseEntity<List<TicketDto>> getTicketsByClient(@PathVariable("clientUsername") String clientUsername)
+            throws IllegalArgumentException {
         Client client = clientService.getClient(clientUsername);
         List<Ticket> tickets = ticketService.getAllTicketsByClient(client);
         List<TicketDto> ticketDtos = new ArrayList<>();

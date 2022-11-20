@@ -19,7 +19,11 @@ import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;;
 
 
 /**
- * @author Nikolas Pasichnik
+ * @author Nikolas Pasichnik (NikolasPasichnik)
+ * 
+ *         The ManagerAccountRestController class is responsible for exposing
+ *         the business logic declared in ManagerAccountService using a REST
+ *         API.
  * 
  */
 @CrossOrigin(origins = "*")

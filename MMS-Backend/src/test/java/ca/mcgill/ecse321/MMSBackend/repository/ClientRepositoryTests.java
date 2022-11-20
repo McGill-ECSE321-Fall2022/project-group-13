@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * @author Nikolas Pasichnik
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -28,16 +28,16 @@ public class ClientRepositoryTests {
 
     @Autowired
     private ClientRepository clientRepository;
-    
+
     @AfterEach
     public void clearDatabase() {
         // Delete the client first to avoid violating not-null constraints
-        clientRepository.deleteAll(); 
+        clientRepository.deleteAll();
         mmsRepository.deleteAll();
     }
 
     @Test
-    public void testClientRepository(){
+    public void testClientRepository() {
 
         // Creating a museum management system using a plain constructor
         MuseumManagementSystem mms = new MuseumManagementSystem();
@@ -53,40 +53,40 @@ public class ClientRepositoryTests {
         mms.setCloseTime(closeTime);
         mms.setMaxLoanNumber(maxLoanNumber);
         mms.setTicketFee(ticketFee);
-    
-        // Saving the museum anagement system to the db 
+
+        // Saving the museum anagement system to the db
         mmsRepository.save(mms);
 
         // Creating a employees
-        Client client = new Client(); 
-        String username = "ClientZhang"; 
-        String name = "Client Zhang"; 
+        Client client = new Client();
+        String username = "ClientZhang";
+        String name = "Client Zhang";
         String password = "clientpass";
-        
-        client.setUsername(username); 
+
+        client.setUsername(username);
         client.setName(name);
         client.setPassword(password);
-        client.setMuseumManagementSystem(mms); 
+        client.setMuseumManagementSystem(mms);
 
-        // Saving the manager to the database 
-        clientRepository.save(client); 
+        // Saving the manager to the database
+        clientRepository.save(client);
 
-        //  Getting ids of Manager and mms 
-        String clientUsername = client.getUsername(); 
-        int museumID = mms.getSystemId(); 
+        // Getting ids of Manager and mms
+        String clientUsername = client.getUsername();
+        int museumID = mms.getSystemId();
 
-        // Make the variables null 
-        mms = null; 
-        client = null; 
+        // Make the variables null
+        mms = null;
+        client = null;
 
-        // Fetching information from the database 
+        // Fetching information from the database
         client = clientRepository.findClientByUsername(clientUsername);
 
-        // Checking for existence of manager and valid username 
+        // Checking for existence of manager and valid username
         assertNotNull(client);
-        assertEquals(clientUsername, client.getUsername()); 
-        
-        //  Checking for proper connection between museum and manager 
+        assertEquals(clientUsername, client.getUsername());
+
+        // Checking for proper connection between museum and manager
         assertNotNull(client.getMuseumManagementSystem());
         assertEquals(museumID, client.getMuseumManagementSystem().getSystemId());
         assertEquals(museumName, client.getMuseumManagementSystem().getName());

@@ -31,6 +31,14 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nikolas Pasichnik (NikolasPasichnik)
+ * 
+ *         The TestClientAccountService class tests the business logic declared
+ *         in
+ *         ClientAccountService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestClientAccountService {
     @Mock
@@ -38,7 +46,6 @@ public class TestClientAccountService {
 
     @Mock
     private EmployeeRepository employeeDao;
-
 
     @Mock
     private MuseumManagementSystemRepository mmsDao;
@@ -56,12 +63,12 @@ public class TestClientAccountService {
     private static final String FAKE_CLIENT_USERNAME = "FakeClientUsername";
 
     private static final String CLIENT_NAME = "ClientName";
-    private static final String CLIENT_PASSWORD = "ClientPassword"; 
+    private static final String CLIENT_PASSWORD = "ClientPassword";
     private static final String CLIENT_NEW_NAME = "NewClientName";
-    private static final String CLIENT_NEW_PASSWORD = "NewClientPasword"; 
-    private static final String CLIENT_INCORRECT_PASSWORD = "IncorrectEmployeePassword"; 
+    private static final String CLIENT_NEW_PASSWORD = "NewClientPasword";
+    private static final String CLIENT_INCORRECT_PASSWORD = "IncorrectEmployeePassword";
 
-    private static final int CLIENT_LOAN_NUMBER = 0; 
+    private static final int CLIENT_LOAN_NUMBER = 0;
 
     private static final int MMS_ID = 8;
     private static final String MMS_NAME = "Louvre";
@@ -74,59 +81,56 @@ public class TestClientAccountService {
     public void setMockOutput() {
 
         lenient().when(mmsDao.findMuseumManagementSystemBySystemId(anyInt()))
-        .thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(MMS_ID)) {
-            MuseumManagementSystem mms = new MuseumManagementSystem();
-            mms.setSystemId(MMS_ID);
-            mms.setName(MMS_NAME);
-            mms.setOpenTime(OPEN_TIME);
-            mms.setCloseTime(CLOSE_TIME);
-            mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
-            mms.setTicketFee(TICKET_FEE);
-            return mms;
-        } else {
-            return null;
-        }
-    });
+                .thenAnswer((InvocationOnMock invocation) -> {
+                    if (invocation.getArgument(0).equals(MMS_ID)) {
+                        MuseumManagementSystem mms = new MuseumManagementSystem();
+                        mms.setSystemId(MMS_ID);
+                        mms.setName(MMS_NAME);
+                        mms.setOpenTime(OPEN_TIME);
+                        mms.setCloseTime(CLOSE_TIME);
+                        mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
+                        mms.setTicketFee(TICKET_FEE);
+                        return mms;
+                    } else {
+                        return null;
+                    }
+                });
 
-        lenient().when(clientDao.findClientByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(CLIENT_USERNAME_B)) {
-                return client(CLIENT_USERNAME_B,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(CLIENT_USERNAME_C)){
-                return client(CLIENT_USERNAME_C,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(CLIENT_USERNAME_D)){
-                return client(CLIENT_USERNAME_D,CLIENT_NAME,CLIENT_PASSWORD,CLIENT_LOAN_NUMBER,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-            }
-            else if (invocation.getArgument(0).equals(FAKE_CLIENT_USERNAME)){
-                return null; 
-            }
-            else {
+        lenient().when(clientDao.findClientByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(CLIENT_USERNAME_B)) {
+                return client(CLIENT_USERNAME_B, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_LOAN_NUMBER,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(CLIENT_USERNAME_C)) {
+                return client(CLIENT_USERNAME_C, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_LOAN_NUMBER,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(CLIENT_USERNAME_D)) {
+                return client(CLIENT_USERNAME_D, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_LOAN_NUMBER,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(FAKE_CLIENT_USERNAME)) {
+                return null;
+            } else {
                 return null;
             }
-    });
+        });
 
-        lenient().when(clientDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-            if(invocation.getArgument(0).equals(EXISTING_CLIENT_USERNAME)) {
+        lenient().when(clientDao.existsById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(EXISTING_CLIENT_USERNAME)) {
                 return true;
             }
-            if(invocation.getArgument(0).equals(CLIENT_USERNAME_C)) {
+            if (invocation.getArgument(0).equals(CLIENT_USERNAME_C)) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-    });
+        });
 
-    lenient().when(employeeDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(EMPLOYEE_USERNAME)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    });
+        lenient().when(employeeDao.existsById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(EMPLOYEE_USERNAME)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
             return invocation.getArgument(0);
@@ -136,17 +140,16 @@ public class TestClientAccountService {
         lenient().when(clientDao.save(any(Client.class))).thenAnswer(returnParameterAsAnswer);
     }
 
-    //-----------------------------------------------Testing createClient()--------------------------------------------------
-
     @Test
-    public void testCreateClient(){
+    public void testCreateClient() {
         assertEquals(0, service.getAllClients().size());
 
-        Client a = null; 
+        Client a = null;
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (IllegalArgumentException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -157,14 +160,14 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientMMSNull(){
-        Client a = null; 
+    public void testCreateClientMMSNull() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD, null);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -173,14 +176,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientUsernameNull(){
-        Client a = null; 
+    public void testCreateClientUsernameNull() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(null, CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(null, CLIENT_NAME, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -189,30 +193,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientNameNull(){
-        Client a = null; 
+    public void testCreateClientNameNull() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, null, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
-            error = e.getMessage();
-        }
-
-        assertNull(a);
-        assertEquals("Cannot have empty fields", error);
-    }
-    
-    @Test
-    public void testCreateClientPaswordNull(){
-        Client a = null; 
-
-        String error = ""; 
-
-        try{
-            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, null,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, null, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -221,14 +210,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientUsernameEmpty(){
-        Client a = null; 
+    public void testCreateClientPaswordNull() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient("", CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, null,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -237,14 +227,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientNameEmpty(){
-        Client a = null; 
+    public void testCreateClientUsernameEmpty() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, "", CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient("", CLIENT_NAME, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -253,14 +244,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientPasswordEmpty(){
-        Client a = null; 
+    public void testCreateClientNameEmpty() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, "", CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -269,14 +261,32 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientUsernameWithWhitespaces(){
-        Client a = null; 
+    public void testCreateClientPasswordEmpty() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient("   ", CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
+        }
+
+        assertNull(a);
+        assertEquals("Cannot have empty fields", error);
+    }
+
+    @Test
+    public void testCreateClientUsernameWithWhitespaces() {
+        Client a = null;
+
+        String error = "";
+
+        try {
+            a = service.createClient("   ", CLIENT_NAME, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -285,14 +295,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientNameOnlyWhitespaces(){
-        Client a = null; 
+    public void testCreateClientNameOnlyWhitespaces() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, "   ", CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, "   ", CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -301,14 +312,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientPasswordWithWhitespaces(){
-        Client a = null; 
+    public void testCreateClientPasswordWithWhitespaces() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "  ",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "  ",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -317,14 +329,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientPasswordLessThan8(){
-        Client a = null; 
+    public void testCreateClientPasswordLessThan8() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "123",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "123",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -333,14 +346,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientPasswordMoreThan30(){
-        Client a = null; 
+    public void testCreateClientPasswordMoreThan30() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "abcdefghijklmnopqrstuvwxyz12345678",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(CLIENT_USERNAME, CLIENT_NAME, "abcdefghijklmnopqrstuvwxyz12345678",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -349,14 +363,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientWithUsedUsername(){
-        Client a = null; 
+    public void testCreateClientWithUsedUsername() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(EXISTING_CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(EXISTING_CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -365,14 +380,15 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testCreateClientWithUsedEmployeeUsername(){
-        Client a = null; 
+    public void testCreateClientWithUsedEmployeeUsername() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createClient(EMPLOYEE_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createClient(EMPLOYEE_USERNAME, CLIENT_NAME, CLIENT_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -380,17 +396,13 @@ public class TestClientAccountService {
         assertEquals("This username is already taken", error);
     }
 
-    //-----------------------------------------------Testing getClient()--------------------------------------------------
-
-    // One of the problematic tests, when not commented out, the createClient fails. 
-
     @Test
-    public void testGetClient(){
-        Client a = null; 
+    public void testGetClient() {
+        Client a = null;
 
-        try{
+        try {
             a = service.getClient(CLIENT_USERNAME_B);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -401,14 +413,14 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testGetClientEmptyUsername(){
-        Client a = null; 
+    public void testGetClientEmptyUsername() {
+        Client a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getClient("");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -417,14 +429,14 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testGetClientNullUsername(){
-        Client a = null; 
+    public void testGetClientNullUsername() {
+        Client a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getClient(null);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -433,14 +445,14 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testGetClientUsernameWithWhitespaces(){
-        Client a = null; 
+    public void testGetClientUsernameWithWhitespaces() {
+        Client a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getClient("   ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -449,14 +461,14 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testGetClientNotFound(){
-        Client a = null; 
+    public void testGetClientNotFound() {
+        Client a = null;
 
         String error = "";
 
-        try{
+        try {
             a = service.getClient(FAKE_CLIENT_USERNAME);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -464,14 +476,11 @@ public class TestClientAccountService {
         assertEquals("This client account does not exist", error);
     }
 
-    //-----------------------------------------------Testing getAllClients()--------------------------------------------------
-
-    // One of the problematic tests, when not commented out, the createClient fails. 
-
     @Test
-    public void testGetAllClients(){
+    public void testGetAllClients() {
 
-        Client client_1 = service.createClient(CLIENT_USERNAME_A, CLIENT_NAME, CLIENT_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Client client_1 = service.createClient(CLIENT_USERNAME_A, CLIENT_NAME, CLIENT_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(clientDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
 
@@ -481,11 +490,11 @@ public class TestClientAccountService {
 
         });
 
-        List<Client> allClients = null; 
+        List<Client> allClients = null;
 
-        try{
+        try {
             allClients = service.getAllClients();
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             fail();
         }
 
@@ -494,40 +503,36 @@ public class TestClientAccountService {
         assertEquals(client_1, allClients.get(0));
     }
 
-    //-----------------------------------------------Testing deleteClient()--------------------------------------------------
-
     @Test
-    public void testDeleteClient(){
+    public void testDeleteClient() {
 
-        try{
+        try {
             service.deleteClient(EXISTING_CLIENT_USERNAME);
-        }catch (MuseumManagementSystemException e){
-            fail(); 
+        } catch (MuseumManagementSystemException e) {
+            fail();
         }
     }
 
     @Test
-    public void ttestDeleteClientNotFound(){
+    public void ttestDeleteClientNotFound() {
 
-        String error = ""; 
-        try{
+        String error = "";
+        try {
             service.deleteClient(CLIENT_USERNAME);
-        }catch (MuseumManagementSystemException e){
-            error = e.getMessage(); 
+        } catch (MuseumManagementSystemException e) {
+            error = e.getMessage();
         }
 
         assertEquals("Client not found", error);
     }
 
-    //-----------------------------------------------Testing signInClientAccount()--------------------------------------------------
-
     @Test
-    public void testSignInClientAccount(){
-        Client a = null; 
+    public void testSignInClientAccount() {
+        Client a = null;
 
-        try{
+        try {
             a = service.signInClientAccount(CLIENT_USERNAME_C, CLIENT_PASSWORD);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -536,82 +541,79 @@ public class TestClientAccountService {
         assertEquals(CLIENT_NAME, a.getName());
         assertEquals(CLIENT_PASSWORD, a.getPassword());
 
-    } 
+    }
 
     @Test
-    public void testSignInClientAccountEmptyPassword(){
-        
-        Client a = null; 
-        String error = ""; 
+    public void testSignInClientAccountEmptyPassword() {
 
-        try{
+        Client a = null;
+        String error = "";
+
+        try {
             a = service.signInClientAccount(CLIENT_USERNAME_C, "");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
-
     @Test
-    public void testSignInClientAccountNullPassword(){
-        
-        Client a = null; 
-        String error = ""; 
+    public void testSignInClientAccountNullPassword() {
 
-        try{
+        Client a = null;
+        String error = "";
+
+        try {
             a = service.signInClientAccount(CLIENT_USERNAME_C, null);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
     @Test
-    public void testSignInClientAccountIncorrectPassword(){
-        
-        Client a = null; 
-        String error = ""; 
+    public void testSignInClientAccountIncorrectPassword() {
 
-        try{
+        Client a = null;
+        String error = "";
+
+        try {
             a = service.signInClientAccount(CLIENT_USERNAME_C, CLIENT_INCORRECT_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is incorrect", error); 
+        assertEquals("This password is incorrect", error);
     }
 
     @Test
-    public void testSignInClientAccountPasswordWithWhitespaces(){
-        
-        Client a = null; 
-        String error = ""; 
+    public void testSignInClientAccountPasswordWithWhitespaces() {
 
-        try{
+        Client a = null;
+        String error = "";
+
+        try {
             a = service.signInClientAccount(CLIENT_USERNAME_C, "   ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is incorrect", error); 
+        assertEquals("This password is incorrect", error);
     }
 
-    //-----------------------------------------------Testing editClientAccount()--------------------------------------------------
-
     @Test
-    public void testEditClientAccount(){
-        Client a = null; 
+    public void testEditClientAccount() {
+        Client a = null;
 
-        try{
+        try {
             a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NEW_NAME, CLIENT_NEW_PASSWORD);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -623,88 +625,89 @@ public class TestClientAccountService {
     }
 
     @Test
-    public void testEditClientAccountEmptyName(){
-        Client a = null; 
+    public void testEditClientAccountEmptyName() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editClientAccount(CLIENT_USERNAME_D, "", CLIENT_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This name is invalid", error); 
-    
+        assertEquals("This name is invalid", error);
+
     }
 
     @Test
-    public void testEditClientAccountNullName(){
-        Client a = null; 
+    public void testEditClientAccountNullName() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editClientAccount(CLIENT_USERNAME_D, null, CLIENT_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This name is invalid", error); 
+        assertEquals("This name is invalid", error);
     }
 
     @Test
-    public void testEditClientAccountPasswordContainsWhitespaces(){
-        Client a = null; 
+    public void testEditClientAccountPasswordContainsWhitespaces() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME, "   ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
     @Test
-    public void testEditClientAccountPasswordLessThan8(){
-        Client a = null; 
+    public void testEditClientAccountPasswordLessThan8() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME, "123");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
     @Test
-    public void testEditClientAccountPasswordGreaterThan30(){
-        Client a = null; 
+    public void testEditClientAccountPasswordGreaterThan30() {
+        Client a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editClientAccount(CLIENT_USERNAME_D, CLIENT_NAME, "abcdefghijklmnopqrstuvwxyz12345678");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
-    
+
     /**
-     * Private Constructor of a client 
+     * Private Constructor of a client
+     * 
      * @param username
      * @param name
      * @param password
@@ -712,16 +715,14 @@ public class TestClientAccountService {
      * @param mms
      * @return
      */
-    private Client client(String username, String name, String password, int loanNumber, MuseumManagementSystem mms){
-        Client client = new Client(); 
-        client.setUsername(username); 
-        client.setName(name); 
-        client.setPassword(password); 
-        client.setCurrentLoanNumber(loanNumber); 
+    private Client client(String username, String name, String password, int loanNumber, MuseumManagementSystem mms) {
+        Client client = new Client();
+        client.setUsername(username);
+        client.setName(name);
+        client.setPassword(password);
+        client.setCurrentLoanNumber(loanNumber);
         client.setMuseumManagementSystem(mms);
         return client;
     }
 
-}   
-
-
+}

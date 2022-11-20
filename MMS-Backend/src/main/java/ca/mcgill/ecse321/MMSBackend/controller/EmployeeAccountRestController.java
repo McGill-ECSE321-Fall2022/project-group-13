@@ -22,8 +22,11 @@ import ca.mcgill.ecse321.MMSBackend.service.EmployeeAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
 /**
- * @author Nikolas Pasichnik
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  * 
+ *         The EmployeeAccountRestController class is responsible for exposing
+ *         the business logic declared in EmployeeAccountService using a REST
+ *         API.
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,42 +36,47 @@ public class EmployeeAccountRestController {
     private EmployeeAccountService service;
 
     @Autowired
-    private MuseumManagementSystemService mmsService; 
+    private MuseumManagementSystemService mmsService;
 
     @GetMapping(value = { "/employees", "/employees/" })
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() throws IllegalArgumentException {
-        return new ResponseEntity<>(service.getAllEmployees().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList()), HttpStatus.OK); 
+        return new ResponseEntity<>(
+                service.getAllEmployees().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/employee", "/employee/"})
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestParam String username, @RequestParam String name, @RequestParam String password, 
-    @RequestParam int systemId) throws IllegalArgumentException{
+    @PostMapping(value = { "/employee", "/employee/" })
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestParam String username, @RequestParam String name,
+            @RequestParam String password,
+            @RequestParam int systemId) throws IllegalArgumentException {
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
-        Employee employee = service.createEmployee(username, name, password, mms); 
-        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK); 
+        Employee employee = service.createEmployee(username, name, password, mms);
+        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/employee/{username}", "/employee/{username}/"})
-    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("username") String username) throws IllegalArgumentException {
+    @GetMapping(value = { "/employee/{username}", "/employee/{username}/" })
+    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("username") String username)
+            throws IllegalArgumentException {
         Employee employee = service.getEmployee(username);
-        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK); 
+        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = {"/employee/delete/{username}", "/employee/delete/{username}/"}) 
+    @DeleteMapping(value = { "/employee/delete/{username}", "/employee/delete/{username}/" })
     public void deleteEmployee(@PathVariable("username") String username) throws IllegalArgumentException {
         service.deleteEmployee(username);
     }
 
-    @GetMapping(value = {"/employee/signin/{username}", "/employee/signin/{username}/"})
-    public ResponseEntity<EmployeeDto> signInEmployeeAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
+    @GetMapping(value = { "/employee/signin/{username}", "/employee/signin/{username}/" })
+    public ResponseEntity<EmployeeDto> signInEmployeeAccount(@PathVariable("username") String username,
+            @RequestParam String password) throws IllegalArgumentException {
         Employee employee = service.signInEmployeeAccount(username, password);
-        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK); 
-    }   
-    
+        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK);
+    }
+
     @PutMapping(value = { "/employee/edit/{username}", "/employee/edit/{username}/" })
-    public ResponseEntity<EmployeeDto> editEmployee(@PathVariable("username") String username, @RequestParam String name, @RequestParam String
-        password) throws IllegalArgumentException{
+    public ResponseEntity<EmployeeDto> editEmployee(@PathVariable("username") String username,
+            @RequestParam String name, @RequestParam String password) throws IllegalArgumentException {
         Employee employee = service.editEmployeeAccount(username, name, password);
-        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK); 
+        return new ResponseEntity<EmployeeDto>(ToDtoHelper.convertToDto(employee), HttpStatus.OK);
     }
 }

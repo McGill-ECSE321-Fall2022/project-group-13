@@ -15,6 +15,16 @@ import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
 
+/**
+ * @author Lucy Zhang (Lucy-Zh)
+ *         The TicketService class implements the use case based on
+ *         the following requirement:
+ *         “FREQ05: The museum management system shall generate and display to
+ *         the manager and the employees a list of all tickets
+ *         purchased and their information, which includes the purchaser’s
+ *         username, ticket fee at the time of the purchase, and
+ *         whether the ticket has been used.”
+ */
 @Service
 public class TicketService {
 
@@ -35,11 +45,9 @@ public class TicketService {
      */
     @Transactional
     public Ticket createTicket(String clientUsername) {
-
         if (clientUsername.equals("") || clientUsername.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This username is invalid");
         }
-
         Client client = clientRepository.findClientByUsername(clientUsername);
         Ticket ticket = new Ticket();
         ticket.setFee(client.getMuseumManagementSystem().getTicketFee());
@@ -56,19 +64,16 @@ public class TicketService {
      * @Author : Lucy Zhang (Lucy-Zh)
      * @param ticketId
      *
-     *
      */
     @Transactional
     public Ticket getTicket(int ticketId) {
-
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
-
-        if(ticket == null) {
+        if (ticket == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
-        }else{
+        } else {
             return ticket;
         }
-        
+
     }
 
     /**
@@ -89,12 +94,10 @@ public class TicketService {
      */
     @Transactional
     public void deleteTicket(int ticketId) {
-
         Ticket ticket = ticketRepository.findTicketByTicketId(ticketId);
-
-        if(ticket == null) {
+        if (ticket == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
-        }else{
+        } else {
             ticketRepository.delete(ticket);
         }
     }
@@ -107,10 +110,9 @@ public class TicketService {
      */
     @Transactional
     public void setTicketStatus(Ticket ticket, boolean status) {
-        
-        if(ticket == null) {
+        if (ticket == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
-        }else{
+        } else {
             ticket.setIsActive(status);
         }
     }
@@ -121,25 +123,20 @@ public class TicketService {
      * @Author : Lucy Zhang (Lucy-Zh)
      * @param clientUsername
      */
-
     @Transactional
-    public List<Ticket> getAllTicketsByClient(Client client){
-
-        if(client == null) {
+    public List<Ticket> getAllTicketsByClient(Client client) {
+        if (client == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Ticket does not exist");
-        }else{
-
+        } else {
             List<Ticket> tickets = getAllTickets();
             List<Ticket> returnedTickets = new ArrayList<Ticket>();
-            
-            for(Ticket ticket : tickets){
-                if(ticket.getClient().equals(client)){
+
+            for (Ticket ticket : tickets) {
+                if (ticket.getClient().equals(client)) {
                     returnedTickets.add(ticket);
                 }
             }
-
             return returnedTickets;
-
         }
     }
 

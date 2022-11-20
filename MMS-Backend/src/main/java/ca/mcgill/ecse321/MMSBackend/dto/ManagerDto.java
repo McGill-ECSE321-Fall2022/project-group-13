@@ -1,19 +1,24 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
+/**
+ * DTO Manager class
+ * 
+ * @Author: Nikolas Pasichnik (NikolasPasichnik)
+ */
 public class ManagerDto {
 
-    //Account Attributes
+    // Account Attributes
     private String username;
     private String name;
     private String password;
-    private MuseumManagementSystemDto MMS; 
-    
-    // /**
-    //  * Empty constructor 
-    //  */
-    // public ManagerDto(){
+    private MuseumManagementSystemDto MMS;
 
-    // }
+    /**
+     * Empty constructor
+     */
+    public ManagerDto() {
+
+    }
 
     /**
      * Constructor of a EmployeeDto
@@ -23,11 +28,11 @@ public class ManagerDto {
      * @param password
      * @param currentLoanNumber
      */
-    public ManagerDto(String username, String name, String password, MuseumManagementSystemDto MMS){
-        this.username = username; 
-        this.name = name; 
-        this.password = password; 
-        this.MMS = MMS; 
+    public ManagerDto(String username, String name, String password, MuseumManagementSystemDto MMS) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.MMS = MMS;
     }
 
     /**
@@ -36,7 +41,7 @@ public class ManagerDto {
      * @return
      */
     public String getUsername() {
-        return username; 
+        return username;
     }
 
     /**
@@ -45,7 +50,7 @@ public class ManagerDto {
      * @return
      */
     public String getName() {
-        return name; 
+        return name;
     }
 
     /**
@@ -54,7 +59,7 @@ public class ManagerDto {
      * @return
      */
     public String getPassword() {
-        return password; 
+        return password;
     }
 
     /**
@@ -63,16 +68,16 @@ public class ManagerDto {
      * @param managerName
      */
     public void setName(String managerName) {
-        this.name = managerName; 
+        this.name = managerName;
     }
 
     /**
-     * Setter for the password 
+     * Setter for the password
      * 
      * @param managerPassword
      */
     public void setPassword(String managerPassword) {
-        this.password = managerPassword; 
+        this.password = managerPassword;
     }
 
     /**
@@ -81,6 +86,6 @@ public class ManagerDto {
      * @return
      */
     public MuseumManagementSystemDto getMuseumManagementSystem() {
-        return MMS; 
+        return MMS;
     }
 }

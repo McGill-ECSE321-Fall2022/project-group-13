@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 
 /**
- * @author Nikolas Pasichnik
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  */
 public interface EmployeeRepository extends CrudRepository<Employee, String> {
     public Employee findEmployeeByUsername(String id);   

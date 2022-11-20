@@ -1,21 +1,25 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
 
+/**
+ * DTO Client class
+ * 
+ * @Author: Nikolas Pasichnik (NikolasPasichnik)
+ */
 public class ClientDto {
 
-    //Account Attributes
+    // Account Attributes
     private String username;
     private String name;
     private String password;
     private int currentLoanNumber;
-    private MuseumManagementSystemDto MMS; 
+    private MuseumManagementSystemDto MMS;
 
+    /**
+     * Empty Constructor
+     */
+    public ClientDto() {
 
-    // /**
-    //  * Empty Constructor 
-    //  */
-    // public ClientDto(){
-
-    // }
+    }
 
     /**
      * Constructor of a ClientDto
@@ -25,12 +29,13 @@ public class ClientDto {
      * @param password
      * @param currentLoanNumber
      */
-    public ClientDto(String username, String name, String password, int currentLoanNumber, MuseumManagementSystemDto MMS){
-        this.username = username; 
-        this.name = name; 
-        this.password = password; 
-        this.currentLoanNumber = currentLoanNumber; 
-        this.MMS = MMS; 
+    public ClientDto(String username, String name, String password, int currentLoanNumber,
+            MuseumManagementSystemDto MMS) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.currentLoanNumber = currentLoanNumber;
+        this.MMS = MMS;
     }
 
     /**
@@ -39,7 +44,7 @@ public class ClientDto {
      * @return
      */
     public String getUsername() {
-        return username; 
+        return username;
     }
 
     /**
@@ -48,7 +53,7 @@ public class ClientDto {
      * @return
      */
     public String getName() {
-        return name; 
+        return name;
     }
 
     /**
@@ -57,7 +62,7 @@ public class ClientDto {
      * @return
      */
     public String getPassword() {
-        return password; 
+        return password;
     }
 
     /**
@@ -75,35 +80,7 @@ public class ClientDto {
      * @return
      */
     public MuseumManagementSystemDto getMuseumManagementSystem() {
-        return MMS; 
+        return MMS;
     }
-
-
-    // /**
-    //  * Setter for the loan number 
-    //  * 
-    //  * @param loanNumber
-    //  */
-    // public void setCurrentLoanNumber(int loanNumber){
-    //     this.currentLoanNumber = loanNumber; 
-    // }
-
-    // /**
-    //  * Setter for the name
-    //  * 
-    //  * @param clientName
-    //  */
-    // public void setName(String clientName) {
-    //     this.name = clientName; 
-    // }
-
-    // /**
-    //  * Setter for the password 
-    //  * 
-    //  * @param clientPassword
-    //  */
-    // public void setPassword(String clientPassword) {
-    //     this.password = clientPassword; 
-    // }
 
 }

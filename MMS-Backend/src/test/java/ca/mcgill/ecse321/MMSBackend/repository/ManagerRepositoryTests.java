@@ -18,7 +18,7 @@ import ca.mcgill.ecse321.MMSBackend.model.Manager;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 /**
- * @author Nikolas Pasichnik
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -29,12 +29,11 @@ public class ManagerRepositoryTests {
 
     @Autowired
     private ManagerRepository managerRepository;
-    
 
     @AfterEach
     public void clearDatabase() {
         // Delete the manager first to avoid violating not-null constraints
-        managerRepository.deleteAll(); 
+        managerRepository.deleteAll();
         mmsRepository.deleteAll();
     }
 
@@ -55,39 +54,39 @@ public class ManagerRepositoryTests {
         mms.setMaxLoanNumber(maxLoanNumber);
         mms.setTicketFee(ticketFee);
 
-        // Saving the museum anagement system to the db 
+        // Saving the museum anagement system to the db
         mmsRepository.save(mms);
 
         // Creating a manager
-        Manager manager = new Manager(); 
-        String username = "MarwanManager"; 
-        String name = "Marwan Kanaan"; 
+        Manager manager = new Manager();
+        String username = "MarwanManager";
+        String name = "Marwan Kanaan";
         String password = "ecse321";
 
-        manager.setUsername(username); 
+        manager.setUsername(username);
         manager.setName(name);
-        manager.setPassword(password); 
-        manager.setMuseumManagementSystem(mms); 
+        manager.setPassword(password);
+        manager.setMuseumManagementSystem(mms);
 
-        // Saving the manager to the database 
-        managerRepository.save(manager); 
+        // Saving the manager to the database
+        managerRepository.save(manager);
 
-        //  Getting ids of Manager and mms 
-        String managerUsername = manager.getUsername(); 
-        int museumID = mms.getSystemId(); 
+        // Getting ids of Manager and mms
+        String managerUsername = manager.getUsername();
+        int museumID = mms.getSystemId();
 
-        // Make the variables null 
-        mms = null; 
-        manager = null; 
+        // Make the variables null
+        mms = null;
+        manager = null;
 
-        // Fetching information from the database 
+        // Fetching information from the database
         manager = managerRepository.findManagerByUsername(managerUsername);
 
-        // Checking for existence of manager and valid username 
+        // Checking for existence of manager and valid username
         assertNotNull(manager);
-        assertEquals(managerUsername, manager.getUsername()); 
+        assertEquals(managerUsername, manager.getUsername());
 
-        //  Checking for proper connection between museum and manager 
+        // Checking for proper connection between museum and manager
         assertNotNull(manager.getMuseumManagementSystem());
         assertEquals(museumID, manager.getMuseumManagementSystem().getSystemId());
         assertEquals(museumName, manager.getMuseumManagementSystem().getName());

@@ -30,16 +30,24 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nikolas Pasichnik (NikolasPasichnik)
+ * 
+ *         The TestManagerAccountService class tests the business logic declared
+ *         in
+ *         ManagerAccountService.
+ * 
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestManagerAccountService {
     @Mock
-    private ManagerRepository managerDao; 
+    private ManagerRepository managerDao;
 
     @Mock
-    private MuseumManagementSystemRepository mmsDao; 
+    private MuseumManagementSystemRepository mmsDao;
 
     @InjectMocks
-    private ManagerAccountService service; 
+    private ManagerAccountService service;
 
     private static final String MANAGER_USERNAME = "ManagerUsername";
     private static final String MANAGER_USERNAME_B = "ManagerUsername_B";
@@ -51,9 +59,9 @@ public class TestManagerAccountService {
 
     private static final String MANAGER_NAME = "ManagerRName";
     private static final String MANAGER_NEW_NAME = "NewManagerName";
-    private static final String MANAGER_NEW_PASSWORD = "NewManagerPasword"; 
-    private static final String MANAGER_PASSWORD = "ManagerPassword"; 
-    private static final String MANAGER_INCORRECT_PASSWORD = "IncorrectManagerPassword"; 
+    private static final String MANAGER_NEW_PASSWORD = "NewManagerPasword";
+    private static final String MANAGER_PASSWORD = "ManagerPassword";
+    private static final String MANAGER_INCORRECT_PASSWORD = "IncorrectManagerPassword";
 
     private static final int MMS_ID = 8;
     private static final String MMS_NAME = "Louvre";
@@ -64,74 +72,70 @@ public class TestManagerAccountService {
 
     @BeforeEach
     public void setMockOutput() {
-        
+
         lenient().when(mmsDao.findMuseumManagementSystemBySystemId(anyInt()))
-        .thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(MMS_ID)) {
-            MuseumManagementSystem mms = new MuseumManagementSystem();
-            mms.setSystemId(MMS_ID);
-            mms.setName(MMS_NAME);
-            mms.setOpenTime(OPEN_TIME);
-            mms.setCloseTime(CLOSE_TIME);
-            mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
-            mms.setTicketFee(TICKET_FEE);
-            return mms;
-        } else {
-            return null;
-        }
-    });
+                .thenAnswer((InvocationOnMock invocation) -> {
+                    if (invocation.getArgument(0).equals(MMS_ID)) {
+                        MuseumManagementSystem mms = new MuseumManagementSystem();
+                        mms.setSystemId(MMS_ID);
+                        mms.setName(MMS_NAME);
+                        mms.setOpenTime(OPEN_TIME);
+                        mms.setCloseTime(CLOSE_TIME);
+                        mms.setMaxLoanNumber(MAX_LOAN_NUMBER);
+                        mms.setTicketFee(TICKET_FEE);
+                        return mms;
+                    } else {
+                        return null;
+                    }
+                });
 
-    lenient().when(managerDao.findManagerByUsername(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(MANAGER_USERNAME_B)) {
-            return manager(MANAGER_USERNAME_B,MANAGER_NAME,MANAGER_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }
-        else if (invocation.getArgument(0).equals(MANAGER_USERNAME_C)){
-            return manager(MANAGER_USERNAME_C,MANAGER_NAME,MANAGER_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }
-        else if (invocation.getArgument(0).equals(MANAGER_USERNAME_D)){
-            return manager(MANAGER_USERNAME_D,MANAGER_NAME,MANAGER_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }
-        else if (invocation.getArgument(0).equals(MANAGER_USERNAME_E)){
-            return manager(MANAGER_USERNAME_E,MANAGER_NAME,MANAGER_PASSWORD,mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }
-        else if (invocation.getArgument(0).equals(FAKE_MANAGER_USERNAME)){
-            return null; 
-        }
-        else {
-            return null;
-        }
-    });
+        lenient().when(managerDao.findManagerByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(MANAGER_USERNAME_B)) {
+                return manager(MANAGER_USERNAME_B, MANAGER_NAME, MANAGER_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(MANAGER_USERNAME_C)) {
+                return manager(MANAGER_USERNAME_C, MANAGER_NAME, MANAGER_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(MANAGER_USERNAME_D)) {
+                return manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(MANAGER_USERNAME_E)) {
+                return manager(MANAGER_USERNAME_E, MANAGER_NAME, MANAGER_PASSWORD,
+                        mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+            } else if (invocation.getArgument(0).equals(FAKE_MANAGER_USERNAME)) {
+                return null;
+            } else {
+                return null;
+            }
+        });
 
-    lenient().when(managerDao.existsById(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-        if(invocation.getArgument(0).equals(EXISTING_MANAGER_USERNAME)) {
-            return true;
-        }
-        if(invocation.getArgument(0).equals(MANAGER_USERNAME_C)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    });
+        lenient().when(managerDao.existsById(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(EXISTING_MANAGER_USERNAME)) {
+                return true;
+            }
+            if (invocation.getArgument(0).equals(MANAGER_USERNAME_C)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
-    Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-        return invocation.getArgument(0);
-    };
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+            return invocation.getArgument(0);
+        };
 
-    lenient().when(mmsDao.save(any(MuseumManagementSystem.class))).thenAnswer(returnParameterAsAnswer);
-    lenient().when(managerDao.save(any(Manager.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(mmsDao.save(any(MuseumManagementSystem.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(managerDao.save(any(Manager.class))).thenAnswer(returnParameterAsAnswer);
     }
 
-    //-----------------------------------------------Testing createManager()--------------------------------------------------
-
-
     @Test
-    public void testCreateManager(){
-        Manager a = null; 
+    public void testCreateManager() {
+        Manager a = null;
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (IllegalArgumentException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -142,14 +146,14 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerMMSNull(){
-        Manager a = null; 
+    public void testCreateManagerMMSNull() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME,MANAGER_PASSWORD, null);
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD, null);
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -158,14 +162,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerUsernameNull(){
-        Manager a = null; 
+    public void testCreateManagerUsernameNull() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(null, MANAGER_NAME, MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(null, MANAGER_NAME, MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -174,14 +179,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerNameNull(){
-        Manager a = null; 
+    public void testCreateManagerNameNull() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, null, MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, null, MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -190,14 +196,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerPaswordNull(){
-        Manager a = null; 
+    public void testCreateManagerPaswordNull() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, null,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, null,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -206,14 +213,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerUsernameEmpty(){
-        Manager a = null; 
+    public void testCreateManagerUsernameEmpty() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager("", MANAGER_NAME, MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager("", MANAGER_NAME, MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -222,14 +230,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerNameEmpty(){
-        Manager a = null; 
+    public void testCreateManagerNameEmpty() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, "", MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, "", MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -238,14 +247,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerPasswordEmpty(){
-        Manager a = null; 
+    public void testCreateManagerPasswordEmpty() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -254,14 +264,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerUsernameWithWhitespaces(){
-        Manager a = null; 
+    public void testCreateManagerUsernameWithWhitespaces() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager("  ", MANAGER_NAME, MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager("  ", MANAGER_NAME, MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -270,14 +281,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerNameOnlyWhitespaces(){
-        Manager a = null; 
+    public void testCreateManagerNameOnlyWhitespaces() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, "  ", MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, "  ", MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -285,16 +297,16 @@ public class TestManagerAccountService {
         assertEquals("Invalid name", error);
     }
 
-
     @Test
-    public void testCreateManagerPasswordWithWhitespaces(){
-        Manager a = null; 
+    public void testCreateManagerPasswordWithWhitespaces() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "  ",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "  ",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -303,14 +315,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerPasswordLessThan8(){
-        Manager a = null; 
+    public void testCreateManagerPasswordLessThan8() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "123",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "123",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -319,14 +332,15 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerPasswordMoreThan30(){
-        Manager a = null; 
+    public void testCreateManagerPasswordMoreThan30() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "abcdefghijklmnopqrstuvwxyz12345678",  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, "abcdefghijklmnopqrstuvwxyz12345678",
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -335,9 +349,10 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testCreateManagerAlreadyExists(){
+    public void testCreateManagerAlreadyExists() {
 
-        Manager manager_1 = manager(EXISTING_MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Manager manager_1 = manager(EXISTING_MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -346,13 +361,14 @@ public class TestManagerAccountService {
 
         });
 
-        Manager a = null; 
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
-            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD,  mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
-        }catch (MuseumManagementSystemException e){
+        try {
+            a = service.createManager(MANAGER_USERNAME, MANAGER_NAME, MANAGER_PASSWORD,
+                    mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
@@ -360,12 +376,10 @@ public class TestManagerAccountService {
         assertEquals("A manager already exists", error);
     }
 
-    //-----------------------------------------------Testing getManager()--------------------------------------------------
-
-
     @Test
-    public void testGetManager(){
-        Manager manager_1 = manager(MANAGER_USERNAME_C, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+    public void testGetManager() {
+        Manager manager_1 = manager(MANAGER_USERNAME_C, MANAGER_NAME, MANAGER_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -374,11 +388,11 @@ public class TestManagerAccountService {
 
         });
 
-        Manager a = null; 
+        Manager a = null;
 
-        try{
+        try {
             a = service.getManager();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -390,8 +404,8 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testGetManagerReturnsNull(){
-        Manager manager_1 = null; 
+    public void testGetManagerReturnsNull() {
+        Manager manager_1 = null;
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -400,23 +414,22 @@ public class TestManagerAccountService {
 
         });
 
-        Manager a = null; 
+        Manager a = null;
 
-        try{
+        try {
             a = service.getManager();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
         assertNull(a);
     }
-    
-    //-----------------------------------------------Testing signInManagerAccount()--------------------------------------------------
 
     @Test
-    public void testSignInManagerAccount(){
+    public void testSignInManagerAccount() {
 
-        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -425,12 +438,11 @@ public class TestManagerAccountService {
 
         });
 
+        Manager a = null;
 
-        Manager a = null; 
-
-        try{
+        try {
             a = service.signInManagerAccount(MANAGER_USERNAME_D, MANAGER_PASSWORD);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -439,43 +451,43 @@ public class TestManagerAccountService {
         assertEquals(MANAGER_NAME, a.getName());
         assertEquals(MANAGER_PASSWORD, a.getPassword());
 
-    } 
+    }
 
     @Test
-    public void testSignInManagerAccountEmptyPassword(){
-        
-        Manager a = null; 
-        String error = ""; 
+    public void testSignInManagerAccountEmptyPassword() {
 
-        try{
+        Manager a = null;
+        String error = "";
+
+        try {
             a = service.signInManagerAccount(MANAGER_USERNAME_D, "");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
     @Test
-    public void testSignInManagerAccountNullPassword(){
-        
-        Manager a = null; 
-        String error = ""; 
+    public void testSignInManagerAccountNullPassword() {
 
-        try{
+        Manager a = null;
+        String error = "";
+
+        try {
             a = service.signInManagerAccount(MANAGER_USERNAME_D, null);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
+        assertEquals("This password is invalid", error);
     }
 
     @Test
-    public void testSignInManagerAccountDoesntExist(){
-        Manager manager_1 = null; 
+    public void testSignInManagerAccountDoesntExist() {
+        Manager manager_1 = null;
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -484,25 +496,25 @@ public class TestManagerAccountService {
 
         });
 
-        Manager a = null; 
-        String error = ""; 
+        Manager a = null;
+        String error = "";
 
-        try{
+        try {
             a = service.signInManagerAccount(MANAGER_USERNAME_E, MANAGER_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("A manager account doesn't exist", error); 
+        assertEquals("A manager account doesn't exist", error);
 
     }
 
-    // This can cause the failure of testSignInManager() [Same problem, the username stuff]
     @Test
-    public void testSignInManagerAccountIncorrectPassword(){
+    public void testSignInManagerAccountIncorrectPassword() {
 
-        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -510,25 +522,25 @@ public class TestManagerAccountService {
             return managers;
 
         });
-        
-        Manager a = null; 
-        String error = ""; 
 
-        try{
+        Manager a = null;
+        String error = "";
+
+        try {
             a = service.signInManagerAccount(MANAGER_USERNAME_E, MANAGER_INCORRECT_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is incorrect", error); 
+        assertEquals("This password is incorrect", error);
     }
 
-    // This can cause the failure of testSignInManager() [Same problem, the username stuff]
     @Test
-    public void testSignInManagerAccountPasswordWithWhitespaces(){
+    public void testSignInManagerAccountPasswordWithWhitespaces() {
 
-        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -536,27 +548,25 @@ public class TestManagerAccountService {
             return managers;
 
         });
-        
-        Manager a = null; 
-        String error = ""; 
 
-        try{
+        Manager a = null;
+        String error = "";
+
+        try {
             a = service.signInManagerAccount(MANAGER_USERNAME_E, "   ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is incorrect", error); 
+        assertEquals("This password is incorrect", error);
     }
 
-    //-----------------------------------------------Testing editManagerAccount()--------------------------------------------------
-
-
     @Test
-    public void testEditManagerAccount(){
+    public void testEditManagerAccount() {
 
-        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD, mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
+        Manager manager_1 = manager(MANAGER_USERNAME_D, MANAGER_NAME, MANAGER_PASSWORD,
+                mmsDao.findMuseumManagementSystemBySystemId(MMS_ID));
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -565,11 +575,11 @@ public class TestManagerAccountService {
 
         });
 
-        Manager a = null; 
+        Manager a = null;
 
-        try{
+        try {
             a = service.editManagerAccount(MANAGER_NEW_NAME, MANAGER_NEW_PASSWORD);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -581,59 +591,59 @@ public class TestManagerAccountService {
     }
 
     @Test
-    public void testEditManagerAccountEmptyName(){
-        Manager a = null; 
+    public void testEditManagerAccountEmptyName() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editManagerAccount("", MANAGER_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This name is invalid", error); 
-    
+        assertEquals("This name is invalid", error);
+
     }
 
     @Test
-    public void testEditManagerAccountNullName(){
-        Manager a = null; 
+    public void testEditManagerAccountNullName() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editManagerAccount(null, MANAGER_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This name is invalid", error); 
-    
+        assertEquals("This name is invalid", error);
+
     }
 
     @Test
-    public void testEditManagerAccountPasswordContainsWhitespaces(){
-        Manager a = null; 
+    public void testEditManagerAccountPasswordContainsWhitespaces() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editManagerAccount(MANAGER_NEW_NAME, "  ");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
-    
+        assertEquals("This password is invalid", error);
+
     }
 
     @Test
-    public void testEditManagerAccountDoesntExist(){
-        Manager manager_1 = null; 
+    public void testEditManagerAccountDoesntExist() {
+        Manager manager_1 = null;
 
         lenient().when(managerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
             List<Manager> managers = new ArrayList<Manager>();
@@ -642,58 +652,57 @@ public class TestManagerAccountService {
 
         });
 
-        Manager a = null; 
-        String error = ""; 
+        Manager a = null;
+        String error = "";
 
-        try{
+        try {
             a = service.editManagerAccount(MANAGER_NEW_NAME, MANAGER_NEW_PASSWORD);
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("A manager account doesn't exist", error); 
+        assertEquals("A manager account doesn't exist", error);
 
     }
 
     @Test
-    public void testEditManagerAccountPasswordLessThan8(){
-        Manager a = null; 
+    public void testEditManagerAccountPasswordLessThan8() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editManagerAccount(MANAGER_NEW_NAME, "123");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
-    
+        assertEquals("This password is invalid", error);
+
     }
 
     @Test
-    public void testEditManagerAccountPasswordGreaterThan30(){
-        Manager a = null; 
+    public void testEditManagerAccountPasswordGreaterThan30() {
+        Manager a = null;
 
-        String error = ""; 
+        String error = "";
 
-        try{
+        try {
             a = service.editManagerAccount(MANAGER_NEW_NAME, "abcdefghijklmnopqrstuvwxyz12345678");
-        }catch (MuseumManagementSystemException e){
+        } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(a);
-        assertEquals("This password is invalid", error); 
-    
+        assertEquals("This password is invalid", error);
+
     }
-
-
 
     /**
-     * Private Constructor of a Manager 
+     * Private Constructor of a Manager
+     * 
      * @param username
      * @param name
      * @param password
@@ -701,11 +710,11 @@ public class TestManagerAccountService {
      * @param mms
      * @return
      */
-    private Manager manager(String username, String name, String password, MuseumManagementSystem mms){
-        Manager manager = new Manager(); 
-        manager.setUsername(username); 
-        manager.setName(name); 
-        manager.setPassword(password); 
+    private Manager manager(String username, String name, String password, MuseumManagementSystem mms) {
+        Manager manager = new Manager();
+        manager.setUsername(username);
+        manager.setName(name);
+        manager.setPassword(password);
         manager.setMuseumManagementSystem(mms);
         return manager;
     }
