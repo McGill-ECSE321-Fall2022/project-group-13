@@ -53,10 +53,10 @@ public class DonationRequestService {
         if (name == null || image == null || description == null)
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
         
-        if (name == "" || image == "" || description == "")
+        if (name.equals("") || image.equals("") || description.equals(""))
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
 
-        if (name == " " || image == " " || description == " ")
+        if (name.equals(" ") || image.equals(" ") || description.equals(" "))
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Empty fields not allowed");
         
         if (worth < 0)
@@ -202,7 +202,7 @@ public class DonationRequestService {
         if (status == null)
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Please select a donation status");
 
-        List<DonationRequest> donationRequestsByStatus = new ArrayList<DonationRequest>();
+        List<DonationRequest> donationRequestsByStatus = new ArrayList<>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
             if (donationRequest.getStatus().equals(status)) {
                 donationRequestsByStatus.add(donationRequest);
@@ -222,7 +222,7 @@ public class DonationRequestService {
         if (client == null)
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values not allowed");
 
-        List<DonationRequest> donationRequestsByClient = new ArrayList<DonationRequest>();
+        List<DonationRequest> donationRequestsByClient = new ArrayList<>();
         for (DonationRequest donationRequest : donationRequestRepository.findAll()) {
             if (donationRequest.getClient().equals(client)) {
                 donationRequestsByClient.add(donationRequest);
@@ -252,12 +252,8 @@ public class DonationRequestService {
 
             donationRequestRepository.deleteById(requestId);
 
-            // if (artifactRepository.findArtifactByArtifactId(artifact.getArtifactId()) == null)
-            //     throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Donated artifact not found");
-            // else {
-                artifactRepository.deleteById(artifact.getArtifactId());
-                return true;
-            // }
+            artifactRepository.deleteById(artifact.getArtifactId());
+            return true;
         }
     }
 
