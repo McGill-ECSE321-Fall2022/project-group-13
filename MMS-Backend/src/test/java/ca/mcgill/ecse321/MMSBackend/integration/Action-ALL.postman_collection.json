@@ -1,0 +1,4089 @@
+{
+	"info": {
+		"_postman_id": "55de0409-86a9-41ac-9c3e-d2b1ef7660d5",
+		"name": "Action: ALL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24296256"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "MuseumManagementSystemRestController",
+					"item": [
+						{
+							"name": "createValidMms",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createInvalidMms",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ManagerAccountRestController",
+					"item": [
+						{
+							"name": "createValidManager",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/manager?username=SireMarwan&name=Marwan Kanaan&password=ecse321rocks&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"manager"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "SireMarwan"
+										},
+										{
+											"key": "name",
+											"value": "Marwan Kanaan"
+										},
+										{
+											"key": "password",
+											"value": "ecse321rocks"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createInvalidManager",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/manager?username=QueenNazia&name=Queen Nazia&password=ok&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"manager"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "QueenNazia"
+										},
+										{
+											"key": "name",
+											"value": "Queen Nazia"
+										},
+										{
+											"key": "password",
+											"value": "ok"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeAccountRestController",
+					"item": [
+						{
+							"name": "createValidEmployee1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee?username=U123456&name=Mona Kalaoun&password=MonaMona123&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "U123456"
+										},
+										{
+											"key": "name",
+											"value": "Mona Kalaoun"
+										},
+										{
+											"key": "password",
+											"value": "MonaMona123"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidEmployee2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee?username=U654321&name=Rosika Muthucumaru&password=Skipper213&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "U654321"
+										},
+										{
+											"key": "name",
+											"value": "Rosika Muthucumaru"
+										},
+										{
+											"key": "password",
+											"value": "Skipper213"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createInvalidEmployee",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee?username=invalidEmployee&name=Mr Invalid&password=ok&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "invalidEmployee"
+										},
+										{
+											"key": "name",
+											"value": "Mr Invalid"
+										},
+										{
+											"key": "password",
+											"value": "ok"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ClientAccountRestController",
+					"item": [
+						{
+							"name": "createClientValid1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client?username=NikolasPasichnik123&name=Nikolas Pasichnik&password=charly1234&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "NikolasPasichnik123"
+										},
+										{
+											"key": "name",
+											"value": "Nikolas Pasichnik"
+										},
+										{
+											"key": "password",
+											"value": "charly1234"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createClientValid2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client?username=SamanthaInesPerezHoffman&name=Samantha Perez&password=Lucrecia123&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "SamanthaInesPerezHoffman"
+										},
+										{
+											"key": "name",
+											"value": "Samantha Perez"
+										},
+										{
+											"key": "password",
+											"value": "Lucrecia123"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createClientValid3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client?username=YuAnlyA&name=Yu An Lu &password=DogPersonLover&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "YuAnlyA"
+										},
+										{
+											"key": "name",
+											"value": "Yu An Lu "
+										},
+										{
+											"key": "password",
+											"value": "DogPersonLover"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createClientInvalid",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client?username=LucyZhang1234&name=Lucy Zhang&password=Nova&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "LucyZhang1234"
+										},
+										{
+											"key": "name",
+											"value": "Lucy Zhang"
+										},
+										{
+											"key": "password",
+											"value": "Nova"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ArtifactRestController",
+					"item": [
+						{
+							"name": "createValidArtifact1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Mona Lisa&description=Painting&image=MMS-backend/images/monalisa.jpg&status=Available&loanFee=10000000.0&isDamaged=false&worth=1000000000.0&roomId=12&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifact",
+										"createArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Mona Lisa"
+										},
+										{
+											"key": "description",
+											"value": "Painting"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/monalisa.jpg"
+										},
+										{
+											"key": "status",
+											"value": "Available"
+										},
+										{
+											"key": "loanFee",
+											"value": "10000000.0"
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "1000000000.0"
+										},
+										{
+											"key": "roomId",
+											"value": "12"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidArtifact2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Oranges&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Loaned&loanFee=100.0&isDamaged=true&worth=500.0&roomId=12&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifact",
+										"createArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Oranges"
+										},
+										{
+											"key": "description",
+											"value": "slices of oranges"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/orange.PNG"
+										},
+										{
+											"key": "status",
+											"value": "Loaned"
+										},
+										{
+											"key": "loanFee",
+											"value": "100.0"
+										},
+										{
+											"key": "isDamaged",
+											"value": "true"
+										},
+										{
+											"key": "worth",
+											"value": "500.0"
+										},
+										{
+											"key": "roomId",
+											"value": "12"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidArtifact3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Cat&description=Royal cat&image=MMS-backend/images/Cat.PNG&status=Unavailable&loanFee=100.0&isDamaged=false&worth=500.0&roomId=12&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifact",
+										"createArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Cat"
+										},
+										{
+											"key": "description",
+											"value": "Royal cat"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/Cat.PNG"
+										},
+										{
+											"key": "status",
+											"value": "Unavailable"
+										},
+										{
+											"key": "loanFee",
+											"value": "100.0"
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "500.0"
+										},
+										{
+											"key": "roomId",
+											"value": "12"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createInvalidArtifact",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifact/createArtifact?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=false&worth=-250.0&roomId=12&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifact",
+										"createArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "OrangePainting"
+										},
+										{
+											"key": "description",
+											"value": "slices of oranges"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/orange.PNG"
+										},
+										{
+											"key": "status",
+											"value": "Available"
+										},
+										{
+											"key": "loanFee",
+											"value": "10.0"
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "-250.0"
+										},
+										{
+											"key": "roomId",
+											"value": "12"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DonationRequestRestController",
+					"item": [
+						{
+							"name": "createDonationArtifactValid1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationArtifact?name=TheMonaLisa&image=MMS-backend/images/monalisa.jpg&description=A woman sitting there.&isDamaged=false&worth=10.0&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "TheMonaLisa"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/monalisa.jpg"
+										},
+										{
+											"key": "description",
+											"value": "A woman sitting there."
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "10.0"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationArtifactValid2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationArtifact?name=TheCat&image=MMS-backend/images/Cat.PNG&description=Cat sitting&isDamaged=false&worth=5.0&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "TheCat"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/Cat.PNG"
+										},
+										{
+											"key": "description",
+											"value": "Cat sitting"
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "5.0"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationArtifactValid3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationArtifact?name=TheOrange&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "TheOrange"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/orange.PNG"
+										},
+										{
+											"key": "description",
+											"value": "Orange there"
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "15.0"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationArtifactInvalid",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationArtifact?name=&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationArtifact"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": ""
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/orange.PNG"
+										},
+										{
+											"key": "description",
+											"value": "Orange there"
+										},
+										{
+											"key": "isDamaged",
+											"value": "false"
+										},
+										{
+											"key": "worth",
+											"value": "15.0"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationRequestValid1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId=16&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "NikolasPasichnik123"
+										},
+										{
+											"key": "artifactId",
+											"value": "16"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationRequestValid2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId=17&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "NikolasPasichnik123"
+										},
+										{
+											"key": "artifactId",
+											"value": "17"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationRequestValid3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest?clientUsername=SamanthaInesPerezHoffman&artifactId=18&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "SamanthaInesPerezHoffman"
+										},
+										{
+											"key": "artifactId",
+											"value": "18"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createDonationRequestInvalid",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest?clientUsername=Alexander&artifactId=17&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "Alexander"
+										},
+										{
+											"key": "artifactId",
+											"value": "17"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "LoanRequestRestController",
+					"item": [
+						{
+							"name": "createLoanRequestValid1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId=13&username=SamanthaInesPerezHoffman&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest"
+									],
+									"query": [
+										{
+											"key": "loanDuration",
+											"value": "13"
+										},
+										{
+											"key": "artifactId",
+											"value": "13"
+										},
+										{
+											"key": "username",
+											"value": "SamanthaInesPerezHoffman"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createLoanRequestValid2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId=13&username=NikolasPasichnik123&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest"
+									],
+									"query": [
+										{
+											"key": "loanDuration",
+											"value": "13"
+										},
+										{
+											"key": "artifactId",
+											"value": "13"
+										},
+										{
+											"key": "username",
+											"value": "NikolasPasichnik123"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createLoanRequestInvalid",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest?loanDuration=14&artifactId=15&username=NikolasPasichnik123&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest"
+									],
+									"query": [
+										{
+											"key": "loanDuration",
+											"value": "14"
+										},
+										{
+											"key": "artifactId",
+											"value": "15"
+										},
+										{
+											"key": "username",
+											"value": "NikolasPasichnik123"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TicketRestController",
+					"item": [
+						{
+							"name": "createValidTicket1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket?clientUsername=NikolasPasichnik123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "NikolasPasichnik123"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidTicket2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket?clientUsername=SamanthaInesPerezHoffman",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "SamanthaInesPerezHoffman"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidTicket3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket?clientUsername=SamanthaInesPerezHoffman",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "SamanthaInesPerezHoffman"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidTicket4",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket?clientUsername=SamanthaInesPerezHoffman",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "SamanthaInesPerezHoffman"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidTicket5",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket?clientUsername=NikolasPasichnik123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "NikolasPasichnik123"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createInvalidTicket",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket?clientUsername=weirdPerson",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket"
+									],
+									"query": [
+										{
+											"key": "clientUsername",
+											"value": "weirdPerson"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeScheduleRestController",
+					"item": [
+						{
+							"name": "createValidShift1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/createShift?employeeUsername=U123456&day=Monday&startTime=10:00:00&endTime=18:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"createShift"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "U123456"
+										},
+										{
+											"key": "day",
+											"value": "Monday"
+										},
+										{
+											"key": "startTime",
+											"value": "10:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "18:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidShift2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/createShift?employeeUsername=U123456&day=Tuesday&startTime=12:00:00&endTime=16:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"createShift"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "U123456"
+										},
+										{
+											"key": "day",
+											"value": "Tuesday"
+										},
+										{
+											"key": "startTime",
+											"value": "12:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "16:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createValidShift3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/createShift?employeeUsername=U654321&day=Wednesday&startTime=15:00:00&endTime=17:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"createShift"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "U654321"
+										},
+										{
+											"key": "day",
+											"value": "Wednesday"
+										},
+										{
+											"key": "startTime",
+											"value": "15:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "17:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createInvalidShift",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/createShift?employeeUsername=U654321&day=Saturday&startTime=15:00:00&endTime=14:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"createShift"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "U654321"
+										},
+										{
+											"key": "day",
+											"value": "Saturday"
+										},
+										{
+											"key": "startTime",
+											"value": "15:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "14:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "MuseumManagementSystemRestController",
+					"item": [
+						{
+							"name": "updateValidMmsName",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/1/?name=Lucrecia's Museum",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"1",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Lucrecia's Museum"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateInvalidMmsName",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/-1/?name=Lucrecia's Museum",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"-1",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Lucrecia's Museum"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateMmsValidTicketFee",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/1/fee?ticketFee=69.96",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"1",
+										"fee"
+									],
+									"query": [
+										{
+											"key": "ticketFee",
+											"value": "69.96"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateMmsInvalidTicketFee",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/1/fee?ticketFee=-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"1",
+										"fee"
+									],
+									"query": [
+										{
+											"key": "ticketFee",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setValidMaxLoanNumberOfSystem",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/setMaxLoanNumber/1?maxLoanNumber=8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"setMaxLoanNumber",
+										"1"
+									],
+									"query": [
+										{
+											"key": "maxLoanNumber",
+											"value": "8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setInvalidMaxLoanNumberOfSystem",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/setMaxLoanNumber/1?maxLoanNumber=-5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"setMaxLoanNumber",
+										"1"
+									],
+									"query": [
+										{
+											"key": "maxLoanNumber",
+											"value": "-5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setValidOpeningHours",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/setOpeningHours/1?openTime=06:00:00&closeTime=12:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"setOpeningHours",
+										"1"
+									],
+									"query": [
+										{
+											"key": "openTime",
+											"value": "06:00:00"
+										},
+										{
+											"key": "closeTime",
+											"value": "12:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setInvalidOpeningHours",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/setOpeningHours/1?openTime=16:00:00&closeTime=12:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"setOpeningHours",
+										"1"
+									],
+									"query": [
+										{
+											"key": "openTime",
+											"value": "16:00:00"
+										},
+										{
+											"key": "closeTime",
+											"value": "12:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ManagerAccountRestController",
+					"item": [
+						{
+							"name": "validEditManager",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/manager/edit/SireMarwan?name=Fav Prof&password=ecse223Rocks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"manager",
+										"edit",
+										"SireMarwan"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Fav Prof"
+										},
+										{
+											"key": "password",
+											"value": "ecse223Rocks"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidEditManager",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/manager/edit/bigBankNazia?name=Fav Prof&password=ok",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"manager",
+										"edit",
+										"bigBankNazia"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Fav Prof"
+										},
+										{
+											"key": "password",
+											"value": "ok"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeAccountRestController",
+					"item": [
+						{
+							"name": "validEditEmployee",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/edit/U123456?name=Boris V&password=myFavoriteTeacher",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"edit",
+										"U123456"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Boris V"
+										},
+										{
+											"key": "password",
+											"value": "myFavoriteTeacher"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidEditEmployee",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/edit/U123456?name=Boris V&password=ok",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"edit",
+										"U123456"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Boris V"
+										},
+										{
+											"key": "password",
+											"value": "ok"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ClientAccountRestController",
+					"item": [
+						{
+							"name": "editClientValid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/edit/NikolasPasichnik123?name=Boris Vaisband&password=myFavoriteTeacher",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"edit",
+										"NikolasPasichnik123"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Boris Vaisband"
+										},
+										{
+											"key": "password",
+											"value": "myFavoriteTeacher"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editClientInvalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/edit/NikolasPasichnik123?name=Boris Vaisband&password=123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"edit",
+										"NikolasPasichnik123"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Boris Vaisband"
+										},
+										{
+											"key": "password",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ArtifactRestController",
+					"item": [
+						{
+							"name": "editValidArtifact",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/14?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"14"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "OrangePainting"
+										},
+										{
+											"key": "description",
+											"value": "slices of oranges"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/orange.PNG"
+										},
+										{
+											"key": "status",
+											"value": "Available"
+										},
+										{
+											"key": "loanFee",
+											"value": "10.0"
+										},
+										{
+											"key": "isDamaged",
+											"value": "true"
+										},
+										{
+											"key": "worth",
+											"value": "150.0"
+										},
+										{
+											"key": "roomId",
+											"value": "12"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editInvalidArtifact",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"-1"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "OrangePainting"
+										},
+										{
+											"key": "description",
+											"value": "slices of oranges"
+										},
+										{
+											"key": "image",
+											"value": "MMS-backend/images/orange.PNG"
+										},
+										{
+											"key": "status",
+											"value": "Available"
+										},
+										{
+											"key": "loanFee",
+											"value": "10.0"
+										},
+										{
+											"key": "isDamaged",
+											"value": "true"
+										},
+										{
+											"key": "worth",
+											"value": "150.0"
+										},
+										{
+											"key": "roomId",
+											"value": "12"
+										},
+										{
+											"key": "systemId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DonationRequestRestController",
+					"item": [
+						{
+							"name": "approveDonationRequestValid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/approveRequest/19?roomId=12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"approveRequest",
+										"19"
+									],
+									"query": [
+										{
+											"key": "roomId",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "approveDonationRequestInvalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/approveRequest/19?roomId=12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"approveRequest",
+										"19"
+									],
+									"query": [
+										{
+											"key": "roomId",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rejectDonationRequestValid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/rejectRequest/20",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"rejectRequest",
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rejectDonationRequestInvalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/rejectRequest/19",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"rejectRequest",
+										"19"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "LoanRequestRestController",
+					"item": [
+						{
+							"name": "approveLoanRequestValid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/approveRequest/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"approveRequest",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "approveLoanRequestInvalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/approveRequest/2000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"approveRequest",
+										"2000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rejectLoanRequestValid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/rejectRequest/23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"rejectRequest",
+										"23"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "rejectLoanRequestInvalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/rejectRequest/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"rejectRequest",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "returnLoanedArtifactValid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/loanReturn/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"loanReturn",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "returnLoanedArtifactInvalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/loanReturn/23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"loanReturn",
+										"23"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TicketRestController",
+					"item": [
+						{
+							"name": "updateValidTicket",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket/24?isActive=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket",
+										"24"
+									],
+									"query": [
+										{
+											"key": "isActive",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateInvalidTicket",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket/-1?isActive=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket",
+										"-1"
+									],
+									"query": [
+										{
+											"key": "isActive",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeScheduleRestController",
+					"item": [
+						{
+							"name": "validUpdateSpecificWeekDayStatus",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/specificWeekDay?day=Friday&isClosed=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"specificWeekDay"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "Friday"
+										},
+										{
+											"key": "isClosed",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidUpdateSpecificWeekDayStatus",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/specificWeekDay?day=Monday&isClosed=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"specificWeekDay"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "Monday"
+										},
+										{
+											"key": "isClosed",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validUpdateShiftStartEndTime",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/times/29?startTime=10:00:00&endTime=14:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"times",
+										"29"
+									],
+									"query": [
+										{
+											"key": "startTime",
+											"value": "10:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "14:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidUpdateShiftStartEndTime",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/times/29?startTime=14:00:00&endTime=12:00:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"times",
+										"29"
+									],
+									"query": [
+										{
+											"key": "startTime",
+											"value": "14:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "12:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validUpdateShiftDay",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/day/30?day=Thursday",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"day",
+										"30"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "Thursday"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidUpdateShiftDay",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/day/30?day=Friday",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"day",
+										"30"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "Friday"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "MuseumManagementSystemRestController",
+					"item": [
+						{
+							"name": "getValidMms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/getMms/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"getMms",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidMms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/getMms/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"getMms",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllMms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getValidSpecificWeekDayByDayType",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/DayByDayType?day=Monday",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"DayByDayType"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "Monday"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidSpecificWeekDayByDayType",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/DayByDayType?day=hello",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"DayByDayType"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "hello"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getValidRoom",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/getRoom/12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"getRoom",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidRoom",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/getRoom/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"getRoom",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllRooms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/rooms",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"rooms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllRoomsByValidType",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/rooms/type/Small",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"rooms",
+										"type",
+										"Small"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllRoomsByInvalidType",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/rooms/type/notaroom",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"rooms",
+										"type",
+										"notaroom"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getValidMaxLoanNumberOfSystem",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/maxLoanNumber/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"maxLoanNumber",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidMaxLoanNumberOfSystem",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/maxLoanNumber/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"maxLoanNumber",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getValidOpeningHours",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/getOpeningHours/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"getOpeningHours",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidOpeningHours",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mms/getOpeningHours/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mms",
+										"getOpeningHours",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ManagerAccountRestController",
+					"item": [
+						{
+							"name": "validGetManager",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/managers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"managers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validManageSignIn",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/manager/signin/SireMarwan?password=ecse223Rocks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"manager",
+										"signin",
+										"SireMarwan"
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "ecse223Rocks"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidManageSignIn",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/manager/signin/bigBankNazia?password=iwillmakemoney",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"manager",
+										"signin",
+										"bigBankNazia"
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "iwillmakemoney"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeAccountRestController",
+					"item": [
+						{
+							"name": "validGetAllEmployees",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employees"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validGetEmployee",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/U123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"U123456"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidGetEmployee",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/invalidEmployee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"invalidEmployee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validSignInEmployeeAccount",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/signin/U123456/?password=myFavoriteTeacher",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"signin",
+										"U123456",
+										""
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "myFavoriteTeacher"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidSignInEmployeeAccount",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/signin/U123456/?password=123456789",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"signin",
+										"U123456",
+										""
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "123456789"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ClientAccountRestController",
+					"item": [
+						{
+							"name": "getClientValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/NikolasPasichnik123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"NikolasPasichnik123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getClientInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/lucyzhang",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"lucyzhang"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllClientsValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signInClientAccountValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/signin/NikolasPasichnik123?password=myFavoriteTeacher",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"signin",
+										"NikolasPasichnik123"
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "myFavoriteTeacher"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signInClientAccountInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/signin/NikolasPasichnik123?password=goodboi1234",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"signin",
+										"NikolasPasichnik123"
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "goodboi1234"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ArtifactRestController",
+					"item": [
+						{
+							"name": "getAllArtifacts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getValidArtifactById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/getById?id=13",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"getById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "13"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidArtifactById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/getById?id=-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"getById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getArtifactsByRoomType",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/Storage",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"Storage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getArtifactsByValidRoomId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/getArtifactByRoom/12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"getArtifactByRoom",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getValidArtifactsByState",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/getByState/true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"getByState",
+										"true"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getArtifactsByValidStatus",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/getByStatus?status=Available",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"getByStatus"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "Available"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DonationRequestRestController",
+					"item": [
+						{
+							"name": "getDonationRequestValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/19",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"19"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getDonationRequestInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllDonationRequestsValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllDonationRequestsByStatusValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequests/withRequestStatus/Approved",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequests",
+										"withRequestStatus",
+										"Approved"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllDonationRequestsByStatusInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequests/withRequestStatus/Displayed",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequests",
+										"withRequestStatus",
+										"Displayed"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllDonationRequestsByClientValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequests/ofClient/NikolasPasichnik123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequests",
+										"ofClient",
+										"NikolasPasichnik123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllDonationRequestsByClientInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequests/ofClient/Alexander",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequests",
+										"ofClient",
+										"Alexander"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "LoanRequestRestController",
+					"item": [
+						{
+							"name": "getLoanRequestValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getLoanRequestInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequest/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequest",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllLoanRequestsValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllLoanRequestsByStatusValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequests/Status/Rejected",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequests",
+										"Status",
+										"Rejected"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllLoanRequestsByStatusInvalid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequests/Status/Displayed",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequests",
+										"Status",
+										"Displayed"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllActiveLoanRequestsValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/activeLoanRequests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"activeLoanRequests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllLoanRequestsByClientValid",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/loanRequests/NikolasPasichnik123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"loanRequests",
+										"NikolasPasichnik123"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TicketRestController",
+					"item": [
+						{
+							"name": "getTicket",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket/24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket",
+										"24"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getInvalidTicket",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllTickets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tickets",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTicketByValidClient",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tickets/SamanthaInesPerezHoffman",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tickets",
+										"SamanthaInesPerezHoffman"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTicketByInvalidClient",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/tickets/weirdweirdperson",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tickets",
+										"weirdweirdperson"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeScheduleRestController",
+					"item": [
+						{
+							"name": "validGetAllShifts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validGetAllShiftsForEmployee",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/employee?employeeUsername=U123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"employee"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "U123456"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidGetAllShiftsForEmployee",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/employee?employeeUsername=invalidUsername",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"employee"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "invalidUsername"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validGetAllShiftsForDay",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/day?day=Monday",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"day"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "Monday"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidGetAllShiftsForDay",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/day?day=hello",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"day"
+									],
+									"query": [
+										{
+											"key": "day",
+											"value": "hello"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "EmployeeScheduleRestController",
+					"item": [
+						{
+							"name": "validDeleteShift",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/deleteShift/30",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"deleteShift",
+										"30"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validDeleteAllShiftsForDay",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/day?dayType=Monday",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"day"
+									],
+									"query": [
+										{
+											"key": "dayType",
+											"value": "Monday"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidDeleteAllShiftsForDay",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/day?dayType=Hello",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"day"
+									],
+									"query": [
+										{
+											"key": "dayType",
+											"value": "Hello"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "validDeleteAllShiftsForEmployee",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/employee?employeeUsername=U654321",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"employee"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "U654321"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidDeleteAllShiftsForEmployee",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/shift/employee?employeeUsername=invalidUsername",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"shift",
+										"employee"
+									],
+									"query": [
+										{
+											"key": "employeeUsername",
+											"value": "invalidUsername"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TicketRestController",
+					"item": [
+						{
+							"name": "deleteValidTicket",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket/24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket",
+										"24"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteInvalidTicket",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/ticket/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"ticket",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DonationRequestRestController",
+					"item": [
+						{
+							"name": "deleteRejectedDonationRequestValid",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/delete/20",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"delete",
+										"20"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteRejectedDonationRequestInvalid",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/donationRequest/delete/19",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"donationRequest",
+										"delete",
+										"19"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ArtifactRestController",
+					"item": [
+						{
+							"name": "deleteValidArtifact",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/15",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"15"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteInvalidArtifact",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/artifacts/-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"artifacts",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EmployeeAccountRestController",
+					"item": [
+						{
+							"name": "validDeleteEmployee",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/delete/U123456",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"delete",
+										"U123456"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalidDeleteEmployee",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/employee/delete/invalidUsername",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"employee",
+										"delete",
+										"invalidUsername"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ClientAccountRestController",
+					"item": [
+						{
+							"name": "deleteClientValid",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/YuAnlyA",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"YuAnlyA"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteClientInvalid",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/client/Alexander",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"client",
+										"Alexander"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
