@@ -122,7 +122,7 @@ public class ArtifactService {
         List<Artifact> result = new ArrayList<>();
 
         for(Artifact a : all){
-            if(a.getLoanStatus().equals(status)){
+            if(a.getLoanStatus() != null && a.getLoanStatus().equals(status)){
                 result.add(a);
             }
         }
