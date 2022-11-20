@@ -50,7 +50,7 @@ public class ClientAccountService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot have empty fields");
         }
         // Case where any of the parameters are empty strings
-        if (username == "" || name == "" || password == "") {
+        if (username.equals("") || name.equals("") || password.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot have empty fields");
         }
         // Case where the username contains whitespaces
@@ -90,7 +90,7 @@ public class ClientAccountService {
     @Transactional
     public Client getClient(String username) {
         // Case where the username is empty or if it contains whitespaces
-        if (username == "" || username == null || username.contains(" ")) {
+        if (username == null || username.equals("") || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This username is invalid");
         }
         Client client = clientRepository.findClientByUsername(username);
@@ -138,7 +138,7 @@ public class ClientAccountService {
     @Transactional
     public Client signInClientAccount(String username, String password) {
         // Case where the password is empty or if it contains whitespaces
-        if (password == "" || password == null) {
+        if (password == null || password.equals("") ) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This password is invalid");
         }
         Client client = getClient(username);
@@ -162,7 +162,7 @@ public class ClientAccountService {
     @Transactional
     public Client editClientAccount(String username, String newName, String newPassword) {
         // Case where the name is empty or if it contains whitespaces
-        if (newName == "" || newName == null) {
+        if ( newName == null || newName.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This name is invalid");
         }
 
