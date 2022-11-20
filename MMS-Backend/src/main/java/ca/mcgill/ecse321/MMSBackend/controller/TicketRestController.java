@@ -39,7 +39,7 @@ public class TicketRestController {
     /**
      * Create a new ticket
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param clientUsername
      * @return clientUsername
      * @throws IllegalArgumentException
@@ -53,7 +53,7 @@ public class TicketRestController {
     /**
      * Get a ticket by id
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      * @return
      * @throws IllegalArgumentException
@@ -67,7 +67,7 @@ public class TicketRestController {
     /**
      * Get a list of all tickets
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param clientDto
      * @return
      * @throws IllegalArgumentException
@@ -86,7 +86,7 @@ public class TicketRestController {
     /**
      * Delete a ticket
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      * @return
      * @throws IllegalArgumentException
@@ -99,7 +99,7 @@ public class TicketRestController {
     /**
      * Update a ticket status
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      * @param isActive
      * @return
@@ -116,7 +116,7 @@ public class TicketRestController {
     /**
      * Get tickets by client
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      * @param clientUsername
      * @return

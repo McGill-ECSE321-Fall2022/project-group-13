@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 /**
  * DTO Employee class
  * 
- * @Author: Nikolas Pasichnik (NikolasPasichnik)
+ * @Author Nikolas Pasichnik (NikolasPasichnik)
  */
 public class EmployeeDto {
 

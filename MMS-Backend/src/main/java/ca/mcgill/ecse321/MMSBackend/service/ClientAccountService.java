@@ -41,7 +41,7 @@ public class ClientAccountService {
      * 
      * @param - Username: string that will be used as the unique identifier of the
      *          account
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Client createClient(String username, String name, String password, MuseumManagementSystem mms) {
@@ -85,7 +85,7 @@ public class ClientAccountService {
      * 
      * @param - Username: string that will be used to locate the account associated
      *          to that unique ID
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Client getClient(String username) {
@@ -103,7 +103,7 @@ public class ClientAccountService {
     /**
      * get a list of all Client accounts
      * 
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public List<Client> getAllClients() {
@@ -115,7 +115,7 @@ public class ClientAccountService {
      * 
      * @param - Username: string that will be used to locate the account associated
      *          to that unique ID
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public void deleteClient(String username) {
@@ -133,7 +133,7 @@ public class ClientAccountService {
      *                 to that unique ID
      * @param password - String that is used to verify that it is the correct client
      *                 signing in
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      * @return
      */
     @Transactional
@@ -158,7 +158,7 @@ public class ClientAccountService {
      * @param name     - Sring that is the name of the user
      * @param password - String that is used to verify that it is the correct
      *                 employee signing in
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Client editClientAccount(String username, String newName, String newPassword) {

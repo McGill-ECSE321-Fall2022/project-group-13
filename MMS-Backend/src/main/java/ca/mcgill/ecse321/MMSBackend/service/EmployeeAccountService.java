@@ -40,7 +40,7 @@ public class EmployeeAccountService {
      * 
      * @param - Username: string that will be used as the unique identifier of the
      *          account
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Employee createEmployee(String username, String name, String password, MuseumManagementSystem mms) {
@@ -83,7 +83,7 @@ public class EmployeeAccountService {
      * 
      * @param - Username: string that will be used to locate the account associated
      *          to that unique ID
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Employee getEmployee(String username) {
@@ -101,7 +101,7 @@ public class EmployeeAccountService {
     /**
      * get a list of all Employee accounts
      * 
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public List<Employee> getAllEmployees() {
@@ -113,7 +113,7 @@ public class EmployeeAccountService {
      * 
      * @param - Username: string that will be used to locate the account associated
      *          to that unique ID
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public void deleteEmployee(String username) {
@@ -156,7 +156,7 @@ public class EmployeeAccountService {
      * @param name     - Sring that is the name of the user
      * @param password - String that is used to verify that it is the correct
      *                 employee signing in
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Employee editEmployeeAccount(String username, String newName, String newPassword) {
@@ -178,7 +178,7 @@ public class EmployeeAccountService {
      * Helper method to create a list of type T
      * 
      * @param - iterable: An iterable object of type T
-     * @author - EventRegistration Authors
+     * @author EventRegistration Authors
      */
     private <T> List<T> toList(Iterable<T> iterable) {
         List<T> resultList = new ArrayList<T>();

@@ -33,7 +33,7 @@ public class ManagerAccountService {
      * 
      * @param - Username: string that will be used as the unique identifier of the
      *          account
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Manager createManager(String username, String name, String password, MuseumManagementSystem mms) {
@@ -73,7 +73,7 @@ public class ManagerAccountService {
     /**
      * get the manager of the system
      * 
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Manager getManager() {
@@ -92,7 +92,7 @@ public class ManagerAccountService {
      *                 to that unique ID
      * @param password - String that is used to verify that it is in fact the
      *                 manager signing in
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      * @return - false if failed to sign in, true if succesfully signed in
      */
     @Transactional
@@ -118,7 +118,7 @@ public class ManagerAccountService {
      * @param name     - Sring that is the name of the user
      * @param password - String that is used to verify that it is the correct
      *                 employee signing in
-     * @author - Nikolas Pasichnik (NikolasPasichnik)
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      */
     @Transactional
     public Manager editManagerAccount(String newName, String newPassword) {
@@ -143,7 +143,7 @@ public class ManagerAccountService {
      * Helper method to create a list of type T
      * 
      * @param - iterable: An iterable object of type T
-     * @author - EventRegistration Authors
+     * @author EventRegistration Authors
      */
     private <T> List<T> toList(Iterable<T> iterable) {
         List<T> resultList = new ArrayList<T>();

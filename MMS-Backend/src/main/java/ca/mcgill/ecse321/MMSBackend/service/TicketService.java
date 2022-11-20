@@ -40,7 +40,7 @@ public class TicketService {
     /**
      * Create ticket for a client
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param clientUsername
      */
     @Transactional
@@ -61,7 +61,7 @@ public class TicketService {
     /**
      * Get ticket through id
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      *
      */
@@ -79,7 +79,7 @@ public class TicketService {
     /**
      * Get all tickets
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      */
     @Transactional
     public List<Ticket> getAllTickets() {
@@ -89,7 +89,7 @@ public class TicketService {
     /**
      * Delete ticket
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      */
     @Transactional
@@ -105,7 +105,7 @@ public class TicketService {
     /**
      * Set ticket status
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId, status
      */
     @Transactional
@@ -120,7 +120,7 @@ public class TicketService {
     /**
      * Get all tickets by client
      * 
-     * @Author : Lucy Zhang (Lucy-Zh)
+     * @Author Lucy Zhang (Lucy-Zh)
      * @param clientUsername
      */
     @Transactional
@@ -141,7 +141,8 @@ public class TicketService {
     }
 
     /**
-     * toList helper method (@author eventRegistration authors)
+     * toList helper method 
+     * @author eventRegistration authors 
      */
     private <T> List<T> toList(Iterable<T> iterable) {
         List<T> resultList = new ArrayList<T>();
