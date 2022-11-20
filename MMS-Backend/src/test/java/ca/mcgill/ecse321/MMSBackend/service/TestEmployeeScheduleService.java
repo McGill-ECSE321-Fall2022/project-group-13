@@ -84,8 +84,7 @@ public class TestEmployeeScheduleService {
         SHIFT1 = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
 
         lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            //Shift existingShift = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
-            List<Shift> shifts = new ArrayList<Shift>();
+            List<Shift> shifts = new ArrayList<>();
             shifts.add(SHIFT1);
             return shifts;
         });
@@ -206,7 +205,7 @@ public class TestEmployeeScheduleService {
     public void testGetAllShiftsForEmployee(){
        Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE2, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME);
         lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Shift> shifts = new ArrayList<Shift>();
+            List<Shift> shifts = new ArrayList<>();
             shifts.add(SHIFT1);
             shifts.add(shift2);
             return shifts;
@@ -309,7 +308,7 @@ public class TestEmployeeScheduleService {
         Shift shift1 = initializeShift(VALID_SHIFT_ID, EMPLOYEE1, SPECIFIC_WEEK_DAY1, Time.valueOf("13:00:00"), Time.valueOf("14:00:00")); //old shift
         Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE1, SPECIFIC_WEEK_DAY1, START_TIME, END_TIME); //overlaps with newShift 
         lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Shift> shifts = new ArrayList<Shift>();
+            List<Shift> shifts = new ArrayList<>();
             shifts.add(shift1);
             shifts.add(shift2);
             return shifts;
@@ -383,7 +382,7 @@ public class TestEmployeeScheduleService {
         //set up overlapping shifts 
         Shift shift2 = initializeShift(VALID_SHIFT_ID+1, EMPLOYEE1, SPECIFIC_WEEK_DAY2, OPEN_TIME, CLOSE_TIME); //overlaps with newShift 
         lenient().when(shiftRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Shift> shifts = new ArrayList<Shift>();
+            List<Shift> shifts = new ArrayList<>();
             shifts.add(SHIFT1);
             shifts.add(shift2);
             return shifts;

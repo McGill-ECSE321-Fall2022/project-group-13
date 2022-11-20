@@ -111,11 +111,9 @@ public class TestDonationRequestService {
         lenient().when(roomRepository.findRoomByRoomId(anyInt()))
             .thenAnswer((InvocationOnMock invocation) -> {
                 if (invocation.getArgument(0).equals(STORAGE_ROOM_ID)) {
-                    Room room = createRoom(STORAGE_ROOM_ID, STORAGE_ROOM_NAME, STORAGE_ROOM_TYPE, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return room;
+                    return createRoom(STORAGE_ROOM_ID, STORAGE_ROOM_NAME, STORAGE_ROOM_TYPE, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else if (invocation.getArgument(0).equals(SMALL_ROOM_ID)) {
-                    Room room = createRoom(SMALL_ROOM_ID, SMALL_ROOM_NAME, SMALL_ROOM_TYPE, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return room;
+                    return createRoom(SMALL_ROOM_ID, SMALL_ROOM_NAME, SMALL_ROOM_TYPE, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else {
                     return null;
                 }
@@ -123,8 +121,7 @@ public class TestDonationRequestService {
         lenient().when(artifactRepository.findArtifactByArtifactId(anyInt()))
             .thenAnswer((InvocationOnMock invocation) -> {
                 if (invocation.getArgument(0).equals(ARTIFACT_ID)) {
-                    Artifact artifact = createArtifact(ARTIFACT_ID, ARTIFACT_NAME, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return artifact;
+                    return createArtifact(ARTIFACT_ID, ARTIFACT_NAME, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else {
                     return null;
                 }
@@ -132,8 +129,7 @@ public class TestDonationRequestService {
         lenient().when(clientRepository.findClientByUsername(anyString()))
             .thenAnswer((InvocationOnMock invocation) -> {
                 if (invocation.getArgument(0).equals(CLIENT_USERNAME)) {
-                    Client client = createClient(CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_CURRENT_LOAN_NUMBER, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return client;
+                    return createClient(CLIENT_USERNAME, CLIENT_NAME, CLIENT_PASSWORD, CLIENT_CURRENT_LOAN_NUMBER, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else {
                     return null;
                 }
@@ -141,14 +137,11 @@ public class TestDonationRequestService {
         lenient().when(donationRequestRepository.findDonationRequestByRequestId(anyInt()))
             .thenAnswer((InvocationOnMock invocation) -> {
                if (invocation.getArgument(0).equals(PENDING_DONATION_REQUEST_ID)) {
-                    DonationRequest donationRequest = createDonationRequest(PENDING_DONATION_REQUEST_ID, clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), DonationRequest.DonationStatus.Pending, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return donationRequest;
+                   return createDonationRequest(PENDING_DONATION_REQUEST_ID, clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), DonationStatus.Pending, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else if (invocation.getArgument(0).equals(APPROVED_DONATION_REQUEST_ID)) {
-                    DonationRequest donationRequest = createDonationRequest(APPROVED_DONATION_REQUEST_ID, clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), DonationRequest.DonationStatus.Approved, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return donationRequest;
+                   return createDonationRequest(APPROVED_DONATION_REQUEST_ID, clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), DonationStatus.Approved, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else if (invocation.getArgument(0).equals(REJECTED_DONATION_REQUEST_ID)) {
-                    DonationRequest donationRequest = createDonationRequest(REJECTED_DONATION_REQUEST_ID, clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), DonationRequest.DonationStatus.Rejected, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
-                    return donationRequest;
+                   return createDonationRequest(REJECTED_DONATION_REQUEST_ID, clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), DonationStatus.Rejected, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
                 } else {
                     return null;
                 }
@@ -174,7 +167,8 @@ public class TestDonationRequestService {
     public void testCreateDonationArtifact(){
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             fail();
         }
@@ -196,7 +190,6 @@ public class TestDonationRequestService {
 
         assertNull(artifact);
         assertEquals("MuseumManagementSystem does not exist", error);
-
     }
 
     @Test
@@ -205,14 +198,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(null, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(null, ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -221,14 +214,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, null, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, null, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -237,14 +230,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, null, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, null, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -253,14 +246,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact("", ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact("", ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -269,14 +262,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, "", ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, "", ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -285,14 +278,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, "", ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, "", ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -301,14 +294,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(" ", ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(" ", ARTIFACT_IMAGE, ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -317,14 +310,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, " ", ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, " ", ARTIFACT_DESCRIPTION, ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -333,14 +326,14 @@ public class TestDonationRequestService {
 
         Artifact artifact = null;
         try {
-            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, " ", ARTIFACT_IS_DAMAGED, ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            artifact = service.createDonationArtifact(ARTIFACT_NAME, ARTIFACT_IMAGE, " ", ARTIFACT_IS_DAMAGED,
+                    ARTIFACT_WORTH, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(artifact);
         assertEquals("Empty fields not allowed", error);
-
     }
 
     @Test
@@ -362,7 +355,8 @@ public class TestDonationRequestService {
     public void testCreateDonationRequest(){
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME),
+                    artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             fail();
         }
@@ -370,7 +364,6 @@ public class TestDonationRequestService {
         assertNotNull(donationRequest);
         assertEquals(DonationRequest.DonationStatus.Pending, donationRequest.getStatus());
         checkCreatedDonationRequest(donationRequest);
-        
     }
 
     @Test
@@ -379,14 +372,14 @@ public class TestDonationRequestService {
 
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(null, artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            donationRequest = service.createDonationRequest(null, artifactRepository.findArtifactByArtifactId(ARTIFACT_ID),
+                    mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(donationRequest);
         assertEquals("Client does not exist", error);
-
     }
 
     @Test
@@ -395,14 +388,14 @@ public class TestDonationRequestService {
 
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME), null, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME),
+                    null, mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(donationRequest);
         assertEquals("Artifact does not exist", error);
-
     }
 
     @Test
@@ -411,14 +404,14 @@ public class TestDonationRequestService {
 
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), null);
+            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME),
+                    artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), null);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(donationRequest);
         assertEquals("Museum Management System does not exist", error);
-
     }
 
     @Test
@@ -427,14 +420,14 @@ public class TestDonationRequestService {
 
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(NONEXISTING_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(NONEXISTING_USERNAME),
+                    artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(donationRequest);
         assertEquals("Client does not exist", error);
-
     }
 
     @Test
@@ -443,14 +436,14 @@ public class TestDonationRequestService {
 
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(NONEXISTING_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
+            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME),
+                    artifactRepository.findArtifactByArtifactId(NONEXISTING_ID), mmsRepository.findMuseumManagementSystemBySystemId(MMS_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(donationRequest);
         assertEquals("Artifact does not exist", error);
-
     }
 
     @Test
@@ -459,14 +452,14 @@ public class TestDonationRequestService {
 
         DonationRequest donationRequest = null;
         try {
-            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME), artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(NONEXISTING_ID));
+            donationRequest = service.createDonationRequest(clientRepository.findClientByUsername(CLIENT_USERNAME),
+                    artifactRepository.findArtifactByArtifactId(ARTIFACT_ID), mmsRepository.findMuseumManagementSystemBySystemId(NONEXISTING_ID));
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertNull(donationRequest);
         assertEquals("Museum Management System does not exist", error);
-        
     }
 
     @Test
@@ -734,7 +727,6 @@ public class TestDonationRequestService {
         List<DonationRequest> donationRequests = service.getAllDonationRequestsByClient(CLIENT_A);
         assertEquals(1, donationRequests.size());
         assertEquals(PENDING_DONATION_REQUEST, donationRequests.get(0));
-       
     }
 
     // Helper methods

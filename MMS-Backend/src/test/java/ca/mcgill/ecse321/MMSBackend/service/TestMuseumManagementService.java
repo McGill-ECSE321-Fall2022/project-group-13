@@ -1,10 +1,6 @@
 package ca.mcgill.ecse321.MMSBackend.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -40,7 +36,7 @@ import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
 /**
  * @author Lucy Zhang (Lucy-Zh), Yu An Lu (yu-an-lu), Nazia Chowdhury (naziaC)
- *         and Samantha Perez Hoffman (samperezh)
+ * and Samantha Perez Hoffman (samperezh)
  * 
  * The TestMuseumManagementService class tests the business logic declared in
  * MuseumManagementSystemService.
@@ -108,7 +104,6 @@ public class TestMuseumManagementService {
     @BeforeEach
 	public void setMockOutput()
     {
-
         lenient().when(mmsRepository.findMuseumManagementSystemBySystemId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(SYSTEM_ID)) {
                 MuseumManagementSystem mms = new MuseumManagementSystem();
@@ -196,9 +191,7 @@ public class TestMuseumManagementService {
         lenient().when(clientRepository.save(any(Client.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(specificWeekDayRepository.save(any(SpecificWeekDay.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(roomRepository.save(any(Room.class))).thenAnswer(returnParameterAsAnswer);
-
         lenient().when(roomRepository.findAll()).thenReturn(ALL_ROOMS);
-
     }
 
      /**
@@ -219,7 +212,6 @@ public class TestMuseumManagementService {
 
         assertNotNull(museumManagementSystem);
         checkMuseumManagementSystemValidness(museumManagementSystem);
-
     }
 
     /**
@@ -242,7 +234,6 @@ public class TestMuseumManagementService {
         }
 
         assertEquals("Museum Management System already exists", error);
-
     }
 
     /**
@@ -260,7 +251,6 @@ public class TestMuseumManagementService {
         }
 
         assertNotNull(museumManagementSystem);
-
     }
 
     /**
@@ -281,7 +271,6 @@ public class TestMuseumManagementService {
 
         assertNull(museumManagementSystem);
         assertEquals("Museum Management System does not exist", error);
-
     }
 
     /**
@@ -295,7 +284,6 @@ public class TestMuseumManagementService {
             } catch (MuseumManagementSystemException e) {
                 fail();
             }
-    
     }
 
     /**
@@ -313,7 +301,6 @@ public class TestMuseumManagementService {
         }
 
         assertEquals("Museum Management System does not exist", error);
-
     }
 
     /**
@@ -337,7 +324,6 @@ public class TestMuseumManagementService {
         assertNotNull(testMms);
         assertEquals(1, testMms.size());
         assertEquals(museum_1, testMms.get(0));
-        
     }
 
     /**
@@ -345,13 +331,11 @@ public class TestMuseumManagementService {
      */
     @Test
     public void testSetMuseumTicketPrice(){
-
         try {
             museumManagementSystemService.setMuseumTicketPrice(SYSTEM_ID, 10.0);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
-
     }
 
     /**
@@ -359,7 +343,6 @@ public class TestMuseumManagementService {
      */
     @Test
     public void testSetTicketPriceNegative(){
-            
         String error = "";
 
         try {
@@ -376,7 +359,6 @@ public class TestMuseumManagementService {
      */
     @Test   
     public void testSetMuseumTicketPriceNull(){
-
         String error = "";
 
         try {
@@ -386,7 +368,6 @@ public class TestMuseumManagementService {
         }
 
         assertEquals("Museum Management System does not exist", error);
-
     }
 
     /**
@@ -530,7 +511,7 @@ public class TestMuseumManagementService {
         SpecificWeekDay specificWeekDay =  museumManagementSystemService.getSpecificWeekDayByDayType(MONDAY);
         assertNotNull(specificWeekDay);
         assertEquals(MONDAY, specificWeekDay.getDayType());
-        assertEquals(false, specificWeekDay.getIsClosed());
+        assertFalse(specificWeekDay.getIsClosed());
         verify(specificWeekDayRepository, times(1)).findSpecificWeekDayByDayType(MONDAY);
     }
 
