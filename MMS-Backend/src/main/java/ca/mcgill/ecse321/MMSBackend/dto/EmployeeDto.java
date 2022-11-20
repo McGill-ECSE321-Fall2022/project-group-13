@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 /**
  * DTO Employee class
  * 
- * @Author Nikolas Pasichnik (NikolasPasichnik)
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  */
 public class EmployeeDto {
 
@@ -26,7 +26,7 @@ public class EmployeeDto {
      * @param username
      * @param name
      * @param password
-     * @param currentLoanNumber
+     * @param MMS
      */
     public EmployeeDto(String username, String name, String password, MuseumManagementSystemDto MMS){
         this.username = username; 
@@ -37,8 +37,6 @@ public class EmployeeDto {
 
     /**
      * Username getter
-     * 
-     * @return
      */
     public String getUsername() {
         return username; 
@@ -46,8 +44,6 @@ public class EmployeeDto {
 
     /**
      * Name getter
-     * 
-     * @return
      */
     public String getName() {
         return name; 
@@ -55,8 +51,6 @@ public class EmployeeDto {
 
     /**
      * Password getter
-     * 
-     * @return
      */
     public String getPassword() {
         return password; 
@@ -64,8 +58,6 @@ public class EmployeeDto {
 
     /**
      * MuseumManagementSystem getter
-     * 
-     * @return
      */
     public MuseumManagementSystemDto getMuseumManagementSystem() {
         return MMS; 
