@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 /**
  * DTO LoanRequest class
  *
- * @Author: Nazia Chowdhury (naziaC)
+ * @author Nazia Chowdhury (naziaC)
  */
 public class LoanRequestDto {
 

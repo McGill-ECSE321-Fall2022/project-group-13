@@ -105,7 +105,7 @@ public class LoanRequestService {
      */
     @Transactional
     public List<LoanRequest> getAllLoanRequestsByStatus(LoanRequest.LoanStatus status) {
-        List<LoanRequest> loanRequestsByStatus = new ArrayList<LoanRequest>();
+        List<LoanRequest> loanRequestsByStatus = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestRepository.findAll()) {
             if (loanRequest.getStatus().equals(status)) {
                 loanRequestsByStatus.add(loanRequest);
@@ -116,7 +116,6 @@ public class LoanRequestService {
 
     /**
      * Gets all loan requests than can be approved/rejected
-     *
      * @return a list of loan request objects for a specific client than can be approved/rejected
      */
     @Transactional
@@ -138,7 +137,7 @@ public class LoanRequestService {
      */
     @Transactional
     public List<LoanRequest> getAllLoanRequestsByClient(Client client) {
-        List<LoanRequest> loanRequestsByClient = new ArrayList<LoanRequest>();
+        List<LoanRequest> loanRequestsByClient = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestRepository.findAll()) {
             if (loanRequest.getClient().equals(client)) {
                 loanRequestsByClient.add(loanRequest);

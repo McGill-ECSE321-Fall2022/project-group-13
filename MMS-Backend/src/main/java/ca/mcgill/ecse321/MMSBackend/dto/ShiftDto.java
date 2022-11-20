@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 import java.sql.Time;
 /**
  * DTO Shift class 
- * @Author: Samantha Perez Hoffman (samperezh)
+ * @author Samantha Perez Hoffman (samperezh)
  */
 public class ShiftDto {
 

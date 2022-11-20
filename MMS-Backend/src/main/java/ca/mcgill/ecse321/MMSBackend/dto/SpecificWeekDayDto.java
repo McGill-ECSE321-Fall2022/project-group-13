@@ -2,7 +2,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 
 /**
  * DTO SpecificWeekDay class
- * @Author: Samantha Perez Hoffman (samperezh)
+ * @author Samantha Perez Hoffman (samperezh)
  */
 public class SpecificWeekDayDto {
     

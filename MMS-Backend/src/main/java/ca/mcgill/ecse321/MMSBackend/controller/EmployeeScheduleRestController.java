@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Samantha Perez Hoffman (samperezh)
- *         The EmployeeScheduleRestController class is responsible for exposing
- *         the business logic declared in EmployeeScheduleService using a REST
- *         API.
+ * The EmployeeScheduleRestController class is responsible for exposing
+ * the business logic declared in EmployeeScheduleService using a REST
+ * API.
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -49,12 +49,11 @@ public class EmployeeScheduleRestController {
     /**
      * Create a new shift 
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param employeeUsername
      * @param day
      * @param startTime
      * @param endTime
-     * @return
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/createShift", "/createShift/" })
@@ -65,14 +64,14 @@ public class EmployeeScheduleRestController {
         DayType dayType = ToDtoHelper.convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         Shift shift = employeeScheduleService.createShift(employee, specificWeekDay, startTime, endTime);
-        return new ResponseEntity<ShiftDto>(ToDtoHelper.convertToDto(shift), HttpStatus.CREATED);
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(shift), HttpStatus.CREATED);
     }
 
 
     /**
      * Delete a shift from its shiftId
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
      */
     @DeleteMapping(value = { "/deleteShift/{shiftId}", "/deleteShift/{shiftId}/" })
@@ -83,7 +82,7 @@ public class EmployeeScheduleRestController {
     /**
      * Delete all shifts for a specific day 
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param dayType
      * @throws IllegalArgumentException
      */
@@ -96,7 +95,7 @@ public class EmployeeScheduleRestController {
     /**
      * Delete all shifts for an employee
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param employeeUsername
      * @throws IllegalArgumentException
      */
@@ -110,12 +109,11 @@ public class EmployeeScheduleRestController {
     /**
      * Get all shifts 
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
-     * @return
+     * @author Samantha Perez Hoffman (samperezh)
      */
     @GetMapping(value = { "/shift", "/shift/" })
     public ResponseEntity<List<ShiftDto>> getAllShifts() {
-        List<ShiftDto> shiftsDto = new ArrayList<ShiftDto>();
+        List<ShiftDto> shiftsDto = new ArrayList<>();
         for (Shift shift : employeeScheduleService.getAllShifts()) {
             shiftsDto.add(ToDtoHelper.convertToDto(shift));
         }
@@ -125,16 +123,15 @@ public class EmployeeScheduleRestController {
     /**
      * Get all shifts for an employee
      *
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param employeeUsername
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/shift/employee", "/shift/employee/" })
     public ResponseEntity<List<ShiftDto>> getAllShiftsForEmployee(@RequestParam String employeeUsername)
             throws IllegalArgumentException {
         Employee employee = employeeAccountService.getEmployee(employeeUsername);
-        List<ShiftDto> shiftsDto = new ArrayList<ShiftDto>();
+        List<ShiftDto> shiftsDto = new ArrayList<>();
         for (Shift shift : employeeScheduleService.getAllShiftsForEmployee(employee)) {
             shiftsDto.add(ToDtoHelper.convertToDto(shift));
         }
@@ -144,16 +141,15 @@ public class EmployeeScheduleRestController {
     /**
      * Get all shifts for a specific day 
      *
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param day
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/shift/day", "/shift/day/" })
     public ResponseEntity<List<ShiftDto>> getAllShiftsForDay(@RequestParam String day)
             throws IllegalArgumentException {
         DayType dayType = ToDtoHelper.convertStringToDayType(day);
-        List<ShiftDto> shiftsDto = new ArrayList<ShiftDto>();
+        List<ShiftDto> shiftsDto = new ArrayList<>();
         for (Shift shift : employeeScheduleService.getAllShiftsForDay(dayType)) {
             shiftsDto.add(ToDtoHelper.convertToDto(shift));
         }
@@ -163,27 +159,25 @@ public class EmployeeScheduleRestController {
     /**
      * Update a shift's start and end time
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
      * @param startTime
      * @param endTime
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/shift/times/{shiftId}", "/shift/times/{shiftId}/" })
     public ResponseEntity<ShiftDto> updateShiftStartEndTime(@PathVariable("shiftId") int shiftId, @RequestParam Time startTime,
             @RequestParam Time endTime) throws IllegalArgumentException {
         Shift shift = employeeScheduleService.updateShiftStartEndTime(shiftId, startTime, endTime);
-        return new ResponseEntity<ShiftDto>(ToDtoHelper.convertToDto(shift), HttpStatus.OK);
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(shift), HttpStatus.OK);
     }
 
     /**
      * Update a shift's day
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
      * @param day
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/shift/day/{shiftId}", "/shift/day/{shiftId}/" })
@@ -192,16 +186,15 @@ public class EmployeeScheduleRestController {
         DayType dayType = ToDtoHelper.convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         Shift shift = employeeScheduleService.updateShiftDay(shiftId, specificWeekDay);
-        return new ResponseEntity<ShiftDto>(ToDtoHelper.convertToDto(shift), HttpStatus.OK);
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(shift), HttpStatus.OK);
     }
 
     /**
      * Update a specificWeekDay isClosed status
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param day
      * @param isClosed
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/specificWeekDay", "/specificWeekDay/" })
@@ -212,6 +205,6 @@ public class EmployeeScheduleRestController {
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         specificWeekDay = employeeScheduleService.updateSpecificWeekDayStatus(specificWeekDay, isClosed);
 
-        return new ResponseEntity<SpecificWeekDayDto>(ToDtoHelper.convertToDto(specificWeekDay), HttpStatus.OK);
+        return new ResponseEntity<>(ToDtoHelper.convertToDto(specificWeekDay), HttpStatus.OK);
     }
 }

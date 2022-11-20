@@ -38,7 +38,7 @@ public class MuseumManagementSystemRestController {
     /**
      * Create a new museum management system
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @author Lucy Zhang (Lucy-Zh)
      * @return
      * @throws IllegalArgumentException
      */
@@ -50,7 +50,7 @@ public class MuseumManagementSystemRestController {
     /**
      * Get a mms by id
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @author Lucy Zhang (Lucy-Zh)
      * @param systemId
      * @return
      * @throws IllegalArgumentException
@@ -63,7 +63,7 @@ public class MuseumManagementSystemRestController {
     /**
      * Update mms name by id
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @author Lucy Zhang (Lucy-Zh)
      * @param systemId
      * @param name
      * @return
@@ -79,7 +79,7 @@ public class MuseumManagementSystemRestController {
     /**
      * Get mms
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @author Lucy Zhang (Lucy-Zh)
      * @return
      * @throws IllegalArgumentException
      */
@@ -97,7 +97,7 @@ public class MuseumManagementSystemRestController {
     /**
      * Set mms ticket fee
      * 
-     * @Author: Lucy Zhang (Lucy-Zh)
+     * @author Lucy Zhang (Lucy-Zh)
      * @param systemId
      * @param ticketFee
      * @return

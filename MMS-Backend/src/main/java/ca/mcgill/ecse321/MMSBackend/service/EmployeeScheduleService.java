@@ -19,12 +19,11 @@ import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
 
 /**
  * @author Samantha Perez Hoffman (samaperezh)
- *         The EmployeeScheduleService class implements the use case based on
- *         the requirement:
- *         “FREQ04: The museum management system shall only allow the manager to
- *         update the opening hours, the list of working employees, their start
- *         and end times on a particular day as well as mark a certain day as
- *         closed.”
+ * The EmployeeScheduleService class implements the use case based on
+ * the requirement: “FREQ04: The museum management system shall only allow the manager to
+ * update the opening hours, the list of working employees, their start
+ * and end times on a particular day as well as mark a certain day as
+ * closed.”
  */
 @Service
 public class EmployeeScheduleService {
@@ -38,11 +37,11 @@ public class EmployeeScheduleService {
     /**
      * Create new shift
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
-     * @parm employee
-     * @parm specifcWeekDay
-     * @parm startTime
-     * @parm endTime
+     * @author Samantha Perez Hoffman (samperezh)
+     * @param employee
+     * @param specificWeekDay
+     * @param startTime
+     * @param endTime
      */
     @Transactional
     public Shift createShift(Employee employee, SpecificWeekDay specificWeekDay, Time startTime, Time endTime) {
@@ -88,19 +87,19 @@ public class EmployeeScheduleService {
     /**
      * Delete shift from its shiftId
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
-     * @parm shiftId
+     * @author Samantha Perez Hoffman (samperezh)
+     * @param shiftId
      */
     @Transactional
-    public void deleteShift(int ShiftId) {
-        shiftRepository.deleteById(ShiftId);
+    public void deleteShift(int shiftId) {
+        shiftRepository.deleteById(shiftId);
     }
 
     /**
      * Delete all shifts for a specific day
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
-     * @parm dayType
+     * @author Samantha Perez Hoffman (samperezh)
+     * @param dayType
      */
     @Transactional
     public void deleteAllShiftsForDay(DayType dayType) {
@@ -116,7 +115,7 @@ public class EmployeeScheduleService {
     /**
      * Delete all shifts for a specific employee
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param employee
      */
     @Transactional
@@ -130,7 +129,7 @@ public class EmployeeScheduleService {
     /**
      * Get all shifts
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      */
     @Transactional
     public List<Shift> getAllShifts() {
@@ -140,7 +139,7 @@ public class EmployeeScheduleService {
     /**
      * Get all shifts for a specific employee
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param employee
      */
     @Transactional
@@ -150,21 +149,20 @@ public class EmployeeScheduleService {
         }
 
         List<Shift> allShifts = getAllShifts();
-        List<Shift> employeeShifts = new ArrayList<Shift>();
+        List<Shift> employeeShifts = new ArrayList<>();
         for (Shift shift : allShifts) {
             if (shift.getEmployee() == employee) {
                 employeeShifts.add(shift);
             }
         }
 
-        //return allShifts;
         return employeeShifts;
     }
 
     /**
      * Get all shifts for a specific day
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param dayType
      */
     @Transactional
@@ -173,7 +171,7 @@ public class EmployeeScheduleService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values are not allowed!");
         }
         List<Shift> allShifts = getAllShifts();
-        List<Shift> dayShifts = new ArrayList<Shift>();
+        List<Shift> dayShifts = new ArrayList<>();
         for (Shift shift : allShifts) {
             if (shift.getDayOfTheWeek().getDayType() == dayType) {
                 dayShifts.add(shift);
@@ -186,10 +184,10 @@ public class EmployeeScheduleService {
     /**
      * edit shift start and end time
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
-     * @param startTime
-     * @param endTime
+     * @param newStartTime
+     * @param newEndTime
      */
     @Transactional
     public Shift updateShiftStartEndTime(int shiftId, Time newStartTime, Time newEndTime) {
@@ -222,7 +220,7 @@ public class EmployeeScheduleService {
     /**
      * edit shift's specific week day
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
      * @param specificWeekDay
      */
@@ -256,7 +254,7 @@ public class EmployeeScheduleService {
     /**
      * update SpecificWeekDay isClosed attribute
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
+     * @author Samantha Perez Hoffman (samperezh)
      * @param specificWeekDay
      * @param isClosed
      */
@@ -294,8 +292,10 @@ public class EmployeeScheduleService {
     /**
      * helper method that checks if a shift overlaps with any other existing shifts
      * 
-     * @Author: Samantha Perez Hoffman (samperezh)
-     * @param newShift
+     * @author Samantha Perez Hoffman (samperezh)
+     * @param shift
+     * @param newStartTime
+     * @param newEndTime
      * @param dayType
      */
     private boolean doesNewShiftOverlap(Shift shift, Time newStartTime, Time newEndTime, DayType dayType) {

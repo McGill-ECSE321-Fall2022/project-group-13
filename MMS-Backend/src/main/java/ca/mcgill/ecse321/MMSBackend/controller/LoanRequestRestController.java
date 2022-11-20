@@ -98,7 +98,7 @@ public class LoanRequestRestController {
      */
     @GetMapping(value = {"/activeLoanRequests", "/activeLoanRequests/"})
     public ResponseEntity<List<LoanRequestDto>> getAllActiveLoanRequests() throws IllegalArgumentException {
-        List<LoanRequestDto> loanRequestsByStatusDto = new ArrayList<LoanRequestDto>();
+        List<LoanRequestDto> loanRequestsByStatusDto = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllActiveLoanRequests()) {
             loanRequestsByStatusDto.add(ToDtoHelper.convertToDto(loanRequest));
         }
@@ -114,7 +114,7 @@ public class LoanRequestRestController {
     @GetMapping(value = {"/loanRequests/{client}", "/loanRequests/{client}/"})
     public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByClient(@PathVariable(name="client") String username) throws IllegalArgumentException {
         Client client = clientAccountService.getClient(username);
-        List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<LoanRequestDto>();
+        List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByClient(client)) {
             loanRequestsByClientDto.add(ToDtoHelper.convertToDto(loanRequest));
         }

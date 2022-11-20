@@ -128,7 +128,7 @@ public class MuseumManagementSystemService {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else if(price < 0){
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Ticket price is not valid");
-        }else {
+        } else {
             museumManagementSystem.setTicketFee(price);
         }
     }
@@ -175,7 +175,7 @@ public class MuseumManagementSystemService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Room type cannot be null");
         }
 
-        List<Room> roomsByType = new ArrayList<Room>();
+        List<Room> roomsByType = new ArrayList<>();
         for (Room room : roomRepository.findAll()) {
             if (room.getType().equals(roomType)) {
                 roomsByType.add(room);
@@ -257,7 +257,7 @@ public class MuseumManagementSystemService {
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
         }
-        List<Time> openingHours = new ArrayList<Time>();
+        List<Time> openingHours = new ArrayList<>();
         openingHours.add(museumManagementSystem.getOpenTime());
         openingHours.add(museumManagementSystem.getCloseTime());
         return openingHours;
@@ -379,6 +379,4 @@ public class MuseumManagementSystemService {
         }
         return resultList;
     }
-
-
 }
