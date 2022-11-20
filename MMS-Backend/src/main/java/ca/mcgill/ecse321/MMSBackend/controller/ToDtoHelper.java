@@ -306,7 +306,7 @@ public class ToDtoHelper {
             case "Available" -> Artifact.LoanStatus.Available;
             case "Unavailable" -> Artifact.LoanStatus.Unavailable;
             case "Loaned" -> Artifact.LoanStatus.Loaned;
-            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+            default -> null;
         };
     }
 
