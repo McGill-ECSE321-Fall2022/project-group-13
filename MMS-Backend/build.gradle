@@ -2,11 +2,20 @@ plugins {
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
+	id "com.github.michaelruocco.gradle-postman-runner" version "0.1.4"
 }
 
 group = 'ca.mcgill.ecse321'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+
+task stage() {
+	dependsOn ':MMS-Backend:assemble'
+}
+
+task integrationTest(type: Exec){
+	commandLine './gradlew' , 'postman'
+}
 
 repositories {
 	mavenCentral()
