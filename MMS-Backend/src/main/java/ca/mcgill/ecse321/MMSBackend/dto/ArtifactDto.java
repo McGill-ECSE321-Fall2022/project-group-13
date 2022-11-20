@@ -1,4 +1,10 @@
 package ca.mcgill.ecse321.MMSBackend.dto;
+
+/**
+ * DTO Artifact class
+ *
+ * @author Mona Kalaoun (m-kln)
+ */
 public class ArtifactDto {
 
     public enum LoanStatusDto { Available, Unavailable, Loaned }

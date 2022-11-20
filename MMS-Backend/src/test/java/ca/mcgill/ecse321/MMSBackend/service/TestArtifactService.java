@@ -17,10 +17,14 @@ import ca.mcgill.ecse321.MMSBackend.dao.*;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Mona Kalaoun (m-kln)
+ * The TestArtifactService class is responsible for testing the
+ * business logic declared in ArtifactService.
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestArtifactService {
     @Mock
@@ -467,7 +471,16 @@ public class TestArtifactService {
     }
 
 
-
+    /**
+     * Private helper method for creating a Museum Management System
+     * @param id
+     * @param name
+     * @param openTime
+     * @param closeTime
+     * @param maxLoanNumber
+     * @param ticketFee
+     * @return a MuseumManagementSystem object
+     */
 
     private static MuseumManagementSystem createMms(int id, String name, Time openTime, Time closeTime,
                                                     int maxLoanNumber, double ticketFee) {
@@ -482,6 +495,14 @@ public class TestArtifactService {
     }
 
 
+    /**
+     * Private helper method for creating a room
+     * @param id
+     * @param name
+     * @param roomType
+     * @param mms
+     * @return a room object
+     */
     private static Room createRoom(int id, String name, Room.RoomType roomType, MuseumManagementSystem mms) {
         Room room = new Room();
         room.setRoomId(id);
@@ -491,6 +512,20 @@ public class TestArtifactService {
         return room;
     }
 
+    /**
+     * Private helper method for creating an artifact
+     * @param id
+     * @param name
+     * @param description
+     * @param image
+     * @param status
+     * @param loanFee
+     * @param isDamaged
+     * @param worth
+     * @param roomId
+     * @param mmsId
+     * @return an artifact object
+     */
     private static Artifact createArtifact(int id, String name, String description, String image, Artifact.LoanStatus
             status, int loanFee, boolean isDamaged, double worth, int roomId, int mmsId) {
         Artifact artifact = new Artifact();
