@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 /**
  * DTO Manager class
  * 
- * @Author Nikolas Pasichnik (NikolasPasichnik)
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  */
 public class ManagerDto {
 
@@ -37,8 +37,6 @@ public class ManagerDto {
 
     /**
      * Username getter
-     * 
-     * @return
      */
     public String getUsername() {
         return username;
@@ -46,8 +44,6 @@ public class ManagerDto {
 
     /**
      * Name getter
-     * 
-     * @return
      */
     public String getName() {
         return name;
@@ -55,8 +51,6 @@ public class ManagerDto {
 
     /**
      * Password getter
-     * 
-     * @return
      */
     public String getPassword() {
         return password;

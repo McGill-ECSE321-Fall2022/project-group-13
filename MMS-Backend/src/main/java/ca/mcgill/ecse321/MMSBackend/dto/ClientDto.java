@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.dto;
 /**
  * DTO Client class
  * 
- * @Author Nikolas Pasichnik (NikolasPasichnik)
+ * @author Nikolas Pasichnik (NikolasPasichnik)
  */
 public class ClientDto {
 
@@ -40,8 +40,6 @@ public class ClientDto {
 
     /**
      * Username getter
-     * 
-     * @return
      */
     public String getUsername() {
         return username;
@@ -49,8 +47,6 @@ public class ClientDto {
 
     /**
      * Name getter
-     * 
-     * @return
      */
     public String getName() {
         return name;
@@ -58,8 +54,6 @@ public class ClientDto {
 
     /**
      * Password getter
-     * 
-     * @return
      */
     public String getPassword() {
         return password;
@@ -67,8 +61,6 @@ public class ClientDto {
 
     /**
      * CurrentLoanNumber getter
-     * 
-     * @return
      */
     public int getCurrentLoanNumber() {
         return currentLoanNumber;
@@ -76,8 +68,6 @@ public class ClientDto {
 
     /**
      * MuseumManagementSystem getter
-     * 
-     * @return
      */
     public MuseumManagementSystemDto getMuseumManagementSystem() {
         return MMS;

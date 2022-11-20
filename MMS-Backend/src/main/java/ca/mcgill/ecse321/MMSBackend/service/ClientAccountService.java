@@ -134,7 +134,6 @@ public class ClientAccountService {
      * @param password - String that is used to verify that it is the correct client
      *                 signing in
      * @author Nikolas Pasichnik (NikolasPasichnik)
-     * @return
      */
     @Transactional
     public Client signInClientAccount(String username, String password) {

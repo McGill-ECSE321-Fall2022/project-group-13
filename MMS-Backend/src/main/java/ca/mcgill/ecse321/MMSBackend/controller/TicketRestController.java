@@ -55,7 +55,6 @@ public class TicketRestController {
      * 
      * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
@@ -69,7 +68,6 @@ public class TicketRestController {
      * 
      * @Author Lucy Zhang (Lucy-Zh)
      * @param clientDto
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/tickets", "/tickets/" })
@@ -88,7 +86,6 @@ public class TicketRestController {
      * 
      * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
-     * @return
      * @throws IllegalArgumentException
      */
     @DeleteMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
@@ -102,7 +99,6 @@ public class TicketRestController {
      * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      * @param isActive
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
@@ -119,7 +115,6 @@ public class TicketRestController {
      * @Author Lucy Zhang (Lucy-Zh)
      * @param ticketId
      * @param clientUsername
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/tickets/{clientUsername}", "/tickets/{clientUsername}/" })

@@ -120,7 +120,7 @@ public class LoanRequestService {
      */
     @Transactional
     public List<LoanRequest> getAllActiveLoanRequests() {
-        List<LoanRequest> loanRequestsByStatus = new ArrayList<LoanRequest>();
+        List<LoanRequest> loanRequestsByStatus = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestRepository.findAll()) {
             if (loanRequest.getStatus().equals(LoanRequest.LoanStatus.Pending) && loanRequest.getClient().getCurrentLoanNumber() < 5) {
                 loanRequestsByStatus.add(loanRequest);
