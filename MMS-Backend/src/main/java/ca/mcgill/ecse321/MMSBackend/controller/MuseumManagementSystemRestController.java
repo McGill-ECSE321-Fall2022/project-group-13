@@ -39,7 +39,6 @@ public class MuseumManagementSystemRestController {
      * Create a new museum management system
      * 
      * @author Lucy Zhang (Lucy-Zh)
-     * @return
      * @throws IllegalArgumentException
      */
     @PostMapping(value = { "/mms", "/mms/" })
@@ -52,7 +51,6 @@ public class MuseumManagementSystemRestController {
      * 
      * @author Lucy Zhang (Lucy-Zh)
      * @param systemId
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/mms/getMms/{systemId}", "/mms/getMms/{systemId}/" })
@@ -66,7 +64,6 @@ public class MuseumManagementSystemRestController {
      * @author Lucy Zhang (Lucy-Zh)
      * @param systemId
      * @param name
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
@@ -80,7 +77,6 @@ public class MuseumManagementSystemRestController {
      * Get mms
      * 
      * @author Lucy Zhang (Lucy-Zh)
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/mms", "/mms/" })
@@ -100,7 +96,6 @@ public class MuseumManagementSystemRestController {
      * @author Lucy Zhang (Lucy-Zh)
      * @param systemId
      * @param ticketFee
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "/mms/{systemId}/fee", "/mms/{systemId}/fee/" })
@@ -196,7 +191,6 @@ public class MuseumManagementSystemRestController {
      * @param systemId
      * @param openTime
      * @param closeTime
-     * @return
      * @throws IllegalArgumentException
      */
     @PutMapping(value = { "mms/setOpeningHours/{systemId}", "mms/setOpeningHours/{systemId}/" })
@@ -211,7 +205,6 @@ public class MuseumManagementSystemRestController {
      * 
      * @author : Samantha Perez Hoffman (samperezh)
      * @param systemId
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "mms/getOpeningHours/{systemId}", "mms/getOpeningHours/{systemId}/" })
@@ -224,7 +217,6 @@ public class MuseumManagementSystemRestController {
      * 
      * @author : Samantha Perez Hoffman (samperezh)
      * @param day
-     * @return
      * @throws IllegalArgumentException
      */
     @GetMapping(value = { "/mms/DayByDayType", "/mms/DayByDayType/" })

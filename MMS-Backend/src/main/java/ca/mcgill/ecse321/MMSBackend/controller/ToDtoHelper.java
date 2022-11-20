@@ -12,7 +12,6 @@ public class ToDtoHelper {
     /**
      * @author Lucy Zhang (Lucy-Zh)
      * @param mms
-     * @return
      */
     public static MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
         if (mms == null) {
@@ -24,7 +23,6 @@ public class ToDtoHelper {
     /**
      * @author Mona Kalaoun (m-kln)
      * @param r
-     * @return
      */
     public static RoomDto convertToDto(Room r) {
         if (r == null) {
@@ -36,7 +34,8 @@ public class ToDtoHelper {
         return room;
     }
 
-    /** @author Mona Kalaoun (m-kln)
+    /**
+     * @author Mona Kalaoun (m-kln)
      * @param type
      * @return a LoanStatusDto
      */
@@ -74,7 +73,6 @@ public class ToDtoHelper {
     /**
      * @author Mona Kalaoun (m-kln)
      * @param a
-     * @return
      */
     public static ArtifactDto convertToDto(Artifact a) {
         if (a == null) {
@@ -90,7 +88,8 @@ public class ToDtoHelper {
         return artifactDto;
     }
 
-    /** @author Mona Kalaoun (m-kln)
+    /**
+     * @author Mona Kalaoun (m-kln)
      * @param status
      * @return a LoanStatusDto
      */
@@ -108,9 +107,8 @@ public class ToDtoHelper {
     }
 
     /**
-     * @author Nikolas Pasichnik
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      * @param client
-     * @return
      */
     public static ClientDto convertToDto(Client client) {
         if (client == null) {
@@ -125,9 +123,8 @@ public class ToDtoHelper {
     }
 
     /**
-     * @author Nikolas Pasichnik
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      * @param manager
-     * @return
      */
     public static ManagerDto convertToDto(Manager manager) {
 
@@ -143,9 +140,8 @@ public class ToDtoHelper {
     }
 
     /**
-     * @author Nikolas Pasichnik 
+     * @author Nikolas Pasichnik (NikolasPasichnik)
      * @param employee
-     * @return
      */
     public static EmployeeDto convertToDto(Employee employee) {
 
@@ -154,7 +150,7 @@ public class ToDtoHelper {
         }
         MuseumManagementSystemDto mmsDto = convertToDto(employee.getMuseumManagementSystem());
 
-        EmployeeDto employeeDto = new EmployeeDto(employee.getUsername(), employee.getName(), 
+        EmployeeDto employeeDto = new EmployeeDto(employee.getUsername(), employee.getName(),
         employee.getPassword(), mmsDto);
 
         return employeeDto;
@@ -163,65 +159,46 @@ public class ToDtoHelper {
     /**
      * @author Samantha Perez Hoffman (samperezh)
      * @param dayType
-     * @return
      */
     public static DayTypeDto convertToDto(DayType dayType) {
         if (dayType == null) {
             throw new IllegalArgumentException("DayType cannot be null!");
         }
-        switch (dayType) {
-            case Monday:
-                return DayTypeDto.Monday;
-            case Tuesday:
-                return DayTypeDto.Tuesday;
-            case Wednesday:
-                return DayTypeDto.Wednesday;
-            case Thursday:
-                return DayTypeDto.Thursday;
-            case Friday:
-                return DayTypeDto.Friday;
-            case Saturday:
-                return DayTypeDto.Saturday;
-            case Sunday:
-                return DayTypeDto.Sunday;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + dayType);
-        }
+        return switch (dayType) {
+            case Monday -> DayTypeDto.Monday;
+            case Tuesday -> DayTypeDto.Tuesday;
+            case Wednesday -> DayTypeDto.Wednesday;
+            case Thursday -> DayTypeDto.Thursday;
+            case Friday -> DayTypeDto.Friday;
+            case Saturday -> DayTypeDto.Saturday;
+            case Sunday -> DayTypeDto.Sunday;
+            default -> throw new IllegalArgumentException("Unexpected value: " + dayType);
+        };
     }
 
     /**
      * @author Samantha Perez Hoffman (samperezh)
      * @param day
-     * @return
      */
     public static DayType convertStringToDayType(String day){
         if (day == null) {
             throw new IllegalArgumentException("DayType cannot be null!");
         }
-        switch (day) {
-            case "Monday":
-                return DayType.Monday;
-            case "Tuesday":
-                return DayType.Tuesday;
-            case "Wednesday":
-                return DayType.Wednesday;
-            case "Thursday":
-                return DayType.Thursday;
-            case "Friday":
-                return DayType.Friday;
-            case "Saturday":
-                return DayType.Saturday;
-            case "Sunday":
-                return DayType.Sunday;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + day);
-        }
+        return switch (day) {
+            case "Monday" -> DayType.Monday;
+            case "Tuesday" -> DayType.Tuesday;
+            case "Wednesday" -> DayType.Wednesday;
+            case "Thursday" -> DayType.Thursday;
+            case "Friday" -> DayType.Friday;
+            case "Saturday" -> DayType.Saturday;
+            case "Sunday" -> DayType.Sunday;
+            default -> throw new IllegalArgumentException("Unexpected value: " + day);
+        };
     }
 
     /**
      * @author Samantha Perez Hoffman (samperezh)
      * @param specificWeekDay
-     * @return
      */
     public static SpecificWeekDayDto convertToDto(SpecificWeekDay specificWeekDay) {
         if (specificWeekDay == null) {
@@ -234,7 +211,6 @@ public class ToDtoHelper {
     /**
      * @author Samantha Perez Hoffman (samperezh)
      * @param shift
-     * @return
      */
     public static ShiftDto convertToDto(Shift shift) {
         if (shift == null) {
@@ -243,13 +219,11 @@ public class ToDtoHelper {
         return new ShiftDto(shift.getShiftId(), shift.getStartTime(), shift.getEndTime(),
                 convertToDto(shift.getDayOfTheWeek()), convertToDto(shift.getMuseumManagementSystem()),
                 convertToDto(shift.getEmployee()));
-
     }
 
     /**
      * @author Lucy Zhang (Lucy-Zh)
      * @param ticket
-     * @return
      */
     public static TicketDto convertToDto(Ticket ticket)
     {
@@ -278,7 +252,8 @@ public class ToDtoHelper {
                 convertToDto(loanRequest.getMuseumManagementSystem()));
     }
 
-    /** @author Nazia Chowdhury (naziaC)
+    /**
+     * @author Nazia Chowdhury (naziaC)
      * @param status
      * @return a LoanRequestStatusDto
      */
@@ -345,16 +320,12 @@ public class ToDtoHelper {
             throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
         }
 
-        switch (status) {
-            case Approved:
-                return DonationStatusDto.Approved;
-            case Rejected:
-                return DonationStatusDto.Rejected;
-            case Pending:
-                return DonationStatusDto.Pending;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + status);
-        }
+        return switch (status) {
+            case Approved -> DonationStatusDto.Approved;
+            case Rejected -> DonationStatusDto.Rejected;
+            case Pending -> DonationStatusDto.Pending;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
     }
 
     /**

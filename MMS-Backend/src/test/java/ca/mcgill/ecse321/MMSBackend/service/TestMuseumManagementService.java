@@ -313,7 +313,7 @@ public class TestMuseumManagementService {
 
         lenient().when(mmsRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
 
-            List<MuseumManagementSystem> mmsList = new ArrayList<MuseumManagementSystem>();
+            List<MuseumManagementSystem> mmsList = new ArrayList<>();
             mmsList.add(museum_1);
             return mmsList;
 
