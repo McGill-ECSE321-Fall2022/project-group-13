@@ -38,14 +38,14 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 
 | Name          | Deliverable 2 - Total Hours |Team Roles| 
 | ------------- | --------------- | --------------- |
-| <p align="center">Nazia Chowdhury </p>|<p align="center"> 39 hours</p>| <p align="center"> Oversees LoanRequest and MuseumManagementSystem classes <br> + <br> GitHub Documentation Author </p> |
-| <p align="center">Samantha Perez Hoffman</p>|<p align="center">41 hours</p>| <p align="center"> Oversees Shift, SpecificWeekDay and MuseumManagementSystem classes <br> + <br> PostWoman </p> |
+| <p align="center">Nazia Chowdhury </p>|<p align="center"> 39.5 hours</p>| <p align="center"> Oversees LoanRequest and MuseumManagementSystem classes <br> + <br> GitHub Documentation Author </p> |
+| <p align="center">Samantha Perez Hoffman</p>|<p align="center">44 hours</p>| <p align="center"> Oversees Shift, SpecificWeekDay and MuseumManagementSystem classes <br> + <br> PostWoman </p> |
 | <p align="center">Mona Kalaoun </p> |<p align="center">39 hours</p>| <p align="center"> Oversees Room and Artifact classes <br> + <br> Master Debugger and Artist </p> |
-| <p align="center">Yu An Lu</p> |<p align="center">39 hours</p>| <p align="center"> Oversees DonationRequest and MuseumManagementSystem classes <br> + <br> Grammar Specialist and Tech Support </p> |
+| <p align="center">Yu An Lu</p> |<p align="center">43 hours</p>| <p align="center"> Oversees DonationRequest and MuseumManagementSystem classes <br> + <br> PostWoman and Tech Support </p> |
 | <p align="center">Nikolas Pasichnik</p> |<p align="center">39 hours</p>| <p align="center"> Oversees Account, Employee, Manager and Client classes <br> + <br> Group-chat Announcer </p> |
-| <p align="center">Lucy Zhang</p> |<p align="center">40 hours</p>| <p align="center"> Oversees Ticket and MuseumManagementSystem classes <br> + <br> Meeting Minutes Writer and PostWoman </p> |
+| <p align="center">Lucy Zhang</p> |<p align="center">44 hours</p>| <p align="center"> Oversees Ticket and MuseumManagementSystem classes <br> + <br> Meeting Minutes Writer and PostWoman </p> |
 
-[Team Roles Detailed Description](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-2-Report#team-roles-detailed-description)
+[Team Roles Detailed Description](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Team-Roles-Detailed-Description#team-roles-detailed-description)
 
 ### Project reports
 [Project Deliverable 2](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-2-Report#meeting-minutes)

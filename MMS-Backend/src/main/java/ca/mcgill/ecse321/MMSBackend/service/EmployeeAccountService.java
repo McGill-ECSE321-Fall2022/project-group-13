@@ -49,7 +49,7 @@ public class EmployeeAccountService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot have empty fields");
         }
         // Case where any of the parameters are empty strings
-        if (username == "" || name == "" || password == "") {
+        if (username.equals("") || name.equals("") || password.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Cannot have empty fields");
         }
         // Case where the username contains whitespaces
@@ -88,7 +88,7 @@ public class EmployeeAccountService {
     @Transactional
     public Employee getEmployee(String username) {
         // Case where the username is empty or if it contains whitespaces
-        if (username == "" || username == null || username.contains(" ")) {
+        if (username == null || username.equals("") || username.contains(" ")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This username is invalid");
         }
         Employee employee = employeeRepository.findEmployeeByUsername(username);
@@ -137,7 +137,7 @@ public class EmployeeAccountService {
     @Transactional
     public Employee signInEmployeeAccount(String username, String password) {
         // Case where the password is empty or if it contains whitespaces
-        if (password == "" || password == null) {
+        if ( password == null || password.equals("") ) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This password is invalid");
         }
         Employee employee = getEmployee(username);
@@ -161,7 +161,7 @@ public class EmployeeAccountService {
     @Transactional
     public Employee editEmployeeAccount(String username, String newName, String newPassword) {
         // Case where the name is empty or if it contains whitespaces
-        if (newName == "" || newName == null) {
+        if ( newName == null || newName.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "This name is invalid");
         }
         // Case where the password is empty or if it contains whitespaces

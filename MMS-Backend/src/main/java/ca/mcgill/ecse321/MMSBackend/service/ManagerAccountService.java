@@ -42,7 +42,7 @@ public class ManagerAccountService {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
         }
         // Case where any of the parameters are empty strings
-        if (username == "" || name == "" || password == "") {
+        if (username.equals("") || name.equals("") || password.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
         }
         // Case where the username contains whitespaces
@@ -98,7 +98,7 @@ public class ManagerAccountService {
     @Transactional
     public Manager signInManagerAccount(String username, String password) {
         // Case where the password is empty or if it contains whitespaces
-        if (password == "" || password == null) {
+        if (password == null || password.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This password is invalid");
         }
         Manager manager = getManager();
@@ -123,7 +123,7 @@ public class ManagerAccountService {
     @Transactional
     public Manager editManagerAccount(String newName, String newPassword) {
         // Case where the name is empty or if it contains whitespaces
-        if (newName == "" || newName == null) {
+        if (  newName == null || newName.equals("")) {
             throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "This name is invalid");
         }
         // Case where the password is empty or if it contains whitespaces
