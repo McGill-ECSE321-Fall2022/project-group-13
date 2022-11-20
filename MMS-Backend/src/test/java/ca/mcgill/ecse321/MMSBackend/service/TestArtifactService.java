@@ -164,8 +164,6 @@ public class TestArtifactService {
         assertEquals(LOAN_FEE, a.getLoanFee());
         assertEquals(IS_DAMAGED, a.getIsDamaged());
         assertEquals(WORTH, a.getWorth());
-        assertEquals(R_ID, a.getRoomLocation().getRoomId());
-        assertEquals(MMS_ID, a.getMuseumManagementSystem().getSystemId());
     }
 
     @Test
@@ -326,8 +324,6 @@ public class TestArtifactService {
         assertEquals(LOAN_FEE, a.getLoanFee());
         assertEquals(IS_DAMAGED, a.getIsDamaged());
         assertEquals(WORTH, a.getWorth());
-        assertEquals(R_ID, a.getRoomLocation().getRoomId());
-        assertEquals(MMS_ID, a.getMuseumManagementSystem().getSystemId());
     }
 
     @Test
