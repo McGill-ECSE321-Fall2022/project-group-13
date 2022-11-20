@@ -7,6 +7,13 @@ import ca.mcgill.ecse321.MMSBackend.dto.*;
 import ca.mcgill.ecse321.MMSBackend.dto.DonationRequestDto.DonationStatusDto;
 import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto.DayTypeDto;
 
+/**
+ * @author Team 13
+ * 
+ * The ToDtoHelper class contains helper methods that convert 
+ * classes from the model into Data Transfer Objects (DTO) and 
+ * vice-versa 
+  */
 public class ToDtoHelper {
 
     /**
