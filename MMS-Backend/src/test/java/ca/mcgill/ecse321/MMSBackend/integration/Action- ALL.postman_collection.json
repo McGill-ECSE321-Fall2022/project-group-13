@@ -2639,7 +2639,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/{{artifact2_id}}?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifacts/{{artifact2_id}}?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2660,7 +2660,7 @@
 										},
 										{
 											"key": "image",
-											"value": "MMS-backend/images/orange.PNG"
+											"value": "images/orange.PNG"
 										},
 										{
 											"key": "status",
@@ -2710,7 +2710,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2731,7 +2731,7 @@
 										},
 										{
 											"key": "image",
-											"value": "MMS-backend/images/orange.PNG"
+											"value": "images/orange.PNG"
 										},
 										{
 											"key": "status",
