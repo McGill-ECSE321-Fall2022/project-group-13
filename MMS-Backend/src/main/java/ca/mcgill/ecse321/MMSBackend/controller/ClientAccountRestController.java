@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.MMSBackend.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ca.mcgill.ecse321.MMSBackend.dto.MuseumManagementSystemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +40,10 @@ public class ClientAccountRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
-    @Autowired
-    private ToDtoHelper toDtoHelper;
-
     @GetMapping(value = { "/clients", "/clients/" })
     public ResponseEntity<List<ClientDto>> getAllClients() throws IllegalArgumentException {
         return new ResponseEntity<>(
-                service.getAllClients().stream().map(p -> toDtoHelper.convertToDto(p)).collect(Collectors.toList()),
+                service.getAllClients().stream().map(this::convertToDto).collect(Collectors.toList()),
                 HttpStatus.OK);
     }
 
@@ -55,14 +53,14 @@ public class ClientAccountRestController {
             @RequestParam int systemId) throws IllegalArgumentException {
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         Client client = service.createClient(username, name, password, mms);
-        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.CREATED);
+        return new ResponseEntity<ClientDto>(convertToDto(client), HttpStatus.CREATED);
     }
 
     @GetMapping(value = { "/client/{username}", "/client/{username}/" })
     public ResponseEntity<ClientDto> getClient(@PathVariable("username") String username)
             throws IllegalArgumentException {
         Client client = service.getClient(username);
-        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(convertToDto(client), HttpStatus.OK);
     }
 
     @DeleteMapping(value = { "/client/{username}", "/client/{username}/" })
@@ -74,13 +72,32 @@ public class ClientAccountRestController {
     public ResponseEntity<ClientDto> signInClientAccount(@PathVariable("username") String username,
             @RequestParam String password) throws IllegalArgumentException {
         Client client = service.signInClientAccount(username, password);
-        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(convertToDto(client), HttpStatus.OK);
     }
 
     @PutMapping(value = { "/client/edit/{username}", "/client/edit/{username}/" })
     public ResponseEntity<ClientDto> editClient(@PathVariable("username") String username, @RequestParam String name,
             @RequestParam String password) throws IllegalArgumentException {
         Client client = service.editClientAccount(username, name, password);
-        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(convertToDto(client), HttpStatus.OK);
+    }
+
+    // Helper methods to convert classes from the model into DTOs and vice-versa
+
+    private ClientDto convertToDto(Client client) {
+        if (client == null) {
+            throw new IllegalArgumentException("There is no such Client!");
+        }
+        MuseumManagementSystemDto mmsDto = convertToDto(client.getMuseumManagementSystem());
+
+        return new ClientDto(client.getUsername(), client.getName(), client.getPassword(),
+                client.getCurrentLoanNumber(), mmsDto);
+    }
+
+    private MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
+        if (mms == null) {
+            throw new IllegalArgumentException("There is no such Museum Management System!");
+        }
+        return new MuseumManagementSystemDto(mms.getSystemId(), mms.getName(), mms.getOpenTime(), mms.getCloseTime(), mms.getMaxLoanNumber(), mms.getTicketFee());
     }
 }

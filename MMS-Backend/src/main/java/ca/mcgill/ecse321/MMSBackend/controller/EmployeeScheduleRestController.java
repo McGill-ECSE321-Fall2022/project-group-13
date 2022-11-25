@@ -4,6 +4,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse321.MMSBackend.dto.EmployeeDto;
+import ca.mcgill.ecse321.MMSBackend.dto.MuseumManagementSystemDto;
+import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,9 +49,6 @@ public class EmployeeScheduleRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
-    @Autowired
-    private ToDtoHelper toDtoHelper;
-
     /**
      * Create a new shift 
      * 
@@ -64,10 +64,10 @@ public class EmployeeScheduleRestController {
             @RequestParam String day, @RequestParam Time startTime,
             @RequestParam Time endTime) throws IllegalArgumentException {
         Employee employee = employeeAccountService.getEmployee(employeeUsername);
-        DayType dayType = toDtoHelper.convertStringToDayType(day);
+        DayType dayType = convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         Shift shift = employeeScheduleService.createShift(employee, specificWeekDay, startTime, endTime);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(shift), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDto(shift), HttpStatus.CREATED);
     }
 
 
@@ -92,7 +92,7 @@ public class EmployeeScheduleRestController {
     @DeleteMapping(value = { "/shift/day", "/shift/day/" })
     public void deleteAllShiftsForDay(@RequestParam String dayType)
             throws IllegalArgumentException {
-        employeeScheduleService.deleteAllShiftsForDay(toDtoHelper.convertStringToDayType(dayType));
+        employeeScheduleService.deleteAllShiftsForDay(convertStringToDayType(dayType));
     }
 
     /**
@@ -118,7 +118,7 @@ public class EmployeeScheduleRestController {
     public ResponseEntity<List<ShiftDto>> getAllShifts() {
         List<ShiftDto> shiftsDto = new ArrayList<>();
         for (Shift shift : employeeScheduleService.getAllShifts()) {
-            shiftsDto.add(toDtoHelper.convertToDto(shift));
+            shiftsDto.add(convertToDto(shift));
         }
         return new ResponseEntity<>(shiftsDto , HttpStatus.OK);
     }
@@ -136,7 +136,7 @@ public class EmployeeScheduleRestController {
         Employee employee = employeeAccountService.getEmployee(employeeUsername);
         List<ShiftDto> shiftsDto = new ArrayList<>();
         for (Shift shift : employeeScheduleService.getAllShiftsForEmployee(employee)) {
-            shiftsDto.add(toDtoHelper.convertToDto(shift));
+            shiftsDto.add(convertToDto(shift));
         }
         return new ResponseEntity<>(shiftsDto , HttpStatus.OK);
     }
@@ -151,10 +151,10 @@ public class EmployeeScheduleRestController {
     @GetMapping(value = { "/shift/day", "/shift/day/" })
     public ResponseEntity<List<ShiftDto>> getAllShiftsForDay(@RequestParam String day)
             throws IllegalArgumentException {
-        DayType dayType = toDtoHelper.convertStringToDayType(day);
+        DayType dayType = convertStringToDayType(day);
         List<ShiftDto> shiftsDto = new ArrayList<>();
         for (Shift shift : employeeScheduleService.getAllShiftsForDay(dayType)) {
-            shiftsDto.add(toDtoHelper.convertToDto(shift));
+            shiftsDto.add(convertToDto(shift));
         }
         return new ResponseEntity<>(shiftsDto , HttpStatus.OK);
     }
@@ -172,7 +172,7 @@ public class EmployeeScheduleRestController {
     public ResponseEntity<ShiftDto> updateShiftStartEndTime(@PathVariable("shiftId") int shiftId, @RequestParam Time startTime,
             @RequestParam Time endTime) throws IllegalArgumentException {
         Shift shift = employeeScheduleService.updateShiftStartEndTime(shiftId, startTime, endTime);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(shift), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(shift), HttpStatus.OK);
     }
 
     /**
@@ -186,10 +186,10 @@ public class EmployeeScheduleRestController {
     @PutMapping(value = { "/shift/day/{shiftId}", "/shift/day/{shiftId}/" })
     public ResponseEntity<ShiftDto> updateShiftDay(@PathVariable("shiftId") int shiftId,
             @RequestParam String day) throws IllegalArgumentException {
-        DayType dayType = toDtoHelper.convertStringToDayType(day);
+        DayType dayType = convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         Shift shift = employeeScheduleService.updateShiftDay(shiftId, specificWeekDay);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(shift), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(shift), HttpStatus.OK);
     }
 
     /**
@@ -204,10 +204,79 @@ public class EmployeeScheduleRestController {
     public ResponseEntity<SpecificWeekDayDto> updateSpecificWeekDayStatus(
             @RequestParam String day, @RequestParam boolean isClosed)
             throws IllegalArgumentException {
-        DayType dayType = toDtoHelper.convertStringToDayType(day);
+        DayType dayType = convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
         specificWeekDay = employeeScheduleService.updateSpecificWeekDayStatus(specificWeekDay, isClosed);
 
-        return new ResponseEntity<>(toDtoHelper.convertToDto(specificWeekDay), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(specificWeekDay), HttpStatus.OK);
+    }
+
+    // Helper methods to convert classes from the model into DTOs and vice-versa
+
+    private DayType convertStringToDayType(String day){
+        if (day == null) {
+            throw new IllegalArgumentException("DayType cannot be null!");
+        }
+        return switch (day) {
+            case "Monday" -> DayType.Monday;
+            case "Tuesday" -> DayType.Tuesday;
+            case "Wednesday" -> DayType.Wednesday;
+            case "Thursday" -> DayType.Thursday;
+            case "Friday" -> DayType.Friday;
+            case "Saturday" -> DayType.Saturday;
+            case "Sunday" -> DayType.Sunday;
+            default -> throw new IllegalArgumentException("Unexpected value: " + day);
+        };
+    }
+
+    private ShiftDto convertToDto(Shift shift) {
+        if (shift == null) {
+            throw new IllegalArgumentException("Shift cannot be null!");
+        }
+        return new ShiftDto(shift.getShiftId(), shift.getStartTime(), shift.getEndTime(),
+                convertToDto(shift.getDayOfTheWeek()), convertToDto(shift.getMuseumManagementSystem()),
+                convertToDto(shift.getEmployee()));
+    }
+
+    private SpecificWeekDayDto convertToDto(SpecificWeekDay specificWeekDay) {
+        if (specificWeekDay == null) {
+            throw new IllegalArgumentException("SpecificWeekDay cannot be null!");
+        }
+        return new SpecificWeekDayDto(convertToDto(specificWeekDay.getDayType()), specificWeekDay.getIsClosed(),
+                convertToDto(specificWeekDay.getMuseumManagementSystem()));
+    }
+
+    private SpecificWeekDayDto.DayTypeDto convertToDto(DayType dayType) {
+        if (dayType == null) {
+            throw new IllegalArgumentException("DayType cannot be null!");
+        }
+        return switch (dayType) {
+            case Monday -> SpecificWeekDayDto.DayTypeDto.Monday;
+            case Tuesday -> SpecificWeekDayDto.DayTypeDto.Tuesday;
+            case Wednesday -> SpecificWeekDayDto.DayTypeDto.Wednesday;
+            case Thursday -> SpecificWeekDayDto.DayTypeDto.Thursday;
+            case Friday -> SpecificWeekDayDto.DayTypeDto.Friday;
+            case Saturday -> SpecificWeekDayDto.DayTypeDto.Saturday;
+            case Sunday -> SpecificWeekDayDto.DayTypeDto.Sunday;
+            default -> throw new IllegalArgumentException("Unexpected value: " + dayType);
+        };
+    }
+
+    private MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
+        if (mms == null) {
+            throw new IllegalArgumentException("There is no such Museum Management System!");
+        }
+        return new MuseumManagementSystemDto(mms.getSystemId(), mms.getName(), mms.getOpenTime(), mms.getCloseTime(), mms.getMaxLoanNumber(), mms.getTicketFee());
+    }
+
+    private EmployeeDto convertToDto(Employee employee) {
+
+        if (employee == null) {
+            throw new IllegalArgumentException("There is no such Employee!");
+        }
+        MuseumManagementSystemDto mmsDto = convertToDto(employee.getMuseumManagementSystem());
+
+        return new EmployeeDto(employee.getUsername(), employee.getName(),
+                employee.getPassword(), mmsDto);
     }
 }

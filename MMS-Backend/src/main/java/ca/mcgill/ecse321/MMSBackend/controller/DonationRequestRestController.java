@@ -38,9 +38,6 @@ public class DonationRequestRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
-    @Autowired
-    private ToDtoHelper toDtoHelper;
-
     /**
      * Creates a new artifact to be donated
      * 
@@ -66,7 +63,7 @@ public class DonationRequestRestController {
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         Artifact artifact = donationRequestService.createDonationArtifact(name, image, description, isDamaged, worth, mms);
 
-        return new ResponseEntity<>(toDtoHelper.convertToDto(artifact), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDto(artifact), HttpStatus.CREATED);
     }
 
      /**
@@ -86,7 +83,7 @@ public class DonationRequestRestController {
         MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(systemId);
         DonationRequest donationRequest = donationRequestService.createDonationRequest(client, artifact, museumManagementSystem);
 
-        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDto(donationRequest), HttpStatus.CREATED);
     }
 
     /**
@@ -103,7 +100,7 @@ public class DonationRequestRestController {
         Room room = mmsService.getRoom(roomId);
         DonationRequest donationRequest = donationRequestService.approveDonationRequest(requestId, room);
         
-        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -117,7 +114,7 @@ public class DonationRequestRestController {
     public ResponseEntity<DonationRequestDto> rejectDonationRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         DonationRequest donationRequest = donationRequestService.rejectDonationRequest(requestId);
 
-        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -131,7 +128,7 @@ public class DonationRequestRestController {
     public ResponseEntity<DonationRequestDto> getDonationRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         DonationRequest donationRequest = donationRequestService.getDonationRequest(requestId);
 
-        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -145,7 +142,7 @@ public class DonationRequestRestController {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequests()) {
-            donationRequestsDtos.add(toDtoHelper.convertToDto(donationRequest));
+            donationRequestsDtos.add(convertToDto(donationRequest));
         }
 
         return new ResponseEntity<>(donationRequestsDtos, HttpStatus.OK);
@@ -162,8 +159,8 @@ public class DonationRequestRestController {
     public ResponseEntity<List<DonationRequestDto>> getAllDonationRequestsByStatus(@PathVariable("status") String status) throws IllegalArgumentException {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
-        for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByStatus(toDtoHelper.convertStringToDonationStatus(status))) {
-            donationRequestsDtos.add(toDtoHelper.convertToDto(donationRequest));
+        for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByStatus(convertStringToDonationStatus(status))) {
+            donationRequestsDtos.add(convertToDto(donationRequest));
         }
 
         return new ResponseEntity<>(donationRequestsDtos, HttpStatus.OK);
@@ -185,7 +182,7 @@ public class DonationRequestRestController {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByClient(client)) {
-            donationRequestsDtos.add(toDtoHelper.convertToDto(donationRequest));
+            donationRequestsDtos.add(convertToDto(donationRequest));
         }
 
         return new ResponseEntity<>(donationRequestsDtos, HttpStatus.OK);
@@ -205,5 +202,109 @@ public class DonationRequestRestController {
         boolean response = donationRequestService.deleteRejectedDonationRequest(requestId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // Helper methods to convert classes from the model into DTOs and vice-versa
+
+    private ArtifactDto convertToDto(Artifact a) {
+        if (a == null) {
+            throw new IllegalArgumentException("There is no such Artifact!");
+        }
+        RoomDto roomDto = convertToDto(a.getRoomLocation());
+        MuseumManagementSystemDto mmsDto = convertToDto(a.getMuseumManagementSystem());
+        ArtifactDto.LoanStatusDto statusDto = convertToDto(a.getLoanStatus());
+
+        return new ArtifactDto(a.getArtifactId(), a.getName(), a.getImage(), a.getDescription(),
+                statusDto, a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
+    }
+
+    private RoomDto convertToDto(Room r) {
+        if (r == null) {
+            return null;
+        }
+        MuseumManagementSystemDto systemDto = convertToDto(r.getMuseumManagementSystem());
+        RoomDto.RoomTypeDto typeDto = convertToDto(r.getType());
+        return new RoomDto(r.getRoomId(), r.getName(), typeDto, systemDto);
+    }
+
+    private MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
+        if (mms == null) {
+            throw new IllegalArgumentException("There is no such Museum Management System!");
+        }
+        return new MuseumManagementSystemDto(mms.getSystemId(), mms.getName(), mms.getOpenTime(), mms.getCloseTime(), mms.getMaxLoanNumber(), mms.getTicketFee());
+    }
+
+    private ArtifactDto.LoanStatusDto convertToDto(Artifact.LoanStatus status) {
+        if (status == null) {
+            return null;
+        }
+
+        return switch (status) {
+            case Available -> ArtifactDto.LoanStatusDto.Available;
+            case Unavailable -> ArtifactDto.LoanStatusDto.Unavailable;
+            case Loaned -> ArtifactDto.LoanStatusDto.Loaned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
+    private RoomDto.RoomTypeDto convertToDto(Room.RoomType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Room type cannot be null.");
+        }
+
+        return switch (type) {
+            case Small -> RoomDto.RoomTypeDto.Small;
+            case Large -> RoomDto.RoomTypeDto.Large;
+            case Storage -> RoomDto.RoomTypeDto.Storage;
+            default -> throw new IllegalArgumentException("Unexpected value: " + type);
+        };
+    }
+
+    private DonationRequestDto convertToDto(DonationRequest donationRequest) {
+        if (donationRequest == null) {
+            throw new IllegalArgumentException("Donation request cannot be null!");
+        }
+
+        return new DonationRequestDto(donationRequest.getRequestId(),
+                convertToDto(donationRequest.getClient()),
+                convertToDto(donationRequest.getArtifact()),
+                convertToDto(donationRequest.getStatus()),
+                convertToDto(donationRequest.getMuseumManagementSystem()));
+    }
+
+    private DonationRequest.DonationStatus convertStringToDonationStatus(String status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case "Pending" -> DonationRequest.DonationStatus.Pending;
+            case "Approved" -> DonationRequest.DonationStatus.Approved;
+            case "Rejected" -> DonationRequest.DonationStatus.Rejected;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
+    private DonationRequestDto.DonationStatusDto convertToDto(DonationRequest.DonationStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
+        }
+
+        return switch (status) {
+            case Approved -> DonationRequestDto.DonationStatusDto.Approved;
+            case Rejected -> DonationRequestDto.DonationStatusDto.Rejected;
+            case Pending -> DonationRequestDto.DonationStatusDto.Pending;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
+    private ClientDto convertToDto(Client client) {
+        if (client == null) {
+            throw new IllegalArgumentException("There is no such Client!");
+        }
+        MuseumManagementSystemDto mmsDto = convertToDto(client.getMuseumManagementSystem());
+
+        return new ClientDto(client.getUsername(), client.getName(), client.getPassword(),
+                client.getCurrentLoanNumber(), mmsDto);
     }
 }

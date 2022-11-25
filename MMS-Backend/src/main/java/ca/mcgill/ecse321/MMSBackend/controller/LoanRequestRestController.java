@@ -1,10 +1,7 @@
 package ca.mcgill.ecse321.MMSBackend.controller;
 
-import ca.mcgill.ecse321.MMSBackend.dto.LoanRequestDto;
-import ca.mcgill.ecse321.MMSBackend.model.Artifact;
-import ca.mcgill.ecse321.MMSBackend.model.Client;
-import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
-import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
+import ca.mcgill.ecse321.MMSBackend.dto.*;
+import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.service.ArtifactService;
 import ca.mcgill.ecse321.MMSBackend.service.ClientAccountService;
 import ca.mcgill.ecse321.MMSBackend.service.LoanRequestService;
@@ -36,11 +33,7 @@ public class LoanRequestRestController {
     private ClientAccountService clientAccountService;
     @Autowired
     private MuseumManagementSystemService mmsService;
-
-    @Autowired
-    private ToDtoHelper toDtoHelper;
-
-
+    
     /**
      * Create a new loan request
      * @param loanDuration
@@ -55,7 +48,7 @@ public class LoanRequestRestController {
         Client client = clientAccountService.getClient(username);
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, artifact, client, mms);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDto(loanRequest), HttpStatus.CREATED);
     }
 
     /**
@@ -66,7 +59,7 @@ public class LoanRequestRestController {
     @GetMapping(value = {"/loanRequest/{requestId}", "/loanRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> getLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.getLoanRequest(requestId);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(loanRequest), HttpStatus.OK);
     }
 
     /**
@@ -75,7 +68,7 @@ public class LoanRequestRestController {
      */
     @GetMapping(value = {"/loanRequests", "/loanRequests/"})
     public ResponseEntity<List<LoanRequestDto>> getAllLoanRequests() {
-        return new ResponseEntity<>(loanRequestService.getAllLoanRequests().stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(loanRequestService.getAllLoanRequests().stream().map(this::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -88,8 +81,8 @@ public class LoanRequestRestController {
     @GetMapping(value = {"/loanRequests/Status/{status}", "/loanRequests/Status/{status}/"})
     public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByStatus(@PathVariable("status") String status) throws IllegalArgumentException {
         List<LoanRequestDto> loanRequestsDtos = new ArrayList<>();
-        for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(toDtoHelper.convertStringToLoanStatus(status))) {
-            loanRequestsDtos.add(toDtoHelper.convertToDto(loanRequest));
+        for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(convertStringToLoanStatus(status))) {
+            loanRequestsDtos.add(convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsDtos, HttpStatus.OK);
     }
@@ -103,7 +96,7 @@ public class LoanRequestRestController {
     public ResponseEntity<List<LoanRequestDto>> getAllActiveLoanRequests() throws IllegalArgumentException {
         List<LoanRequestDto> loanRequestsByStatusDto = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllActiveLoanRequests()) {
-            loanRequestsByStatusDto.add(toDtoHelper.convertToDto(loanRequest));
+            loanRequestsByStatusDto.add(convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsByStatusDto, HttpStatus.OK);
     }
@@ -119,7 +112,7 @@ public class LoanRequestRestController {
         Client client = clientAccountService.getClient(username);
         List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByClient(client)) {
-            loanRequestsByClientDto.add(toDtoHelper.convertToDto(loanRequest));
+            loanRequestsByClientDto.add(convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsByClientDto, HttpStatus.OK);
     }
@@ -133,7 +126,7 @@ public class LoanRequestRestController {
     @PutMapping(value = {"/loanRequest/approveRequest/{requestId}", "/loanRequest/approveRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> approveLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.approveLoanRequest(requestId);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(loanRequest), HttpStatus.OK);
     }
 
     /**
@@ -145,7 +138,7 @@ public class LoanRequestRestController {
     @PutMapping(value = {"/loanRequest/rejectRequest/{requestId}", "/loanRequest/rejectRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> rejectLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.rejectLoanRequest(requestId);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(loanRequest), HttpStatus.OK);
     }
 
     /**
@@ -157,6 +150,126 @@ public class LoanRequestRestController {
     @PutMapping(value = {"/loanRequest/loanReturn/{requestId}", "/loanRequest/loanReturn/{requestId}/"})
     public ResponseEntity<LoanRequestDto> returnLoanedArtifact(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.returnLoanedArtifact(requestId);
-        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(convertToDto(loanRequest), HttpStatus.OK);
+    }
+
+    // Helper methods to convert classes from the model into DTOs and vice-versa
+
+    private LoanRequestDto convertToDto(LoanRequest loanRequest) {
+        if (loanRequest == null) {
+            throw new IllegalArgumentException("Loan request cannot be null!");
+        }
+        return new LoanRequestDto(loanRequest.getRequestId(),
+                loanRequest.getLoanDuration(),
+                loanRequest.getFee(),
+                convertToDto(loanRequest.getClient()),
+                convertToDto(loanRequest.getArtifact()),
+                convertToDto(loanRequest.getStatus()),
+                convertToDto(loanRequest.getMuseumManagementSystem()));
+    }
+
+    private LoanRequestDto.LoanRequestStatusDto convertToDto(LoanRequest.LoanStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case Approved -> LoanRequestDto.LoanRequestStatusDto.Approved;
+            case Rejected -> LoanRequestDto.LoanRequestStatusDto.Rejected;
+            case Pending -> LoanRequestDto.LoanRequestStatusDto.Pending;
+            case Returned -> LoanRequestDto.LoanRequestStatusDto.Returned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
+    private LoanRequest.LoanStatus convertStringToLoanStatus(String status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case "Approved" -> LoanRequest.LoanStatus.Approved;
+            case "Rejected" -> LoanRequest.LoanStatus.Rejected;
+            case "Pending" -> LoanRequest.LoanStatus.Pending;
+            case "Returned" -> LoanRequest.LoanStatus.Returned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
+    }
+
+    private Artifact.LoanStatus convertArtifactStringToLoanStatus(String status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null.");
+        }
+
+        return switch (status) {
+            case "Available" -> Artifact.LoanStatus.Available;
+            case "Unavailable" -> Artifact.LoanStatus.Unavailable;
+            case "Loaned" -> Artifact.LoanStatus.Loaned;
+            default -> null;
+        };
+    }
+
+    private ClientDto convertToDto(Client client) {
+        if (client == null) {
+            throw new IllegalArgumentException("There is no such Client!");
+        }
+        MuseumManagementSystemDto mmsDto = convertToDto(client.getMuseumManagementSystem());
+
+        return new ClientDto(client.getUsername(), client.getName(), client.getPassword(),
+                client.getCurrentLoanNumber(), mmsDto);
+    }
+
+    private MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
+        if (mms == null) {
+            throw new IllegalArgumentException("There is no such Museum Management System!");
+        }
+        return new MuseumManagementSystemDto(mms.getSystemId(), mms.getName(), mms.getOpenTime(), mms.getCloseTime(), mms.getMaxLoanNumber(), mms.getTicketFee());
+    }
+
+    private ArtifactDto convertToDto(Artifact a) {
+        if (a == null) {
+            throw new IllegalArgumentException("There is no such Artifact!");
+        }
+        RoomDto roomDto = convertToDto(a.getRoomLocation());
+        MuseumManagementSystemDto mmsDto = convertToDto(a.getMuseumManagementSystem());
+        ArtifactDto.LoanStatusDto statusDto = convertToDto(a.getLoanStatus());
+
+        return new ArtifactDto(a.getArtifactId(), a.getName(), a.getImage(), a.getDescription(),
+                statusDto, a.getIsDamaged(), a.getLoanFee(), a.getWorth(), roomDto, mmsDto);
+    }
+
+    private RoomDto convertToDto(Room r) {
+        if (r == null) {
+            return null;
+        }
+        MuseumManagementSystemDto systemDto = convertToDto(r.getMuseumManagementSystem());
+        RoomDto.RoomTypeDto typeDto = convertToDto(r.getType());
+        return new RoomDto(r.getRoomId(), r.getName(), typeDto, systemDto);
+    }
+
+    private RoomDto.RoomTypeDto convertToDto(Room.RoomType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Room type cannot be null.");
+        }
+
+        return switch (type) {
+            case Small -> RoomDto.RoomTypeDto.Small;
+            case Large -> RoomDto.RoomTypeDto.Large;
+            case Storage -> RoomDto.RoomTypeDto.Storage;
+            default -> throw new IllegalArgumentException("Unexpected value: " + type);
+        };
+    }
+
+    private ArtifactDto.LoanStatusDto convertToDto(Artifact.LoanStatus status) {
+        if (status == null) {
+            return null;
+        }
+
+        return switch (status) {
+            case Available -> ArtifactDto.LoanStatusDto.Available;
+            case Unavailable -> ArtifactDto.LoanStatusDto.Unavailable;
+            case Loaned -> ArtifactDto.LoanStatusDto.Loaned;
+            default -> throw new IllegalArgumentException("Unexpected value: " + status);
+        };
     }
 }
