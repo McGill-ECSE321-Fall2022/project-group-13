@@ -39,10 +39,13 @@ public class ClientAccountRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
+    @Autowired
+    private ToDtoHelper toDtoHelper;
+
     @GetMapping(value = { "/clients", "/clients/" })
     public ResponseEntity<List<ClientDto>> getAllClients() throws IllegalArgumentException {
         return new ResponseEntity<>(
-                service.getAllClients().stream().map(p -> ToDtoHelper.convertToDto(p)).collect(Collectors.toList()),
+                service.getAllClients().stream().map(p -> toDtoHelper.convertToDto(p)).collect(Collectors.toList()),
                 HttpStatus.OK);
     }
 
@@ -52,14 +55,14 @@ public class ClientAccountRestController {
             @RequestParam int systemId) throws IllegalArgumentException {
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         Client client = service.createClient(username, name, password, mms);
-        return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.CREATED);
+        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.CREATED);
     }
 
     @GetMapping(value = { "/client/{username}", "/client/{username}/" })
     public ResponseEntity<ClientDto> getClient(@PathVariable("username") String username)
             throws IllegalArgumentException {
         Client client = service.getClient(username);
-        return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.OK);
     }
 
     @DeleteMapping(value = { "/client/{username}", "/client/{username}/" })
@@ -71,13 +74,13 @@ public class ClientAccountRestController {
     public ResponseEntity<ClientDto> signInClientAccount(@PathVariable("username") String username,
             @RequestParam String password) throws IllegalArgumentException {
         Client client = service.signInClientAccount(username, password);
-        return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.OK);
     }
 
     @PutMapping(value = { "/client/edit/{username}", "/client/edit/{username}/" })
     public ResponseEntity<ClientDto> editClient(@PathVariable("username") String username, @RequestParam String name,
             @RequestParam String password) throws IllegalArgumentException {
         Client client = service.editClientAccount(username, name, password);
-        return new ResponseEntity<ClientDto>(ToDtoHelper.convertToDto(client), HttpStatus.OK);
+        return new ResponseEntity<ClientDto>(toDtoHelper.convertToDto(client), HttpStatus.OK);
     }
 }

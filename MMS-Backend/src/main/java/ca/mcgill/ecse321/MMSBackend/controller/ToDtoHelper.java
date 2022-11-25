@@ -3,6 +3,9 @@ package ca.mcgill.ecse321.MMSBackend.controller;
 import ca.mcgill.ecse321.MMSBackend.model.*;
 import ca.mcgill.ecse321.MMSBackend.model.DonationRequest.DonationStatus;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay.DayType;
+
+import org.springframework.stereotype.Service;
+
 import ca.mcgill.ecse321.MMSBackend.dto.*;
 import ca.mcgill.ecse321.MMSBackend.dto.DonationRequestDto.DonationStatusDto;
 import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto.DayTypeDto;
@@ -14,13 +17,14 @@ import ca.mcgill.ecse321.MMSBackend.dto.SpecificWeekDayDto.DayTypeDto;
  * classes from the model into Data Transfer Objects (DTO) and 
  * vice-versa 
   */
+@Service
 public class ToDtoHelper {
 
     /**
      * @author Lucy Zhang (Lucy-Zh)
      * @param mms
      */
-    public static MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
+    public MuseumManagementSystemDto convertToDto(MuseumManagementSystem mms) {
         if (mms == null) {
             throw new IllegalArgumentException("There is no such Museum Management System!");
         }
@@ -31,7 +35,7 @@ public class ToDtoHelper {
      * @author Mona Kalaoun (m-kln)
      * @param r
      */
-    public static RoomDto convertToDto(Room r) {
+    public RoomDto convertToDto(Room r) {
         if (r == null) {
             return null;
         }
@@ -46,7 +50,7 @@ public class ToDtoHelper {
      * @param type
      * @return a LoanStatusDto
      */
-    public static RoomDto.RoomTypeDto convertToDto(Room.RoomType type) {
+    public RoomDto.RoomTypeDto convertToDto(Room.RoomType type) {
         if (type == null) {
             throw new IllegalArgumentException("Room type cannot be null.");
         }
@@ -64,7 +68,7 @@ public class ToDtoHelper {
      * @param roomType
      * @return a RoomTypeDto
      */
-    public static Room.RoomType convertStringToRoomType(String roomType) {
+    public Room.RoomType convertStringToRoomType(String roomType) {
         if (roomType == null) {
             throw new IllegalArgumentException("Room type cannot be null.");
         }
@@ -81,7 +85,7 @@ public class ToDtoHelper {
      * @author Mona Kalaoun (m-kln)
      * @param a
      */
-    public static ArtifactDto convertToDto(Artifact a) {
+    public ArtifactDto convertToDto(Artifact a) {
         if (a == null) {
             throw new IllegalArgumentException("There is no such Artifact!");
         }
@@ -100,7 +104,7 @@ public class ToDtoHelper {
      * @param status
      * @return a LoanStatusDto
      */
-    public static ArtifactDto.LoanStatusDto convertToDto(Artifact.LoanStatus status) {
+    public ArtifactDto.LoanStatusDto convertToDto(Artifact.LoanStatus status) {
         if (status == null) {
             return null;
         }
@@ -117,7 +121,7 @@ public class ToDtoHelper {
      * @author Nikolas Pasichnik (NikolasPasichnik)
      * @param client
      */
-    public static ClientDto convertToDto(Client client) {
+    public ClientDto convertToDto(Client client) {
         if (client == null) {
             throw new IllegalArgumentException("There is no such Client!");
         }
@@ -133,7 +137,7 @@ public class ToDtoHelper {
      * @author Nikolas Pasichnik (NikolasPasichnik)
      * @param manager
      */
-    public static ManagerDto convertToDto(Manager manager) {
+    public ManagerDto convertToDto(Manager manager) {
 
         if (manager == null) {
             throw new IllegalArgumentException("There is no such Manager!");
@@ -150,7 +154,7 @@ public class ToDtoHelper {
      * @author Nikolas Pasichnik (NikolasPasichnik)
      * @param employee
      */
-    public static EmployeeDto convertToDto(Employee employee) {
+    public EmployeeDto convertToDto(Employee employee) {
 
         if (employee == null) {
             throw new IllegalArgumentException("There is no such Employee!");
@@ -167,7 +171,7 @@ public class ToDtoHelper {
      * @author Samantha Perez Hoffman (samperezh)
      * @param dayType
      */
-    public static DayTypeDto convertToDto(DayType dayType) {
+    public DayTypeDto convertToDto(DayType dayType) {
         if (dayType == null) {
             throw new IllegalArgumentException("DayType cannot be null!");
         }
@@ -187,7 +191,7 @@ public class ToDtoHelper {
      * @author Samantha Perez Hoffman (samperezh)
      * @param day
      */
-    public static DayType convertStringToDayType(String day){
+    public DayType convertStringToDayType(String day){
         if (day == null) {
             throw new IllegalArgumentException("DayType cannot be null!");
         }
@@ -207,7 +211,7 @@ public class ToDtoHelper {
      * @author Samantha Perez Hoffman (samperezh)
      * @param specificWeekDay
      */
-    public static SpecificWeekDayDto convertToDto(SpecificWeekDay specificWeekDay) {
+    public SpecificWeekDayDto convertToDto(SpecificWeekDay specificWeekDay) {
         if (specificWeekDay == null) {
             throw new IllegalArgumentException("SpecificWeekDay cannot be null!");
         }
@@ -219,7 +223,7 @@ public class ToDtoHelper {
      * @author Samantha Perez Hoffman (samperezh)
      * @param shift
      */
-    public static ShiftDto convertToDto(Shift shift) {
+    public ShiftDto convertToDto(Shift shift) {
         if (shift == null) {
             throw new IllegalArgumentException("Shift cannot be null!");
         }
@@ -232,7 +236,7 @@ public class ToDtoHelper {
      * @author Lucy Zhang (Lucy-Zh)
      * @param ticket
      */
-    public static TicketDto convertToDto(Ticket ticket)
+    public TicketDto convertToDto(Ticket ticket)
     {
         if(ticket == null)
         {
@@ -246,7 +250,7 @@ public class ToDtoHelper {
      * @param loanRequest
      * @return a LoanRequestDto
      */
-    public static LoanRequestDto convertToDto(LoanRequest loanRequest) {
+    public LoanRequestDto convertToDto(LoanRequest loanRequest) {
         if (loanRequest == null) {
             throw new IllegalArgumentException("Loan request cannot be null!");
         }
@@ -264,7 +268,7 @@ public class ToDtoHelper {
      * @param status
      * @return a LoanRequestStatusDto
      */
-    public static LoanRequestDto.LoanRequestStatusDto convertToDto(LoanRequest.LoanStatus status) {
+    public LoanRequestDto.LoanRequestStatusDto convertToDto(LoanRequest.LoanStatus status) {
         if (status == null) {
             throw new IllegalArgumentException("Status cannot be null.");
         }
@@ -285,7 +289,7 @@ public class ToDtoHelper {
      * @param status
      * @return a LoanRequest.LoanStatus
      */
-    public static LoanRequest.LoanStatus convertStringToLoanStatus(String status) {
+    public LoanRequest.LoanStatus convertStringToLoanStatus(String status) {
         if (status == null) {
             throw new IllegalArgumentException("Status cannot be null.");
         }
@@ -304,7 +308,7 @@ public class ToDtoHelper {
      * @param status
      * @return a Artifact.LoanStatus
      */
-    public static Artifact.LoanStatus convertArtifactStringToLoanStatus(String status) {
+    public Artifact.LoanStatus convertArtifactStringToLoanStatus(String status) {
         if (status == null) {
             throw new IllegalArgumentException("Status cannot be null.");
         }
@@ -322,7 +326,7 @@ public class ToDtoHelper {
      * @param status
      * @return a DonationStatusDto
      */
-    public static DonationStatusDto convertToDto(DonationStatus status) {
+    public DonationStatusDto convertToDto(DonationStatus status) {
         if (status == null) {
             throw new IllegalArgumentException("DonationRequestStatus cannot be null!");
         }
@@ -340,7 +344,7 @@ public class ToDtoHelper {
      * @param status
      * @return a DonationRequest.DonationStatus
      */
-    public static DonationRequest.DonationStatus convertStringToDonationStatus(String status) {
+    public DonationRequest.DonationStatus convertStringToDonationStatus(String status) {
         if (status == null) {
             throw new IllegalArgumentException("Status cannot be null.");
         }
@@ -358,7 +362,7 @@ public class ToDtoHelper {
      * @param donationRequest
      * @return a DonationRequestDto
      */
-    public static DonationRequestDto convertToDto(DonationRequest donationRequest) {
+    public DonationRequestDto convertToDto(DonationRequest donationRequest) {
         if (donationRequest == null) {
             throw new IllegalArgumentException("Donation request cannot be null!");
         }

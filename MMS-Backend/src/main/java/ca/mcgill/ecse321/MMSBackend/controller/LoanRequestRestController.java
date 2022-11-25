@@ -37,6 +37,9 @@ public class LoanRequestRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
+    @Autowired
+    private ToDtoHelper toDtoHelper;
+
 
     /**
      * Create a new loan request
@@ -52,7 +55,7 @@ public class LoanRequestRestController {
         Client client = clientAccountService.getClient(username);
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, artifact, client, mms);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.CREATED);
     }
 
     /**
@@ -63,7 +66,7 @@ public class LoanRequestRestController {
     @GetMapping(value = {"/loanRequest/{requestId}", "/loanRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> getLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.getLoanRequest(requestId);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
     }
 
     /**
@@ -72,7 +75,7 @@ public class LoanRequestRestController {
      */
     @GetMapping(value = {"/loanRequests", "/loanRequests/"})
     public ResponseEntity<List<LoanRequestDto>> getAllLoanRequests() {
-        return new ResponseEntity<>(loanRequestService.getAllLoanRequests().stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(loanRequestService.getAllLoanRequests().stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -85,8 +88,8 @@ public class LoanRequestRestController {
     @GetMapping(value = {"/loanRequests/Status/{status}", "/loanRequests/Status/{status}/"})
     public ResponseEntity<List<LoanRequestDto>> getAllLoanRequestsByStatus(@PathVariable("status") String status) throws IllegalArgumentException {
         List<LoanRequestDto> loanRequestsDtos = new ArrayList<>();
-        for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(ToDtoHelper.convertStringToLoanStatus(status))) {
-            loanRequestsDtos.add(ToDtoHelper.convertToDto(loanRequest));
+        for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByStatus(toDtoHelper.convertStringToLoanStatus(status))) {
+            loanRequestsDtos.add(toDtoHelper.convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsDtos, HttpStatus.OK);
     }
@@ -100,7 +103,7 @@ public class LoanRequestRestController {
     public ResponseEntity<List<LoanRequestDto>> getAllActiveLoanRequests() throws IllegalArgumentException {
         List<LoanRequestDto> loanRequestsByStatusDto = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllActiveLoanRequests()) {
-            loanRequestsByStatusDto.add(ToDtoHelper.convertToDto(loanRequest));
+            loanRequestsByStatusDto.add(toDtoHelper.convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsByStatusDto, HttpStatus.OK);
     }
@@ -116,7 +119,7 @@ public class LoanRequestRestController {
         Client client = clientAccountService.getClient(username);
         List<LoanRequestDto> loanRequestsByClientDto = new ArrayList<>();
         for (LoanRequest loanRequest : loanRequestService.getAllLoanRequestsByClient(client)) {
-            loanRequestsByClientDto.add(ToDtoHelper.convertToDto(loanRequest));
+            loanRequestsByClientDto.add(toDtoHelper.convertToDto(loanRequest));
         }
         return new ResponseEntity<>(loanRequestsByClientDto, HttpStatus.OK);
     }
@@ -130,7 +133,7 @@ public class LoanRequestRestController {
     @PutMapping(value = {"/loanRequest/approveRequest/{requestId}", "/loanRequest/approveRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> approveLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.approveLoanRequest(requestId);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
     }
 
     /**
@@ -142,7 +145,7 @@ public class LoanRequestRestController {
     @PutMapping(value = {"/loanRequest/rejectRequest/{requestId}", "/loanRequest/rejectRequest/{requestId}/"})
     public ResponseEntity<LoanRequestDto> rejectLoanRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.rejectLoanRequest(requestId);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
     }
 
     /**
@@ -154,6 +157,6 @@ public class LoanRequestRestController {
     @PutMapping(value = {"/loanRequest/loanReturn/{requestId}", "/loanRequest/loanReturn/{requestId}/"})
     public ResponseEntity<LoanRequestDto> returnLoanedArtifact(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         LoanRequest loanRequest = loanRequestService.returnLoanedArtifact(requestId);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(loanRequest), HttpStatus.OK);
     }
 }

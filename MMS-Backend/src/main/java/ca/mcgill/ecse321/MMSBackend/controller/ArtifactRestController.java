@@ -24,13 +24,16 @@ public class ArtifactRestController {
     @Autowired
     private ArtifactService service;
 
+    @Autowired
+    private ToDtoHelper toDtoHelper;
+
     /**
      * Get all artifacts
      * @return a list of artifactDto objects
      */
     @GetMapping(value = { "/artifacts", "/artifacts/" })
     public ResponseEntity<List<ArtifactDto>>  getAllArtifacts(){
-        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifacts().stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifacts().stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -40,7 +43,7 @@ public class ArtifactRestController {
      */
     @GetMapping(value = { "/artifacts/getById", "/artifacts/getById/" })
     public ResponseEntity<ArtifactDto> getArtifactById(@RequestParam Integer id) throws IllegalArgumentException{
-        return new ResponseEntity<ArtifactDto> (ToDtoHelper.convertToDto(service.getArtifact(id)), HttpStatus.OK);
+        return new ResponseEntity<ArtifactDto> (toDtoHelper.convertToDto(service.getArtifact(id)), HttpStatus.OK);
     }
 
     /**
@@ -51,7 +54,7 @@ public class ArtifactRestController {
     @GetMapping(value = { "/artifacts/{roomType}", "/artifacts/{roomType}/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByRoomType(@PathVariable("roomType") Room.RoomType roomType) throws
             IllegalArgumentException {
-        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomType(roomType).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomType(roomType).stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -62,7 +65,7 @@ public class ArtifactRestController {
     @GetMapping(value = { "/artifacts/getArtifactByRoom/{roomId}", "/artifacts/getArtifactByRoom/{roomId}/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByRoomId(@PathVariable("roomId") int roomId) throws
             IllegalArgumentException {
-        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomId(roomId).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByRoomId(roomId).stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -73,7 +76,7 @@ public class ArtifactRestController {
     @GetMapping(value = { "/artifacts/getByStatus", "/artifacts/getByStatus/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByLoanStatus(@RequestParam String status) throws
             IllegalArgumentException {
-        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByLoanStatus(ToDtoHelper.convertArtifactStringToLoanStatus(status)).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByLoanStatus(toDtoHelper.convertArtifactStringToLoanStatus(status)).stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -84,7 +87,7 @@ public class ArtifactRestController {
     @GetMapping(value = { "/artifacts/getByState/{state}", "/artifacts/{state}/" })
     public ResponseEntity<List<ArtifactDto>> getArtifactsByState(@PathVariable("state") boolean state) throws
             IllegalArgumentException {
-        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByState(state).stream().map(ToDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<List<ArtifactDto>> (service.getAllArtifactsByState(state).stream().map(toDtoHelper::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     /**
@@ -110,7 +113,7 @@ public class ArtifactRestController {
 
         Artifact artifact = service.editArtifact(artifactId, name, description, image, status, loanFee, isDamaged,
                 worth, roomId, systemId);
-        return new ResponseEntity<ArtifactDto> (ToDtoHelper.convertToDto(artifact), HttpStatus.OK);
+        return new ResponseEntity<ArtifactDto> (toDtoHelper.convertToDto(artifact), HttpStatus.OK);
     }
 
     /**
@@ -134,7 +137,7 @@ public class ArtifactRestController {
             IllegalArgumentException{
         Artifact artifact = service.createArtifact(name, description, image, status, loanFee, isDamaged, worth, roomId,
                 systemId);
-        return new ResponseEntity<> (ToDtoHelper.convertToDto(artifact), HttpStatus.OK);
+        return new ResponseEntity<> (toDtoHelper.convertToDto(artifact), HttpStatus.OK);
     }
 
     /**

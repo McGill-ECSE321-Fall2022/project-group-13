@@ -36,6 +36,9 @@ public class ManagerAccountRestController {
     @Autowired
     private MuseumManagementSystemService mmsService; 
 
+    @Autowired
+    private ToDtoHelper ToDtoHelper;
+
     @GetMapping(value = { "/managers", "/managers/" })
     public ResponseEntity<ManagerDto> getManager() throws IllegalArgumentException {
         return new ResponseEntity<>(ToDtoHelper.convertToDto(service.getManager()), HttpStatus.OK);

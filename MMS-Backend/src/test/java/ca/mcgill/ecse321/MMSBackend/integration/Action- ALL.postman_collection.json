@@ -33,7 +33,14 @@
 											"    pm.expect(responseJson.maxLoanNumber).to.eql(5);",
 											"    pm.expect(responseJson.ticketFee).to.eql(0.0);",
 											"",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.museumManagementSystemId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"mms1_id\", jsonData.museumManagementSystemId);"
 										],
 										"type": "text/javascript"
 									}
@@ -112,7 +119,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/manager?username=SireMarwan&name=Marwan Kanaan&password=ecse321rocks&systemId=1",
+									"raw": "http://localhost:8080/manager?username=SireMarwan&name=Marwan Kanaan&password=ecse321rocks&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -136,7 +143,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -217,7 +224,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/employee?username=U123456&name=Mona Kalaoun&password=MonaMona123&systemId=1",
+									"raw": "http://localhost:8080/employee?username=U123456&name=Mona Kalaoun&password=MonaMona123&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -241,7 +248,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -267,7 +274,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/employee?username=U654321&name=Rosika Muthucumaru&password=Skipper213&systemId=1",
+									"raw": "http://localhost:8080/employee?username=U654321&name=Rosika Muthucumaru&password=Skipper213&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -291,7 +298,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -372,7 +379,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=NikolasPasichnik123&name=Nikolas Pasichnik&password=charly1234&systemId=1",
+									"raw": "http://localhost:8080/client?username=NikolasPasichnik123&name=Nikolas Pasichnik&password=charly1234&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -396,7 +403,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -422,7 +429,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=SamanthaInesPerezHoffman&name=Samantha Perez&password=Lucrecia123&systemId=1",
+									"raw": "http://localhost:8080/client?username=SamanthaInesPerezHoffman&name=Samantha Perez&password=Lucrecia123&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -446,7 +453,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -472,7 +479,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=YuAnlyA&name=Yu An Lu &password=DogPersonLover&systemId=1",
+									"raw": "http://localhost:8080/client?username=YuAnlyA&name=Yu An Lu &password=DogPersonLover&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -496,7 +503,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -567,7 +574,15 @@
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.artifactId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"artifact1_id\", jsonData.artifactId);"
 										],
 										"type": "text/javascript"
 									}
@@ -577,7 +592,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=Mona Lisa&description=Painting&image=MMS-backend/images/monalisa.jpg&status=Available&loanFee=10000000.0&isDamaged=false&worth=1000000000.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Mona Lisa&description=Painting&image=images/monalisa.jpg&status=Available&loanFee=10000000.0&isDamaged=false&worth=1000000000.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -598,7 +613,7 @@
 										},
 										{
 											"key": "image",
-											"value": "MMS-backend/images/monalisa.jpg"
+											"value": "images/monalisa.jpg"
 										},
 										{
 											"key": "status",
@@ -622,7 +637,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -638,7 +653,15 @@
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.artifactId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"artifact2_id\", jsonData.artifactId);"
 										],
 										"type": "text/javascript"
 									}
@@ -648,7 +671,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=Oranges&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Loaned&loanFee=100.0&isDamaged=true&worth=500.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Oranges&description=slices of oranges&image=images/orange.PNG&status=Loaned&loanFee=100.0&isDamaged=true&worth=500.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -669,7 +692,7 @@
 										},
 										{
 											"key": "image",
-											"value": "MMS-backend/images/orange.PNG"
+											"value": "images/orange.PNG"
 										},
 										{
 											"key": "status",
@@ -693,7 +716,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -709,7 +732,14 @@
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.artifactId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"artifact3_id\", jsonData.artifactId);"
 										],
 										"type": "text/javascript"
 									}
@@ -719,7 +749,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=Cat&description=Royal cat&image=MMS-backend/images/Cat.PNG&status=Unavailable&loanFee=100.0&isDamaged=false&worth=500.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Cat&description=Royal cat&image=images/Cat.PNG&status=Unavailable&loanFee=100.0&isDamaged=false&worth=500.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -740,7 +770,7 @@
 										},
 										{
 											"key": "image",
-											"value": "MMS-backend/images/Cat.PNG"
+											"value": "images/Cat.PNG"
 										},
 										{
 											"key": "status",
@@ -764,7 +794,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -790,7 +820,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=false&worth=-250.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=false&worth=-250.0&roomId=12&systemId=1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -811,7 +841,7 @@
 										},
 										{
 											"key": "image",
-											"value": "MMS-backend/images/orange.PNG"
+											"value": "images/orange.PNG"
 										},
 										{
 											"key": "status",
@@ -856,7 +886,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.artifactId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"Dartifact1_id\", jsonData.artifactId);"
 										],
 										"type": "text/javascript"
 									}
@@ -866,7 +903,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=TheMonaLisa&image=MMS-backend/images/monalisa.jpg&description=A woman sitting there.&isDamaged=false&worth=10.0&systemId=1",
+									"raw": "http://localhost:8080/donationArtifact?name=TheMonaLisa&image=MMS-backend/images/monalisa.jpg&description=A woman sitting there.&isDamaged=false&worth=10.0&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -898,7 +935,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -914,7 +951,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.artifactId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"Dartifact2_id\", jsonData.artifactId);"
 										],
 										"type": "text/javascript"
 									}
@@ -924,7 +968,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=TheCat&image=MMS-backend/images/Cat.PNG&description=Cat sitting&isDamaged=false&worth=5.0&systemId=1",
+									"raw": "http://localhost:8080/donationArtifact?name=TheCat&image=MMS-backend/images/Cat.PNG&description=Cat sitting&isDamaged=false&worth=5.0&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -956,7 +1000,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -972,7 +1016,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.artifactId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"Dartifact3_id\", jsonData.artifactId);"
 										],
 										"type": "text/javascript"
 									}
@@ -982,7 +1033,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=TheOrange&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId=1",
+									"raw": "http://localhost:8080/donationArtifact?name=TheOrange&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1014,7 +1065,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1040,7 +1091,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId=1",
+									"raw": "http://localhost:8080/donationArtifact?name=&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1072,7 +1123,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1088,7 +1139,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.requestId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"request1_id\", jsonData.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1098,7 +1156,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId=16&systemId=1",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId={{Dartifact1_id}}&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1114,11 +1172,11 @@
 										},
 										{
 											"key": "artifactId",
-											"value": "16"
+											"value": "{{Dartifact1_id}}"
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1134,7 +1192,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.requestId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"request2_id\", jsonData.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1144,7 +1209,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId=17&systemId=1",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId={{Dartifact2_id}}&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1160,11 +1225,11 @@
 										},
 										{
 											"key": "artifactId",
-											"value": "17"
+											"value": "{{Dartifact2_id}}"
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1180,7 +1245,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.requestId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"request3_id\", jsonData.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1190,7 +1262,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=SamanthaInesPerezHoffman&artifactId=18&systemId=1",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=SamanthaInesPerezHoffman&artifactId={{Dartifact3_id}}&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1206,11 +1278,11 @@
 										},
 										{
 											"key": "artifactId",
-											"value": "18"
+											"value": "{{Dartifact3_id}}"
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1236,7 +1308,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=Alexander&artifactId=17&systemId=1",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=Alexander&artifactId={{Dartifact1_id}}&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1252,11 +1324,11 @@
 										},
 										{
 											"key": "artifactId",
-											"value": "17"
+											"value": "{{Dartifact1_id}}"
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1277,7 +1349,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.requestId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"Lrequest1_id\", jsonData.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1287,7 +1366,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId=13&username=SamanthaInesPerezHoffman&systemId=1",
+									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId={{artifact1_id}}&username=SamanthaInesPerezHoffman&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1303,7 +1382,7 @@
 										},
 										{
 											"key": "artifactId",
-											"value": "13"
+											"value": "{{artifact1_id}}"
 										},
 										{
 											"key": "username",
@@ -1311,7 +1390,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1327,7 +1406,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.requestId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"Lrequest2_id\", jsonData.requestId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1337,7 +1423,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId=13&username=NikolasPasichnik123&systemId=1",
+									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId={{artifact1_id}}&username=NikolasPasichnik123&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1353,7 +1439,7 @@
 										},
 										{
 											"key": "artifactId",
-											"value": "13"
+											"value": "{{artifact1_id}}"
 										},
 										{
 											"key": "username",
@@ -1361,7 +1447,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1432,7 +1518,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.ticketId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"ticket1_id\", jsonData.ticketId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1470,7 +1563,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.ticketId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"ticket2_id\", jsonData.ticketId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1508,7 +1608,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.ticketId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"ticket3_id\", jsonData.ticketId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1546,7 +1653,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.ticketId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"ticket4_id\", jsonData.ticketId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1584,7 +1698,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.ticketId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"ticket5_id\", jsonData.ticketId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1665,7 +1786,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.shiftId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"shift1_id\", jsonData.shiftId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1715,7 +1843,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.shiftId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"shift2_id\", jsonData.shiftId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1765,7 +1900,14 @@
 										"exec": [
 											"pm.test(\"Status code is 201\", function () {",
 											"    pm.response.to.have.status(201);",
-											"});"
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Your test name\", function () {",
+											"    pm.expect(jsonData.shiftId).to.greaterThan(0);",
+											"});",
+											"",
+											"pm.collectionVariables.set(\"shift3_id\", jsonData.shiftId);"
 										],
 										"type": "text/javascript"
 									}
@@ -1885,7 +2027,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/1/?name=Lucrecia's Museum",
+									"raw": "http://localhost:8080/mms/{{mms1_id}}/?name=Lucrecia's Museum",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1893,7 +2035,7 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"1",
+										"{{mms1_id}}",
 										""
 									],
 									"query": [
@@ -1965,7 +2107,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/1/fee?ticketFee=69.96",
+									"raw": "http://localhost:8080/mms/{{mms1_id}}/fee?ticketFee=69.96",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1973,7 +2115,7 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"1",
+										"{{mms1_id}}",
 										"fee"
 									],
 									"query": [
@@ -2005,7 +2147,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/1/fee?ticketFee=-1",
+									"raw": "http://localhost:8080/mms/{{mms1_id}}/fee?ticketFee=-1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2013,7 +2155,7 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"1",
+										"{{mms1_id}}",
 										"fee"
 									],
 									"query": [
@@ -2045,7 +2187,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setMaxLoanNumber/1?maxLoanNumber=8",
+									"raw": "http://localhost:8080/mms/setMaxLoanNumber/{{mms1_id}}?maxLoanNumber=8",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2054,7 +2196,7 @@
 									"path": [
 										"mms",
 										"setMaxLoanNumber",
-										"1"
+										"{{mms1_id}}"
 									],
 									"query": [
 										{
@@ -2085,7 +2227,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setMaxLoanNumber/1?maxLoanNumber=-5",
+									"raw": "http://localhost:8080/mms/setMaxLoanNumber/{{mms1_id}}?maxLoanNumber=-5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2094,7 +2236,7 @@
 									"path": [
 										"mms",
 										"setMaxLoanNumber",
-										"1"
+										"{{mms1_id}}"
 									],
 									"query": [
 										{
@@ -2125,7 +2267,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setOpeningHours/1?openTime=06:00:00&closeTime=12:00:00",
+									"raw": "http://localhost:8080/mms/setOpeningHours/{{mms1_id}}?openTime=06:00:00&closeTime=12:00:00",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2134,7 +2276,7 @@
 									"path": [
 										"mms",
 										"setOpeningHours",
-										"1"
+										"{{mms1_id}}"
 									],
 									"query": [
 										{
@@ -2169,7 +2311,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setOpeningHours/1?openTime=16:00:00&closeTime=12:00:00",
+									"raw": "http://localhost:8080/mms/setOpeningHours/{{mms1_id}}?openTime=16:00:00&closeTime=12:00:00",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2178,7 +2320,7 @@
 									"path": [
 										"mms",
 										"setOpeningHours",
-										"1"
+										"{{mms1_id}}"
 									],
 									"query": [
 										{
@@ -2497,7 +2639,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/14?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifacts/{{artifact2_id}}?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2505,7 +2647,7 @@
 									"port": "8080",
 									"path": [
 										"artifacts",
-										"14"
+										"{{artifact2_id}}"
 									],
 									"query": [
 										{
@@ -2542,7 +2684,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -2568,7 +2710,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=MMS-backend/images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2613,7 +2755,7 @@
 										},
 										{
 											"key": "systemId",
-											"value": "1"
+											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -2644,7 +2786,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/approveRequest/19?roomId=12",
+									"raw": "http://localhost:8080/donationRequest/approveRequest/{{request1_id}}?roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2653,7 +2795,7 @@
 									"path": [
 										"donationRequest",
 										"approveRequest",
-										"19"
+										"{{request1_id}}"
 									],
 									"query": [
 										{
@@ -2684,7 +2826,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/approveRequest/19?roomId=12",
+									"raw": "http://localhost:8080/donationRequest/approveRequest/{{request1_id}}?roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2693,7 +2835,7 @@
 									"path": [
 										"donationRequest",
 										"approveRequest",
-										"19"
+										"{{request1_id}}"
 									],
 									"query": [
 										{
@@ -2724,7 +2866,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/rejectRequest/20",
+									"raw": "http://localhost:8080/donationRequest/rejectRequest/{{request2_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2733,7 +2875,7 @@
 									"path": [
 										"donationRequest",
 										"rejectRequest",
-										"20"
+										"{{request2_id}}"
 									]
 								}
 							},
@@ -2758,7 +2900,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/rejectRequest/19",
+									"raw": "http://localhost:8080/donationRequest/rejectRequest/{{request1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2767,7 +2909,7 @@
 									"path": [
 										"donationRequest",
 										"rejectRequest",
-										"19"
+										"{{request1_id}}"
 									]
 								}
 							},
@@ -2797,7 +2939,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest/approveRequest/22",
+									"raw": "http://localhost:8080/loanRequest/approveRequest/{{Lrequest1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2806,7 +2948,7 @@
 									"path": [
 										"loanRequest",
 										"approveRequest",
-										"22"
+										"{{Lrequest1_id}}"
 									]
 								}
 							},
@@ -2865,7 +3007,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest/rejectRequest/23",
+									"raw": "http://localhost:8080/loanRequest/rejectRequest/{{Lrequest2_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2874,7 +3016,7 @@
 									"path": [
 										"loanRequest",
 										"rejectRequest",
-										"23"
+										"{{Lrequest2_id}}"
 									]
 								}
 							},
@@ -2899,7 +3041,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest/rejectRequest/22",
+									"raw": "http://localhost:8080/loanRequest/rejectRequest/{{Lrequest1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2908,7 +3050,7 @@
 									"path": [
 										"loanRequest",
 										"rejectRequest",
-										"22"
+										"{{Lrequest1_id}}"
 									]
 								}
 							},
@@ -2933,7 +3075,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest/loanReturn/22",
+									"raw": "http://localhost:8080/loanRequest/loanReturn/{{Lrequest1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2942,7 +3084,7 @@
 									"path": [
 										"loanRequest",
 										"loanReturn",
-										"22"
+										"{{Lrequest1_id}}"
 									]
 								}
 							},
@@ -2967,7 +3109,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest/loanReturn/23",
+									"raw": "http://localhost:8080/loanRequest/loanReturn/{{Lrequest2_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2976,7 +3118,7 @@
 									"path": [
 										"loanRequest",
 										"loanReturn",
-										"23"
+										"{{Lrequest2_id}}"
 									]
 								}
 							},
@@ -3006,7 +3148,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/ticket/24?isActive=false",
+									"raw": "http://localhost:8080/ticket/{{ticket1_id}}?isActive=false",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3014,7 +3156,7 @@
 									"port": "8080",
 									"path": [
 										"ticket",
-										"24"
+										"{{ticket1_id}}"
 									],
 									"query": [
 										{
@@ -3173,7 +3315,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/times/29?startTime=10:00:00&endTime=14:00:00",
+									"raw": "http://localhost:8080/shift/times/{{shift1_id}}?startTime=10:00:00&endTime=14:00:00",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3182,7 +3324,7 @@
 									"path": [
 										"shift",
 										"times",
-										"29"
+										"{{shift1_id}}"
 									],
 									"query": [
 										{
@@ -3217,7 +3359,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/times/29?startTime=14:00:00&endTime=12:00:00",
+									"raw": "http://localhost:8080/shift/times/{{shift1_id}}?startTime=14:00:00&endTime=12:00:00",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3226,7 +3368,7 @@
 									"path": [
 										"shift",
 										"times",
-										"29"
+										"{{shift1_id}}"
 									],
 									"query": [
 										{
@@ -3261,7 +3403,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/day/30?day=Thursday",
+									"raw": "http://localhost:8080/shift/day/{{shift2_id}}?day=Thursday",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3270,7 +3412,7 @@
 									"path": [
 										"shift",
 										"day",
-										"30"
+										"{{shift2_id}}"
 									],
 									"query": [
 										{
@@ -3301,7 +3443,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/day/30?day=Friday",
+									"raw": "http://localhost:8080/shift/day/{{shift2_id}}?day=Friday",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3310,7 +3452,7 @@
 									"path": [
 										"shift",
 										"day",
-										"30"
+										"{{shift2_id}}"
 									],
 									"query": [
 										{
@@ -3351,7 +3493,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/getMms/1",
+									"raw": "http://localhost:8080/mms/getMms/{{mms1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3360,7 +3502,7 @@
 									"path": [
 										"mms",
 										"getMms",
-										"1"
+										"{{mms1_id}}"
 									]
 								}
 							},
@@ -4358,7 +4500,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/getById?id=13",
+									"raw": "http://localhost:8080/artifacts/getById?id={{artifact1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -4371,7 +4513,7 @@
 									"query": [
 										{
 											"key": "id",
-											"value": "13"
+											"value": "{{artifact1_id}}"
 										}
 									]
 								}
@@ -4581,7 +4723,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/19",
+									"raw": "http://localhost:8080/donationRequest/{{request1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -4589,7 +4731,7 @@
 									"port": "8080",
 									"path": [
 										"donationRequest",
-										"19"
+										"{{request1_id}}"
 									]
 								}
 							},
@@ -5056,7 +5198,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/ticket/24",
+									"raw": "http://localhost:8080/ticket/{{ticket1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5064,7 +5206,7 @@
 									"port": "8080",
 									"path": [
 										"ticket",
-										"24"
+										"{{ticket1_id}}"
 									]
 								}
 							},
@@ -5362,7 +5504,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 500\", function () {",
+											"pm.test(\"Status code is 500s\", function () {",
 											"    pm.response.to.have.status(500);",
 											"});"
 										],
@@ -5423,7 +5565,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/deleteShift/30",
+									"raw": "http://localhost:8080/deleteShift/{{shift2_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5431,7 +5573,7 @@
 									"port": "8080",
 									"path": [
 										"deleteShift",
-										"30"
+										"{{shift2_id}}"
 									]
 								}
 							},
@@ -5617,7 +5759,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/ticket/24",
+									"raw": "http://localhost:8080/ticket/{{ticket1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5625,7 +5767,7 @@
 									"port": "8080",
 									"path": [
 										"ticket",
-										"24"
+										"{{ticket1_id}}"
 									]
 								}
 							},
@@ -5688,7 +5830,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/delete/20",
+									"raw": "http://localhost:8080/donationRequest/delete/{{request2_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5697,7 +5839,7 @@
 									"path": [
 										"donationRequest",
 										"delete",
-										"20"
+										"{{request2_id}}"
 									]
 								}
 							},
@@ -5722,7 +5864,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest/delete/19",
+									"raw": "http://localhost:8080/donationRequest/delete/{{request1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5731,7 +5873,7 @@
 									"path": [
 										"donationRequest",
 										"delete",
-										"19"
+										"{{request1_id}}"
 									]
 								}
 							},
@@ -5761,7 +5903,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/15",
+									"raw": "http://localhost:8080/artifacts/{{artifact3_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5769,7 +5911,7 @@
 									"port": "8080",
 									"path": [
 										"artifacts",
-										"15"
+										"{{artifact3_id}}"
 									]
 								}
 							},
@@ -5955,6 +6097,112 @@
 					]
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "ticket1_id",
+			"value": ""
+		},
+		{
+			"key": "mms1_id",
+			"value": ""
+		},
+		{
+			"key": "manager_id",
+			"value": ""
+		},
+		{
+			"key": "employee1_id",
+			"value": ""
+		},
+		{
+			"key": "employee2_id",
+			"value": ""
+		},
+		{
+			"key": "client1_id",
+			"value": ""
+		},
+		{
+			"key": "client2_id",
+			"value": ""
+		},
+		{
+			"key": "client3_id",
+			"value": ""
+		},
+		{
+			"key": "artifact1_id",
+			"value": ""
+		},
+		{
+			"key": "artifact2_id",
+			"value": ""
+		},
+		{
+			"key": "artifact3_id",
+			"value": ""
+		},
+		{
+			"key": "request1_id",
+			"value": ""
+		},
+		{
+			"key": "request2_id",
+			"value": ""
+		},
+		{
+			"key": "request3_id",
+			"value": ""
+		},
+		{
+			"key": "Lrequest1_id",
+			"value": ""
+		},
+		{
+			"key": "Lrequest2_id",
+			"value": ""
+		},
+		{
+			"key": "ticket2_id",
+			"value": ""
+		},
+		{
+			"key": "ticket3_id",
+			"value": ""
+		},
+		{
+			"key": "ticket4_id",
+			"value": ""
+		},
+		{
+			"key": "ticket5_id",
+			"value": ""
+		},
+		{
+			"key": "shift1_id",
+			"value": ""
+		},
+		{
+			"key": "shift2_id",
+			"value": ""
+		},
+		{
+			"key": "shift3_id",
+			"value": ""
+		},
+		{
+			"key": "Dartifact1_id",
+			"value": ""
+		},
+		{
+			"key": "Dartifact2_id",
+			"value": ""
+		},
+		{
+			"key": "Dartifact3_id",
+			"value": ""
 		}
 	]
 }

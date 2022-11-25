@@ -38,6 +38,9 @@ public class DonationRequestRestController {
     @Autowired
     private MuseumManagementSystemService mmsService;
 
+    @Autowired
+    private ToDtoHelper toDtoHelper;
+
     /**
      * Creates a new artifact to be donated
      * 
@@ -63,7 +66,7 @@ public class DonationRequestRestController {
         MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
         Artifact artifact = donationRequestService.createDonationArtifact(name, image, description, isDamaged, worth, mms);
 
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(artifact), HttpStatus.CREATED);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(artifact), HttpStatus.CREATED);
     }
 
      /**
@@ -83,7 +86,7 @@ public class DonationRequestRestController {
         MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(systemId);
         DonationRequest donationRequest = donationRequestService.createDonationRequest(client, artifact, museumManagementSystem);
 
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(donationRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.CREATED);
     }
 
     /**
@@ -100,7 +103,7 @@ public class DonationRequestRestController {
         Room room = mmsService.getRoom(roomId);
         DonationRequest donationRequest = donationRequestService.approveDonationRequest(requestId, room);
         
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -114,7 +117,7 @@ public class DonationRequestRestController {
     public ResponseEntity<DonationRequestDto> rejectDonationRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         DonationRequest donationRequest = donationRequestService.rejectDonationRequest(requestId);
 
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -128,7 +131,7 @@ public class DonationRequestRestController {
     public ResponseEntity<DonationRequestDto> getDonationRequest(@PathVariable("requestId") int requestId) throws IllegalArgumentException {
         DonationRequest donationRequest = donationRequestService.getDonationRequest(requestId);
 
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(donationRequest), HttpStatus.OK);
     }
 
     /**
@@ -142,7 +145,7 @@ public class DonationRequestRestController {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequests()) {
-            donationRequestsDtos.add(ToDtoHelper.convertToDto(donationRequest));
+            donationRequestsDtos.add(toDtoHelper.convertToDto(donationRequest));
         }
 
         return new ResponseEntity<>(donationRequestsDtos, HttpStatus.OK);
@@ -159,8 +162,8 @@ public class DonationRequestRestController {
     public ResponseEntity<List<DonationRequestDto>> getAllDonationRequestsByStatus(@PathVariable("status") String status) throws IllegalArgumentException {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
-        for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByStatus(ToDtoHelper.convertStringToDonationStatus(status))) {
-            donationRequestsDtos.add(ToDtoHelper.convertToDto(donationRequest));
+        for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByStatus(toDtoHelper.convertStringToDonationStatus(status))) {
+            donationRequestsDtos.add(toDtoHelper.convertToDto(donationRequest));
         }
 
         return new ResponseEntity<>(donationRequestsDtos, HttpStatus.OK);
@@ -182,7 +185,7 @@ public class DonationRequestRestController {
         List<DonationRequestDto> donationRequestsDtos = new ArrayList<>();
 
         for (DonationRequest donationRequest : donationRequestService.getAllDonationRequestsByClient(client)) {
-            donationRequestsDtos.add(ToDtoHelper.convertToDto(donationRequest));
+            donationRequestsDtos.add(toDtoHelper.convertToDto(donationRequest));
         }
 
         return new ResponseEntity<>(donationRequestsDtos, HttpStatus.OK);

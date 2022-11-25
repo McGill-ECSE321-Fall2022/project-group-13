@@ -36,6 +36,9 @@ public class TicketRestController {
     @Autowired
     private ClientAccountService clientService;
 
+    @Autowired
+    private ToDtoHelper toDtoHelper;
+
     /**
      * Create a new ticket
      * 
@@ -47,7 +50,7 @@ public class TicketRestController {
     @PostMapping(value = { "/ticket", "/ticket/" })
     public ResponseEntity<TicketDto> createTicket(@RequestParam String clientUsername) throws IllegalArgumentException {
         Ticket ticket = ticketService.createTicket(clientUsername);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.CREATED);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(ticket), HttpStatus.CREATED);
     }
 
     /**
@@ -60,7 +63,7 @@ public class TicketRestController {
     @GetMapping(value = { "/ticket/{ticketId}", "/ticket/{ticketId}/" })
     public ResponseEntity<TicketDto> getTicket(@PathVariable("ticketId") int ticketId) throws IllegalArgumentException {
         Ticket ticket = ticketService.getTicket(ticketId);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(ticket), HttpStatus.OK);
     }
 
     /**
@@ -76,7 +79,7 @@ public class TicketRestController {
         List<TicketDto> ticketDtos = new ArrayList<>();
 
         for (Ticket ticket : tickets) {
-            ticketDtos.add(ToDtoHelper.convertToDto(ticket));
+            ticketDtos.add(toDtoHelper.convertToDto(ticket));
         }
         return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
     }
@@ -106,7 +109,7 @@ public class TicketRestController {
             @RequestParam boolean isActive) throws IllegalArgumentException {
         Ticket ticket = ticketService.getTicket(ticketId);
         ticketService.setTicketStatus(ticket, isActive);
-        return new ResponseEntity<>(ToDtoHelper.convertToDto(ticket), HttpStatus.OK);
+        return new ResponseEntity<>(toDtoHelper.convertToDto(ticket), HttpStatus.OK);
     }
 
     /**
@@ -125,7 +128,7 @@ public class TicketRestController {
         List<TicketDto> ticketDtos = new ArrayList<>();
 
         for (Ticket ticket : tickets) {
-            ticketDtos.add(ToDtoHelper.convertToDto(ticket));
+            ticketDtos.add(toDtoHelper.convertToDto(ticket));
         }
         return new ResponseEntity<>(ticketDtos, HttpStatus.OK);
     }
