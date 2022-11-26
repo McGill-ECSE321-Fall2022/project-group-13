@@ -35,3 +35,13 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Mac ###
+.DS_Store
+
+### Node ###
+node_modules/
+
+### PostMan ###
+package-lock.json
+package.json
