@@ -17,6 +17,10 @@
         <div class = "signUpButton">
             <h5><button type="button">Create Account</button></h5>
         </div>
+        <h6>Already have an account?</h6>
+        <p>
+            <router-link to="/">Sign In</router-link>
+        </p>
     </div>
 </template>
 
