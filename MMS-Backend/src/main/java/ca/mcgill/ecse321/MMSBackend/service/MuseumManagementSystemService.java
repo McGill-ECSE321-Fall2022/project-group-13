@@ -158,9 +158,7 @@ public class MuseumManagementSystemService {
     @Transactional
     public void setMaxLoanNumberOfMms(int maxLoanNumber) {
         MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
-        } else if(maxLoanNumber <= 0){
+        if(maxLoanNumber <= 0){
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Maximum loan number is not valid");
         } else {
             museumManagementSystem.setMaxLoanNumber(maxLoanNumber);

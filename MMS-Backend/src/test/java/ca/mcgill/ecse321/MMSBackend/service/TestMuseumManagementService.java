@@ -94,10 +94,11 @@ public class TestMuseumManagementService {
 
     private static final int NONEXISTING_ID = 0;
 
-    private static final MuseumManagementSystem MMS = new MuseumManagementSystem();
+    private static final MuseumManagementSystem MMS = createMms(SYSTEM_ID,MMS_NAME,OPEN_TIME_1,CLOSE_TIME_1,MMS_MAX_LOAN_NUMBER,MMS_TICKET_FEE);
     private static final Room STORAGE_ROOM = createRoom(STORAGE_ROOM_ID, STORAGE_ROOM_NAME, STORAGE_ROOM_TYPE, MMS);
     private static final Room SMALL_ROOM = createRoom(SMALL_ROOM_ID, SMALL_ROOM_NAME, SMALL_ROOM_TYPE, MMS);
     private static final List<Room> ALL_ROOMS = Arrays.asList(STORAGE_ROOM, SMALL_ROOM);
+    private static final List<MuseumManagementSystem> ALL_MMS = Arrays.asList(MMS);
 
 
     @BeforeEach
@@ -180,6 +181,8 @@ public class TestMuseumManagementService {
                 return null;
             }
          });
+
+        lenient().when(mmsRepository.findAll()).thenReturn(ALL_MMS);
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
@@ -287,22 +290,6 @@ public class TestMuseumManagementService {
     }
 
     /**
-     * @author Nazia Chowdhury (naziaC)
-     */
-    @Test
-    public void testSetMaxLoanNumberOfMmsNull(){
-
-        String error = "";
-
-        try {
-            museumManagementSystemService.setMaxLoanNumberOfMms(13);
-        } catch (MuseumManagementSystemException e) {
-            error = e.getMessage();
-        }
-        assertEquals("Museum Management System does not exist", error);
-    }
-
-    /**
      * @author Samantha Perez Hoffman (samperezh)
      */
     @Test
@@ -313,21 +300,6 @@ public class TestMuseumManagementService {
         assert(museumManagementSystem.getOpenTime().equals(OPEN_TIME_2));
         assert(museumManagementSystem.getCloseTime().equals(CLOSE_TIME_2));
         verify(mmsRepository, times(1)).save(museumManagementSystem);
-    }
-
-    /**
-     * @author Samantha Perez Hoffman (samperezh)
-     */
-    @Test 
-    public void testSetOpeningHoursWithInvalidMMS(){
-        MuseumManagementSystemException exception = assertThrows(MuseumManagementSystemException.class, () -> {
-            museumManagementSystemService.setOpeningHours(OPEN_TIME_1, OPEN_TIME_2);
-        });
-
-        assertEquals("Museum Management System does not exist.", exception.getMessage());
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-        verify(mmsRepository, times(1)).findMuseumManagementSystemBySystemId(0);
-        verify(mmsRepository, never()).save(any(MuseumManagementSystem.class));
     }
 
     /**
@@ -483,5 +455,29 @@ public class TestMuseumManagementService {
         room.setType(roomType);
         room.setMuseumManagementSystem(mms);
         return room;
+    }
+
+    /**
+     * Private helper method for creating a Museum Management System
+     * @author Mona Kalaoun (m-kln)
+     * @param id
+     * @param name
+     * @param openTime
+     * @param closeTime
+     * @param maxLoanNumber
+     * @param ticketFee
+     * @return a MuseumManagementSystem object
+     */
+
+    private static MuseumManagementSystem createMms(int id, String name, Time openTime, Time closeTime,
+                                                    int maxLoanNumber, double ticketFee) {
+        MuseumManagementSystem mms = new MuseumManagementSystem();
+        mms.setSystemId(id);
+        mms.setName(name);
+        mms.setOpenTime(openTime);
+        mms.setCloseTime(closeTime);
+        mms.setMaxLoanNumber(maxLoanNumber);
+        mms.setTicketFee(ticketFee);
+        return mms;
     }
 }
