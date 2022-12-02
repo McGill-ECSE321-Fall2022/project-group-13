@@ -5,16 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Time;
 
+import ca.mcgill.ecse321.MMSBackend.dao.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.TicketRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Ticket;
@@ -34,14 +33,45 @@ public class TicketRepositoryTests {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private ArtifactRepository artifactRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    @Autowired
+    private SpecificWeekDayRepository specificWeekDayRepository;
     
-    @AfterEach
+    @BeforeEach
     public void clearDatabase(){
         
         // Delete the ticketRepository first to avoid violating not-null constraint
         ticketRepository.deleteAll();
 
-        // delete the clientRepository and mmsRepository   
+        // delete the clientRepository and mmsRepository
+        managerRepository.deleteAll();
+        artifactRepository.deleteAll();
+        roomRepository.deleteAll();
+        specificWeekDayRepository.deleteAll();
+        employeeRepository.deleteAll();
+        clientRepository.deleteAll();
+        mmsRepository.deleteAll();
+    }
+
+    @AfterEach
+    public void clearDatabaseAfter(){
+
+        // Delete the ticketRepository first to avoid violating not-null constraint
+        ticketRepository.deleteAll();
+
+        // delete the clientRepository and mmsRepository
         clientRepository.deleteAll();
         mmsRepository.deleteAll();
     }

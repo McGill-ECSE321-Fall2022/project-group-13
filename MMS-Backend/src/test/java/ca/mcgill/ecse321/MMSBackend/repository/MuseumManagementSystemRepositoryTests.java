@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Time;
 
+import ca.mcgill.ecse321.MMSBackend.dao.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 /**
@@ -24,12 +25,42 @@ public class MuseumManagementSystemRepositoryTests {
     @Autowired
     private MuseumManagementSystemRepository mmsRepository;
 
-    @AfterEach
+    @Autowired
+    private ArtifactRepository artifactRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    @Autowired
+    private SpecificWeekDayRepository specificWeekDayRepository;
+
+    @BeforeEach
     public void clearDatabase(){
         
         // Delete the museumMangementSystem first 
+        artifactRepository.deleteAll();
+        roomRepository.deleteAll();
+        specificWeekDayRepository.deleteAll();
+        employeeRepository.deleteAll();
+        managerRepository.deleteAll();
+        clientRepository.deleteAll();
         mmsRepository.deleteAll();
+    }
 
+    @AfterEach
+    public void clearDatabaseAfter(){
+
+        // Delete the museumMangementSystem first
+        mmsRepository.deleteAll();
     }
 
     @Test

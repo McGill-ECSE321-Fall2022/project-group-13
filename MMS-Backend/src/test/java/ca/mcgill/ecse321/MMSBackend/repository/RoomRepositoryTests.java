@@ -3,15 +3,15 @@ package ca.mcgill.ecse321.MMSBackend.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import ca.mcgill.ecse321.MMSBackend.dao.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.Room;
 import ca.mcgill.ecse321.MMSBackend.model.Room.RoomType;
@@ -31,8 +31,34 @@ public class RoomRepositoryTests {
     @Autowired
     private MuseumManagementSystemRepository mmsRepository;
 
-    @AfterEach
+    @Autowired
+    private ArtifactRepository artifactRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    @Autowired
+    private SpecificWeekDayRepository specificWeekDayRepository;
+
+    @BeforeEach
     public void clearDatabase() {
+        managerRepository.deleteAll();
+        artifactRepository.deleteAll();
+        roomRepository.deleteAll();
+        specificWeekDayRepository.deleteAll();
+        employeeRepository.deleteAll();
+        clientRepository.deleteAll();
+        mmsRepository.deleteAll();
+    }
+
+    @AfterEach
+    public void clearDatabaseAfter() {
         roomRepository.deleteAll();
         mmsRepository.deleteAll();
     }

@@ -4,15 +4,15 @@ package ca.mcgill.ecse321.MMSBackend.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import ca.mcgill.ecse321.MMSBackend.dao.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.SpecificWeekDayRepository;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.model.SpecificWeekDay;
 
@@ -30,12 +30,45 @@ public class SpecificWeekDayRepositoryTests {
     @Autowired
     private SpecificWeekDayRepository weekDayRepository;
 
-    @AfterEach
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ArtifactRepository artifactRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    @Autowired
+    private SpecificWeekDayRepository specificWeekDayRepository;
+
+    @BeforeEach
     public void clearDatabase(){
         // Delete the weekDayRepository first to avoid violating not-null constraint
         weekDayRepository.deleteAll();
 
-        // delete the museum mangement system repository   
+        // delete the museum mangement system repository
+        managerRepository.deleteAll();
+        artifactRepository.deleteAll();
+        roomRepository.deleteAll();
+        specificWeekDayRepository.deleteAll();
+        employeeRepository.deleteAll();
+        clientRepository.deleteAll();
+        mmsRepository.deleteAll();
+    }
+
+    @AfterEach
+    public void clearDatabaseAfter(){
+        // Delete the weekDayRepository first to avoid violating not-null constraint
+        weekDayRepository.deleteAll();
+
+        // delete the museum mangement system repository
         mmsRepository.deleteAll();
 
     }

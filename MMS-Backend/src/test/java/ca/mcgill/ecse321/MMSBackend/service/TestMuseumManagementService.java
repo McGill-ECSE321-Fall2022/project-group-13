@@ -582,11 +582,11 @@ public class TestMuseumManagementService {
     }
 
     public void checkMuseumManagementSystemValidness(MuseumManagementSystem museumManagementSystem){
-        assertEquals("Museum Management System Default Name", museumManagementSystem.getName());
+        assertEquals("Cabinet Of Curiosities", museumManagementSystem.getName());
         assertEquals(Time.valueOf("9:00:00"), museumManagementSystem.getOpenTime());
         assertEquals(Time.valueOf("17:00:00"), museumManagementSystem.getCloseTime());
         assertEquals(5, museumManagementSystem.getMaxLoanNumber());
-        assertEquals(0.00, museumManagementSystem.getTicketFee());
+        assertEquals(15.00, museumManagementSystem.getTicketFee());
     }
 
     /**

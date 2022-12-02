@@ -5,17 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Time;
 
+import ca.mcgill.ecse321.MMSBackend.dao.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.EmployeeRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.ShiftRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.SpecificWeekDayRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.Shift;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
@@ -40,13 +38,44 @@ public class ShiftRepositoryTests {
     @Autowired
     private ShiftRepository shiftRepository;
 
-    @AfterEach
+    @Autowired
+    private ArtifactRepository artifactRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    @Autowired
+    private SpecificWeekDayRepository specificWeekDayRepository;
+
+    @BeforeEach
     public void clearDatabase(){
         // Delete the shiftRepository first to avoid violating not-null constraint
         shiftRepository.deleteAll();
 
         // delete the employeeRepository and weekDayRepository  
         weekDayRepository.deleteAll(); 
+        employeeRepository.deleteAll();
+        managerRepository.deleteAll();
+        artifactRepository.deleteAll();
+        roomRepository.deleteAll();
+        specificWeekDayRepository.deleteAll();
+        clientRepository.deleteAll();
+        mmsRepository.deleteAll();
+    }
+
+    @AfterEach
+    public void clearDatabaseAfter(){
+        // Delete the shiftRepository first to avoid violating not-null constraint
+        shiftRepository.deleteAll();
+
+        // delete the employeeRepository and weekDayRepository
+        weekDayRepository.deleteAll();
         employeeRepository.deleteAll();
         mmsRepository.deleteAll();
     }

@@ -5,18 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Time;
 
+import ca.mcgill.ecse321.MMSBackend.dao.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse321.MMSBackend.dao.ArtifactRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.ClientRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.LoanRequestRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.MuseumManagementSystemRepository;
-import ca.mcgill.ecse321.MMSBackend.dao.RoomRepository;
 import ca.mcgill.ecse321.MMSBackend.model.Artifact;
 import ca.mcgill.ecse321.MMSBackend.model.Client;
 import ca.mcgill.ecse321.MMSBackend.model.LoanRequest;
@@ -46,8 +43,31 @@ public class LoanRequestRepositoryTests {
     @Autowired
     private RoomRepository roomRepository;
 
-    @AfterEach
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    @Autowired
+    private SpecificWeekDayRepository specificWeekDayRepository;
+
+    @BeforeEach
     public void clearDatabase() {
+        // Delete the loan requests first to avoid violating not-null constraints
+        loanRequestRepository.deleteAll();
+
+        artifactRepository.deleteAll();
+        roomRepository.deleteAll();
+        specificWeekDayRepository.deleteAll();
+        employeeRepository.deleteAll();
+        managerRepository.deleteAll();
+        clientRepository.deleteAll();
+        mmsRepository.deleteAll();
+    }
+
+    @AfterEach
+    public void clearDatabaseAfter() {
         // Delete the loan requests first to avoid violating not-null constraints
         loanRequestRepository.deleteAll();
 
