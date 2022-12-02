@@ -4,7 +4,12 @@ import AccountLogin from '@/components/AccountLogin'
 import AccountSignUp from '@/components/AccountSignUp'
 import MyDonationRequests from '@/components/MyDonationRequests'
 import MyLoanRequests from '@/components/MyLoanRequests'
+import MySchedule from '@/components/MySchedule'
+import ViewSchedules from '@/components/ViewSchedules'
 import Client from '@/components/Client'
+import Employee from '@/components/Employee'
+import Manager from '@/components/Manager'
+
 
 Vue.use(Router)
 
@@ -36,6 +41,30 @@ export default new Router({
           path: 'myloanrequests',
           name: 'client_myloanrequests',
           component: MyLoanRequests
+        }
+      ]
+    }, 
+    {
+      path: '/employee',
+      name: 'Employee',
+      component: Employee,
+      children: [
+        {
+          path: 'mySchedule',
+          name: 'employee_mySchedule',
+          component: MySchedule
+        }
+      ]
+    }, 
+    {
+      path: '/manager',
+      name: 'Manager',
+      component: Manager,
+      children: [
+        {
+          path: 'viewSchedules',
+          name: 'manager_ViewSchedules',
+          component: ViewSchedules
         }
       ]
     }
