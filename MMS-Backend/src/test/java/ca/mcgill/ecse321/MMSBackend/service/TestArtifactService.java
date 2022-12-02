@@ -60,6 +60,7 @@ public class TestArtifactService {
     private static final double WORTH = 500000000.00;
 
     private static final MuseumManagementSystem system = createMms(MMS_ID,MMS_NAME,OPEN_TIME,CLOSE_TIME,MAX_LOAN_NUMBER,TICKET_FEE);
+    private static final List<MuseumManagementSystem> ALL_MMS = Arrays.asList(system);
 
     private static final Room r1 = createRoom(3,"Room 3", Room.RoomType.Small,system);
     private static final Room r2 = createRoom(4,"Room 4", Room.RoomType.Large,system);
@@ -140,6 +141,7 @@ public class TestArtifactService {
         });
 
         lenient().when(artifactDao.findAll()).thenReturn(ALL_ARTIFACTS);
+        lenient().when(mmsDao.findAll()).thenReturn(ALL_MMS);
 
         // Whenever anything is saved, just return the parameter object
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -155,7 +157,7 @@ public class TestArtifactService {
     public void testCreateArtifact() {
         Artifact a = null;
         try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID, MMS_ID);
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
@@ -176,7 +178,7 @@ public class TestArtifactService {
         Artifact a = null;
         try {
             a = service.createArtifact(null, null, null, null, 0, false, 0,
-                    0, 0);
+                    0);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -192,7 +194,7 @@ public class TestArtifactService {
         String error = null;
         Artifact a = null;
         try {
-            a = service.createArtifact(name, description, image, null, 0, false, 0, 0, 0);
+            a = service.createArtifact(name, description, image, null, 0, false, 0, 0);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -208,7 +210,7 @@ public class TestArtifactService {
         String error = null;
 
         try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, image, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID, MMS_ID);
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, image, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -223,7 +225,7 @@ public class TestArtifactService {
         String error = null;
 
         try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, fee, IS_DAMAGED, WORTH, R_ID, MMS_ID);
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, fee, IS_DAMAGED, WORTH, R_ID);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -238,7 +240,7 @@ public class TestArtifactService {
         String error = null;
 
         try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, worth, R_ID, MMS_ID);
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, worth, R_ID);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -253,42 +255,12 @@ public class TestArtifactService {
         String error = null;
 
         try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, roomId, MMS_ID);
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, roomId);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
 
         assertEquals("The room id can not be negative.", error);
-    }
-
-    @Test
-    public void testCreateArtifactNegativeMmsId() {
-        int mmsId = MMS_ID * -1;
-        Artifact a = null;
-        String error = null;
-
-        try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID, mmsId);
-        } catch (MuseumManagementSystemException e) {
-            error = e.getMessage();
-        }
-
-        assertEquals("The system id can not be negative.", error);
-    }
-
-    @Test
-    public void testCreateArtifactInNonExistingMMS(){
-        int mmsId = 3;
-        Artifact a = null;
-        String error = null;
-
-        try{
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID, mmsId);
-        } catch (MuseumManagementSystemException e) {
-            error = e.getMessage();
-        }
-
-        assertEquals("The museum with id: " + mmsId + " was not found.", error);
     }
 
     @Test
@@ -298,7 +270,7 @@ public class TestArtifactService {
         String error = null;
 
         try{
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, roomId, MMS_ID);
+            a = service.createArtifact(A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, roomId);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -314,7 +286,7 @@ public class TestArtifactService {
         Artifact a = null;
         try {
             a = service.editArtifact(A_KEY,A_NAME, A_DESCRIPTION, A_IMAGE, status, LOAN_FEE, IS_DAMAGED, WORTH,
-                    R_ID, MMS_ID);
+                    R_ID);
         } catch (MuseumManagementSystemException e) {
             fail();
         }
@@ -338,7 +310,7 @@ public class TestArtifactService {
 
         try {
             a = service.editArtifact(a_id, A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH,
-                    R_ID, MMS_ID);
+                    R_ID);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
@@ -354,7 +326,7 @@ public class TestArtifactService {
 
         try {
             a = service.editArtifact(a_id, A_NAME, A_DESCRIPTION, A_IMAGE, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH,
-                    R_ID, MMS_ID);
+                    R_ID);
         } catch (MuseumManagementSystemException e) {
             error = e.getMessage();
         }
