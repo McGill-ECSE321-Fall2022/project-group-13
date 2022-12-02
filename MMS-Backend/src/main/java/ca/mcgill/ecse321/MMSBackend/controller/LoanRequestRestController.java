@@ -39,14 +39,13 @@ public class LoanRequestRestController {
      * @param loanDuration
      * @param artifactId
      * @param username
-     * @param systemId
      */
     @PostMapping(value = {"/loanRequest", "/loanRequest/"})
     public ResponseEntity<LoanRequestDto> createLoanRequest(@RequestParam int loanDuration, @RequestParam int artifactId,
-            @RequestParam String username, @RequestParam int systemId) throws IllegalArgumentException {
+            @RequestParam String username) throws IllegalArgumentException {
         Artifact artifact = artifactService.getArtifact(artifactId);
         Client client = clientAccountService.getClient(username);
-        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem();
         LoanRequest loanRequest = loanRequestService.createLoanRequest(loanDuration, artifact, client, mms);
         return new ResponseEntity<>(convertToDto(loanRequest), HttpStatus.CREATED);
     }

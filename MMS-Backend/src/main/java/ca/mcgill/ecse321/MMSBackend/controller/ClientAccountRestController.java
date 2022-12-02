@@ -49,9 +49,8 @@ public class ClientAccountRestController {
 
     @PostMapping(value = { "/client", "/client/" })
     public ResponseEntity<ClientDto> createClient(@RequestParam String username, @RequestParam String name,
-            @RequestParam String password,
-            @RequestParam int systemId) throws IllegalArgumentException {
-        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
+            @RequestParam String password) throws IllegalArgumentException {
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem();
         Client client = service.createClient(username, name, password, mms);
         return new ResponseEntity<ClientDto>(convertToDto(client), HttpStatus.CREATED);
     }
