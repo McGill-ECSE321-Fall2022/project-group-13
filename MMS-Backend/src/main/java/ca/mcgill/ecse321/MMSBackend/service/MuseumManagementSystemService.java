@@ -46,8 +46,8 @@ public class MuseumManagementSystemService {
         }
 
         MuseumManagementSystem museumManagementSystem = new MuseumManagementSystem();
-        museumManagementSystem.setName("Museum Management System Default Name");
-        museumManagementSystem.setTicketFee(0.00);
+        museumManagementSystem.setName("Cabinet Of Curiosities");
+        museumManagementSystem.setTicketFee(15.00);
         museumManagementSystem.setOpenTime(Time.valueOf("9:00:00"));
         museumManagementSystem.setCloseTime(Time.valueOf("17:00:00"));
         museumManagementSystem.setMaxLoanNumber(5);
