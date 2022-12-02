@@ -99,17 +99,15 @@ public class ArtifactRestController {
      * @param isDamaged
      * @param worth
      * @param roomId
-     * @param systemId
      * @return an artifactDto object
      */
     @PutMapping(value = { "/artifacts/{id}", "/artifacts/{id}/" })
     public ResponseEntity<ArtifactDto> editArtifact(@PathVariable("id") int artifactId, @RequestParam String name, @RequestParam String
             description, @RequestParam String image, @RequestParam Artifact.LoanStatus status, @RequestParam double
-            loanFee, @RequestParam boolean isDamaged, @RequestParam double worth, @RequestParam int roomId,
-                                    @RequestParam int systemId) throws IllegalArgumentException{
+            loanFee, @RequestParam boolean isDamaged, @RequestParam double worth, @RequestParam int roomId) throws IllegalArgumentException{
 
         Artifact artifact = service.editArtifact(artifactId, name, description, image, status, loanFee, isDamaged,
-                worth, roomId, systemId);
+                worth, roomId);
         return new ResponseEntity<ArtifactDto> (convertToDto(artifact), HttpStatus.OK);
     }
 
@@ -124,16 +122,14 @@ public class ArtifactRestController {
      * @param isDamaged
      * @param worth
      * @param roomId
-     * @param systemId
      * @return an artifactDto object
      */
     @PostMapping(value = { "/artifact/createArtifact", "/artifact/createArtifact/" })
     public ResponseEntity<ArtifactDto> createArtifact(@RequestParam String name, @RequestParam String description, @RequestParam
             String image, @RequestParam Artifact.LoanStatus status, @RequestParam double loanFee, @RequestParam boolean
-            isDamaged, @RequestParam double worth, @RequestParam int roomId, @RequestParam int systemId) throws
+            isDamaged, @RequestParam double worth, @RequestParam int roomId) throws
             IllegalArgumentException{
-        Artifact artifact = service.createArtifact(name, description, image, status, loanFee, isDamaged, worth, roomId,
-                systemId);
+        Artifact artifact = service.createArtifact(name, description, image, status, loanFee, isDamaged, worth, roomId);
         return new ResponseEntity<> (convertToDto(artifact), HttpStatus.OK);
     }
 

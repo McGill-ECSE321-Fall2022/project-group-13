@@ -166,13 +166,14 @@ public class ArtifactService {
      * @param isDamaged - boolean indicating if the artifact is damaged or not
      * @param worth - int representing the monetary value of the artifact
      * @param roomId - int representing the unique id of the room location of the artifact
-     * @param systemId - int representing the unique id of the current system
      *
      * @return artifact object once edited
      */
     @Transactional
     public Artifact editArtifact(int artifactId, String name, String description, String image, Artifact.LoanStatus
-            status, double loanFee, boolean isDamaged, double worth, int roomId, int systemId){
+            status, double loanFee, boolean isDamaged, double worth, int roomId){
+        
+        int systemId = toList(mmsRepository.findAll()).get(0).getSystemId();   
 
         checkInput(name,description,image,status,loanFee,isDamaged,worth,roomId,systemId);
 
@@ -190,7 +191,7 @@ public class ArtifactService {
             artifact.setLoanFee(loanFee);
             artifact.setWorth(worth);
             artifact.setRoomLocation(roomRepository.findRoomByRoomId(roomId));
-            artifact.setMuseumManagementSystem(MuseumManagementSystem.getWithSystemId(systemId));
+            artifact.setMuseumManagementSystem(mmsRepository.findMuseumManagementSystemBySystemId(systemId));
         }else{
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Artifact with id: " + artifactId +
                     " was not found.");
@@ -212,13 +213,14 @@ public class ArtifactService {
      * @param isDamaged - boolean indicating if the artifact is damaged or not
      * @param worth - int representing the monetary value of the artifact
      * @param roomId - int representing the unique id of the room location of the artifact
-     * @param systemId - int representing the unique id of the current system
      *
      * @return a new artifact object
      */
     @Transactional
     public Artifact createArtifact(String name, String description, String image, Artifact.LoanStatus status,
-                                   double loanFee, boolean isDamaged, double worth, int roomId, int systemId){
+                                   double loanFee, boolean isDamaged, double worth, int roomId){
+
+        int systemId = toList(mmsRepository.findAll()).get(0).getSystemId();
 
         checkInput(name, description, image, status, loanFee, isDamaged, worth, roomId, systemId);
 
