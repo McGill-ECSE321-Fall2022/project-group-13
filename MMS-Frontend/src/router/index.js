@@ -34,7 +34,7 @@ export default new Router({
       children: [
         {
           path: 'mydonationrequests',
-          name: 'clieant_mydonationrequests',
+          name: 'client_mydonationrequests',
           component: MyDonationRequests
         },
         {
@@ -50,8 +50,8 @@ export default new Router({
       component: Employee,
       children: [
         {
-          path: 'mySchedule',
-          name: 'employee_mySchedule',
+          path: 'myschedule',
+          name: 'employee_myschedule',
           component: MySchedule
         }
       ]
@@ -62,8 +62,8 @@ export default new Router({
       component: Manager,
       children: [
         {
-          path: 'viewSchedules',
-          name: 'manager_ViewSchedules',
+          path: 'viewschedules',
+          name: 'manager_viewschedules',
           component: ViewSchedules
         }
       ]

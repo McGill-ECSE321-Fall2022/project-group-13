@@ -19,28 +19,4 @@
   left: 0px;
   overflow: hidden;
 }
-
-.title {
-  color: #008573;
-  position: absolute;
-  font-family: Inter;
-  font-weight: 600;
-  font-size: 40px;
-  opacity: 1;
-  top: 0;
-  left: 167px;
-}
-
-.bookmark{
-  width: 73px;
-  height: 129px;
-  border: none;
-  background: #D6D2D2;
-  opacity: 1;
-  position: fixed;
-  top: 0px;
-  left: 70px;
-  overflow: hidden;
-}
-
 </style>
