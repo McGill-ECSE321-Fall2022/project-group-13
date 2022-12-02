@@ -1,10 +1,11 @@
 <template>
     <div class="myDonations">
         <head>
-            <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         </head>
         <button class="donateButton">DONATE</button>
-        <span class="title">MY DONATIONS</span>
+        <span class="title">MY DONATION REQUESTS</span>
         <div class="bottomText">
         <span class="thankYou">Thank you for your wonderful donations!</span>
         </div>
@@ -34,7 +35,7 @@
   color: white;
   text-align: center;
   position: absolute;
-  top: 0;
+  top: 50px;
   right: 15px;
 }
 
@@ -46,7 +47,7 @@
   font-size: 40px;
   opacity: 1;
   top: 0;
-  left: 45px;
+  left: 167px;
 }
 
 .bottomText {

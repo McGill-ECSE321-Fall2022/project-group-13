@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import AccountLogin from '@/components/AccountLogin'
 import AccountSignUp from '@/components/AccountSignUp'
-import MyDonations from '@/components/MyDonations'
+import MyDonationRequests from '@/components/MyDonationRequests'
 import MyLoanRequests from '@/components/MyLoanRequests'
+import Client from '@/components/Client'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -21,14 +23,23 @@ export default new Router({
       component: AccountSignUp
     },
     {
-      path: '/client/mydonations',
-      name: 'MyDonations',
-      component: MyDonations
-    },
-    {
-      path: '/client/myloanrequests',
-      name: 'MyLoanRequests',
-      component: MyLoanRequests
+      path: '/client',
+      name: 'Client',
+      component: Client,
+      children: [
+        {
+          path: 'mydonationrequests',
+          name: 'clieant_mydonationrequests',
+          component: MyDonationRequests
+        },
+        {
+          path: 'myloanrequests',
+          name: 'client_myloanrequests',
+          component: MyLoanRequests
+        }
+      ]
     }
   ]
 })
+
+
