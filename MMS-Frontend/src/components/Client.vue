@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .clientHome {
   overflow: hidden;
   position: absolute;
@@ -74,7 +74,7 @@ export default {
   color: black;
 }
 
-.bookmark{
+.bookmark {
   width: 73px;
   height: 129px;
   border: none;
@@ -84,5 +84,36 @@ export default {
   top: 0px;
   left: 70px;
   overflow: hidden;
+}
+
+.title {
+  color: #008573;
+  position: absolute;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 40px;
+  opacity: 1;
+  top: 0;
+  left: 167px;
+}
+
+.styledButton {
+  background: #008573;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  opacity: 1;
+  font-family: Inter;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.styledButton:hover {
+  background: white;
+  border: solid;
+  border-color: #008573;
+  color: #008573;
 }
 </style>

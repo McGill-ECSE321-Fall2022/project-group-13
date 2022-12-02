@@ -8,7 +8,7 @@
         <div class="bottomText">
         <span class="noOtherRequests">No other requests made.<br> Would you like to browse the catalog?<br></span>
         <form action="http://127.0.0.1:8087/#/">
-        <button class="viewCatalogButton">View Catalog</button>
+        <button class="styledButton">View Catalog</button>
         </form>
         </div>
     </div>
@@ -24,41 +24,6 @@
   top: 0px;
   left: 0px;
   overflow: hidden;
-}
-
-.title {
-  color: #008573;
-  position: absolute;
-  font-family: Inter;
-  font-weight: 600;
-  font-size: 40px;
-  opacity: 1;
-  top: 0;
-  left: 167px;
-}
-
-.bookmark{
-  width: 73px;
-  height: 129px;
-  border: none;
-  background: #D6D2D2;
-  opacity: 1;
-  position: fixed;
-  top: 0px;
-  left: 70px;
-  overflow: hidden;
-}
-
-.viewCatalogButton {
-  background-color: #008573;
-  opacity: 1;
-  border: none;
-  color: white;
-  font-family: Inter;
-  font-weight: 600;
-  padding: 15px;
-  text-align: center;
-  border-radius: 12px;
 }
 
 .noOtherRequests {
