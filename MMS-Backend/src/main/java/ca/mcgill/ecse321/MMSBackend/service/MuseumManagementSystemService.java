@@ -70,10 +70,9 @@ public class MuseumManagementSystemService {
      * 
      */
     @Transactional
-    public MuseumManagementSystem getMuseumManagementSystem(int museumManagementSystemId) {
+    public MuseumManagementSystem getMuseumManagementSystem() {
 
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
 
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
