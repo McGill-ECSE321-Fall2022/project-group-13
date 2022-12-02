@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.MMSBackend.dao.ManagerRepository;
 import ca.mcgill.ecse321.MMSBackend.exception.MuseumManagementSystemException;
 import ca.mcgill.ecse321.MMSBackend.model.Manager;
-import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 
 /**
  * @author Nikolas Pasichnik (NikolasPasichnik)

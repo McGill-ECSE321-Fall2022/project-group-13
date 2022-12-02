@@ -98,26 +98,11 @@ public class TestMuseumManagementService {
     private static final Room STORAGE_ROOM = createRoom(STORAGE_ROOM_ID, STORAGE_ROOM_NAME, STORAGE_ROOM_TYPE, MMS);
     private static final Room SMALL_ROOM = createRoom(SMALL_ROOM_ID, SMALL_ROOM_NAME, SMALL_ROOM_TYPE, MMS);
     private static final List<Room> ALL_ROOMS = Arrays.asList(STORAGE_ROOM, SMALL_ROOM);
-    private static final List<MuseumManagementSystem> ALL_MMS = Arrays.asList(MMS);
 
 
     @BeforeEach
 	public void setMockOutput()
     {
-        lenient().when(mmsRepository.findMuseumManagementSystemBySystemId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(SYSTEM_ID)) {
-                MuseumManagementSystem mms = new MuseumManagementSystem();
-                mms.setSystemId(SYSTEM_ID);
-                mms.setName(MMS_NAME);
-                mms.setOpenTime(OPEN_TIME_1);
-                mms.setCloseTime(CLOSE_TIME_1);
-                mms.setMaxLoanNumber(MMS_MAX_LOAN_NUMBER);
-                mms.setTicketFee(MMS_TICKET_FEE);
-                return mms;
-            } else {
-                return null;
-            }
-        });
 
         lenient().when(clientRepository.findClientByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
             if (invocation.getArgument(0).equals(CLIENT_USERNAME)) {
@@ -170,7 +155,6 @@ public class TestMuseumManagementService {
         initializeSpecificWeekDay(SPECIFIC_WEEK_DAY1, MONDAY, false);
         initializeSpecificWeekDay(SPECIFIC_WEEK_DAY2, TUESDAY, true);
         lenient().when(specificWeekDayRepository.findSpecificWeekDayByDayType(any())).thenAnswer((InvocationOnMock invocation) -> {
-            System.out.println("invocation " + invocation.getArgument(0));
             if (invocation.getArgument(0) == null) {
                 return null;
             } else if (invocation.getArgument(0).equals(MONDAY)) {
@@ -182,7 +166,7 @@ public class TestMuseumManagementService {
             }
          });
 
-        lenient().when(mmsRepository.findAll()).thenReturn(ALL_MMS);
+        lenient().when(mmsRepository.findAll()).thenReturn(Arrays.asList(createMms(SYSTEM_ID,MMS_NAME,OPEN_TIME_1,CLOSE_TIME_1,MMS_MAX_LOAN_NUMBER,MMS_TICKET_FEE)));
 
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
@@ -260,7 +244,7 @@ public class TestMuseumManagementService {
     @Test
     public void testGetMaxLoanNumberOfMms(){
         int maxLoanNumber = museumManagementSystemService.getMaxLoanNumberOfMms();
-        assertEquals(maxLoanNumber, MMS_MAX_LOAN_NUMBER);
+        assertEquals(MMS_MAX_LOAN_NUMBER, maxLoanNumber);
     }
 
     /**
