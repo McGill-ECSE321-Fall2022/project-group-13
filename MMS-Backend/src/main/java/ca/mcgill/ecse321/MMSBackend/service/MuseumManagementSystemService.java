@@ -69,17 +69,6 @@ public class MuseumManagementSystemService {
     }
 
     /**
-     * Get museum management system
-     * 
-     * @author : Lucy Zhang (Lucy-Zh)
-     *
-     */
-    @Transactional
-    public List<MuseumManagementSystem> getAllMuseumManagementSystem() {
-        return toList(museumManagementSystemRepository.findAll());
-    }
-
-    /**
      * Set current museum ticket price through id
      * 
      * @author : Lucy Zhang (Lucy-Zh)

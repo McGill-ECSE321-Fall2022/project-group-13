@@ -61,23 +61,6 @@ public class MuseumManagementSystemRestController {
     }
 
     /**
-     * Get mms
-     * 
-     * @author Lucy Zhang (Lucy-Zh)
-     * @throws IllegalArgumentException
-     */
-    @GetMapping(value = { "/mms", "/mms/" })
-    public ResponseEntity<List<MuseumManagementSystemDto>> getAllMms() throws IllegalArgumentException {
-
-        List<MuseumManagementSystemDto> mmsDto = new ArrayList<>();
-
-        for (MuseumManagementSystem mms : mmsService.getAllMuseumManagementSystem()) {
-            mmsDto.add(convertToDto(mms));
-        }
-        return new ResponseEntity<>(mmsDto, HttpStatus.OK);
-    }
-
-    /**
      * Set mms ticket fee
      * 
      * @author Lucy Zhang (Lucy-Zh)
