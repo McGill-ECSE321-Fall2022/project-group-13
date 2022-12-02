@@ -33,40 +33,9 @@ public class MuseumManagementSystemService {
     SpecificWeekDayRepository specificWeekDayRepository;
 
     /**
-     * Create museum management system
-     * 
-     * @author : Lucy Zhang (Lucy-Zh) and Samantha Perez Hoffman (samperezh)
-     * 
-     */
-    @Transactional
-    public MuseumManagementSystem createMuseumManagementSystem() {
-
-        if(museumManagementSystemRepository.count() != 0) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System already exists");
-        }
-
-        MuseumManagementSystem museumManagementSystem = new MuseumManagementSystem();
-        museumManagementSystem.setName("Cabinet Of Curiosities");
-        museumManagementSystem.setTicketFee(15.00);
-        museumManagementSystem.setOpenTime(Time.valueOf("9:00:00"));
-        museumManagementSystem.setCloseTime(Time.valueOf("17:00:00"));
-        museumManagementSystem.setMaxLoanNumber(5);
-
-        museumManagementSystem = museumManagementSystemRepository.save(museumManagementSystem);
-
-        //create 7 days of the week 
-        createMuseumSpecificWeekDays(museumManagementSystem);
-        //create rooms 
-        createMuseumRooms(museumManagementSystem);
-
-        return museumManagementSystem;
-    }
-
-    /**
-     * Get museum management system through id
+     * Get museum management system 
      * 
      * @author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystemId
      * 
      */
     @Transactional
@@ -85,13 +54,12 @@ public class MuseumManagementSystemService {
      * Set museum management system name through id
      * 
      * @author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystemId, name
+     * @param name
      *
      */
     @Transactional
-    public void setMuseumManagementSystemName(int museumManagementSystemId, String name) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+    public void setMuseumManagementSystemName(String name) {
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
 
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
@@ -115,13 +83,12 @@ public class MuseumManagementSystemService {
      * Set current museum ticket price through id
      * 
      * @author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystemId, price
+     * @param  price
      * 
      */
     @Transactional
-    public void setMuseumTicketPrice(int museumManagementSystemId, double price) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+    public void setMuseumTicketPrice(double price) {
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
 
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
@@ -187,11 +154,10 @@ public class MuseumManagementSystemService {
      * get museum management system's max loan number for clients
      *
      * @author : Nazia Chowdhury (naziaC)
-     * @param museumManagementSystemId
      */
     @Transactional
-    public int getMaxLoanNumberOfMms(int museumManagementSystemId) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository.findMuseumManagementSystemBySystemId(museumManagementSystemId);
+    public int getMaxLoanNumberOfMms() {
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
         return museumManagementSystem.getMaxLoanNumber();
     }
 
@@ -199,12 +165,10 @@ public class MuseumManagementSystemService {
      * Set museum management system's max loan number for clients
      *
      * @author : Nazia Chowdhury (naziaC)
-     * @param museumManagementSystemId
      */
     @Transactional
-    public void setMaxLoanNumberOfMms(int museumManagementSystemId, int maxLoanNumber) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+    public void setMaxLoanNumberOfMms(int maxLoanNumber) {
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
         } else if(maxLoanNumber <= 0){
@@ -221,18 +185,16 @@ public class MuseumManagementSystemService {
      * @author : Samantha Perez Hoffman (samperezh)
      * @param newOpenTime
      * @param newCloseTime
-     * @param museumManagementSystemId
      */
     @Transactional
-    public MuseumManagementSystem setOpeningHours(Time newOpenTime, Time newCloseTime, int museumManagementSystemId) {
+    public MuseumManagementSystem setOpeningHours(Time newOpenTime, Time newCloseTime) {
         if(newOpenTime == null || newCloseTime == null) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Opening and closing times cannot be null.");
         }
         if (newOpenTime.after(newCloseTime)) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Opening time cannot be after closing time.");
         }
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
         }
@@ -247,12 +209,10 @@ public class MuseumManagementSystemService {
      * Get museum management system opening hours
      * 
      * @author : Samantha Perez Hoffman (samperezh)
-     * @param museumManagementSystemId
      */
     @Transactional
-    public List<Time> getOpeningHours (int museumManagementSystemId) {
-        MuseumManagementSystem museumManagementSystem = museumManagementSystemRepository
-                .findMuseumManagementSystemBySystemId(museumManagementSystemId);
+    public List<Time> getOpeningHours () {
+        MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
         if (museumManagementSystem == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
         }
@@ -278,95 +238,6 @@ public class MuseumManagementSystemService {
         }
         return specificWeekDay;
     }
-
-
-    /**
-     * Helper method that creates the 7 specific week days of the museum management system
-     * 
-     * @author : Samantha Perez Hoffman (samperezh)
-     * @param museumManagementSystem
-     */
-    private void createMuseumSpecificWeekDays(MuseumManagementSystem museumManagementSystem){
-        SpecificWeekDay monday = new SpecificWeekDay();
-        monday.setDayType(DayType.Monday);
-        monday.setIsClosed(false);
-        monday.setMuseumManagementSystem(museumManagementSystem);
-
-        SpecificWeekDay tuesday = new SpecificWeekDay();
-        tuesday.setDayType(DayType.Tuesday);
-        tuesday.setIsClosed(false);
-        tuesday.setMuseumManagementSystem(museumManagementSystem);
-
-        SpecificWeekDay wednesday = new SpecificWeekDay();
-        wednesday.setDayType(DayType.Wednesday);
-        wednesday.setIsClosed(false);
-        wednesday.setMuseumManagementSystem(museumManagementSystem);
-
-        SpecificWeekDay thursday = new SpecificWeekDay();
-        thursday.setDayType(DayType.Thursday);
-        thursday.setIsClosed(false);
-        thursday.setMuseumManagementSystem(museumManagementSystem);
-
-        SpecificWeekDay friday = new SpecificWeekDay();
-        friday.setDayType(DayType.Friday);
-        friday.setIsClosed(false);
-        friday.setMuseumManagementSystem(museumManagementSystem);
-        
-        SpecificWeekDay saturday = new SpecificWeekDay();
-        saturday.setDayType(DayType.Saturday);
-        saturday.setIsClosed(false);
-        saturday.setMuseumManagementSystem(museumManagementSystem);
-
-        SpecificWeekDay sunday = new SpecificWeekDay();
-        sunday.setDayType(DayType.Sunday);
-        sunday.setIsClosed(false);
-        sunday.setMuseumManagementSystem(museumManagementSystem);
-
-        specificWeekDayRepository.save(monday);
-        specificWeekDayRepository.save(tuesday);
-        specificWeekDayRepository.save(wednesday);
-        specificWeekDayRepository.save(thursday);
-        specificWeekDayRepository.save(friday);
-        specificWeekDayRepository.save(saturday);
-        specificWeekDayRepository.save(sunday);
-    }
-
-    /**
-     * helper method that creates the rooms of the museum management system
-     * 
-     * @author : Lucy Zhang (Lucy-Zh)
-     * @param museumManagementSystem
-     *
-     */
-    public void createMuseumRooms(MuseumManagementSystem museumManagementSystem) {
-        // create 5 small rooms
-        for (int i = 1; i <= 5; i++) {
-
-            Room currentRoom = new Room();
-            currentRoom.setName("Small Room " + i);
-            currentRoom.setType(RoomType.Small);
-            currentRoom.setMuseumManagementSystem(museumManagementSystem);
-            roomRepository.save(currentRoom);
-        }
-
-        // create 5 large rooms
-        for (int i = 1; i <= 5; i++) {
-
-            Room currentRoom = new Room();
-            currentRoom.setName("Large Room " + i);
-            currentRoom.setType(RoomType.Large);
-            currentRoom.setMuseumManagementSystem(museumManagementSystem);
-            roomRepository.save(currentRoom);
-        }
-
-        // create storage room
-        Room storageRoom = new Room();
-        storageRoom.setName("Storage Room");
-        storageRoom.setType(RoomType.Storage);
-        storageRoom.setMuseumManagementSystem(museumManagementSystem);
-        roomRepository.save(storageRoom);
-    }
-
 
     /**
      * toList helper method (@author eventRegistration authors)

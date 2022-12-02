@@ -36,41 +36,28 @@ public class MuseumManagementSystemRestController {
     private MuseumManagementSystemService mmsService;
 
     /**
-     * Create a new museum management system
-     * 
-     * @author Lucy Zhang (Lucy-Zh)
-     * @throws IllegalArgumentException
-     */
-    @PostMapping(value = { "/mms", "/mms/" })
-    public ResponseEntity<MuseumManagementSystemDto> createMms() throws IllegalArgumentException {
-        return new ResponseEntity<>(convertToDto(mmsService.createMuseumManagementSystem()), HttpStatus.CREATED);
-    }
-
-    /**
      * Get a mms by id
      * 
      * @author Lucy Zhang (Lucy-Zh)
-     * @param systemId
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "/mms/getMms/{systemId}", "/mms/getMms/{systemId}/" })
-    public ResponseEntity<MuseumManagementSystemDto> getMms(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        return new ResponseEntity<>(convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
+    @GetMapping(value = { "/mms/getMms", "/mms/getMms/" })
+    public ResponseEntity<MuseumManagementSystemDto> getMms() throws IllegalArgumentException {
+        return new ResponseEntity<>(convertToDto(mmsService.getMuseumManagementSystem()), HttpStatus.OK);
     }
 
     /**
      * Update mms name by id
      * 
      * @author Lucy Zhang (Lucy-Zh)
-     * @param systemId
      * @param name
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/mms/{systemId}", "/mms/{systemId}/" })
-    public ResponseEntity<MuseumManagementSystemDto> updateMmsName(@PathVariable("systemId") int systemId, @RequestParam String name)
+    @PutMapping(value = { "/mms", "/mms/" })
+    public ResponseEntity<MuseumManagementSystemDto> updateMmsName(@RequestParam String name)
             throws IllegalArgumentException {
-        mmsService.setMuseumManagementSystemName(systemId, name);
-        return new ResponseEntity<>(convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
+        mmsService.setMuseumManagementSystemName(name);
+        return new ResponseEntity<>(convertToDto(mmsService.getMuseumManagementSystem()), HttpStatus.OK);
     }
 
     /**
@@ -94,16 +81,15 @@ public class MuseumManagementSystemRestController {
      * Set mms ticket fee
      * 
      * @author Lucy Zhang (Lucy-Zh)
-     * @param systemId
      * @param ticketFee
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/mms/{systemId}/fee", "/mms/{systemId}/fee/" })
-    public ResponseEntity<MuseumManagementSystemDto> updateMmsTicketFee(@PathVariable("systemId") int systemId,
+    @PutMapping(value = { "/mms/fee", "/mms/fee/" })
+    public ResponseEntity<MuseumManagementSystemDto> updateMmsTicketFee(
             @RequestParam double ticketFee) throws IllegalArgumentException {
 
-        mmsService.setMuseumTicketPrice(systemId, ticketFee);
-        return new ResponseEntity<>(convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
+        mmsService.setMuseumTicketPrice(ticketFee);
+        return new ResponseEntity<>(convertToDto(mmsService.getMuseumManagementSystem()), HttpStatus.OK);
 
     }
 
@@ -164,52 +150,48 @@ public class MuseumManagementSystemRestController {
      * get museum management system's max loan number for clients
      *
      * @author : Nazia Chowdhury (naziaC)
-     * @param systemId
      */
-    @GetMapping(value = { "/mms/maxLoanNumber/{systemId}", "/mms/maxLoanNumber/{systemId}/" })
-    public ResponseEntity<Integer> getMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        return new ResponseEntity<Integer>(mmsService.getMaxLoanNumberOfMms(systemId), HttpStatus.OK);
+    @GetMapping(value = { "/mms/maxLoanNumber", "/mms/maxLoanNumber/" })
+    public ResponseEntity<Integer> getMaxLoanNumberOfSystem() throws IllegalArgumentException {
+        return new ResponseEntity<Integer>(mmsService.getMaxLoanNumberOfMms(), HttpStatus.OK);
     }
 
     /**
      * Set museum management system's max loan number for clients
      *
      * @author : Nazia Chowdhury (naziaC)
-     * @param systemId
      */
-    @PutMapping(value = { "/mms/setMaxLoanNumber/{systemId}", "/mms/setMaxLoanNumber/{systemId}/" })
-    public ResponseEntity<MuseumManagementSystemDto> setMaxLoanNumberOfSystem(@PathVariable("systemId") int systemId, @RequestParam int maxLoanNumber)
+    @PutMapping(value = { "/mms/setMaxLoanNumber", "/mms/setMaxLoanNumber/" })
+    public ResponseEntity<MuseumManagementSystemDto> setMaxLoanNumberOfSystem(@RequestParam int maxLoanNumber)
             throws IllegalArgumentException {
-        mmsService.setMaxLoanNumberOfMms(systemId, maxLoanNumber);
-        return new ResponseEntity<MuseumManagementSystemDto>(convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
+        mmsService.setMaxLoanNumberOfMms(maxLoanNumber);
+        return new ResponseEntity<MuseumManagementSystemDto>(convertToDto(mmsService.getMuseumManagementSystem()), HttpStatus.OK);
     }
 
     /**
      * Set museum management system's opening hours
      * 
      * @author : Samantha Perez Hoffman (samperezh)
-     * @param systemId
      * @param openTime
      * @param closeTime
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "mms/setOpeningHours/{systemId}", "mms/setOpeningHours/{systemId}/" })
-    public ResponseEntity<MuseumManagementSystemDto> setOpeningHours(@PathVariable("systemId") int systemId,
+    @PutMapping(value = { "mms/setOpeningHours", "mms/setOpeningHours/" })
+    public ResponseEntity<MuseumManagementSystemDto> setOpeningHours(
             @RequestParam Time openTime, @RequestParam Time closeTime) throws IllegalArgumentException {
-        mmsService.setOpeningHours(openTime, closeTime, systemId);
-        return new ResponseEntity<MuseumManagementSystemDto>(convertToDto(mmsService.getMuseumManagementSystem(systemId)), HttpStatus.OK);
+        mmsService.setOpeningHours(openTime, closeTime);
+        return new ResponseEntity<MuseumManagementSystemDto>(convertToDto(mmsService.getMuseumManagementSystem()), HttpStatus.OK);
     }
 
     /**
      * Get museum management system's opening hours
      * 
      * @author : Samantha Perez Hoffman (samperezh)
-     * @param systemId
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "mms/getOpeningHours/{systemId}", "mms/getOpeningHours/{systemId}/" })
-    public ResponseEntity<List<Time>> getOpeningHours(@PathVariable("systemId") int systemId) throws IllegalArgumentException {
-        return new ResponseEntity<>(mmsService.getOpeningHours(systemId), HttpStatus.OK);
+    @GetMapping(value = { "mms/getOpeningHours", "mms/getOpeningHours/" })
+    public ResponseEntity<List<Time>> getOpeningHours() throws IllegalArgumentException {
+        return new ResponseEntity<>(mmsService.getOpeningHours(), HttpStatus.OK);
     }
 
     /**

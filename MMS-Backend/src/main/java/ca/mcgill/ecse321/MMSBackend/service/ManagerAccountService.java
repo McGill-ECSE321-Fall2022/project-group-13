@@ -29,48 +29,6 @@ public class ManagerAccountService {
     ManagerRepository managerRepository;
 
     /**
-     * Create a Manager account
-     * 
-     * @param - Username: string that will be used as the unique identifier of the
-     *          account
-     * @author Nikolas Pasichnik (NikolasPasichnik)
-     */
-    @Transactional
-    public Manager createManager(String username, String name, String password, MuseumManagementSystem mms) {
-        // Case where any of the parameters are null
-        if (mms == null || username == null || name == null || password == null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
-        }
-        // Case where any of the parameters are empty strings
-        if (username.equals("") || name.equals("") || password.equals("")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Cannot have empty fields");
-        }
-        // Case where the username contains whitespaces
-        if (username.contains(" ")) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "The username cannot have spaces");
-        }
-        // Case where the name consists of only whitespaces
-        if (name.trim().isEmpty() == true) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid name");
-        }
-        // Case where the password contains whitespaces
-        if (password.contains(" ") || password.length() < 8 || password.length() > 30) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "Invalid password");
-        }
-        if (getManager() != null) {
-            throw new MuseumManagementSystemException(HttpStatus.CONFLICT, "A manager already exists");
-        }
-        // Creating a manager
-        Manager manager = new Manager();
-        manager.setUsername(username);
-        manager.setName(name);
-        manager.setPassword(password);
-        manager.setMuseumManagementSystem(mms);
-        managerRepository.save(manager);
-        return manager;
-    }
-
-    /**
      * get the manager of the system
      * 
      * @author Nikolas Pasichnik (NikolasPasichnik)

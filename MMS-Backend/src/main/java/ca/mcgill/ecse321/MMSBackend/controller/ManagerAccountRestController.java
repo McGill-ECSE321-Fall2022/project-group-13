@@ -42,14 +42,6 @@ public class ManagerAccountRestController {
         return new ResponseEntity<>(convertToDto(service.getManager()), HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/manager", "/manager/"})
-    public ResponseEntity<ManagerDto> createManager(@RequestParam String username, @RequestParam String name, @RequestParam String password, 
-    @RequestParam int systemId) throws IllegalArgumentException{
-        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
-        Manager manager = service.createManager(username, name, password, mms); 
-        return new ResponseEntity<ManagerDto>(convertToDto(manager), HttpStatus.OK); 
-    }
-
     @GetMapping(value = {"/manager/signin/{username}", "/manager/signin/{username}/"})
     public ResponseEntity<ManagerDto> signInManagerAccount(@PathVariable("username") String username, @RequestParam String password) throws IllegalArgumentException{
         Manager manager = service.signInManagerAccount(username, password);
