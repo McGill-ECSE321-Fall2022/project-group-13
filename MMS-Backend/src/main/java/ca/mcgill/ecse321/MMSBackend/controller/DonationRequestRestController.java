@@ -46,7 +46,6 @@ public class DonationRequestRestController {
      * @param description
      * @param isDamaged
      * @param worth
-     * @param systemId
      * @return the created artifact for donation
      * @throws IllegalArgumentException
      */
@@ -56,11 +55,10 @@ public class DonationRequestRestController {
         @RequestParam String image,
         @RequestParam String description,
         @RequestParam boolean isDamaged,
-        @RequestParam double worth, 
-        @RequestParam int systemId)
+        @RequestParam double worth)
         
         throws IllegalArgumentException {
-        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem();
         Artifact artifact = donationRequestService.createDonationArtifact(name, image, description, isDamaged, worth, mms);
 
         return new ResponseEntity<>(convertToDto(artifact), HttpStatus.CREATED);
@@ -71,16 +69,15 @@ public class DonationRequestRestController {
       *
       * @param clientUsername
       * @param artifactId
-      * @param systemId
       * @return the created donation request dto
       * @throws IllegalArgumentException
       */
     @PostMapping(value = { "/donationRequest", "/donationRequest/" })
     public ResponseEntity<DonationRequestDto> createDonationRequest(@RequestParam String clientUsername,
-        @RequestParam int artifactId, @RequestParam int systemId) throws IllegalArgumentException {
+        @RequestParam int artifactId) throws IllegalArgumentException {
         Client client = clientAccountService.getClient(clientUsername);
         Artifact artifact = artifactService.getArtifact(artifactId);
-        MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem(systemId);
+        MuseumManagementSystem museumManagementSystem = mmsService.getMuseumManagementSystem();
         DonationRequest donationRequest = donationRequestService.createDonationRequest(client, artifact, museumManagementSystem);
 
         return new ResponseEntity<>(convertToDto(donationRequest), HttpStatus.CREATED);

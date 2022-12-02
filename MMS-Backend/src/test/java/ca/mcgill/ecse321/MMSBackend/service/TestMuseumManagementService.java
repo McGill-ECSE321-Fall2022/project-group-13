@@ -245,32 +245,12 @@ public class TestMuseumManagementService {
         MuseumManagementSystem museumManagementSystem = null;
 
         try {
-            museumManagementSystem = museumManagementSystemService.getMuseumManagementSystem(SYSTEM_ID);
+            museumManagementSystem = museumManagementSystemService.getMuseumManagementSystem();
         } catch (MuseumManagementSystemException e) {
             fail();
         }
 
         assertNotNull(museumManagementSystem);
-    }
-
-    /**
-     * @author Lucy Zhang (Lucy-Zh)
-     */
-    @Test
-    public void testGetMuseumManagementSystemNull(){
-
-        MuseumManagementSystem museumManagementSystem = null;
-
-        String error = "";
-
-        try {
-            museumManagementSystem = museumManagementSystemService.getMuseumManagementSystem(-1);
-        } catch (MuseumManagementSystemException e) {
-            error = e.getMessage();
-        }
-
-        assertNull(museumManagementSystem);
-        assertEquals("Museum Management System does not exist", error);
     }
 
     /**

@@ -48,9 +48,8 @@ public class EmployeeAccountRestController {
 
     @PostMapping(value = { "/employee", "/employee/" })
     public ResponseEntity<EmployeeDto> createEmployee(@RequestParam String username, @RequestParam String name,
-            @RequestParam String password,
-            @RequestParam int systemId) throws IllegalArgumentException {
-        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem(systemId);
+            @RequestParam String password) throws IllegalArgumentException {
+        MuseumManagementSystem mms = mmsService.getMuseumManagementSystem();
         Employee employee = service.createEmployee(username, name, password, mms);
         return new ResponseEntity<EmployeeDto>(convertToDto(employee), HttpStatus.OK);
     }
