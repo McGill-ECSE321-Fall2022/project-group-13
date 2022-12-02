@@ -26,9 +26,9 @@ export default new Router({
       component: MyDonations
     },
     {
-          path: '/client/myloanrequests',
-          name: 'MyLoanRequests',
-          component: MyLoanRequests
+      path: '/client/myloanrequests',
+      name: 'MyLoanRequests',
+      component: MyLoanRequests
     }
   ]
 })
