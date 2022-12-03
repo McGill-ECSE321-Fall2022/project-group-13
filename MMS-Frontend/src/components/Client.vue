@@ -6,7 +6,7 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <div class="clientHome">
-        <a href="/client/myaccount">Hi, Client!</a>
+        <a href="/client/myaccount">Hi, {{clientName}}!</a>
     </div>
     <div class="topnav">
         <a href="/client/browsecatalog">Browse Catalog</a>
@@ -23,9 +23,29 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var axiosClient = axios.create({
+    baseURL: backendUrl,
+    headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 export default {
-  name: 'client'
-}
+  name: 'Client',
+  data() {
+      return {
+        clientName: '',
+      }
+    },
+  created() {
+        let username = sessionStorage.getItem('loggedInClient');
+        const response = axiosClient.get('client/' + username);
+        this.clientName = username;
+    }
+  }
 </script>
 
 <style>

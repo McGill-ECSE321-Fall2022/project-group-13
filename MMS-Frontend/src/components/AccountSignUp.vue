@@ -2,19 +2,19 @@
     <div>
         <h1>Cabinet of Curiosities</h1>
         <hr class="solid">
-        <div class = "usernameInput">
-            <h5><input type = "text" v-model="username" placeholder="Username" /></h5>
+        <div class = "form-group">
+            <h5><input class="form-control" type = "text" v-model="username" placeholder="Username" /></h5>
         </div>
-        <div class = "firstNameInput">
-            <h5><input type = "text" v-model="firstNameInput" placeholder="First Name" /></h5>
+        <div class = "form-group">
+            <h5><input class="form-control" type = "text" v-model="firstNameInput" placeholder="First Name" /></h5>
         </div>
-        <div class = "lastNameInput">
-            <h5><input type = "text" v-model="lastNameInput" placeholder="Last Name" /></h5>
+        <div class = "form-group">
+            <h5><input class="form-control" type = "text" v-model="lastNameInput" placeholder="Last Name" /></h5>
         </div>
-        <div class = "passwordInput">
-            <h5><input type = "password" v-model="password" placeholder="Password" /></h5>
+        <div class = "form-group">
+            <h5><input class="form-control" type = "password" v-model="password" placeholder="Password" /></h5>
         </div>
-        <div class = "signUpButton">
+        <div>
             <h5><button type="button">Create Account</button></h5>
         </div>
         <h6>Already have an account?</h6>
@@ -37,6 +37,6 @@ hr.solid {
 
 /* Centering the placeholders */
 ::placeholder {
-   text-align: center; 
+   text-align: center;
 }
 </style>
