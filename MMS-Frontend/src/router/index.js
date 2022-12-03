@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Client from '@/components/Client'
+import Employee from '@/components/Employee'
+import Manager from '@/components/Manager'
 import AccountLogin from '@/components/AccountLogin'
 import AccountSignUp from '@/components/AccountSignUp'
 import MyDonationRequests from '@/components/MyDonationRequests'
 import MyLoanRequests from '@/components/MyLoanRequests'
 import MySchedule from '@/components/MySchedule'
 import ViewSchedules from '@/components/ViewSchedules'
-import Client from '@/components/Client'
-import Employee from '@/components/Employee'
-import Manager from '@/components/Manager'
+import ViewDonationRequests from '@/components/ViewDonationRequests'
 
 
 Vue.use(Router)
@@ -53,6 +54,11 @@ export default new Router({
           path: 'myschedule',
           name: 'employee_myschedule',
           component: MySchedule
+        },
+        {
+          path: 'viewdonationrequests',
+          name: 'employee_viewdonationrequests',
+          component: ViewDonationRequests
         }
       ]
     }, 
@@ -65,6 +71,11 @@ export default new Router({
           path: 'viewschedules',
           name: 'manager_viewschedules',
           component: ViewSchedules
+        },
+        {
+          path: 'viewdonationrequests',
+          name: 'manager_viewdonationrequests',
+          component: ViewDonationRequests
         }
       ]
     }

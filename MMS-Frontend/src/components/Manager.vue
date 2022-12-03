@@ -9,11 +9,11 @@
         <a href="/">Hi, Manager!</a>
     </div>
     <div class="topnav"> <!--TO DO: modify links -->
-        <a href="/manager/viewSchedules">Tickets</a> 
-        <a href="/manager/viewSchedules">Employees</a>
-        <a href="/manager/viewSchedules">Loans</a>
-        <a href="/manager/viewSchedules">Donations</a>
-        <a href="/manager/viewSchedules">Catalog</a>
+        <a href="/manager/viewschedules">Tickets</a> 
+        <a href="/manager/viewschedules">Employees</a>
+        <a href="/manager/viewschedules">Loans</a>
+        <a href="/manager/viewdonationrequests">Donations</a>
+        <a href="/manager/viewschedules">Catalog</a>
     </div>
     <form action="http://127.0.0.1:8087">
     <button class="bookmark">
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'employee'
+  name: 'manager'
 }
 </script>
 

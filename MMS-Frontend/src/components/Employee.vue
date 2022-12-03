@@ -9,10 +9,10 @@
         <a href="/">Hi, Employee!</a>
     </div>
     <div class="topnav"> <!--TO DO: modify links -->
-        <a href="/employee/mySchedule">Tickets</a> 
-        <a href="/employee/mySchedule">My Schedule</a>
-        <a href="/employee/mySchedule">Donations</a>
-        <a href="/employee/mySchedule">Catalog</a>
+        <a href="/employee/myschedule">Tickets</a> 
+        <a href="/employee/myschedule">My Schedule</a>
+        <a href="/employee/viewdonationrequests">Donations</a>
+        <a href="/employee/myschedule">Catalog</a>
     </div>
     <form action="http://127.0.0.1:8087">
     <button class="bookmark">
