@@ -1,26 +1,37 @@
 <template>
     <div class="accountLogin">
+    
     <form @submit="submitLoginForm">
         <h1>Cabinet of Curiosities</h1>
         <hr class="solid"
+
+        <div class = "userTypeDropdown">
         <section>
-        <input type="radio" name="test" value="value1"> Manager
-        <input type="radio" name="test" value="value2"> Client
-        <input type="radio" name="test" value="value3"> Employee
+        <select name = "userID" @change = "onChange($event)" class ="form-select form-control">
+          <option value = "Client"> Cient </option>
+          <option value = "Employee"> Employee </option>
+          <option value = "Manager"> Manager </option>
+        </select>
         </section>
+        </div>
+
         <div style="position:relative; margin:auto; left:40%;">
         <div class="form-group">
             <input style="width: 20%;" class="form-control" type = "text" v-model="username" placeholder="Username" />
         </div>
+
         <div class="form-group" style="margin:auto;">
             <input style="width: 20%;" type = "password" class="form-control" v-model="password" placeholder="Password" />
         </div>
+        
         </div>
             <button class="btn btn-primary btn-block">Login</button>
         <h6>Don't have an account?</h6>
+
         <p>
             <router-link to="/signup">Sign Up</router-link>
         </p>
+
     </form>
     </div>
 </template>
@@ -37,35 +48,81 @@ var axiosClient = axios.create({
     headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+var axiosEmployee = axios.create({
+    baseURL: backendUrl,
+    headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
+var axiosManager = axios.create({
+    baseURL: backendUrl,
+    headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 export default {
-  name: 'AccountLogin',
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
-  },
-  methods: {
-    submitLoginForm(event) {
-        event.preventDefault();
-        this.handleSubmit(this.password);
-      },
-    handleSubmit(password) {
-      const self = this;
-      var fetchDateUrl = ({username}) => `/client/signin/${username}`;
-      axiosClient.get(fetchDateUrl({username: this.username}), {
-      params: {
-        password
-      }}).then((response) => {
-            sessionStorage.setItem('loggedInClient', response.data.username);
-            self.$router.push({ path: '/client' });
-       })
+    name: 'AccountLogin',
+    data() {
+      return {
+        username: '',
+        password: '',
+        //The accountType is set as Client bcs it only updates if the dropdown menu is touched.. 
+        accountType: 'Client', 
+        
+        //This method gets the current value of the dropdown menu
+        onChange(e){
+          this.accountType = e.target.value;
+        }
+  
+      }
+    },
+    methods: {
+      submitLoginForm(event) {
+          event.preventDefault();
+          this.handleSubmit(this.password);
+        },
+        
+      handleSubmit(password) {
+        const self = this;
+        var fetchDateUrl; 
+        // Case where the account type is a client 
+        if (this.accountType === 'Client'){
+            fetchDateUrl = ({username}) => `/client/signin/${username}`;
+            axiosClient.get(fetchDateUrl({username: this.username}), {
+                params: {
+                  password
+                }}).then((response) => {
+                      sessionStorage.setItem('loggedInClient', response.data.username);
+                      self.$router.push({ path: '/client' });
+                 })
+        }
+
+        // Case where the account type is an employee 
+        else if (this.accountType === "Employee"){
+            fetchDateUrl = ({username}) => `/employee/signin/${username}`;
+            axiosEmployee.get(fetchDateUrl({username: this.username}), {
+                params: {
+                  password
+                }}).then((response) => {
+                      sessionStorage.setItem('loggedInEmployee', response.data.username);
+                      self.$router.push({ path: '/employee' });
+                 })
+        }
+        
+        //Case where the account type is a manager 
+        else if (this.accountType === "Manager"){
+            fetchDateUrl = ({username}) => `/manager/signin/${username}`;
+            axiosEmployee.get(fetchDateUrl({username: this.username}), {
+                params: {
+                  password
+                }}).then((response) => {
+                      sessionStorage.setItem('loggedInManager', response.data.username);
+                      self.$router.push({ path: '/manager' });
+                 })
+        }
+      }
     }
   }
-}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
   font-weight: bold;

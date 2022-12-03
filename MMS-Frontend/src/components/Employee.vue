@@ -6,7 +6,7 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <div class="employeeHome">
-        <a href="/employee/myaccount">Hi, Employee!</a>
+        <a href="/employee/myaccount">Hi, {{employeeName}}!</a>
     </div>
     <div class="topnav">
         <a href="/employee/managetickets">Manage Tickets</a> 
@@ -24,9 +24,29 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var axiosEmployee = axios.create({
+    baseURL: backendUrl,
+    headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 export default {
-  name: 'employee'
-}
+  name: 'Employee',
+  data() {
+      return {
+        employeeName: '',
+      }
+    },
+  created() {
+        let username = sessionStorage.getItem('loggedInEmployee');
+        const response = axiosEmployee.get('employee/' + username);
+        this.employeeName = username;
+    }
+  }
 </script>
 
 <style>

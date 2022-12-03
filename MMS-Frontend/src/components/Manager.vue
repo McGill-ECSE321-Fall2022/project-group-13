@@ -6,7 +6,7 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <div class="managerHome">
-        <a href="/manager/myaccount">Hi, Manager!</a>
+        <a href="/manager/myaccount">Hi, {{managerName}}!</a>
     </div>
     <div class="topnav"> <!--TO DO: modify links -->
         <a href="/manager/managetickets">Manage Tickets</a> 
@@ -24,9 +24,29 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var axiosManager = axios.create({
+    baseURL: backendUrl,
+    headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 export default {
-  name: 'manager'
-}
+  name: 'Manager',
+  data() {
+      return {
+        managerName: '',
+      }
+    },
+  created() {
+        let username = sessionStorage.getItem('loggedInManager');
+        const response = axiosManager.get('/managers');
+        this.managerName = username;
+    }
+  }
 </script>
 
 <style>
