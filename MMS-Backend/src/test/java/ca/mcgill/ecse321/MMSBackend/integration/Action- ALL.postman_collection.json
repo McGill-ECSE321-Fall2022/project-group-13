@@ -10,199 +10,6 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "MuseumManagementSystemRestController",
-					"item": [
-						{
-							"name": "createValidMms",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 201\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});",
-											"",
-											"pm.test(\"The response has all properties\", () => {",
-											"    //parse the response JSON ",
-											"    const responseJson = pm.response.json();",
-											"    pm.expect(responseJson.museumManagementSystemId).to.eql(1);",
-											"    pm.expect(responseJson.name).to.eql(\"Museum Management System Default Name\");",
-											"    pm.expect(responseJson.openingTime).to.eql(\"09:00:00\");",
-											"    pm.expect(responseJson.closingTime).to.eql(\"17:00:00\");",
-											"    pm.expect(responseJson.maxLoanNumber).to.eql(5);",
-											"    pm.expect(responseJson.ticketFee).to.eql(0.0);",
-											"",
-											"});",
-											"",
-											"var jsonData = pm.response.json();",
-											"pm.test(\"Your test name\", function () {",
-											"    pm.expect(jsonData.museumManagementSystemId).to.greaterThan(0);",
-											"});",
-											"",
-											"pm.collectionVariables.set(\"mms1_id\", jsonData.museumManagementSystemId);"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "createInvalidMms",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "ManagerAccountRestController",
-					"item": [
-						{
-							"name": "createValidManager",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/manager?username=SireMarwan&name=Marwan Kanaan&password=ecse321rocks&systemId={{mms1_id}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"manager"
-									],
-									"query": [
-										{
-											"key": "username",
-											"value": "SireMarwan"
-										},
-										{
-											"key": "name",
-											"value": "Marwan Kanaan"
-										},
-										{
-											"key": "password",
-											"value": "ecse321rocks"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "createInvalidManager",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 409\", function () {",
-											"    pm.response.to.have.status(409);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/manager?username=QueenNazia&name=Queen Nazia&password=ok&systemId=1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"manager"
-									],
-									"query": [
-										{
-											"key": "username",
-											"value": "QueenNazia"
-										},
-										{
-											"key": "name",
-											"value": "Queen Nazia"
-										},
-										{
-											"key": "password",
-											"value": "ok"
-										},
-										{
-											"key": "systemId",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "EmployeeAccountRestController",
 					"item": [
 						{
@@ -224,7 +31,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/employee?username=U123456&name=Mona Kalaoun&password=MonaMona123&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/employee?username=U123456&name=Mona Kalaoun&password=MonaMona123",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -245,10 +52,6 @@
 										{
 											"key": "password",
 											"value": "MonaMona123"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -274,7 +77,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/employee?username=U654321&name=Rosika Muthucumaru&password=Skipper213&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/employee?username=U654321&name=Rosika Muthucumaru&password=Skipper213",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -295,10 +98,6 @@
 										{
 											"key": "password",
 											"value": "Skipper213"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -324,7 +123,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/employee?username=invalidEmployee&name=Mr Invalid&password=ok&systemId=1",
+									"raw": "http://localhost:8080/employee?username=invalidEmployee&name=Mr Invalid&password=ok",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -345,10 +144,6 @@
 										{
 											"key": "password",
 											"value": "ok"
-										},
-										{
-											"key": "systemId",
-											"value": "1"
 										}
 									]
 								}
@@ -379,7 +174,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=NikolasPasichnik123&name=Nikolas Pasichnik&password=charly1234&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/client?username=NikolasPasichnik123&name=Nikolas Pasichnik&password=charly1234",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -400,10 +195,6 @@
 										{
 											"key": "password",
 											"value": "charly1234"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -429,7 +220,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=SamanthaInesPerezHoffman&name=Samantha Perez&password=Lucrecia123&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/client?username=SamanthaInesPerezHoffman&name=Samantha Perez&password=Lucrecia123",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -450,10 +241,6 @@
 										{
 											"key": "password",
 											"value": "Lucrecia123"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -479,7 +266,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=YuAnlyA&name=Yu An Lu &password=DogPersonLover&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/client?username=YuAnlyA&name=Yu An Lu &password=DogPersonLover",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -500,10 +287,6 @@
 										{
 											"key": "password",
 											"value": "DogPersonLover"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -529,7 +312,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/client?username=LucyZhang1234&name=Lucy Zhang&password=Nova&systemId=1",
+									"raw": "http://localhost:8080/client?username=LucyZhang1234&name=Lucy Zhang&password=Nova",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -550,10 +333,6 @@
 										{
 											"key": "password",
 											"value": "Nova"
-										},
-										{
-											"key": "systemId",
-											"value": "1"
 										}
 									]
 								}
@@ -592,7 +371,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=Mona Lisa&description=Painting&image=images/monalisa.jpg&status=Available&loanFee=10000000.0&isDamaged=false&worth=1000000000.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Mona Lisa&description=Painting&image=images/monalisa.jpg&status=Available&loanFee=10000000.0&isDamaged=false&worth=1000000000.0&roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -634,10 +413,6 @@
 										{
 											"key": "roomId",
 											"value": "12"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -671,7 +446,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=Oranges&description=slices of oranges&image=images/orange.PNG&status=Loaned&loanFee=100.0&isDamaged=true&worth=500.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Oranges&description=slices of oranges&image=images/orange.PNG&status=Loaned&loanFee=100.0&isDamaged=true&worth=500.0&roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -713,10 +488,6 @@
 										{
 											"key": "roomId",
 											"value": "12"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -749,7 +520,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=Cat&description=Royal cat&image=images/Cat.PNG&status=Unavailable&loanFee=100.0&isDamaged=false&worth=500.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=Cat&description=Royal cat&image=images/Cat.PNG&status=Unavailable&loanFee=100.0&isDamaged=false&worth=500.0&roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -791,10 +562,6 @@
 										{
 											"key": "roomId",
 											"value": "12"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -820,7 +587,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifact/createArtifact?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=false&worth=-250.0&roomId=12&systemId=1",
+									"raw": "http://localhost:8080/artifact/createArtifact?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=false&worth=-250.0&roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -862,10 +629,6 @@
 										{
 											"key": "roomId",
 											"value": "12"
-										},
-										{
-											"key": "systemId",
-											"value": "1"
 										}
 									]
 								}
@@ -903,7 +666,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=TheMonaLisa&image=MMS-backend/images/monalisa.jpg&description=A woman sitting there.&isDamaged=false&worth=10.0&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationArtifact?name=TheMonaLisa&image=MMS-backend/images/monalisa.jpg&description=A woman sitting there.&isDamaged=false&worth=10.0",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -932,10 +695,6 @@
 										{
 											"key": "worth",
 											"value": "10.0"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -968,7 +727,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=TheCat&image=MMS-backend/images/Cat.PNG&description=Cat sitting&isDamaged=false&worth=5.0&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationArtifact?name=TheCat&image=MMS-backend/images/Cat.PNG&description=Cat sitting&isDamaged=false&worth=5.0",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -997,10 +756,6 @@
 										{
 											"key": "worth",
 											"value": "5.0"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1033,7 +788,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=TheOrange&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationArtifact?name=TheOrange&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1062,10 +817,6 @@
 										{
 											"key": "worth",
 											"value": "15.0"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1091,7 +842,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationArtifact?name=&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationArtifact?name=&image=MMS-backend/images/orange.PNG&description=Orange there&isDamaged=false&worth=15.0",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1120,10 +871,6 @@
 										{
 											"key": "worth",
 											"value": "15.0"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1156,7 +903,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId={{Dartifact1_id}}&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId={{Dartifact1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1173,10 +920,6 @@
 										{
 											"key": "artifactId",
 											"value": "{{Dartifact1_id}}"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1209,7 +952,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId={{Dartifact2_id}}&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=NikolasPasichnik123&artifactId={{Dartifact2_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1226,10 +969,6 @@
 										{
 											"key": "artifactId",
 											"value": "{{Dartifact2_id}}"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1262,7 +1001,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=SamanthaInesPerezHoffman&artifactId={{Dartifact3_id}}&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=SamanthaInesPerezHoffman&artifactId={{Dartifact3_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1279,10 +1018,6 @@
 										{
 											"key": "artifactId",
 											"value": "{{Dartifact3_id}}"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1308,7 +1043,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/donationRequest?clientUsername=Alexander&artifactId={{Dartifact1_id}}&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/donationRequest?clientUsername=Alexander&artifactId={{Dartifact1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1325,10 +1060,6 @@
 										{
 											"key": "artifactId",
 											"value": "{{Dartifact1_id}}"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1366,7 +1097,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId={{artifact1_id}}&username=SamanthaInesPerezHoffman&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId={{artifact1_id}}&username=SamanthaInesPerezHoffman",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1387,10 +1118,6 @@
 										{
 											"key": "username",
 											"value": "SamanthaInesPerezHoffman"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1423,7 +1150,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId={{artifact1_id}}&username=NikolasPasichnik123&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/loanRequest?loanDuration=13&artifactId={{artifact1_id}}&username=NikolasPasichnik123",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1444,10 +1171,6 @@
 										{
 											"key": "username",
 											"value": "NikolasPasichnik123"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -1473,7 +1196,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest?loanDuration=14&artifactId=15&username=NikolasPasichnik123&systemId=1",
+									"raw": "http://localhost:8080/loanRequest?loanDuration=14&artifactId=15&username=NikolasPasichnik123",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1494,10 +1217,6 @@
 										{
 											"key": "username",
 											"value": "NikolasPasichnik123"
-										},
-										{
-											"key": "systemId",
-											"value": "1"
 										}
 									]
 								}
@@ -2027,7 +1746,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/{{mms1_id}}/?name=Lucrecia's Museum",
+									"raw": "http://localhost:8080/mms/?name=Lucrecia's Museum",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2035,47 +1754,6 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"{{mms1_id}}",
-										""
-									],
-									"query": [
-										{
-											"key": "name",
-											"value": "Lucrecia's Museum"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "updateInvalidMmsName",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms/-1/?name=Lucrecia's Museum",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms",
-										"-1",
 										""
 									],
 									"query": [
@@ -2107,7 +1785,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/{{mms1_id}}/fee?ticketFee=69.96",
+									"raw": "http://localhost:8080/mms/fee?ticketFee=69.96",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2115,7 +1793,6 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"{{mms1_id}}",
 										"fee"
 									],
 									"query": [
@@ -2147,7 +1824,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/{{mms1_id}}/fee?ticketFee=-1",
+									"raw": "http://localhost:8080/mms/fee?ticketFee=-1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2155,7 +1832,6 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"{{mms1_id}}",
 										"fee"
 									],
 									"query": [
@@ -2187,7 +1863,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setMaxLoanNumber/{{mms1_id}}?maxLoanNumber=8",
+									"raw": "http://localhost:8080/mms/setMaxLoanNumber/?maxLoanNumber=8",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2196,7 +1872,7 @@
 									"path": [
 										"mms",
 										"setMaxLoanNumber",
-										"{{mms1_id}}"
+										""
 									],
 									"query": [
 										{
@@ -2227,7 +1903,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setMaxLoanNumber/{{mms1_id}}?maxLoanNumber=-5",
+									"raw": "http://localhost:8080/mms/setMaxLoanNumber/?maxLoanNumber=-5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2236,7 +1912,7 @@
 									"path": [
 										"mms",
 										"setMaxLoanNumber",
-										"{{mms1_id}}"
+										""
 									],
 									"query": [
 										{
@@ -2267,7 +1943,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setOpeningHours/{{mms1_id}}?openTime=06:00:00&closeTime=12:00:00",
+									"raw": "http://localhost:8080/mms/setOpeningHours/?openTime=06:00:00&closeTime=12:00:00",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2276,7 +1952,7 @@
 									"path": [
 										"mms",
 										"setOpeningHours",
-										"{{mms1_id}}"
+										""
 									],
 									"query": [
 										{
@@ -2311,7 +1987,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/setOpeningHours/{{mms1_id}}?openTime=16:00:00&closeTime=12:00:00",
+									"raw": "http://localhost:8080/mms/setOpeningHours/?openTime=16:00:00&closeTime=12:00:00",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2320,7 +1996,7 @@
 									"path": [
 										"mms",
 										"setOpeningHours",
-										"{{mms1_id}}"
+										""
 									],
 									"query": [
 										{
@@ -2639,7 +2315,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/{{artifact2_id}}?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifacts/{{artifact2_id}}?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2681,10 +2357,6 @@
 										{
 											"key": "roomId",
 											"value": "12"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -2710,7 +2382,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12&systemId={{mms1_id}}",
+									"raw": "http://localhost:8080/artifacts/-1?name=OrangePainting&description=slices of oranges&image=images/orange.PNG&status=Available&loanFee=10.0&isDamaged=true&worth=150.0&roomId=12",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2752,10 +2424,6 @@
 										{
 											"key": "roomId",
 											"value": "12"
-										},
-										{
-											"key": "systemId",
-											"value": "{{mms1_id}}"
 										}
 									]
 								}
@@ -3493,7 +3161,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/getMms/{{mms1_id}}",
+									"raw": "http://localhost:8080/mms/getMms",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3501,74 +3169,7 @@
 									"port": "8080",
 									"path": [
 										"mms",
-										"getMms",
-										"{{mms1_id}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "getInvalidMms",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms/getMms/-1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms",
-										"getMms",
-										"-1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "getAllMms",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms"
+										"getMms"
 									]
 								}
 							},
@@ -3842,7 +3443,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/maxLoanNumber/1",
+									"raw": "http://localhost:8080/mms/maxLoanNumber/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3851,41 +3452,7 @@
 									"path": [
 										"mms",
 										"maxLoanNumber",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "getInvalidMaxLoanNumberOfSystem",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 500\", function () {",
-											"    pm.response.to.have.status(500);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms/maxLoanNumber/-1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms",
-										"maxLoanNumber",
-										"-1"
+										""
 									]
 								}
 							},
@@ -3910,7 +3477,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/mms/getOpeningHours/1",
+									"raw": "http://localhost:8080/mms/getOpeningHours/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3919,41 +3486,7 @@
 									"path": [
 										"mms",
 										"getOpeningHours",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "getInvalidOpeningHours",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/mms/getOpeningHours/-1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"mms",
-										"getOpeningHours",
-										"-1"
+										""
 									]
 								}
 							},
@@ -4962,7 +4495,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/loanRequest/22",
+									"raw": "http://localhost:8080/loanRequest/{{Lrequest1_id}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -4970,7 +4503,7 @@
 									"port": "8080",
 									"path": [
 										"loanRequest",
-										"22"
+										"{{Lrequest1_id}}"
 									]
 								}
 							},

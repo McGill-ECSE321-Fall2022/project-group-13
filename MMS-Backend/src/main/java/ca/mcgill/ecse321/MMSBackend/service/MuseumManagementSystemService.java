@@ -43,11 +43,7 @@ public class MuseumManagementSystemService {
 
         MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
 
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
-        } else {
-            return museumManagementSystem;
-        }
+        return museumManagementSystem;
     }
 
     /**
@@ -60,12 +56,7 @@ public class MuseumManagementSystemService {
     @Transactional
     public void setMuseumManagementSystemName(String name) {
         MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
-
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
-        } else {
-            museumManagementSystem.setName(name);
-        }
+        museumManagementSystem.setName(name);
     }
 
     /**
@@ -79,9 +70,7 @@ public class MuseumManagementSystemService {
     public void setMuseumTicketPrice(double price) {
         MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
 
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist");
-        } else if(price < 0){
+        if(price < 0){
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Ticket price is not valid");
         } else {
             museumManagementSystem.setTicketFee(price);
@@ -182,9 +171,6 @@ public class MuseumManagementSystemService {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Opening time cannot be after closing time.");
         }
         MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
-        }
         museumManagementSystem.setOpenTime(newOpenTime);
         museumManagementSystem.setCloseTime(newCloseTime);
         museumManagementSystem = museumManagementSystemRepository.save(museumManagementSystem);
@@ -200,9 +186,6 @@ public class MuseumManagementSystemService {
     @Transactional
     public List<Time> getOpeningHours () {
         MuseumManagementSystem museumManagementSystem = toList(museumManagementSystemRepository.findAll()).get(0);
-        if (museumManagementSystem == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "Museum Management System does not exist.");
-        }
         List<Time> openingHours = new ArrayList<>();
         openingHours.add(museumManagementSystem.getOpenTime());
         openingHours.add(museumManagementSystem.getCloseTime());
