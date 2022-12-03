@@ -6,15 +6,16 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <div class="employeeHome">
-        <a href="/">Hi, Employee!</a>
+        <a href="/employee/myaccount">Hi, Employee!</a>
     </div>
-    <div class="topnav"> <!--TO DO: modify links -->
-        <a href="/employee/myschedule">Tickets</a> 
+    <div class="topnav">
+        <a href="/employee/managetickets">Manage Tickets</a> 
         <a href="/employee/myschedule">My Schedule</a>
-        <a href="/employee/viewdonationrequests">Donations</a>
-        <a href="/employee/myschedule">Catalog</a>
+        <a href="/employee/manageloanrequests">Manage Loan Requests</a>
+        <a href="/employee/managedonationrequests">Manage Donation Requests</a>
+        <a href="/employee/managecatalog">Manage Catalog</a>
     </div>
-    <form action="http://127.0.0.1:8087">
+    <form action="/employee/myhomepage">
     <button class="bookmark">
         <img src="../assets/dinoLogo.png" alt="Home" style="width:70px;height:120;position: absolute;left: 0;bottom: 0;">
     </button>
@@ -93,7 +94,7 @@ export default {
   font-weight: 600;
   font-size: 40px;
   opacity: 1;
-  top: 0;
+  top: 50px;
   left: 167px;
 }
 

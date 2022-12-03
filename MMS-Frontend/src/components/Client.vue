@@ -6,15 +6,15 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <div class="clientHome">
-        <a href="/">Hi, Client!</a>
+        <a href="/client/myaccount">Hi, Client!</a>
     </div>
     <div class="topnav">
-        <a href="/client/mydonationrequests">Catalog</a>
+        <a href="/client/browsecatalog">Browse Catalog</a>
         <a href="/client/myloanrequests">My Loans</a>
         <a href="/client/mydonationrequests">My Donations</a>
-        <a href="/client/myloanrequests">My Tickets</a>
+        <a href="/client/mytickets">My Tickets</a>
     </div>
-    <form action="http://127.0.0.1:8087">
+    <form action="/client/myhomepage">
     <button class="bookmark">
         <img src="../assets/dinoLogo.png" alt="Home" style="width:70px;height:120;position: absolute;left: 0;bottom: 0;">
     </button>
@@ -93,7 +93,7 @@ export default {
   font-weight: 600;
   font-size: 40px;
   opacity: 1;
-  top: 0;
+  top: 50px;
   left: 167px;
 }
 
