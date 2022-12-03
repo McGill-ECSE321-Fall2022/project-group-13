@@ -13,24 +13,64 @@ var axiosClient = axios.create({
 })
 
 export default {
-    name: 'myDonationRequests',
+    name: 'MyDonationRequests',
     data() {
         return {
+            clientId: '',
             requests: [],
+            newDonationArtifact: ''
         }
     },
-    // created() {
-    //     axiosClient.get('/donationRequest/ofClient/' + this.$route.params.clientId)
-    //         .then(response => {
-    //             console.log(response)
-    //             this.requests = response.data
-    //         })
-    //         .catch(e => {
-    //             console.log('Error in GET /donationRequests/ofClient')
-    //             console.log(e)
-    //         })
-    // },
-    methods: {
+    created: function () {
+        // Get clientId from session storage
+        this.clientId = sessionStorage.getItem('loggedInClient')
 
+        // Initializing donation requests of the client from the backend
+        axiosClient.get('donationRequests/ofClient/' + clientId)
+            .then(response => {
+                console.log(response)
+                this.requests = response.data
+            })
+            .catch(e => {
+                console.log('Error in GET donationRequests/ofClient/' + clientId)
+                console.log(e)
+            })
+    },
+    methods: {
+        createDonationArtifact: function (name, image, description, isDamaged, worth) {
+            axiosClient.post('donationArtifact', {}, {
+                params: {
+                    name: name,
+                    image: image,
+                    description: description,
+                    isDamaged: isDamaged,
+                    worth: worth
+                }
+            })
+                .then(response => {
+                    console.log(response)
+                    this.newDonationArtifact = response.data
+                })
+                .catch(e => {
+                    console.log('Error in POST createDonationArtifact')
+                    console.log(e)
+                })
+        },
+        createDonationRequest: function (clientUsername, artifactId) {
+            axiosClient.post('donationRequest', {}, {
+                params: {
+                    clientUsername: clientUsername,
+                    artifactId: artifactId
+                }
+            })
+                .then(response => {
+                    console.log(response)
+                    this.requests.push(response.data)
+                })
+                .catch(e => {
+                    console.log('Error in POST createDonationRequest')
+                    console.log(e)
+                })
+        }
     }
 }

@@ -4,12 +4,12 @@
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         </head>
-        <button class="styledButton donateButton">DONATE</button>
+        <button class="styled-button donateButton" @click="openDonationForm()">DONATE</button>
         <span class="title">MY DONATION REQUESTS</span>
         <div class="bottomText">
         <span class="thankYou">Thank you for your wonderful donations!</span>
         </div>
-        <table id="displayDonationRequests">
+        <table class="styled-table">
           <thead>
             <tr>
               <th>Donation ID</th>
@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="request in requests">
+            <tr v-for="request in requests" :key="request.requestId">
               <td>{{request.requestId}}</td>
               <td>{{request.artifact.name}}</td>
               <td>{{request.status}}</td>
