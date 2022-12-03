@@ -19,9 +19,9 @@
           </thead>
           <tbody>
             <tr v-for="request in requests">
-              <td>{{request.id}}</td>
-              <td>{{request.artifactName}}</td>
-              <td>{{request.donationStatus}}</td>
+              <td>{{request.requestId}}</td>
+              <td>{{request.artifact.name}}</td>
+              <td>{{request.status}}</td>
               <td><button>View</button></td>
             </tr>
           </tbody>
