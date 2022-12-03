@@ -1,6 +1,10 @@
 <template>
     <div class="accountLogin">
-    
+      
+    <div class = "dinoPicture">
+        <img src="../assets/dinoLogo.png">
+    </div>
+
     <form @submit="submitLoginForm">
         <h1>Cabinet of Curiosities</h1>
         <hr class="solid"
@@ -25,13 +29,20 @@
         </div>
         
         </div>
-            <button class="btn btn-primary btn-block">Login</button>
-        <h6>Don't have an account?</h6>
 
+        <div>
+        <button class="styledButton">Login</button>
+        </div>
+        
+        <div class = "label1">
+        <h6>Don't have an account?</h6>
+        </div>
+
+        <div class = "signupLink">
         <p>
             <router-link to="/signup">Sign Up</router-link>
         </p>
-
+        </div>
     </form>
     </div>
 </template>
@@ -106,7 +117,7 @@ export default {
                       self.$router.push({ path: '/employee' });
                  })
         }
-        
+
         //Case where the account type is a manager 
         else if (this.accountType === "Manager"){
             fetchDateUrl = ({username}) => `/manager/signin/${username}`;
@@ -134,6 +145,14 @@ h2 {
   padding-bottom: 1.5rem;
 }
 
+.dinoPicture {
+  position: relative;
+  top: 60px;
+  max-width: 300%;
+  height: auto;
+  
+}
+
 .accountLogin {
   width: 100%;
   height: 1024px;
@@ -144,4 +163,53 @@ h2 {
   left: 0px;
   overflow: hidden;
 }
+
+.userTypeDropdown {
+  width: 20%;
+  position:relative; 
+  margin:auto; 
+  bottom: 20px;
+}
+
+.styledButton {
+  width: 20%;
+  position:relative; 
+  margin:auto; 
+  top: 20px;
+  background: #008573;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  opacity: 1;
+  font-family: Inter;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.styledButton:hover {
+  background: white;
+  border: solid;
+  border-color: #008573;
+  color: #008573;
+}
+
+
+.label1 {
+  width: 20%;
+  position:relative; 
+  margin:auto; 
+  top: 40px;
+}
+
+.signupLink {
+  width: 20%;
+  position:relative; 
+  margin:auto; 
+  top: 40px;
+}
+
+
+
 </style>
