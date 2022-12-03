@@ -39,9 +39,7 @@
         </div>
 
         <div class = "signupLink">
-        <p>
-            <router-link to="/signup">Sign Up</router-link>
-        </p>
+            <a href="/signup"style = "color: #008573">Sign Up</a>
         </div>
     </form>
     </div>
@@ -209,7 +207,5 @@ h2 {
   margin:auto; 
   top: 40px;
 }
-
-
 
 </style>
