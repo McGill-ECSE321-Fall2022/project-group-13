@@ -182,56 +182,28 @@ public class EmployeeScheduleService {
     }
 
     /**
-     * edit shift start and end time
+     * edit shift start and end time as well as day of the week
      * 
      * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
      * @param newStartTime
      * @param newEndTime
+     * @param specificWeekDay
      */
     @Transactional
-    public Shift updateShiftStartEndTime(int shiftId, Time newStartTime, Time newEndTime) {
+    public Shift updateShift(int shiftId, Time newStartTime, Time newEndTime, SpecificWeekDay specificWeekDay) {
         Shift shift = shiftRepository.findShiftByShiftId(shiftId);
         if (shift == null) {
             throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "No shift with given id exists.");
         }
 
-        if (newStartTime == null || newEndTime == null) {
+        if (newStartTime == null || newEndTime == null || specificWeekDay == null) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values are not allowed!");
         }
 
         // checks if newStartTime is after newEndTime
         if (newStartTime.after(newEndTime)) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Start time cannot be after end time.");
-        }
-
-        // check if employee already has shift that overlaps with updated shift
-        if (doesNewShiftOverlap(shift,newStartTime, newEndTime, shift.getDayOfTheWeek().getDayType())) {
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST,
-                    "Employee already has a shift that overlaps with this new shift");
-        }
-
-        shift.setStartTime(newStartTime);
-        shift.setEndTime(newEndTime);
-        shift = shiftRepository.save(shift);
-        return shift;
-    }
-
-    /**
-     * edit shift's specific week day
-     * 
-     * @author Samantha Perez Hoffman (samperezh)
-     * @param shiftId
-     * @param specificWeekDay
-     */
-    @Transactional
-    public Shift updateShiftDay(int shiftId, SpecificWeekDay specificWeekDay) {
-        Shift shift = shiftRepository.findShiftByShiftId(shiftId);
-        if (shift == null) {
-            throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND, "No shift with given id exists.");
-        }
-        if (specificWeekDay == null) {
-            throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "Null values are not allowed!");
         }
 
         // check if newDayType is marked as closed
@@ -241,11 +213,13 @@ public class EmployeeScheduleService {
         }
 
         // check if employee already has shift that overlaps with updated shift
-        if (doesNewShiftOverlap(shift, shift.getStartTime(), shift.getEndTime(), specificWeekDay.getDayType())) {
+        if (doesNewShiftOverlap(shift,newStartTime, newEndTime, specificWeekDay.getDayType())) {
             throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST,
-                    "Employee already has a shift that overlaps with this new shift");
+                "Employee already has a shift that overlaps with this new shift");
         }
 
+        shift.setStartTime(newStartTime);
+        shift.setEndTime(newEndTime);
         shift.setDayOfTheWeek(specificWeekDay);
         shift = shiftRepository.save(shift);
         return shift;

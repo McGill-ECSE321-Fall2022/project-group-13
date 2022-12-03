@@ -160,7 +160,7 @@ public class EmployeeScheduleRestController {
     }
 
     /**
-     * Update a shift's start and end time
+     * Update a shift's start and end time as well as its day
      * 
      * @author Samantha Perez Hoffman (samperezh)
      * @param shiftId
@@ -168,27 +168,12 @@ public class EmployeeScheduleRestController {
      * @param endTime
      * @throws IllegalArgumentException
      */
-    @PutMapping(value = { "/shift/times/{shiftId}", "/shift/times/{shiftId}/" })
-    public ResponseEntity<ShiftDto> updateShiftStartEndTime(@PathVariable("shiftId") int shiftId, @RequestParam Time startTime,
-            @RequestParam Time endTime) throws IllegalArgumentException {
-        Shift shift = employeeScheduleService.updateShiftStartEndTime(shiftId, startTime, endTime);
-        return new ResponseEntity<>(convertToDto(shift), HttpStatus.OK);
-    }
-
-    /**
-     * Update a shift's day
-     * 
-     * @author Samantha Perez Hoffman (samperezh)
-     * @param shiftId
-     * @param day
-     * @throws IllegalArgumentException
-     */
-    @PutMapping(value = { "/shift/day/{shiftId}", "/shift/day/{shiftId}/" })
-    public ResponseEntity<ShiftDto> updateShiftDay(@PathVariable("shiftId") int shiftId,
-            @RequestParam String day) throws IllegalArgumentException {
+    @PutMapping(value = { "/shift/update/{shiftId}", "/shift/update/{shiftId}/" })
+    public ResponseEntity<ShiftDto> updateShift(@PathVariable("shiftId") int shiftId, @RequestParam Time startTime,
+            @RequestParam Time endTime, @RequestParam String day) throws IllegalArgumentException {
         DayType dayType = convertStringToDayType(day);
         SpecificWeekDay specificWeekDay = mmsService.getSpecificWeekDayByDayType(dayType);
-        Shift shift = employeeScheduleService.updateShiftDay(shiftId, specificWeekDay);
+        Shift shift = employeeScheduleService.updateShift(shiftId, startTime, endTime, specificWeekDay);
         return new ResponseEntity<>(convertToDto(shift), HttpStatus.OK);
     }
 

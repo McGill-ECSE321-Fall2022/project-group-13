@@ -2965,7 +2965,7 @@
 							"response": []
 						},
 						{
-							"name": "validUpdateShiftStartEndTime",
+							"name": "validUpdateShift",
 							"event": [
 								{
 									"listen": "test",
@@ -2983,7 +2983,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/times/{{shift1_id}}?startTime=10:00:00&endTime=14:00:00",
+									"raw": "http://localhost:8080/shift/update/{{shift1_id}}?startTime=10:00:00&endTime=14:00:00&day=Thursday",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2991,7 +2991,7 @@
 									"port": "8080",
 									"path": [
 										"shift",
-										"times",
+										"update",
 										"{{shift1_id}}"
 									],
 									"query": [
@@ -3002,87 +3002,7 @@
 										{
 											"key": "endTime",
 											"value": "14:00:00"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "invalidUpdateShiftStartEndTime",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/shift/times/{{shift1_id}}?startTime=14:00:00&endTime=12:00:00",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"shift",
-										"times",
-										"{{shift1_id}}"
-									],
-									"query": [
-										{
-											"key": "startTime",
-											"value": "14:00:00"
 										},
-										{
-											"key": "endTime",
-											"value": "12:00:00"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "validUpdateShiftDay",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/shift/day/{{shift2_id}}?day=Thursday",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"shift",
-										"day",
-										"{{shift2_id}}"
-									],
-									"query": [
 										{
 											"key": "day",
 											"value": "Thursday"
@@ -3093,7 +3013,7 @@
 							"response": []
 						},
 						{
-							"name": "invalidUpdateShiftDay",
+							"name": "invalidUpdateShift",
 							"event": [
 								{
 									"listen": "test",
@@ -3111,7 +3031,7 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/day/{{shift2_id}}?day=Friday",
+									"raw": "http://localhost:8080/shift/update/{{shift1_id}}?startTime=14:00:00&endTime=12:00:00&day=Thursday",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3119,13 +3039,21 @@
 									"port": "8080",
 									"path": [
 										"shift",
-										"day",
-										"{{shift2_id}}"
+										"update",
+										"{{shift1_id}}"
 									],
 									"query": [
 										{
+											"key": "startTime",
+											"value": "14:00:00"
+										},
+										{
+											"key": "endTime",
+											"value": "12:00:00"
+										},
+										{
 											"key": "day",
-											"value": "Friday"
+											"value": "Thursday"
 										}
 									]
 								}
@@ -5131,7 +5059,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/shift/day?dayType=Monday",
+									"raw": "http://localhost:8080/shift/day?dayType=Thursday",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5144,7 +5072,7 @@
 									"query": [
 										{
 											"key": "dayType",
-											"value": "Monday"
+											"value": "Thursday"
 										}
 									]
 								}
