@@ -93,7 +93,7 @@ public class DonationRequestRestController {
      */
     @PutMapping(value = { "/donationRequest/approveRequest/{requestId}", "/donationRequest/approveRequest/{requestId}/" })
     public ResponseEntity<DonationRequestDto> approveDonationRequest(@PathVariable("requestId") int requestId,
-            @RequestParam int roomId) throws IllegalArgumentException {
+        @RequestParam int roomId) throws IllegalArgumentException {
         Room room = mmsService.getRoom(roomId);
         DonationRequest donationRequest = donationRequestService.approveDonationRequest(requestId, room);
         
