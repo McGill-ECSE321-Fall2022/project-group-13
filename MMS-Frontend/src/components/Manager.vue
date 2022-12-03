@@ -15,11 +15,11 @@
         <a href="/manager/managedonationrequests">Manage Donations</a>
         <a href="/manager/managecatalog">Manage Catalog</a>
     </div>
-    <form action="/manager/myhomepage">
     <button class="bookmark">
-        <img src="../assets/dinoLogo.png" alt="Home" style="width:70px;height:120;position: absolute;left: 0;bottom: 0;">
+        <a href="/manager/myhomepage">
+          <img src="../assets/dinoLogo.png" alt="Home" style="width:70px;height:120;position: absolute;left: 0;bottom: 0;">
+        </a>   
     </button>
-    </form>
   </div>
 </template>
 
@@ -95,15 +95,15 @@ export default {
   color: black;
 }
 
-.bookmark{
+.bookmark {
   width: 73px;
   height: 129px;
   border: none;
   background: #D6D2D2;
   opacity: 1;
   position: absolute;
-  top: 0px;
-  left: 70px;
+  top: 0%;
+  left: 5%;
   overflow: hidden;
 }
 
@@ -114,8 +114,8 @@ export default {
   font-weight: 600;
   font-size: 40px;
   opacity: 1;
-  top: 50px;
-  left: 167px;
+  top: 5%;
+  left: 12%;
 }
 
 .styledButton {
