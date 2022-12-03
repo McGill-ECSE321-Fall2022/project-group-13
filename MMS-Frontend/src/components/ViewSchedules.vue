@@ -9,7 +9,7 @@
 </template>
 
 <style scoped>
-.viewSchedule {
+.viewSchedules {
   width: 100%;
   height: 1024px;
   background: rgba(255,255,255,1);
