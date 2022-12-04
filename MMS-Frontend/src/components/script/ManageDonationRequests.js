@@ -16,19 +16,17 @@
     name: 'ManageDonationRequests',
     data() {
         return {
-            employeeId: '',
             requests: [],
             currentRequestId: '',
             currentDonationArtifactName: '',
             currentDonationArtifactDescription: '',
             currentDonationArtifactWorth: '',
             currentDonationArtifactIsDamaged: false,
-            storageRoomId: ''
+            storageRoomId: '',
+            displayedStatus: 'All'
         }
     },
     created: function () {
-        // Get employeeId from session storage
-        let username = sessionStorage.getItem('loggedInEmployee')
         // Initializing all donation requests from the backend
         axiosStaff.get('donationRequests')
             .then(response => {
@@ -39,7 +37,6 @@
                 console.log('Error in GET getAllDonationRequests')
                 console.log(e)
             })
-        this.employeeId = username
     },
     methods: {
         getStorageRoom: function () {
@@ -72,7 +69,7 @@
                 window.location.reload()
             })
             .catch(e => {
-                console.log('Error in PUT approveDonationRequest')
+                console.log('Error in PUT donationRequest/approveRequest/' + request.requestId)
                 console.log(e)
             })
         },
@@ -94,7 +91,7 @@
                 window.location.reload()
             })
             .catch(e=>  {
-                console.log('Error in DELETE deleteRejectedDonationRequest')
+                console.log('Error in DELETE donationRequest/delete/' + request.requestId)
                 console.log(e)
             })
         },
@@ -108,6 +105,50 @@
             this.currentDonationArtifactDescription = request.artifact.description
             this.currentDonationArtifactWorth = request.artifact.worth
             this.currentDonationArtifactIsDamaged = request.artifact.isDamaged
+        },
+        statusOnChange: function (e) {
+            this.displayedStatus = e.target.value
+            if (this.displayedStatus == 'Pending') {
+                axiosStaff.get('donationRequests/withRequestStatus/' + this.displayedStatus)
+                    .then(response => {
+                        console.log(response)
+                        this.requests = response.data
+                    })
+                    .catch(e => {
+                        console.log('Error in GET donationRequests/withRequestStatus/Pending')
+                        console.log(e)
+                    })
+            } else if (this.displayedStatus == 'Approved') {
+                axiosStaff.get('donationRequests/withRequestStatus/' + this.displayedStatus)
+                    .then(response => {
+                        console.log(response)
+                        this.requests = response.data
+                    })
+                    .catch(e => {
+                        console.log('Error in GET donationRequests/withRequestStatus/Approved')
+                        console.log(e)
+                    })
+            } else if (this.displayedStatus == 'Rejected') {
+                axiosStaff.get('donationRequests/withRequestStatus/' + this.displayedStatus)
+                    .then(response => {
+                        console.log(response)
+                        this.requests = response.data
+                    })
+                    .catch(e => {
+                        console.log('Error in GET donationRequests/withRequestStatus/Rejected')
+                        console.log(e)
+                    })
+            } else if (this.displayedStatus == 'All') {
+                axiosStaff.get('donationRequests')
+                    .then(response => {
+                        console.log(response)
+                        this.requests = response.data
+                    })
+                    .catch(e => {
+                        console.log('Error in GET getAllDonationRequests')
+                        console.log(e)
+                    })
+            }
         }
     }
  }

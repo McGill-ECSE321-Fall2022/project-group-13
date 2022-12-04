@@ -6,7 +6,14 @@
     </head>
     <span class="title">ALL DONATION REQUESTS</span>
     <span class="title">ALL DONATION REQUESTS</span>
-
+    <div class="statusTypeDropdown">
+      <select @change = "statusOnChange($event)" class = "form-select form-control">
+        <option value = "All"> All </option>
+        <option value = "Pending"> Pending </option>
+        <option value = "Approved"> Approved </option>
+        <option value = "Rejected"> Rejected </option>
+      </select>
+    </div>
     <!-- Display table for all donation requests -->
     <table class="styled-table">
       <thead>
@@ -95,6 +102,12 @@ button[disabled] {
   background: none;
   border: none;
   color: grey;
+}
+
+.statusTypeDropdown {
+  position: absolute;
+  top: 6%;
+  right: 15px;
 }
 
 /deep/ .popup {
