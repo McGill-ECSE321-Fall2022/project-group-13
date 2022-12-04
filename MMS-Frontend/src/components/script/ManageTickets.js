@@ -13,15 +13,14 @@
  })
  
  export default {
-     name: 'myTickets',
+     name: 'manageTickets',
      data() {
         return {
           tickets: [],
         }
     },
     created() {
-        let username = sessionStorage.getItem('loggedInClient');
-        axiosMyTickets.get('/tickets/' + username)
+        axiosMyTickets.get('/tickets')
                     .then(response => {
                         this.tickets = response.data
                     })
@@ -31,24 +30,4 @@
     }
       
  }
- methods: {
-    function getTickets() {
-      var self = this
-      axiosClient.get('/mms/getMms', {
-        dataType: 'json',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        mode: 'no-cors',
-        credentials: 'include'
-      })
-      .then(function (response) {
-        console.log(JSON.stringify(response.data))
-        self.courses = response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    }
-  }
+ 
