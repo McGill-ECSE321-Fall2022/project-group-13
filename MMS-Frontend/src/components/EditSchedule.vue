@@ -1,3 +1,5 @@
+<!-- @author Samantha Perez Hoffman (samperezh) (+ inspo for pop ups Yu An Lu) -->
+
 <template>
     <div class="editSchedule">
         <head>
@@ -21,7 +23,7 @@
                 <td>{{s.specificWeekDay.dayType}}</td>
                 <td>{{s.startTime}}</td>
                 <td>{{s.endTime}}</td>
-                <td><button class="styled-button" @click="editShift(s.shiftId)">Edit</button> </td>
+                <td><button class="styled-button" v-b-modal.update-shift-modal @click="sendInfo(s)">Edit</button> </td>
                 <td><button class="styled-button deleteButton" @click="deleteShift(s.shiftId)">Delete</button></td>
             </tr>
         </tbody>
@@ -81,6 +83,51 @@
       </form>
     </b-modal>
 
+    <b-modal modal-class="popup" id="update-shift-modal" centered title="UPDATE SHIFT" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      @show="resetUpdateShiftModal"
+      @hidden="resetUpdateShiftModal"
+      @ok="handleOkUpdateShiftModal"
+    >
+      <form ref="updateShiftForm" @submit.stop.prevent="handleSubmitUpdateShift">
+        <b-form-group
+          label="Day"
+          invalid-feedback="Day of the week is required"
+        >
+          <b-form-input
+            type="text"
+            :placeholder="this.oldShiftDay"
+            v-model="updatedShiftDay"
+            :state="updatedShiftDay.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label="Start Time"
+          invalid-feedback="Start time is required"
+        >
+          <b-form-textarea
+            :placeholder="this.oldShiftStartTime"
+            v-model="updatedShiftStartTime"
+            :state="updatedShiftStartTime.trim().length > 0 ? true : false"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+
+        <b-form-group
+          label="End Time"
+          invalid-feedback="End time is required"
+        >
+          <b-form-textarea
+            :placeholder="this.oldShiftEndTime"
+            v-model="updatedShiftEndTime"
+            :state="updatedShiftEndTime.trim().length > 0 ? true : false"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+      </form>
+    </b-modal>
+
     </div>    
 </template>
 
@@ -109,9 +156,15 @@ export default {
         newShiftStartTime: '',
         newShiftEndTime: '',
 
-        day: '',
-        startTime: '',
-        endTime: ''
+        oldShiftDay: '',
+        oldShiftStartTime: '',
+        oldShiftEndTime: '',
+
+        updatedShift: {},
+        updatedShiftId: '',
+        updatedShiftDay: '',
+        updatedShiftStartTime: '',
+        updatedShiftEndTime: ''
     }
   }, 
   created(){
@@ -171,30 +224,38 @@ export default {
         //reload page to show updated table
         window.location.reload();
     }, 
-    saveData: function(s){
-        let shiftId = s.shiftId;
-        const self = this;
-        var fetchDateUrl = ({shiftId}) => `/shift/update/${shiftId}`;
-        axiosManager.put(fetchDateUrl({shiftId: s.shiftId}), {
+    updateShift : function() {
+      const self = this
+      let shiftId = self.updatedShiftId
+      var fetchDateUrl = ({shiftId}) => `/shift/update/${shiftId}`
+      return new Promise(function (resolve, reject) {
+        axiosManager.put(fetchDateUrl({shiftId: shiftId}), {}, {
             params: {
-              startTime: this.startTime,
-              endTime: this.endTime,
-              day: this.day,
+              startTime: self.updatedShiftStartTime,
+              endTime: self.updatedShiftEndTime,
+              day: self.updatedShiftDay
             }
         })
         .then(response => {
+            var result = response.data
             console.log(response)
-        })
-        .catch(e => {
-            console.log('Error in PUT /shift/update/' + shiftId)
+            resolve(result)
+        },
+          e => {
+            console.log('Error in PUT /shift/update/')
             console.log(e)
+            console.log(self.updatedShiftId)
+            console.log() //, self.startTime, self.endTime, self.day)
+            reject(e)
         })
-        //reload page to show updated table
-        window.location.reload();
-    },
-    editShift() {
-
+      })
     }, 
+    sendInfo(s){
+        this.updatedShiftId = s.shiftId
+        this.oldShiftDay = s.specificWeekDay.dayType
+        this.oldShiftStartTime = s.startTime
+        this.oldShiftEndTime = s.endTime
+    },
     addNewShift : function() {
       const self = this
       return new Promise(function (resolve, reject) {
@@ -212,7 +273,7 @@ export default {
             resolve(result)
         },
           e => {
-            console.log('Error in POST /shift/create')
+            console.log('Error in POST /createShift')
             console.log(e)
             reject(e)
         })
@@ -244,6 +305,34 @@ export default {
     handleOkNewShiftModal: function (bvModalEvent) {
             bvModalEvent.preventDefault()
             this.handleSubmitNewShift()
+        },
+    
+    resetUpdateShiftModal: function () {
+            this.updateShiftId = ''
+            this.updatedShift = {}
+            this.updatedShiftDay = ''
+            this.updatedShiftStartTime = ''
+            this.updatedShiftEndTime = ''
+        },
+    checkUpdatedShiftFormValidity() {
+            return this.updatedShiftDay.trim().length > 0 && 
+            this.updatedShiftStartTime.trim().length > 0 && 
+            this.updatedShiftEndTime.trim().length > 0
+        },
+    handleSubmitUpdateShift: async function () {
+            if (!this.checkUpdatedShiftFormValidity()) {
+                return
+            }
+            this.updatedShift = await this.updateShift() //need to pass here the shiftId
+            this.$nextTick(() => {
+                this.$bvModal.hide("update-shift-modal")
+            })
+            //reload page to show updated table
+            window.location.reload();
+        },
+    handleOkUpdateShiftModal: function (bvModalEvent) {
+            bvModalEvent.preventDefault()
+            this.handleSubmitUpdateShift()
         }
   }
 }
