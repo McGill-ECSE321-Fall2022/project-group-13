@@ -9,6 +9,8 @@
     <div class="bottomText">
       <span class="thankYou">Thank you for your wonderful donations!</span>
     </div>
+
+    <!-- Display table for all donation requests of client-->
     <table class="styled-table">
       <thead>
         <tr>
