@@ -17,6 +17,7 @@
         >
             <form ref="newTicketPurchaseForm">
                 <b-form-group>  
+                    <b-alert v-model="showAlert" :variant="info">Price has changed, please refresh the page and try again.</b-alert>
                     <span class="modalPrice">Regular Ticket - CA ${{ticketFee}} each</span><br /><br />
                     <button class="minus" @click="changeCounter('-1')" type="button" name="button">-</button>
 					<input class="numberOfTickets" type="text" name="name" @change="refreshTotal()" :value="counter">
