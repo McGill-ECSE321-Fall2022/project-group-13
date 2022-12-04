@@ -1,32 +1,82 @@
 <template>
-    <div class="myDonationRequests">
-        <head>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        </head>
-        <button class="styled-button donateButton" @click="openDonationForm()">DONATE</button>
-        <span class="title">MY DONATION REQUESTS</span>
-        <div class="bottomText">
-        <span class="thankYou">Thank you for your wonderful donations!</span>
-        </div>
-        <table class="styled-table">
-          <thead>
-            <tr>
-              <th>Donation ID</th>
-              <th>Artifact Name</th>
-              <th>Request Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="request in requests" :key="request.requestId">
-              <td>{{request.requestId}}</td>
-              <td>{{request.artifact.name}}</td>
-              <td>{{request.status}}</td>
-              <td><button>View</button></td>
-            </tr>
-          </tbody>
-        </table>
+  <div class="myDonationRequests">
+    <head>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+    <button class="styled-button donateButton" v-b-modal.new-artifact-donation-modal>DONATE</button>
+    <span class="title">MY DONATION REQUESTS</span>
+    <div class="bottomText">
+      <span class="thankYou">Thank you for your wonderful donations!</span>
     </div>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Donation ID</th>
+          <th>Artifact Name</th>
+          <th>Request Status</th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="request in requests" :key="request.requestId">
+          <td>{{request.requestId}}</td>
+          <td>{{request.artifact.name}}</td>
+          <td>{{request.status}}</td>
+          <td><button class="styled-button">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
+    <b-modal modal-class="popup" id="new-artifact-donation-modal" centered title="MAKE YOUR DONATION" ok-title="Donate" ok-variant="light" cancel-variant="dark"
+      @show="resetNewArtifactModal"
+      @hidden="resetNewArtifactModal"
+      @ok="handleOkNewArtifactModal"
+    >
+      <form ref="newDonationArtifactForm" @submit.stop.prevent="handleSubmitNewDonationArtifact">
+        <b-form-group
+          label="Name"
+          invalid-feedback="Artifact Name is required"
+        >
+          <b-form-input
+            type="text"
+            placeholder="Artifact name"
+            v-model="newDonationArtifactName"
+            :state="newDonationArtifactName.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label="Description"
+          invalid-feedback="Description is required"
+        >
+          <b-form-textarea
+            placeholder="This artifact is ..."
+            v-model="newDonationArtifactDescription"
+            rows="3"
+            max-rows="5"
+            :state="newDonationArtifactDescription.trim().length > 0 ? true : false"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+
+        <b-form-group
+          label="Worth"
+          invalid-feedback="Worth is required"
+        >
+          <b-form-input
+            type="number"
+            placeholder="0"
+            v-model="newDonationArtifactWorth"
+            :state="parseInt(newDonationArtifactWorth) > 0 && newDonationArtifactWorth.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
+  </div>
 </template>
 
 <script src="./script/MyDonationRequests.js">
@@ -67,5 +117,14 @@
   font-size: 40px;
   opacity: 1;
   text-align: center;
+}
+
+/deep/ .popup {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+/deep/ .modal-content {
+  background: #008573;
 }
 </style>

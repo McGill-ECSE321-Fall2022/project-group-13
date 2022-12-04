@@ -18,49 +18,77 @@ export default {
         return {
             clientId: '',
             requests: [],
-            newDonationArtifact: ''
+            newDonationArtifact: {},
+            newDonationArtifactName: '',
+            newDonationArtifactImage: "MMS-backend/images/Donation.PNG",
+            newDonationArtifactDescription: '',
+            newDonationArtifactWorth: 0,
+            newDonationArtifactIsDamaged: false
         }
     },
     created: function () {
         // Get clientId from session storage
-        this.clientId = sessionStorage.getItem('loggedInClient')
-
+        let username = sessionStorage.getItem('loggedInClient')
         // Initializing donation requests of the client from the backend
-        axiosClient.get('donationRequests/ofClient/' + clientId)
+        axiosClient.get('donationRequests/ofClient/' + username)
             .then(response => {
                 console.log(response)
                 this.requests = response.data
             })
             .catch(e => {
-                console.log('Error in GET donationRequests/ofClient/' + clientId)
+                console.log('Error in GET donationRequests/ofClient/' + username)
                 console.log(e)
             })
+        this.clientId = username
     },
     methods: {
-        createDonationArtifact: function (name, image, description, isDamaged, worth) {
+        createDonationArtifact: function () {
+            // Export this function scope to promise
+            const self = this
+            return new Promise(function (resolve, reject) {
             axiosClient.post('donationArtifact', {}, {
                 params: {
-                    name: name,
-                    image: image,
-                    description: description,
-                    isDamaged: isDamaged,
-                    worth: worth
+                    name: self.newDonationArtifactName,
+                    image: self.newDonationArtifactImage,
+                    description: self.newDonationArtifactDescription,
+                    isDamaged: self.newDonationArtifactIsDamaged,
+                    worth: self.newDonationArtifactWorth
                 }
             })
                 .then(response => {
+                    var result = response.data
                     console.log(response)
-                    this.newDonationArtifact = response.data
-                })
-                .catch(e => {
-                    console.log('Error in POST createDonationArtifact')
-                    console.log(e)
-                })
+                    resolve(result)
+                },
+                    error => {
+                        console.log('Error in POST createDonationArtifact')
+                        console.log(error)
+                        reject(error)
+                    })
+            })
+            // axiosClient.post('donationArtifact', {}, {
+            //     params: {
+            //         name: this.newDonationArtifactName,
+            //         image: this.newDonationArtifactImage,
+            //         description: this.newDonationArtifactDescription,
+            //         isDamaged: this.newDonationArtifactIsDamaged,
+            //         worth: this.newDonationArtifactWorth
+            //     }
+            // })
+            //     .then(response => {
+            //         console.log(response)
+            //         this.newDonationArtifact = response.data.artifactId
+            //     })
+            //     .catch(e => {
+            //         console.log('Error in POST createDonationArtifact')
+            //         console.log(e)
+            //     })
         },
-        createDonationRequest: function (clientUsername, artifactId) {
+        createDonationRequest: function () {
             axiosClient.post('donationRequest', {}, {
                 params: {
-                    clientUsername: clientUsername,
-                    artifactId: artifactId
+                    clientUsername: this.clientId,
+                    artifactId: this.newDonationArtifact.artifactId
                 }
             })
                 .then(response => {
@@ -71,6 +99,34 @@ export default {
                     console.log('Error in POST createDonationRequest')
                     console.log(e)
                 })
+        },
+        // Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal
+        resetNewArtifactModal: function () {
+            this.newDonationArtifact = {}
+            this.newDonationArtifactName = ''
+            this.newDonationArtifactImage = "MMS-backend/images/Donation.PNG"
+            this.newDonationArtifactDescription = ''
+            this.newDonationArtifactWorth = 0
+            this.newDonationArtifactIsDamaged = false
+        },
+        checkNewArtifactFormValidity() {
+            return this.newDonationArtifactName.trim().length > 0 && 
+            this.newDonationArtifactDescription.trim().length > 0 && 
+            parseInt(this.newDonationArtifactWorth) > 0 
+        },
+        handleSubmitNewDonationArtifact: async function () {
+            if (!this.checkNewArtifactFormValidity()) {
+                return
+            }
+            this.newDonationArtifact = await this.createDonationArtifact()
+            this.createDonationRequest()
+            this.$nextTick(() => {
+                this.$bvModal.hide("new-artifact-donation-modal")
+            })
+        },
+        handleOkNewArtifactModal: function (bvModalEvent) {
+            bvModalEvent.preventDefault()
+            this.handleSubmitNewDonationArtifact()
         }
     }
 }
