@@ -12,15 +12,48 @@
             <th>Day</th>
             <th>Start Time</th>
             <th>End Time</th>
+            <th></th>
             <th><button class="styled-button addButton" @click="addNewShift()">Add new shift</button></th>
           </tr>
         </thead>
         <tbody>
-            <tr v-for="s in shifts" :key="s.shiftId">
-                <td>{{s.specificWeekDay.dayType}}</td>
-                <td>{{s.startTime}}</td>
-                <td>{{s.endTime}}</td>
-                <td><button class="styled-button" @click="editShift()">Edit</button><button class="styled-button deleteButton" @click="deleteShift(s.shiftId)">Delete</button></td>
+            <tr v-for="s in shifts" :class="{editing: s == editedShift}" v-cloak>
+                <td>
+                  <div class="view">
+                    {{s.specificWeekDay.dayType}}
+                  </div>
+                  <div class="edit">
+                    <input type="text" v-model="day"/>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="view">
+                    {{s.startTime}}
+                  </div>
+                  <div class="edit">
+                    <input type="text" v-model="startTime"/>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="view">
+                    {{s.endTime}}
+                  </div>
+                  <div class="edit">
+                    <input type="text" v-model="endTime"/>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="view">
+                    <button class="styled-button" @click="editData(s)">Edit</button>
+                  </div>
+                  <div class="edit">
+                    <button class="styled-button" @click="saveData(s)">Save</button>
+                  </div>
+                </td>
+                <td><button class="styled-button deleteButton" @click="deleteShift(s.shiftId)">Delete</button></td>
             </tr>
         </tbody>
     </table>
@@ -52,7 +85,13 @@ export default {
     return {
         employees: [],
         shifts: [],
-        selectedEmployee: ''
+        selectedEmployee: '', 
+
+        editMode: false,
+        editedShift: null,
+        day: '',
+        startTime: '',
+        endTime: ''
     }
   }, 
   created(){
@@ -83,7 +122,6 @@ export default {
         })
     }, 
     deleteShift: function(shiftId){
-        let currentUsername = this.selectedEmployee;
         const self = this;
         var fetchDateUrl = ({shiftId}) => `/deleteShift/${shiftId}`;
         axiosManager.delete(fetchDateUrl({shiftId: shiftId}))
@@ -96,6 +134,31 @@ export default {
         })
         //reload page to show updated table
         window.location.reload();
+    }, 
+    saveData: function(s){
+        let shiftId = s.shiftId;
+        const self = this;
+        var fetchDateUrl = ({shiftId}) => `/shift/update/${shiftId}`;
+        axiosManager.put(fetchDateUrl({shiftId: s.shiftId}), {
+            params: {
+              startTime: this.startTime,
+              endTime: this.endTime,
+              day: this.day,
+            }
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(e => {
+            console.log('Error in PUT /shift/update/' + shiftId)
+            console.log(e)
+        })
+        //reload page to show updated table
+        window.location.reload();
+    },
+    editData (s) {
+      this.beforEditCache = s
+      this.editedUser = s
     }
   }
 
@@ -187,5 +250,18 @@ export default {
   text-align: center;
   transition: 0.2s;
 }
+
+[v-cloak] {
+      display: none;
+    }
+    .edit {
+      display: none;
+    }
+    .editing .edit {
+      display: block
+    }
+    .editing .view {
+      display: none;
+    }
 
 </style>
