@@ -22,7 +22,15 @@
     created() {
         axiosMyTickets.get('/tickets')
                     .then(response => {
-                        this.tickets = response.data
+                        var response = response.data;
+                        for (var i = 0; i < response.length; i++) {
+                            if(response[i].isActive) {
+                            response[i].isActive = "Active";
+                            }else{
+                            response[i].isActive = "Inactive";
+                            }
+                        }
+                        this.tickets = response
                     })
                     .catch(error => {
                         console.log(error);
