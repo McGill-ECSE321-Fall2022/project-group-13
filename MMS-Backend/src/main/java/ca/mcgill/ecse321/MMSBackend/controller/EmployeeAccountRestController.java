@@ -20,6 +20,7 @@ import ca.mcgill.ecse321.MMSBackend.dto.EmployeeDto;
 import ca.mcgill.ecse321.MMSBackend.model.Employee;
 import ca.mcgill.ecse321.MMSBackend.model.MuseumManagementSystem;
 import ca.mcgill.ecse321.MMSBackend.service.EmployeeAccountService;
+import ca.mcgill.ecse321.MMSBackend.service.EmployeeScheduleService;
 import ca.mcgill.ecse321.MMSBackend.service.MuseumManagementSystemService;
 
 /**
@@ -38,6 +39,9 @@ public class EmployeeAccountRestController {
 
     @Autowired
     private MuseumManagementSystemService mmsService;
+
+    @Autowired
+    private EmployeeScheduleService shiftService; 
 
     @GetMapping(value = { "/employees", "/employees/" })
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() throws IllegalArgumentException {
@@ -63,6 +67,8 @@ public class EmployeeAccountRestController {
 
     @DeleteMapping(value = { "/employee/delete/{username}", "/employee/delete/{username}/" })
     public void deleteEmployee(@PathVariable("username") String username) throws IllegalArgumentException {
+        Employee employee = service.getEmployee(username);
+        shiftService.deleteAllShiftsForEmployee(employee);
         service.deleteEmployee(username);
     }
 
