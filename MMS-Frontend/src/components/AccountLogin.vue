@@ -12,7 +12,7 @@
         <div class = "userTypeDropdown">
         <section>
         <select name = "userID" @change = "onChange($event)" class ="form-select form-control">
-          <option value = "Client"> Cient </option>
+          <option value = "Client"> Client </option>
           <option value = "Employee"> Employee </option>
           <option value = "Manager"> Manager </option>
         </select>
