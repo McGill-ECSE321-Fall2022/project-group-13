@@ -13,46 +13,15 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th></th>
-            <th><button class="styled-button addButton" @click="addNewShift()">Add new shift</button></th>
+            <th><button class="styled-button addButton" v-b-modal.new-shift-modal>Add new shift</button></th>
           </tr>
         </thead>
         <tbody>
-            <tr v-for="s in shifts" :class="{editing: s == editedShift}" v-cloak>
-                <td>
-                  <div class="view">
-                    {{s.specificWeekDay.dayType}}
-                  </div>
-                  <div class="edit">
-                    <input type="text" v-model="day"/>
-                  </div>
-                </td>
-
-                <td>
-                  <div class="view">
-                    {{s.startTime}}
-                  </div>
-                  <div class="edit">
-                    <input type="text" v-model="startTime"/>
-                  </div>
-                </td>
-
-                <td>
-                  <div class="view">
-                    {{s.endTime}}
-                  </div>
-                  <div class="edit">
-                    <input type="text" v-model="endTime"/>
-                  </div>
-                </td>
-
-                <td>
-                  <div class="view">
-                    <button class="styled-button" @click="editData(s)">Edit</button>
-                  </div>
-                  <div class="edit">
-                    <button class="styled-button" @click="saveData(s)">Save</button>
-                  </div>
-                </td>
+            <tr v-for="s in shifts" :key="s.shiftId">
+                <td>{{s.specificWeekDay.dayType}}</td>
+                <td>{{s.startTime}}</td>
+                <td>{{s.endTime}}</td>
+                <td><button class="styled-button" @click="editShift(s.shiftId)">Edit</button> </td>
                 <td><button class="styled-button deleteButton" @click="deleteShift(s.shiftId)">Delete</button></td>
             </tr>
         </tbody>
@@ -64,6 +33,54 @@
         </select>
         </section>
         </div>
+
+
+    <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
+    <b-modal modal-class="popup" id="new-shift-modal" centered title="NEW SHIFT" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      @show="resetNewShiftModal"
+      @hidden="resetNewShiftModal"
+      @ok="handleOkNewShiftModal"
+    >
+      <form ref="newShiftForm" @submit.stop.prevent="handleSubmitNewShift">
+        <b-form-group
+          label="Day"
+          invalid-feedback="Day of the week is required"
+        >
+          <b-form-input
+            type="text"
+            placeholder="Monday"
+            v-model="newShiftDay"
+            :state="newShiftDay.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label="Start Time"
+          invalid-feedback="Start time is required"
+        >
+          <b-form-textarea
+            placeholder="9:00:00"
+            v-model="newShiftStartTime"
+            :state="newShiftStartTime.trim().length > 0 ? true : false"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+
+        <b-form-group
+          label="End Time"
+          invalid-feedback="End time is required"
+        >
+          <b-form-textarea
+            placeholder="17:00:00"
+            v-model="newShiftEndTime"
+            :state="newShiftEndTime.trim().length > 0 ? true : false"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+      </form>
+    </b-modal>
+
     </div>    
 </template>
 
@@ -85,10 +102,13 @@ export default {
     return {
         employees: [],
         shifts: [],
-        selectedEmployee: '', 
+        selectedEmployee: sessionStorage.getItem('selectedEmployeeSchedule'), 
 
-        editMode: false,
-        editedShift: null,
+        newShift: {},
+        newShiftDay: '',
+        newShiftStartTime: '',
+        newShiftEndTime: '',
+
         day: '',
         startTime: '',
         endTime: ''
@@ -104,9 +124,25 @@ export default {
         console.log('Error in GET /employees')
         console.log(e)
     })
+    if(this.selectedEmployee != ''){
+      axiosManager.get('/shift/employee', {
+            params: {
+                employeeUsername: this.selectedEmployee
+            }
+        })
+        .then(response => {
+            console.log(response)
+            this.shifts = response.data
+        })
+        .catch(e => {
+            console.log('Error in GET /shift/employee')
+            console.log(e)
+        })
+    }
   },
   methods: {
     onChange: function(){
+        sessionStorage.setItem('selectedEmployeeSchedule', this.selectedEmployee)
         axiosManager.get('/shift/employee', {
             params: {
                 employeeUsername: this.selectedEmployee
@@ -156,12 +192,60 @@ export default {
         //reload page to show updated table
         window.location.reload();
     },
-    editData (s) {
-      this.beforEditCache = s
-      this.editedUser = s
-    }
-  }
+    editShift() {
 
+    }, 
+    addNewShift : function() {
+      const self = this
+      return new Promise(function (resolve, reject) {
+        axiosManager.post('/createShift',{}, {
+            params: {
+              employeeUsername: self.selectedEmployee,
+              day: self.newShiftDay,
+              startTime: self.newShiftStartTime,
+              endTime: self.newShiftEndTime
+            }
+        })
+        .then(response => {
+            var result = response.data
+            console.log(response)
+            resolve(result)
+        },
+          e => {
+            console.log('Error in POST /shift/create')
+            console.log(e)
+            reject(e)
+        })
+      })
+    },
+    // Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal
+    resetNewShiftModal: function () {
+            this.newShift = {}
+            this.newShiftDay = ''
+            this.newShiftStartTime = ''
+            this.newShiftEndTime = ''
+        },
+    checkNewShiftFormValidity() {
+            return this.newShiftDay.trim().length > 0 && 
+            this.newShiftStartTime.trim().length > 0 && 
+            this.newShiftEndTime.trim().length > 0
+        },
+    handleSubmitNewShift: async function () {
+            if (!this.checkNewShiftFormValidity()) {
+                return
+            }
+            this.newShift = await this.addNewShift()
+            this.$nextTick(() => {
+                this.$bvModal.hide("new-shift-modal")
+            })
+            //reload page to show updated table
+            window.location.reload();
+        },
+    handleOkNewShiftModal: function (bvModalEvent) {
+            bvModalEvent.preventDefault()
+            this.handleSubmitNewShift()
+        }
+  }
 }
 
 </script>
@@ -251,17 +335,12 @@ export default {
   transition: 0.2s;
 }
 
-[v-cloak] {
-      display: none;
-    }
-    .edit {
-      display: none;
-    }
-    .editing .edit {
-      display: block
-    }
-    .editing .view {
-      display: none;
-    }
+/deep/ .popup {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+/deep/ .modal-content {
+  background: #008573;
+}
 
 </style>
