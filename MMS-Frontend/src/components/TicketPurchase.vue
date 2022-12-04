@@ -7,40 +7,30 @@
         <div style="margin-top:10%; margin-left: 20%;">        
             <span class="slogan">Fulfill your curiosity with us.</span>
             <span class="ticketprice">Regular Admission: CA ${{ticketFee}}</span>
-            <button class="styled-button bookTicketButton" @click="openTicketPurchaseForm()">Book Tickets</button>
+            <button class="styled-button bookTicketButton" v-b-modal.new-ticket-purchase-modal>Book Tickets</button>
         </div>
         <hr class="line">
+        <b-modal modal-class="popup" id="new-ticket-purchase-modal" centered title="RESERVE YOUR SPOT" ok-only ok-title="Reserve" ok-variant="dark"
+        @show="resetNewTicketPurchaseModal"
+        @ok="handleSubmitNewTicketPurchase"
+        @hidden="resetNewTicketPurchaseModal"
+        >
+            <form ref="newTicketPurchaseForm">
+                <b-form-group>  
+                    <span class="modalPrice">Regular Ticket - CA ${{ticketFee}} each</span><br /><br />
+                    <button class="minus" @click="changeCounter('-1')" type="button" name="button">-</button>
+					<input class="numberOfTickets" type="text" name="name" @change="refreshTotal()" :value="counter">
+					<button class="plus" @click="changeCounter('1')" type="button" name="button">+</button>
+                </b-form-group>
+                <b-form-group> 
+                    <span class="total">Total: CA ${{displayTotal}}</span>
+                </b-form-group>
+            </form>
+        </b-modal>
     </div>
 </template>
 
-<script>
-    import axios from 'axios'
-    var config = require('../../config')
-    var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-    var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-
-    var axiosTicketPurchase = axios.create({
-        baseURL: backendUrl,
-        headers: { 'Access-Control-Allow-Origin': frontendUrl }
-    })
-    export default {
-        name: 'TicketPurchase',
-        data() {         
-            return {
-                ticketFee: 0,
-            }
-        },
-        created() {
-            axiosTicketPurchase.get('/mms/getMms')
-                .then(response => {
-                    this.ticketFee = response.data.ticketFee;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    }
-</script>
+<script src="./script/TicketPurchase.js"></script>
 
 <style>
     .ticketPurchase {
@@ -88,5 +78,79 @@
         margin-left:5%; 
         size: 5; 
         color: black;
+    }
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
     }  
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    span {cursor:pointer; }
+		.number{
+			margin:100px;
+		}
+		.minus{
+			width:32px;
+			height:38px;
+			background:black;
+			border-radius:4px;
+			padding:8px 5px 8px 5px;
+			border:1px solid #ddd;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            color: white;
+		}
+        .plus{
+			width:32px;
+			height:38px;
+			background:#008573;
+			border-radius:4px;
+			padding:8px 5px 8px 5px;
+			border:1px solid #ddd;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            color: white;
+		}
+	    input{
+            height:38px;
+            width: 100px;
+            text-align: center;
+            font-size: 26px;
+            border:1px solid #ddd;
+            border-radius:4px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .total{
+            font-weight: 600;
+            float: right;
+        }
 </style>
