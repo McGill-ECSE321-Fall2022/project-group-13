@@ -13,28 +13,18 @@
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>10</td>
-                <td>$10.00</td>
-                <td>Active</td>
-            </tr>
-            <tr class="active-row">
-                <td>11</td>
-                <td>$11.99</td>
-                <td>Active</td>
-            </tr>
-            <tr class="active-row">
-                <td>12</td>
-                <td>$11.99</td>
-                <td>Active</td>
-            </tr>
-        </tbody>
+        <tr v-for="ticket in tickets">
+          <td>{{ ticket.ticketId }}</td>
+          <td>{{ ticket.fee }}</td>
+          <td>{{ ticket.isActive }}</td>
+        </tr>
     </table>
   </div>
 </template>
 
-<style scoped>
+<script src="./script/MyTickets.js"></script>
+
+<style>
 .myTickets {
 width: 100%;
 height: 1024px;
