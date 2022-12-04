@@ -23,12 +23,13 @@
           <td>{{request.requestId}}</td>
           <td>{{request.artifact.name}}</td>
           <td>{{request.status}}</td>
-          <td><button class="styled-button">View</button></td>
+          <td><button class="styled-button" v-b-modal.view-request-modal @click="sendInfo(request)">View</button></td>
         </tr>
       </tbody>
     </table>
 
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
+    <!-- Popup for create donation request -->
     <b-modal modal-class="popup" id="new-artifact-donation-modal" centered title="MAKE YOUR DONATION" 
       ok-title="Donate" ok-variant="light" cancel-variant="dark"
       no-close-on-esc no-close-on-backdrop hide-header-close
@@ -96,6 +97,16 @@
         </b-form-group>
       </form>
     </b-modal>
+
+    <!-- Popup for view specific donation request -->
+    <b-modal modal-class="popup" id="view-request-modal" centered title="REQUEST INFO" hide-footer>
+      <span class="view-request"><strong>Name: </strong> {{this.currentDonationArtifactName}}<br></span>
+      <span class="view-request"><strong>Description: </strong> {{this.currentDonationArtifactDescription}}<br></span>
+      <span class="view-request"><strong>Worth: </strong> {{this.currentDonationArtifactWorth}}$<br></span>
+      <span class="view-request"><strong>Condition: </strong>
+        <span v-if="this.currentDonationArtifactIsDamaged == false">Mint condition</span>
+        <span v-else> There are damages to the item </span><br></span>
+    </b-modal>
   </div>
 </template>
 
@@ -147,5 +158,10 @@
 
 /deep/ .modal-content {
   background: #008573;
+}
+
+/deep/ .view-request {
+  font-family: Inter;
+  font-size: 20px;
 }
 </style>

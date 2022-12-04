@@ -18,6 +18,11 @@ export default {
         return {
             clientId: '',
             requests: [],
+            currentRequestId: '',
+            currentDonationArtifactName: '',
+            currentDonationArtifactDescription: '',
+            currentDonationArtifactWorth: '',
+            currentDonationArtifactIsDamaged: false,
             newDonationArtifact: {},
             newDonationArtifactName: '',
             newDonationArtifactImage: "MMS-backend/images/Donation.PNG",
@@ -136,7 +141,14 @@ export default {
             this.handleSubmitNewDonationArtifact()
         },
         onChange: function (e){
-            this.newDonationArtifactIsDamaged = e.target.value;
+            this.newDonationArtifactIsDamaged = e.target.value
+        },
+        sendInfo: function (request) {
+            this.currentRequestId = request.currentRequestId
+            this.currentDonationArtifactName = request.artifact.name
+            this.currentDonationArtifactDescription = request.artifact.description
+            this.currentDonationArtifactWorth = request.artifact.worth
+            this.currentDonationArtifactIsDamaged = request.artifact.isDamaged
         }
     }
 }

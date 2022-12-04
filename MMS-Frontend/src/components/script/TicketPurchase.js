@@ -21,7 +21,6 @@ export default {
                 counter: 1,
                 displayTotal: 0,
                 showAlert: false,
-                newestPrice: 0,
             }
         },
         created() {
@@ -36,56 +35,43 @@ export default {
         },
         methods: {
             createTicket: function(numberOfTickets) {
-                if(this.checkPriceValidity(this.ticketFee)){
-                    for(var i = 0; i < numberOfTickets; i++) {
-                        axiosTicketPurchase.post('/ticket', {}, {
-                            params: {
-                                clientUsername: sessionStorage.getItem('loggedInClient'),
-                            }
-                        })
-                        .then(response => {
-                            console.log(response);
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        })
+                axiosTicketPurchase.get('/mms/getMms')
+                .then(response => {
+                    var newestPrice = response.data.ticketFee;
+                    if(newestPrice == this.ticketFee) {
+                        for(var i = 0; i < numberOfTickets; i++) {
+                            axiosTicketPurchase.post('/ticket', {}, {
+                                params: {
+                                    clientUsername: sessionStorage.getItem('loggedInClient'),
+                                }
+                            })
+                            .then(response => {
+                                console.log(response);
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            })
+                        }
+                       window.location.href = '/client/mytickets';
+                    }else{
+                        this.showAlert = true;
                     }
-                    window.location.href = '/client/mytickets';
-                }else{
-                    this.showAlert = true;
-                }
-                
+                })
+                .catch(error => {
+                    console.log(error);
+                })
             },
             resetNewTicketPurchaseModal: function () {
                 this.counter = 1;
                 this.displayPrice = this.ticketFee;
             },
-            checkPriceValidity: function(displayPrice) {
-                axiosTicketPurchase.get('/mms/getMms')
-                .then(response => {
-                    this.newestPrice = response.data.ticketFee;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-                if(this.newestPrice == displayPrice) {
-                    return true;
-                }else{
-                    return false;
-                }
-            },
             handleSubmitNewTicketPurchase: async function () {
-                this.newTicketPurchase = await this.createTicket(this.counter, this.ticketFee)
                 this.createTicket(this.counter)
             },
-            // refreshTotal: function () {
-            //     var numberOfTickets = document.getElementById('numberOfTickets').value;
-            //     this.displayTotal = this.ticketFee * numberOfTickets;
-            // },
             changeCounter: function (num) {
                 this.counter += +num;
-                console.log(this.counter);
-                !isNaN(this.counter) && this.counter > 0 ? this.counter : (this.counter = 0);
+                !isNaN(this.counter) && this.counter > 0 ? this.counter : (this.counter = 1);
+                this.displayTotal = this.ticketFee * this.counter;
             }
         }
     }  
