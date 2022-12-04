@@ -12,7 +12,7 @@
             <th>Day</th>
             <th>Start Time</th>
             <th>End Time</th>
-            <th>Add button </th>
+            <th><button class="styled-button addButton" @click="addNewShift()">Add new shift</button></th>
           </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
                 <td>{{s.specificWeekDay.dayType}}</td>
                 <td>{{s.startTime}}</td>
                 <td>{{s.endTime}}</td>
-                <td>Edit button</td>
+                <td><button class="styled-button" @click="editShift()">Edit</button><button class="styled-button deleteButton" @click="deleteShift(s.shiftId)">Delete</button></td>
             </tr>
         </tbody>
     </table>
@@ -65,9 +65,9 @@ export default {
         console.log('Error in GET /employees')
         console.log(e)
     })
-  }, 
+  },
   methods: {
-    onChange: function(event){
+    onChange: function(){
         axiosManager.get('/shift/employee', {
             params: {
                 employeeUsername: this.selectedEmployee
@@ -81,6 +81,21 @@ export default {
             console.log('Error in GET /shift/employee')
             console.log(e)
         })
+    }, 
+    deleteShift: function(shiftId){
+        let currentUsername = this.selectedEmployee;
+        const self = this;
+        var fetchDateUrl = ({shiftId}) => `/deleteShift/${shiftId}`;
+        axiosManager.delete(fetchDateUrl({shiftId: shiftId}))
+        .then(response => {
+            console.log(response)
+        })
+        .catch(e => {
+            console.log('Error in DELETE /deleteShift' + shiftId)
+            console.log(e)
+        })
+        //reload page to show updated table
+        window.location.reload();
     }
   }
 
@@ -132,6 +147,45 @@ export default {
   position:relative; 
   margin:auto; 
   bottom: 20px;
+}
+
+.styled-button {
+  background: #008573;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  opacity: 1;
+  font-family: Inter;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.styled-button:hover {
+  background: white;
+  border: solid;
+  border-color: #008573;
+  color: #008573;
+}
+
+.addButton {
+  background: white;
+  border: solid;
+  border-color: #008573;
+  color: #008573;
+}
+
+.deleteButton {
+  background: #000000;
+  border: solid;
+  border-radius: 12px;
+  opacity: 1;
+  font-family: Inter;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  transition: 0.2s;
 }
 
 </style>
