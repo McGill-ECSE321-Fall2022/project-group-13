@@ -46,6 +46,7 @@
       @ok="handleOkNewShiftModal"
     >
       <form ref="newShiftForm" @submit.stop.prevent="handleSubmitNewShift">
+        <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
         <b-form-group
           label="Day"
           invalid-feedback="Day of the week is required"
@@ -91,6 +92,7 @@
       @ok="handleOkUpdateShiftModal"
     >
       <form ref="updateShiftForm" @submit.stop.prevent="handleSubmitUpdateShift">
+        <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
         <b-form-group
           label="Day"
           invalid-feedback="Day of the week is required"
@@ -166,7 +168,11 @@ export default {
         updatedShiftId: '',
         updatedShiftDay: '',
         updatedShiftStartTime: '',
-        updatedShiftEndTime: ''
+        updatedShiftEndTime: '',
+
+        showErrorAlert: false,
+        errorData: ''
+        
     }
   }, 
   created(){
@@ -246,8 +252,15 @@ export default {
           e => {
             console.log('Error in PUT /shift/update/')
             console.log(e)
-            console.log(self.updatedShiftId)
-            console.log() //, self.startTime, self.endTime, self.day)
+            if(e.response.data == "Employee already has a shift that overlaps with this new shift" || 
+                e.response.data == "Start time cannot be after end time." ||
+                e.response.data == "This day is closed, cannot update shift"){
+                self.errorData = e.response.data
+                self.showErrorAlert = true
+            }else if (e.response.status == 500 || e.response.status == 400) {
+                self.errorData = "Wrong Input Format"
+                self.showErrorAlert = true
+            }
             reject(e)
         })
       })
@@ -277,6 +290,16 @@ export default {
           e => {
             console.log('Error in POST /createShift')
             console.log(e)
+            console.log(e.response.data)
+            if(e.response.data == "Employee already has a shift that overlaps with this new shift" || 
+                e.response.data == "Start time must be before end time!" ||
+                e.response.data == "This day is closed, cannot create shift"){
+                self.errorData = e.response.data
+                self.showErrorAlert = true
+            }else if (e.response.status == 500 || e.response.status == 400) {
+                self.errorData = "Wrong Input Format"
+                self.showErrorAlert = true
+            }
             reject(e)
         })
       })
@@ -287,6 +310,7 @@ export default {
             this.newShiftDay = ''
             this.newShiftStartTime = ''
             this.newShiftEndTime = ''
+            this.showErrorAlert = false
         },
     checkNewShiftFormValidity() {
             return this.newShiftDay.trim().length > 0 && 
@@ -297,6 +321,7 @@ export default {
             if (!this.checkNewShiftFormValidity()) {
                 return
             }
+            this.showErrorAlert = false
             this.newShift = await this.addNewShift()
             this.$nextTick(() => {
                 this.$bvModal.hide("new-shift-modal")
@@ -315,6 +340,7 @@ export default {
             this.updatedShiftDay = ''
             this.updatedShiftStartTime = ''
             this.updatedShiftEndTime = ''
+            this.showErrorAlert = false
         },
     checkUpdatedShiftFormValidity() {
             return this.updatedShiftDay.trim().length > 0 && 
@@ -325,6 +351,7 @@ export default {
             if (!this.checkUpdatedShiftFormValidity()) {
                 return
             }
+            this.showErrorAlert = false
             this.updatedShift = await this.updateShift() //need to pass here the shiftId
             this.$nextTick(() => {
                 this.$bvModal.hide("update-shift-modal")
