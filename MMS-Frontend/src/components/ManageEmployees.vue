@@ -6,6 +6,12 @@
         </head>
         <button class="styled-button CreateEmployeeButton" v-b-modal.new-employee-account-modal>Create Employee Account</button>
 
+        <div class = "viewSchedules">
+        <form action="/manager/viewSchedules">
+            <button class="styled-button">View Schedules</button>
+        </form>
+        </div>
+
         <div class = "editSchedules">
         <form action="/manager/editschedule">
             <button class="styled-button">Edit Schedules</button>
@@ -265,6 +271,12 @@ export default {
   position: absolute;
   top: 50px;
   right: 270px;
+}
+
+.viewSchedules {
+  position: absolute;
+  top: 50px;
+  right: 440px;
 }
 
 

@@ -396,8 +396,8 @@ export default {
 .deleteButton:hover {
   background: white;
   border: solid;
-  border-color: #008573;
-  color: #008573;
+  border-color: red;
+  color: red;
 }
 
 .addButton:hover {
