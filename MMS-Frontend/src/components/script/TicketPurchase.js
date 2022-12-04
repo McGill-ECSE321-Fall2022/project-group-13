@@ -21,7 +21,6 @@ export default {
                 counter: 1,
                 displayTotal: 0,
                 showAlert: false,
-                priceValid: false,
             }
         },
         created() {
@@ -65,19 +64,14 @@ export default {
             resetNewTicketPurchaseModal: function () {
                 this.counter = 1;
                 this.displayPrice = this.ticketFee;
-                this.priceValid = true;
             },
             handleSubmitNewTicketPurchase: async function () {
                 this.createTicket(this.counter)
             },
-            // refreshTotal: function () {
-            //     var numberOfTickets = document.getElementById('numberOfTickets').value;
-            //     this.displayTotal = this.ticketFee * numberOfTickets;
-            // },
             changeCounter: function (num) {
                 this.counter += +num;
-                console.log(this.counter);
-                !isNaN(this.counter) && this.counter > 0 ? this.counter : (this.counter = 0);
+                !isNaN(this.counter) && this.counter > 0 ? this.counter : (this.counter = 1);
+                this.displayTotal = this.ticketFee * this.counter;
             }
         }
     }  
