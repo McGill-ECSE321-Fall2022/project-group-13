@@ -64,24 +64,24 @@
           label="Start Time"
           invalid-feedback="Start time is required"
         >
-          <b-form-textarea
+          <b-form-input
             placeholder="9:00:00"
             v-model="newShiftStartTime"
             :state="newShiftStartTime.trim().length > 0 ? true : false"
             required
-          ></b-form-textarea>
+          ></b-form-input>
         </b-form-group>
 
         <b-form-group
           label="End Time"
           invalid-feedback="End time is required"
         >
-          <b-form-textarea
+          <b-form-input
             placeholder="17:00:00"
             v-model="newShiftEndTime"
             :state="newShiftEndTime.trim().length > 0 ? true : false"
             required
-          ></b-form-textarea>
+          ></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
@@ -110,24 +110,24 @@
           label="Start Time"
           invalid-feedback="Start time is required"
         >
-          <b-form-textarea
+          <b-form-input
             :placeholder="this.oldShiftStartTime"
             v-model="updatedShiftStartTime"
             :state="updatedShiftStartTime.trim().length > 0 ? true : false"
             required
-          ></b-form-textarea>
+          ></b-form-input>
         </b-form-group>
 
         <b-form-group
           label="End Time"
           invalid-feedback="End time is required"
         >
-          <b-form-textarea
+          <b-form-input
             :placeholder="this.oldShiftEndTime"
             v-model="updatedShiftEndTime"
             :state="updatedShiftEndTime.trim().length > 0 ? true : false"
             required
-          ></b-form-textarea>
+          ></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
