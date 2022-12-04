@@ -29,12 +29,20 @@
     </table>
 
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
-    <b-modal modal-class="popup" id="new-artifact-donation-modal" centered title="MAKE YOUR DONATION" ok-title="Donate" ok-variant="light" cancel-variant="dark"
+    <b-modal modal-class="popup" id="new-artifact-donation-modal" centered title="MAKE YOUR DONATION" 
+      ok-title="Donate" ok-variant="light" cancel-variant="dark"
+      no-close-on-esc no-close-on-backdrop hide-header-close
       @show="resetNewArtifactModal"
       @hidden="resetNewArtifactModal"
       @ok="handleOkNewArtifactModal"
     >
       <form ref="newDonationArtifactForm" @submit.stop.prevent="handleSubmitNewDonationArtifact">
+        <!-- Donation Image --> <!-- Doesn't work -->
+        <!--b-form-group-->
+          <!--img src="../../../MMS-Backend/images/Donation.PNG" class="rounded-circle border border-light"/-->
+        <!--/b-form-group-->
+
+        <!-- Artifact Name -->
         <b-form-group
           label="Name"
           invalid-feedback="Artifact Name is required"
@@ -48,6 +56,7 @@
           ></b-form-input>
         </b-form-group>
 
+        <!-- Artifact Description -->
         <b-form-group
           label="Description"
           invalid-feedback="Description is required"
@@ -62,6 +71,7 @@
           ></b-form-textarea>
         </b-form-group>
 
+        <!-- Artifact Worth -->
         <b-form-group
           label="Worth"
           invalid-feedback="Worth is required"
@@ -73,6 +83,16 @@
             :state="parseInt(newDonationArtifactWorth) > 0 && newDonationArtifactWorth.trim().length > 0 ? true : false"
             required
           ></b-form-input>
+        </b-form-group>
+
+        <!-- Artifact Preserved State -->
+        <b-form-group
+          label="Preserved State"
+        >
+          <select @change = "onChange($event)" class = "form-select form-control">
+            <option value = "Good"> Good </option>
+            <option value = "Damaged"> Damaged </option>
+          </select>
         </b-form-group>
       </form>
     </b-modal>
@@ -110,11 +130,12 @@
 }
 
 .thankYou {
+  background-color: rgba(0, 133, 115, 0.2);
   width: 796px;
   color: rgba(0,0,0,1);
   font-family: Inter;
   font-weight: Bold;
-  font-size: 40px;
+  font-size: 35px;
   opacity: 1;
   text-align: center;
 }
