@@ -4,7 +4,10 @@
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
       </head>
-      <span class="title">MY TICKETS</span>
+      <div style="margin-top:10%; margin-left: 20%;">  
+        <span class="title">MY TICKETS</span>
+        <button class="styled-button bookTicketButton" onclick="window.location.href = '/client/ticketpurchase';">GET TICKETS</button>
+      </div>
       <table class="styled-table">
         <thead>
           <tr>
@@ -47,35 +50,11 @@ top: 40px;
 left: 167px;
 }
 
-.styled-table {
-    border-collapse: collapse;
-    margin: 200px 60px;
-    font-size: 30px;
-    font-family: sans-serif;
-    min-width: 1400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+.bookTicketButton {
+  position: absolute;
+  top: 50px;
+  right: 15px;
 }
 
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-
-.styled-table thead tr {
-    background-color: #008573;
-    color: #ffffff;
-    text-align: middle;
-}
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
 </style>
 

@@ -7,7 +7,7 @@
  var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
  var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
  
- var axiosMyTickets = axios.create({
+ var axiosManageTickets = axios.create({
      baseURL: backendUrl,
      headers: { 'Access-Control-Allow-Origin': frontendUrl }
  })
@@ -20,14 +20,14 @@
         }
     },
     created() {
-        axiosMyTickets.get('/tickets')
+        axiosManageTickets.get('/tickets')
                     .then(response => {
                         var response = response.data;
                         for (var i = 0; i < response.length; i++) {
                             if(response[i].isActive) {
-                            response[i].isActive = "Active";
+                                response[i].isActive = "Active";
                             }else{
-                            response[i].isActive = "Inactive";
+                                response[i].isActive = "Inactive";
                             }
                         }
                         this.tickets = response

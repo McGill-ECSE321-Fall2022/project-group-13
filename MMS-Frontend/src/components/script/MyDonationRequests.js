@@ -23,7 +23,7 @@ export default {
             newDonationArtifactImage: "MMS-backend/images/Donation.PNG",
             newDonationArtifactDescription: '',
             newDonationArtifactWorth: 0,
-            newDonationArtifactIsDamaged: false
+            newDonationArtifactIsDamaged: 'Good',
         }
     },
     created: function () {
@@ -45,13 +45,20 @@ export default {
         createDonationArtifact: function () {
             // Export this function scope to promise
             const self = this
+
             return new Promise(function (resolve, reject) {
+            let state = false
+            // Cases in preserved state
+            if (self.newDonationArtifactIsDamaged == 'Damaged') {
+                state = true
+            }
+
             axiosClient.post('donationArtifact', {}, {
                 params: {
                     name: self.newDonationArtifactName,
                     image: self.newDonationArtifactImage,
                     description: self.newDonationArtifactDescription,
-                    isDamaged: self.newDonationArtifactIsDamaged,
+                    isDamaged: state,
                     worth: self.newDonationArtifactWorth
                 }
             })
@@ -107,7 +114,7 @@ export default {
             this.newDonationArtifactImage = "MMS-backend/images/Donation.PNG"
             this.newDonationArtifactDescription = ''
             this.newDonationArtifactWorth = 0
-            this.newDonationArtifactIsDamaged = false
+            this.newDonationArtifactIsDamaged = 'Good'
         },
         checkNewArtifactFormValidity() {
             return this.newDonationArtifactName.trim().length > 0 && 
@@ -127,6 +134,9 @@ export default {
         handleOkNewArtifactModal: function (bvModalEvent) {
             bvModalEvent.preventDefault()
             this.handleSubmitNewDonationArtifact()
+        },
+        onChange: function (e){
+            this.newDonationArtifactIsDamaged = e.target.value;
         }
     }
 }

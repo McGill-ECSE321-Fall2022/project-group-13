@@ -23,7 +23,7 @@ import ManagerAccount from '@/components/ManagerAccount'
 import ManageEmployees from '@/components/ManageEmployees'
 import EditSchedule from '@/components/EditSchedule'
 import MySchedule from '@/components/MySchedule'
-import ManageSchedules from '@/components/ManageSchedules'
+import ViewSchedules from '@/components/ViewSchedules'
 import ManageDonationRequests from '@/components/ManageDonationRequests'
 
 
@@ -148,9 +148,9 @@ export default new Router({
           component: ManagerAccount
         },
         {
-          path: 'manageschedules',
-          name: 'manager_manageschedules',
-          component: ManageSchedules
+          path: 'viewschedules',
+          name: 'manager_viewschedules',
+          component: ViewSchedules
         },
         {
           path: 'managedonationrequests',

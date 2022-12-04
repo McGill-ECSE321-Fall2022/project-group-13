@@ -8,6 +8,7 @@
         </head>
         <span class="title">EDIT SCHEDULE</span>
 
+        <div class="table-container">
         <table class="styled-table">
         <thead>
           <tr>
@@ -28,6 +29,7 @@
             </tr>
         </tbody>
     </table>
+  </div>
         <div class = "employeeDropdown">
         <section>
         <select v-model="selectedEmployee" @change = "onChange($event)" class ="form-select form-control">
@@ -351,58 +353,31 @@ export default {
   overflow: hidden;
 }
 
-.styled-table {
-    border-collapse: collapse;
-    margin: 200px 60px;
-    font-size: 25px;
-    font-family: sans-serif;
-    min-width: 90%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-
-.styled-table thead tr {
-    background-color: #008573;
-    color: #ffffff;
-    text-align: middle;
-}
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.table-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .employeeDropdown {
   width: 20%;
   position:relative; 
+  top: 50px;
   margin:auto; 
-  bottom: 20px;
 }
 
-.styled-button {
-  background: #008573;
-  border: none;
-  border-radius: 12px;
-  padding: 15px;
-  opacity: 1;
-  font-family: Inter;
-  font-weight: 600;
-  color: white;
-  text-align: center;
-  transition: 0.2s;
-}
-
-.styled-button:hover {
+.deleteButton:hover {
   background: white;
   border: solid;
   border-color: #008573;
   color: #008573;
+}
+
+.addButton:hover {
+  background: #000000;
+  border: solid;
+  border-color: #008573;
+  color: white;
 }
 
 .addButton {
