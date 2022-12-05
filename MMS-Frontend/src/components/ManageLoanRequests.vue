@@ -5,6 +5,16 @@
               <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         </head>
         <span class="title">ALL LOAN REQUESTS</span>
+        <div class="statusTypeDropdown">
+              <select @change = "statusOnChange($event)" class = "form-select form-control">
+                <option value = "All"> All </option>
+                <option value = "Active"> Active </option>
+                <option value = "Pending"> Pending </option>
+                <option value = "Approved"> Approved </option>
+                <option value = "Rejected"> Rejected </option>
+                <option value = "Returned"> Returned </option>
+              </select>
+        </div>
         <table class="styled-table">
               <thead>
                 <tr>
@@ -86,7 +96,7 @@ export default {
                 this.requests = response.data
             })
             .catch(e => {
-                console.log('Error in GET loanRequest/' + username)
+                console.log('Error in GET loanRequest/{username}')
                 console.log(e)
             })
         this.clientId = username
@@ -113,7 +123,7 @@ export default {
             window.location.reload();
         },
           e => {
-            console.log('Error in PUT loanRequest/approveRequest/' + requestId)
+            console.log('Error in PUT loanRequest/approveRequest/{requestId}')
             console.log(e)
             reject(e)
         })
@@ -130,7 +140,7 @@ export default {
                 window.location.reload();
             },
               e => {
-                console.log('Error in PUT loanRequest/rejectRequest/' + requestId)
+                console.log('Error in PUT loanRequest/rejectRequest/{requestId}')
                 console.log(e)
                 reject(e)
             })
@@ -147,12 +157,59 @@ export default {
                 window.location.reload();
             },
               e => {
-                console.log('Error in PUT loanRequest/loanReturn/' + requestId)
+                console.log('Error in PUT loanRequest/loanReturn/{requestId}')
                 console.log(e)
                 reject(e)
      })
     })
    },
+    statusOnChange: function (e) {
+       this.displayedStatus = e.target.value
+       if (this.displayedStatus == 'Pending') {
+          axiosStaff.get('loanRequests/Status/' + this.displayedStatus).then(response => {
+            console.log(response)
+            this.requests = response.data
+          }).catch(e => {
+            console.log('Error in GET loanRequests/Status/Pending')
+            console.log(e) })
+          } else if (this.displayedStatus == 'Approved') {
+            axiosStaff.get('loanRequests/Status/' + this.displayedStatus).then(response => {
+              console.log(response)
+              this.requests = response.data })
+          .catch(e => {
+            console.log('Error in GET loanRequests/Status/Approved')
+            console.log(e) })
+           } else if (this.displayedStatus == 'Rejected') {
+              axiosStaff.get('loanRequests/Status/' + this.displayedStatus).then(response => {
+                console.log(response)
+                this.requests = response.data })
+           .catch(e => {
+              console.log('Error in GET loanRequests/Status/Rejected')
+              console.log(e) })
+           } else if (this.displayedStatus == 'Active') {
+              axiosStaff.get('/activeLoanRequests').then(response => {
+              console.log(response)
+              this.requests = response.data })
+              .catch(e => {
+              console.log('Error in GET getAllActiveLoanRequests')
+              console.log(e) })
+          } else if (this.displayedStatus == 'Returned') {
+              axiosStaff.get('loanRequests/Status/' + this.displayedStatus).then(response => {
+                console.log(response)
+                this.requests = response.data })
+           .catch(e => {
+              console.log('Error in GET loanRequests/Status/Returned')
+              console.log(e) })
+            } else if (this.displayedStatus == 'All') {
+                axiosStaff.get('loanRequests/').then(response => {
+                console.log(response)
+                this.requests = response.data
+            }).catch(e => {
+                console.log('Error in GET getAllLoanRequests')
+                console.log(e)
+            })
+          }
+        }
   },
 }
 </script>
@@ -242,5 +299,11 @@ export default {
   border: solid;
   border-color: red;
   color: red;
+}
+
+.statusTypeDropdown {
+  position: absolute;
+  top: 10%;
+  right: 10%;
 }
 </style>
