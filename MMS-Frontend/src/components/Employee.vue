@@ -9,11 +9,11 @@
         <a href="/employee/myaccount">Hi, {{employeeName}}!</a>
     </div>
     <div class="topnav">
-        <a href="/employee/managetickets">Manage Tickets</a> 
+        <a href="/employee/managecatalog">Manage Catalog</a>
         <a href="/employee/myschedule">My Schedule</a>
         <a href="/employee/manageloanrequests">Manage Loan Requests</a>
         <a href="/employee/managedonationrequests">Manage Donation Requests</a>
-        <a href="/employee/managecatalog">Manage Catalog</a>
+        <a href="/employee/managetickets">Manage Tickets</a> 
     </div>
     <button class="bookmark">
         <a href="/employee/myhomepage">
