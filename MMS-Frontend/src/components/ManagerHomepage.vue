@@ -13,11 +13,30 @@
         </div>
 
         <div class="button-container">
-            <button class="styled-button">EDIT TICKET FEE</button>
+            <button class="styled-button" v-b-modal.edit-ticket-fee-modal>EDIT TICKET FEE</button>
             <button class="styled-button" v-b-modal.update-day-modal>EDIT DAY STATUS</button>
             <button class="styled-button" v-b-modal.update-hours-modal>EDIT OPENING HOURS</button>
         </div>
 
+        <b-modal modal-class="popup" id="edit-ticket-fee-modal" centered title="EDITING TICKET FEE" ok-title="Save" ok-variant="light" cancel-variant="dark"
+        @show="resetEditTicketFeeModal"
+        @hidden="resetEditTicketFeeModal"
+        @ok="handleOkEditTicketFeeModal"
+        >
+        <form ref="editTicketFeeForm" @submit.stop.prevent="handleSubmitTicketFee">
+          <b-form-group
+            label="Ticket Price"
+            invalid-feedback="Invalid Ticket Price"
+          >
+          <b-form-input 
+          :placeholder="this.oldTicketFee"
+          v-model="newTicketFee"
+          :state="(newTicketFee.trim().length > 0 && parseInt(newTicketFee) >= 0) ? true : false"
+          required
+          ></b-form-input>
+          </b-form-group>
+        </form>
+        </b-modal>
         <b-modal modal-class="popup" id="update-hours-modal" centered title="OPENING HOURS" ok-title="Save" ok-variant="light" cancel-variant="dark"
       @show="resetUpdateHoursModal"
       @hidden="resetUpdateHoursModal"
@@ -96,172 +115,7 @@
 
 </template>
 
-<script>
-import axios from 'axios';
-var config = require('../../config')
-
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-
-var axiosManager = axios.create({
-    baseURL: backendUrl,
-    headers: { 'Access-Control-Allow-Origin': frontendUrl }
-})
-
-export default {
-  name: 'ManagerHomepage',
-    data(){
-        return {
-            newOpenHours: [],
-            newOpenTime: '',
-            newCloseTime: '',
-            oldOpenTime: '',
-            oldCloseTime: '',
-
-            updatedSpecificDay: [],
-            selectedDay: 'PickDay',
-            selectedStatus: 'PickStatus',
-            errorDay: '',
-
-            showErrorAlert: false,
-            errorData: ''
-        }
-    }, 
-    created(){
-    },
-    methods: {
-    updateHours: function() {
-        const self= this;
-        return new Promise(function (resolve, reject) {
-        axiosManager.put('/mms/setOpeningHours/', {},{
-            params: {
-                openTime: self.newOpenTime,
-                closeTime: self.newCloseTime
-            }
-        })        
-        .then(response => {
-            var result = response.data
-            console.log(response)
-            resolve(result)
-        },
-          e => {
-            console.log('Error in PUT /mms/setOpeningHours/')
-            console.log(e)
-            if(e.response.data == "Opening time cannot be after closing time."){
-                self.errorData = e.response.data
-                self.showErrorAlert = true
-            }else if (e.response.status == 500 || e.response.status == 400) {
-                self.errorData = "Wrong Input Format"
-                self.showErrorAlert = true
-            }
-            reject(e)
-        })
-      })
-    },
-    resetUpdateHoursModal: function () {
-            this.newOpenHours = []
-            this.newOpenTime = ''
-            this.newCloseTime = ''
-            this.showErrorAlert = false
-        },
-    checkUpdateHoursFormValidity() {
-            return this.newOpenTime.trim().length > 0 && 
-            this.newCloseTime.trim().length > 0 
-        },
-    handleSubmitOpeningHours: async function () {
-            if (!this.checkUpdateHoursFormValidity()) {
-                return
-            }
-            this.showErrorAlert = false
-            this.newOpenHours = await this.updateHours()
-            this.$nextTick(() => {
-                this.$bvModal.hide("update-hours-modal")
-            })
-            //reload page to show updated table
-            window.location.reload();
-        },
-    handleOkUpdateHoursModal: function (bvModalEvent) {
-            bvModalEvent.preventDefault()
-            this.handleSubmitOpeningHours()
-        },
-    updateDayStatus: function() {
-        const self= this;
-        return new Promise(function (resolve, reject) {
-            axiosManager.put('/specificWeekDay', {},{
-                params: {
-                    day: self.selectedDay,
-                    isClosed: self.selectedStatus
-                }
-            })        
-        .then(response => {
-            var result = response.data
-            console.log(response)
-            resolve(result)
-        },
-          e => {
-            console.log('Error in PUT /specificWeekDay/')
-            console.log(e)
-            if(e.response.data == "Cannot close day with that has scheduled shifts."){
-                self.errorData = "Cannot close day that has scheduled shifts."
-                self.errorDay = self.selectedDay
-                self.showErrorAlert = true
-            }
-            reject(e)
-        })
-
-        })
-    },
-    onChangeDay(e){
-          this.selectedDay = e.target.value;
-    },
-    onChangeStatus(e){
-          this.selectedStatus = e.target.value;
-    },
-    resetUpdateDayModal: function () {
-            this.updatedSpecificDay = []
-            this.selectedDay = 'PickDay'
-            this.selectedStatus = 'PickStatus'
-            this.showErrorAlert = false
-            this.errorDay = ''
-        },
-    checkUpdateDayFormValidity() {
-            return this.selectedDay != "PickDay" && 
-           this. selectedStatus != "PickStatus"
-        },
-    handleSubmitDayStatus: async function () {
-            if (!this.checkUpdateDayFormValidity()) {
-                return
-            }
-            this.showErrorAlert = false
-            this.updatedSpecificDay = await this.updateDayStatus()
-            this.$nextTick(() => {
-                this.$bvModal.hide("update-day-modal")
-            })
-            //reload page to show updated table
-            window.location.reload();
-        },
-    handleOkUpdateDayModal: function (bvModalEvent) {
-            bvModalEvent.preventDefault()
-            this.handleSubmitDayStatus()
-        },
-    deleteShifts: function(){
-        axiosManager.delete('/shift/day', {
-            params: {
-                dayType: this.errorDay
-            }
-        })
-        .then(response => {
-            console.log(response)
-        })
-        .catch(e => {
-            console.log('Error in DELETE /shift/day')
-            console.log(e)
-        })
-        this.showErrorAlert = false
-    }
-    }
-}
-</script>
+<script src="./script/ManagerHomepage.js"></script>
 
 <style scoped>
 .managerHomepage {
