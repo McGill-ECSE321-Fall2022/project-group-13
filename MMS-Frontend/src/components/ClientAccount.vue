@@ -37,7 +37,8 @@
             type="text"
             :placeholder="this.oldClientFullName"
             v-model="newClientName"
-            :state="newClientName.trim().length > 0 ? true : false"
+            :state="(newClientName.trim().length > 0 && newClientName.split(' ').length == 2 && newClientName.split(' ')[0].length >0 
+            && newClientName.split(' ')[1].length >0) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -50,7 +51,7 @@
             type="text"
             placeholder="Password"
             v-model="newClientPassword"
-            :state="newClientPassword.trim().length > 0 ? true : false"
+            :state="(newClientPassword.trim().length >=8 && newClientPassword.trim().length <= 30 && newClientPassword.indexOf(' ') < 0) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -115,7 +116,7 @@ export default {
             const myArray = response.data.name.split(" ");
             this.oldClientFirstName = myArray[0]; 
             this.oldClientLastName = myArray[1];
-            this.oldClientFullName = this.oldClientFirstName + " " + this.oldClientLastName
+            this.oldClientFullName = response.data.name;
             this.oldClientPassword = response.data.password; 
 
         })
@@ -126,17 +127,18 @@ export default {
     },
     checkEditClientFormValidity() {
         return this.newClientName.trim().length > 0 && 
+        this.newClientName.split(" ").length == 2 &&
         this.newClientPassword.length  >= 8 &&
         this.newClientPassword.length  <= 30
         
     },
     handleSubmitEditClientAccount: async function () {
         if (!this.checkEditClientFormValidity()) {
-            console.log('failed to edit client')
+            // console.log('failed to edit client')
             return
         }
         this.editClientAccount(this.oldClientUsername)
-        console.log('edited client')
+        // console.log('edited client')
         this.$nextTick(() => {
             this.$bvModal.hide("edit-client-account-modal")
         })
