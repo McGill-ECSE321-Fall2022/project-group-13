@@ -27,7 +27,7 @@
     @ok="handleOkEditEmployeeModal"
     >
     <form ref="editEmployeeInformationForm" @submit.stop.prevent="handleSubmitEditEmployeeAccount">
-
+      <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
         <b-form-group
           label="New Full Name"
           invalid-feedback="Full name is required"
@@ -79,6 +79,8 @@ export default {
         oldEmployeePassword: '',
         newEmployeeName: '',
         newEmployeePassword: '', 
+        showErrorAlert: false,
+        errorData: ''
       }
     },
   created() {
@@ -110,23 +112,23 @@ export default {
             this.oldEmployeePassword = response.data.password; 
 
         })
-        .catch(e => {
-            console.log('Error in PUT /employee/edit/' + employeeUsername)
-            console.log(e)
-        })
     },
     checkEditEmployeeFormValidity() {
         return this.newEmployeeName.trim().length > 0 && 
         this.newEmployeePassword.length  >= 8 &&
-        this.newEmployeePassword.length  <= 30
+        this.newEmployeePassword.length  <= 30 &&
+        this.newEmployeePassword.indexOf(' ') < 0 
         
     },
     handleSubmitEditEmployeeAccount: async function () {
+      const self = this
         if (!this.checkEditEmployeeFormValidity()) {
+            self.errorData = "Incorrect information was entered"
+            self.showErrorAlert = true
             return
         }
         this.editEmployeeAccount(this.oldEmployeeUsername)
-        console.log('edited employee')
+        // console.log('edited employee')
         this.$nextTick(() => {
             this.$bvModal.hide("edit-employee-account-modal")
         })

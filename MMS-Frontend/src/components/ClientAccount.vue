@@ -27,7 +27,7 @@
     @ok="handleOkEditClientModal"
     >
     <form ref="editClientInformationForm" @submit.stop.prevent="handleSubmitEditClientAccount">
-
+      <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
         <b-form-group
           label="New Full Name"
           invalid-feedback="Full name is required"
@@ -79,6 +79,8 @@ export default {
         oldClientPassword: '',
         newClientName: '',
         newClientPassword: '', 
+        showErrorAlert: false,
+        errorData: ''
       }
     },
   created() {
@@ -118,12 +120,14 @@ export default {
     checkEditClientFormValidity() {
         return this.newClientName.trim().length > 0 && 
         this.newClientPassword.length  >= 8 &&
-        this.newClientPassword.length  <= 30
+        this.newClientPassword.length  <= 30 && this.newClientPassword.indexOf(' ') < 0 
         
     },
     handleSubmitEditClientAccount: async function () {
+      const self = this
         if (!this.checkEditClientFormValidity()) {
-            // console.log('failed to edit client')
+            self.errorData = "Incorrect information was entered"
+            self.showErrorAlert = true
             return
         }
         this.editClientAccount(this.oldClientUsername)
