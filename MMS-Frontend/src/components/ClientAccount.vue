@@ -129,7 +129,7 @@ export default {
             return
         }
         this.editClientAccount(this.oldClientUsername)
-        console.log('edited client')
+        // console.log('edited client')
         this.$nextTick(() => {
             this.$bvModal.hide("edit-client-account-modal")
         })

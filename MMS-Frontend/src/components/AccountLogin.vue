@@ -1,5 +1,7 @@
 <template>
+  
     <div class="accountLogin">
+      <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
       
     <div class = "dinoPicture">
         <img src="../assets/dinoLogo.png">
@@ -73,7 +75,9 @@ export default {
       return {
         username: '',
         password: '',
-        //The accountType is set as Client bcs it only updates if the dropdown menu is touched.. 
+        showErrorAlert: false,
+        errorData: '',
+        //The accountType is set as Client bcs it only updates if the dropdown menu is touched
         accountType: 'Client', 
         
         //This method gets the current value of the dropdown menu
@@ -101,6 +105,22 @@ export default {
                 }}).then((response) => {
                       sessionStorage.setItem('loggedInClient', response.data.username);
                       self.$router.push({ path: '/client/myhomepage' });
+                 },
+                 e => {
+                  if (e.response.data == "This username is invalid" || e.response.data == "This password is invalid" || e.response.data == "This password is incorrect"){
+                        self.errorData = e.response.data
+                        self.showErrorAlert = true
+                      }
+                  else if (e.response.data == "This client account does not exist" ){
+                      self.errorData = "This account does not exist"
+                      self.showErrorAlert = true
+                  }
+
+                  else if (e.response.status == 400 || e.response.status == 404){
+                    self.errorData = "Wrong Input Format"
+                    self.showErrorAlert = true
+                  }
+                  reject(e)
                  })
         }
 
@@ -113,6 +133,22 @@ export default {
                 }}).then((response) => {
                       sessionStorage.setItem('loggedInEmployee', response.data.username);
                       self.$router.push({ path: '/employee/myhomepage' });
+                 },
+                 e => {
+                  if (e.response.data == "This username is invalid" || e.response.data == "This password is invalid" || e.response.data == "This password is incorrect"){
+                        self.errorData = e.response.data
+                        self.showErrorAlert = true
+                      }
+                  else if (e.response.data == "This employee account does not exist" ){
+                      self.errorData = "This account does not exist"
+                      self.showErrorAlert = true
+                  }
+
+                  else if (e.response.status == 400 || e.response.status == 404){
+                    self.errorData = "Wrong Input Format"
+                    self.showErrorAlert = true
+                  }
+                  reject(e)
                  })
         }
 
@@ -123,8 +159,31 @@ export default {
                 params: {
                   password
                 }}).then((response) => {
-                      sessionStorage.setItem('loggedInManager', response.data.username);
-                      self.$router.push({ path: '/manager/myhomepage' });
+
+                      if (this.username == response.data.username){
+                        sessionStorage.setItem('loggedInManager', response.data.username);
+                        self.$router.push({ path: '/manager/myhomepage' });
+                      }
+                      else {
+                        self.errorData = "This account does not exist"
+                        self.showErrorAlert = true
+                      }
+                 },
+                 e => {
+                  if (e.response.data == "This username is invalid" || e.response.data == "This password is invalid" || e.response.data == "This password is incorrect"){
+                        self.errorData = e.response.data
+                        self.showErrorAlert = true
+                      }
+                  else if (e.response.data == "A manager account doesn't exist" ){
+                      self.errorData = "This account does not exist"
+                      self.showErrorAlert = true
+                  }
+
+                  else if (e.response.status == 400 || e.response.status == 404){
+                    self.errorData = "Wrong Input Format"
+                    self.showErrorAlert = true
+                  }
+                  reject(e)
                  })
         }
       }
