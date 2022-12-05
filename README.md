@@ -65,3 +65,7 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 
 ### Project reports
 [Project Deliverable 3](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Deliverable-3-Report)
+
+***
+
+Please check our [Wiki](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki) for more details!
