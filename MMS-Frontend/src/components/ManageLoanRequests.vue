@@ -4,6 +4,9 @@
               <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
               <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         </head>
+        <div style="margin-top:7%;">
+           <b-alert v-model="showAlert" variant="info">Client has reached maximum number of loans. Please check active requests.</b-alert>
+        </div>
         <span class="title">ALL LOAN REQUESTS</span>
         <div class="statusTypeDropdown">
               <select @change = "statusOnChange($event)" class = "form-select form-control">
@@ -33,7 +36,7 @@
                   <td><button class="styled-button" v-b-modal.view-request-modal @click="sendInfo(request)">View</button></td>
                   <td>
                   <span v-if="request.status == 'Pending'">
-                  <button class="styled-button" @click="approveRequest(request.requestId)">Approve</button>
+                  <button class="styled-button" @click="approveRequest(request)">Approve</button>
                   <button class="reject-button" @click="rejectRequest(request.requestId)">Reject</button>
                   </span>
                   <span v-if="request.status == 'Approved'">
@@ -84,6 +87,7 @@ export default {
             artifactLoanFee: '',
             artifactLoanDuration: '',
             requestStatus: '',
+            showAlert: false,
         }
     },
     created: function () {
@@ -112,22 +116,25 @@ export default {
               this.requestStatus = request.status
               this.clientName = request.client.username
       },
-    approveRequest : function(requestId) {
+    approveRequest : function(request) {
       const self = this
+      if (request.client.currentLoanNumber != request.client.museumManagementSystem.maxLoanNumber) {
       return new Promise(function (resolve, reject) {
-        axiosStaff.put('loanRequest/approveRequest/' + requestId)
+        axiosStaff.put('loanRequest/approveRequest/' + request.requestId)
         .then(response => {
-            var result = response.data
-            console.log(response)
-            resolve(result)
+            var result = response.data;
+            console.log(response);
+            resolve(result);
             window.location.reload();
-        },
-          e => {
-            console.log('Error in PUT loanRequest/approveRequest/{requestId}')
-            console.log(e)
-            reject(e)
+        }, e => {
+            console.log('Error in PUT loanRequest/approveRequest/{requestId}');
+            console.log(e);
+            reject(e);
         })
       })
+      } else {
+       this.showAlert = true;
+      }
     },
     rejectRequest : function(requestId) {
           const self = this
@@ -303,7 +310,7 @@ export default {
 
 .statusTypeDropdown {
   position: absolute;
-  top: 10%;
-  right: 10%;
+  top: 6%;
+  right: 15px;
 }
 </style>
