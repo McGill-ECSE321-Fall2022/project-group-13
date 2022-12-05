@@ -62,7 +62,7 @@ export default {
     data(){
         return {
             shifts: [],
-            selectedDay: 'Monday',
+            selectedDay: 'PickDay',
         }
     }, 
     created(){
