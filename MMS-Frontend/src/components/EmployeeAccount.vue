@@ -49,7 +49,7 @@
             type="text"
             placeholder="Password"
             v-model="newEmployeePassword"
-            :state="(newEmployeePassword.trim().length > 0 && newEmployeePassword.trim().length <= 30 && newEmployeePassword.indexOf(' ') < 0 )? true : false"
+            :state="(newEmployeePassword.trim().length >= 8 && newEmployeePassword.trim().length <= 30 && newEmployeePassword.indexOf(' ') < 0 )? true : false"
             required
           ></b-form-input>
         </b-form-group>
