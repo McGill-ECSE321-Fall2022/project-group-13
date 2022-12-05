@@ -1,5 +1,5 @@
 <template>
-    <div class="accountInformation">
+  <div class="accountInformation">
     <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -7,7 +7,7 @@
     
     <span class="title">MY ACCOUNT</span>
   
-      <div class = "accountInfo">
+      <div class = "account-info">
 
         <div class="usernameLabel">Username: {{this.oldClientUsername}}</div>
         <div class="firstNameLabel">First Name: {{this.oldClientFirstName}}</div>
@@ -16,9 +16,10 @@
 
       </div>
 
-    <div class = "saveButton">
-        <button class="styled-button EditClientButton" v-b-modal.edit-client-account-modal>Edit Information</button>
-        </div>
+    <div class = "account-button">
+        <button class="styled-button" v-b-modal.edit-client-account-modal>Edit Information</button>
+        <a href="/"><button class="styled-button">Logout</button></a>
+    </div>
         
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
     <b-modal modal-class="popup" id="edit-client-account-modal" centered title="EDIT YOUR INFORMATION" ok-title="Save Changes" ok-variant="light" cancel-variant="dark"
@@ -34,13 +35,12 @@
         >
           <b-form-input
             type="text"
-            placeholder="Full Name"
+            :placeholder="this.oldClientFullName"
             v-model="newClientName"
             :state="newClientName.trim().length > 0 ? true : false"
             required
           ></b-form-input>
         </b-form-group>
-
 
         <b-form-group
           label="New Password"
@@ -56,13 +56,7 @@
         </b-form-group>
       </form>
     </b-modal>
-
-        <div class = "logoutButton">
-        <form action="/">
-            <button class="styled-button">Logout</button>
-        </form>
-        </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -84,6 +78,7 @@ export default {
         oldClientUsername: '',
         oldClientFirstName: '',
         oldClientLastName : '',
+        oldClientFullName: '',
         oldClientPassword: '',
         newClientName: '',
         newClientPassword: '', 
@@ -96,7 +91,8 @@ export default {
         this.oldClientUsername= response.data.username; 
         const myArray = response.data.name.split(" ");
         this.oldClientFirstName = myArray[0]; 
-        this.oldClientLastName = myArray[1]; 
+        this.oldClientLastName = myArray[1];
+        this.oldClientFullName = this.oldClientFirstName + " " + this.oldClientLastName
         this.oldClientPassword = response.data.password; 
     })
     },
@@ -118,7 +114,8 @@ export default {
         .then(response => {
             const myArray = response.data.name.split(" ");
             this.oldClientFirstName = myArray[0]; 
-            this.oldClientLastName = myArray[1]; 
+            this.oldClientLastName = myArray[1];
+            this.oldClientFullName = this.oldClientFirstName + " " + this.oldClientLastName
             this.oldClientPassword = response.data.password; 
 
         })
@@ -175,20 +172,10 @@ export default {
     left: 0px;
 }
 
-.accountInfo{
+.account-info{
   position:relative; 
   margin:auto; 
-  top: 30%;
-}
-
-.saveButton{
-  width: 20%;
-  position:relative; 
-  margin:auto; 
-  top: 40%;
-}
-
-.accountInfo{
+  top: 20%;
   color: #196d60;
   text-align: center;
   padding: 14px 16px;
@@ -196,11 +183,10 @@ export default {
   font-size: 50px;
 }
 
-.logoutButton{
-  width: 20%;
-  position:relative; 
-  margin:auto; 
-  top: 42%;
+.account-button{
+  position: absolute;
+  top: 50px;
+  right: 15px;
 }
 
 input {
