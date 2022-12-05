@@ -7,7 +7,7 @@
         <span class="title">MY LOAN REQUESTS</span>
         <div class="bottomText">
                         <span class="noOtherRequests">No other requests made.<br> Would you like to browse the catalog?<br></span>
-                        <a href="/client/browsecatalog"> <button class="styled-button">View Catalog</button> </a>
+                        <a href="/client/browsecatalog"> <button class="styled-button">Browse Catalog</button> </a>
         </div>
         <table class="styled-table">
               <thead>
@@ -33,7 +33,7 @@
               <span class="modalContent"><strong>Worth: </strong> {{this.artifactWorth}}$<br></span>
               <span class="modalContent"><strong>Condition: </strong>
                 <span v-if="this.artifactCondition == false">Mint condition</span>
-                <span v-else> There are damages to the item </span><br>
+                <span v-else> There are damages to the item</span><br>
               </span>
               <span class="modalContent"><strong>Loan Fee: </strong> {{this.artifactLoanFee}}$/day<br></span>
               <span class="modalContent"><strong>Loan Duration: </strong> {{this.artifactLoanDuration}} days<br></span>
@@ -71,7 +71,7 @@ export default {
     created: function () {
         // Get clientId from session storage
         let username = sessionStorage.getItem('loggedInClient')
-        // Initializing donation requests of the client from the backend
+        // Initializing loan requests of the client from the backend
         axiosClient.get('loanRequests/' + username)
             .then(response => {
                 console.log(response)
@@ -84,6 +84,7 @@ export default {
         this.clientId = username
     },
     methods: {
+      // updating data to be displayed in the view modal
       sendInfo(request){
               this.artifactTitle = request.artifact.name
               this.artifactDescription = request.artifact.description
