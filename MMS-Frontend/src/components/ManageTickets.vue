@@ -13,6 +13,7 @@
                 <th>Purchaser Username</th>
                 <th>Ticket Fee</th>
                 <th>Status</th>
+                <th>Edit Status</th>
             </tr>
             </thead>
             <tbody>
@@ -22,6 +23,10 @@
                     <td>{{ ticket.client.username }}</td>
                     <td>${{ ticket.fee }}</td>
                     <td>{{ ticket.isActive }}</td>
+                    <td>
+                        <button v-if="ticket.isActive == 'Inactive'" class="styled-button" @click="makeActive(ticket)">Make Active</button>
+                        <button v-else class="styled-button" @click="makeInactive(ticket)">Make Inactive</button>
+                     </td>
                 </tr>
             </tbody>
         </table>

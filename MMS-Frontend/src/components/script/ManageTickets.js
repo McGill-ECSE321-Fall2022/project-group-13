@@ -35,6 +35,32 @@
                     .catch(error => {
                         console.log(error);
                     })
+    },
+    methods: {
+        makeActive: function (ticket) {
+            axiosManageTickets.put('/ticket/' + ticket.ticketId,{},{params: {
+                isActive: true
+            }
+            }).then(response => {
+                console.log(response)
+                window.location.reload();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        makeInactive: function (ticket) {
+            axiosManageTickets.put('/ticket/' + ticket.ticketId,{},{params: {
+                isActive: false
+            }
+            }).then(response => {
+                console.log(response)
+                window.location.reload();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
     }
       
  }

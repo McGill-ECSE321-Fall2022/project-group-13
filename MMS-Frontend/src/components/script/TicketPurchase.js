@@ -73,5 +73,6 @@ export default {
                 !isNaN(this.counter) && this.counter > 0 ? this.counter : (this.counter = 1);
                 this.displayTotal = this.ticketFee * this.counter;
             }
+                
         }
     }  
