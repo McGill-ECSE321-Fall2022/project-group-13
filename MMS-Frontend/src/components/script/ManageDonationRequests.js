@@ -23,7 +23,9 @@
             currentDonationArtifactWorth: '',
             currentDonationArtifactIsDamaged: false,
             storageRoomId: '',
-            displayedStatus: 'All'
+            displayedStatus: 'All',
+            clientId: '',
+            showDismissibleAlert: false
         }
     },
     created: function () {
@@ -149,6 +151,24 @@
                         console.log(e)
                     })
             }
+        },
+        getAllDonationRequestsByClient: function () {
+            axiosStaff.get('donationRequests/ofClient/' + this.clientId)
+                .then(response => {
+                    console.log(response)
+                    this.requests = response.data
+                })
+                .catch(e => {
+                    console.log('Error in GET donationRequests/ofClient/' + this.clientId)
+                    console.log(e)
+                    if(e.response.data == "This username is invalid" || e.response.data == "This client account does not exist")
+                    {
+                        this.showAlert()
+                    }
+                })
+        },
+        showAlert: function () {
+            this.showDismissibleAlert = true
         }
     }
  }

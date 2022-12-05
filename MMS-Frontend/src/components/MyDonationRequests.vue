@@ -101,7 +101,7 @@
     </b-modal>
 
     <!-- Popup for view specific donation request -->
-    <b-modal modal-class="popup" id="view-request-modal" centered title="REQUEST INFO" hide-footer>
+    <b-modal modal-class="popup" id="view-request-modal" centered title="DONATION INFO" hide-footer>
       <span class="view-request"><strong>Name: </strong> {{this.currentDonationArtifactName}}<br></span>
       <span class="view-request"><strong>Description: </strong> {{this.currentDonationArtifactDescription}}<br></span>
       <span class="view-request"><strong>Worth: </strong> {{this.currentDonationArtifactWorth}}$<br></span>

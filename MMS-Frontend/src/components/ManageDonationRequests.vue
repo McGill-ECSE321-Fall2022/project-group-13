@@ -6,13 +6,19 @@
     </head>
     <span class="title">ALL DONATION REQUESTS</span>
     <span class="title">ALL DONATION REQUESTS</span>
-    <div class="statusTypeDropdown">
-      <select @change = "statusOnChange($event)" class = "form-select form-control">
-        <option value = "All"> All </option>
-        <option value = "Pending"> Pending </option>
-        <option value = "Approved"> Approved </option>
-        <option value = "Rejected"> Rejected </option>
-      </select>
+    <div class="search-bar">
+      <div class="search-dropdown">
+        <span><strong>Filters:  &nbsp</strong></span>
+        <select @change = "statusOnChange($event)" class = "form-select dropdown">
+          <option value = "All"> All </option>
+          <option value = "Pending"> Pending </option>
+          <option value = "Approved"> Approved </option>
+          <option value = "Rejected"> Rejected </option>
+        </select>
+      </div>
+      <input class="search-input" type="text" placeholder="Enter client username" v-model="clientId"></b-form-input>
+      <button v-if="clientId.trim().length > 0" class="styled-button" @click="getAllDonationRequestsByClient()">Search</button>
+      <button v-else class="delete-button" disabled>Search</button>
     </div>
     <!-- Display table for all donation requests -->
     <table class="styled-table">
@@ -52,7 +58,7 @@
     </table>
 
     <!-- Popup for view specific donation request -->
-    <b-modal modal-class="popup" id="view-request-modal" centered title="REQUEST INFO" hide-footer>
+    <b-modal modal-class="popup" id="view-request-modal" centered title="DONATION INFO" hide-footer>
       <span class="view-request"><strong>Name: </strong> {{this.currentDonationArtifactName}}<br></span>
       <span class="view-request"><strong>Description: </strong> {{this.currentDonationArtifactDescription}}<br></span>
       <span class="view-request"><strong>Worth: </strong> {{this.currentDonationArtifactWorth}}$<br></span>
@@ -60,6 +66,13 @@
         <span v-if="this.currentDonationArtifactIsDamaged == false">Mint condition</span>
         <span v-else> There are damages to the item </span><br></span>
     </b-modal>
+
+    <!-- Alert -->
+    <div class="bottomText">
+      <b-alert v-model="showDismissibleAlert" variant="danger" dismissible fade in>
+        Client with username does not exist!
+      </b-alert>
+    </div>
   </div>
 </template>
 
@@ -104,10 +117,43 @@ button[disabled] {
   color: grey;
 }
 
-.statusTypeDropdown {
+.search-bar {
   position: absolute;
   top: 6%;
   right: 15px;
+}
+
+.search-input {
+  display: inline-block;
+  padding: 12px 20px;
+}
+
+.search-dropdown {
+  display: inline-block;
+  border-right: 3px solid #008573;
+  padding-right: 5px;
+}
+
+.dropdown {
+  padding: 12px 20px;
+}
+
+.bottomText {
+  position: fixed;
+  text-align: center;
+  padding-bottom: 40px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.alert {
+  margin-left: auto; 
+  margin-right: auto; 
+  bottom:0;
+  text-align: center;
+  font-weight: bold;
+  width: 40%;
 }
 
 /deep/ .popup {
