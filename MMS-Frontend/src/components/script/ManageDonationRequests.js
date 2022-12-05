@@ -151,12 +151,14 @@
                         console.log(e)
                     })
             }
+            this.clientId = ''
         },
         getAllDonationRequestsByClient: function () {
             axiosStaff.get('donationRequests/ofClient/' + this.clientId)
                 .then(response => {
                     console.log(response)
                     this.requests = response.data
+                    this.displayedStatus='All'
                 })
                 .catch(e => {
                     console.log('Error in GET donationRequests/ofClient/' + this.clientId)

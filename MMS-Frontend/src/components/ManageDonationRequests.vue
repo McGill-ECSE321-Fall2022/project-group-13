@@ -9,7 +9,7 @@
     <div class="search-bar">
       <div class="search-dropdown">
         <span><strong>Filters:  &nbsp</strong></span>
-        <select @change = "statusOnChange($event)" class = "form-select dropdown">
+        <select @change = "statusOnChange($event)" class = "form-select dropdown" v-model="displayedStatus">
           <option value = "All"> All </option>
           <option value = "Pending"> Pending </option>
           <option value = "Approved"> Approved </option>
