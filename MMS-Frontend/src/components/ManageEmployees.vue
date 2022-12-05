@@ -131,7 +131,6 @@ export default {
     deleteEmployee: function(EmployeeUsername){
         const self = this;
         var fetchDateUrl = ({EmployeeUsername}) => `/employee/delete/${EmployeeUsername}`;
-        // this.deleteAllShiftsForEmployee(EmployeeUsername);
         axiosManager.delete(fetchDateUrl({EmployeeUsername: EmployeeUsername}))
         .then(response => {
             console.log(response)
@@ -141,22 +140,8 @@ export default {
             console.log(e)
         })
         //reload page to show updated table
-        // window.location.reload();
-        ///employee/delete/{username}
+        window.location.reload();
     }, 
-    // deleteAllShiftsForEmployee: function(NewEmployeeUsername){
-    //     axiosManager.delete('/shift/employee',{}, {
-    //     params: {
-    //         "employeeUsername": NewEmployeeUsername
-    //     }}).then(response => {
-    //         console.log('deleted shits')
-    //         console.log(response)
-    //     })
-    //     .catch(e => {
-    //         console.log('Error in DELETE /shift/employee/' + EmployeeUsername)
-    //         console.log(e)
-    //     })
-    // },
     createEmployeeAccount : function() {
       const self = this
       console.log(self.newEmployeeName)
@@ -222,18 +207,6 @@ export default {
 
   }
 }
-
-// axiosClient.get(fetchDateUrl({username: this.username}), {
-//                 params: {
-//                   password
-//                 }}).
-// @DeleteMapping(value = { "/shift/employee", "/shift/employee/" })
-//     public void deleteAllShiftsForEmployee(@RequestParam String employeeUsername)
-//             throws IllegalArgumentException {
-//         Employee employee = employeeAccountService.getEmployee(employeeUsername);
-//         employeeScheduleService.deleteAllShiftsForEmployee(employee);
-//     }
-
 </script>
 
 <style scoped>
