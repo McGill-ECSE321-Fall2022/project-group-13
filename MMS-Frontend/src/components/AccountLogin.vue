@@ -39,7 +39,7 @@
         </div>
 
         <div class = "signupLink">
-            <a href="/signup"style = "color: #008573">Sign Up</a>
+            <a href="/signup" style = "color: #008573">Sign Up</a>
         </div>
     </form>
     </div>
@@ -100,7 +100,7 @@ export default {
                   password
                 }}).then((response) => {
                       sessionStorage.setItem('loggedInClient', response.data.username);
-                      self.$router.push({ path: '/client' });
+                      self.$router.push({ path: '/client/myhomepage' });
                  })
         }
 
@@ -112,7 +112,7 @@ export default {
                   password
                 }}).then((response) => {
                       sessionStorage.setItem('loggedInEmployee', response.data.username);
-                      self.$router.push({ path: '/employee' });
+                      self.$router.push({ path: '/employee/myhomepage' });
                  })
         }
 
@@ -124,7 +124,7 @@ export default {
                   password
                 }}).then((response) => {
                       sessionStorage.setItem('loggedInManager', response.data.username);
-                      self.$router.push({ path: '/manager' });
+                      self.$router.push({ path: '/manager/myhomepage' });
                  })
         }
       }
