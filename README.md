@@ -30,7 +30,7 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 [Team Roles Detailed Description](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-1-Report#team-roles-detailed-description)
 
 ### Project reports
-[Project Deliverable 1](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-1-Report#meeting-minutes)
+[Project Deliverable 1](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-1-Report)
 
 ## Deliverable 2
 
@@ -48,4 +48,24 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 [Team Roles Detailed Description](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Team-Roles-Detailed-Description#team-roles-detailed-description)
 
 ### Project reports
-[Project Deliverable 2](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-2-Report#meeting-minutes)
+[Project Deliverable 2](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Project-Deliverable-2-Report)
+
+## Deliverable 3
+
+### Effort Table For Deliverable 3
+
+| Name          | Deliverable 3 - Total Hours |Team Roles| 
+| ------------- | --------------- | --------------- |
+| <p align="center">Nazia Chowdhury </p>|<p align="center"> 49.5 hours</p>| <p align="center"> Oversees Loan Request Feature </p> |
+| <p align="center">Samantha Perez Hoffman</p>|<p align="center">50 hours</p>| <p align="center"> Oversees Employee and Museum Scheduling Features </p>|
+| <p align="center">Mona Kalaoun </p> |<p align="center">46 hours</p>| <p align="center"> Oversees Catalog Feature </p> |
+| <p align="center">Yu An Lu</p> |<p align="center">51 hours</p>| <p align="center"> Oversees Donation Request Feature </p> |
+| <p align="center">Nikolas Pasichnik</p> |<p align="center">46.5 hours</p>| <p align="center"> Oversees Account Feature </p> |
+| <p align="center">Lucy Zhang</p> |<p align="center">48 hours</p>| <p align="center"> Oversees Ticket </p> |
+
+### Project reports
+[Project Deliverable 3](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Deliverable-3-Report)
+
+***
+
+Please check our [Wiki](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki) for more details!

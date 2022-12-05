@@ -1,5 +1,5 @@
 <template>
-    <div class="myLoanRequests">
+    <div class="manageLoanRequests">
         <head>
               <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
               <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -36,8 +36,8 @@
                   <td><button class="styled-button" v-b-modal.view-request-modal @click="sendInfo(request)">View</button></td>
                   <td>
                   <span v-if="request.status == 'Pending'">
-                  <button class="styled-button" @click="approveRequest(request)">Approve</button>
-                  <button class="reject-button" @click="rejectRequest(request.requestId)">Reject</button>
+                      <button class="styled-button" @click="approveRequest(request)">Approve</button>
+                      <button class="reject-button" @click="rejectRequest(request.requestId)">Reject</button>
                   </span>
                   <span v-if="request.status == 'Approved'">
                   <button class="styled-button" @click="returnedRequest(request.requestId)">Confirm Return</button>
@@ -93,19 +93,20 @@ export default {
     created: function () {
         // Get clientId from session storage
         let username = sessionStorage.getItem('loggedInClient')
-        // Initializing donation requests of the client from the backend
+        // Initializing loan requests of all clients from the backend
         axiosStaff.get('/loanRequests')
             .then(response => {
                 console.log(response)
                 this.requests = response.data
             })
             .catch(e => {
-                console.log('Error in GET loanRequest/{username}')
+                console.log('Error in GET loanRequest/')
                 console.log(e)
             })
         this.clientId = username
     },
     methods: {
+      // updating data to be displayed in the view modal
       sendInfo(request){
               this.artifactTitle = request.artifact.name
               this.artifactDescription = request.artifact.description
@@ -118,6 +119,7 @@ export default {
       },
     approveRequest : function(request) {
       const self = this
+      // if the client has reached the man loan number, then we handle the error with a banner (showAlert)
       if (request.client.currentLoanNumber != request.client.museumManagementSystem.maxLoanNumber) {
       return new Promise(function (resolve, reject) {
         axiosStaff.put('loanRequest/approveRequest/' + request.requestId)
@@ -162,14 +164,14 @@ export default {
                 console.log(response)
                 resolve(result)
                 window.location.reload();
-            },
-              e => {
+            }, e => {
                 console.log('Error in PUT loanRequest/loanReturn/{requestId}')
                 console.log(e)
                 reject(e)
-     })
-    })
+              })
+          })
    },
+   // this filters all the loan requests by their status
     statusOnChange: function (e) {
        this.displayedStatus = e.target.value
        if (this.displayedStatus == 'Pending') {
@@ -222,7 +224,7 @@ export default {
 </script>
 
 <style scoped>
-.myLoanRequests {
+.manageLoanRequests {
   width: 100%;
   height: 1024px;
   background: rgba(255,255,255,1);

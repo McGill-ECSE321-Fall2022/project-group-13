@@ -10,8 +10,7 @@
       <div class = "account-info">
 
         <div class="usernameLabel">Username: {{this.oldClientUsername}}</div>
-        <div class="firstNameLabel">First Name: {{this.oldClientFirstName}}</div>
-        <div class="lastNameLabel">Last Name: {{this.oldClientLastName}}</div>
+        <div class="fullNameLabel">Name: {{this.oldClientFullName}}</div>
         <div class="passwordLabel">Password: {{this.oldClientPassword}}</div>
 
       </div>
@@ -28,7 +27,7 @@
     @ok="handleOkEditClientModal"
     >
     <form ref="editClientInformationForm" @submit.stop.prevent="handleSubmitEditClientAccount">
-
+      <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
         <b-form-group
           label="New Full Name"
           invalid-feedback="Full name is required"
@@ -37,7 +36,7 @@
             type="text"
             :placeholder="this.oldClientFullName"
             v-model="newClientName"
-            :state="newClientName.trim().length > 0 ? true : false"
+            :state="(newClientName.trim().length > 0) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -50,7 +49,7 @@
             type="text"
             placeholder="Password"
             v-model="newClientPassword"
-            :state="newClientPassword.trim().length > 0 ? true : false"
+            :state="(newClientPassword.trim().length >=8 && newClientPassword.trim().length <= 30 && newClientPassword.indexOf(' ') < 0) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -76,12 +75,12 @@ export default {
     data() {
       return {
         oldClientUsername: '',
-        oldClientFirstName: '',
-        oldClientLastName : '',
         oldClientFullName: '',
         oldClientPassword: '',
         newClientName: '',
         newClientPassword: '', 
+        showErrorAlert: false,
+        errorData: ''
       }
     },
   created() {
@@ -89,10 +88,7 @@ export default {
     axiosClient.get('client/' + username)
     .then(response => {
         this.oldClientUsername= response.data.username; 
-        const myArray = response.data.name.split(" ");
-        this.oldClientFirstName = myArray[0]; 
-        this.oldClientLastName = myArray[1];
-        this.oldClientFullName = this.oldClientFirstName + " " + this.oldClientLastName
+        this.oldClientFullName = response.data.name;
         this.oldClientPassword = response.data.password; 
     })
     },
@@ -112,10 +108,7 @@ export default {
               "password": self.newClientPassword
           }})
         .then(response => {
-            const myArray = response.data.name.split(" ");
-            this.oldClientFirstName = myArray[0]; 
-            this.oldClientLastName = myArray[1];
-            this.oldClientFullName = this.oldClientFirstName + " " + this.oldClientLastName
+            this.oldClientFullName = response.data.name;
             this.oldClientPassword = response.data.password; 
 
         })
@@ -127,16 +120,18 @@ export default {
     checkEditClientFormValidity() {
         return this.newClientName.trim().length > 0 && 
         this.newClientPassword.length  >= 8 &&
-        this.newClientPassword.length  <= 30
+        this.newClientPassword.length  <= 30 && this.newClientPassword.indexOf(' ') < 0 
         
     },
     handleSubmitEditClientAccount: async function () {
+      const self = this
         if (!this.checkEditClientFormValidity()) {
-            console.log('failed to edit client')
+            self.errorData = "Incorrect information was entered"
+            self.showErrorAlert = true
             return
         }
         this.editClientAccount(this.oldClientUsername)
-        console.log('edited client')
+        // console.log('edited client')
         this.$nextTick(() => {
             this.$bvModal.hide("edit-client-account-modal")
         })

@@ -20,7 +20,7 @@
                     <td>{{ ticket.ticketId }}</td>
                     <td>{{ ticket.client.name }}</td>
                     <td>{{ ticket.client.username }}</td>
-                    <td>{{ ticket.fee }}</td>
+                    <td>${{ ticket.fee }}</td>
                     <td>{{ ticket.isActive }}</td>
                 </tr>
             </tbody>

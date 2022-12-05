@@ -10,8 +10,7 @@
       <div class = "account-info">
 
         <div class="usernameLabel">Username: {{this.oldEmployeeUsername}}</div>
-        <div class="firstNameLabel">First Name: {{this.oldEmployeeFirstName}}</div>
-        <div class="lastNameLabel">Last Name: {{this.oldEmployeeLastName}}</div>
+        <div class="nameLabel">Name: {{this.oldEmployeeFullName}}</div>
         <div class="passwordLabel">Password: {{this.oldEmployeePassword}}</div>
 
       </div>
@@ -28,7 +27,7 @@
     @ok="handleOkEditEmployeeModal"
     >
     <form ref="editEmployeeInformationForm" @submit.stop.prevent="handleSubmitEditEmployeeAccount">
-
+      <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
         <b-form-group
           label="New Full Name"
           invalid-feedback="Full name is required"
@@ -37,7 +36,7 @@
             type="text"
             :placeholder="this.oldEmployeeFullName"
             v-model="newEmployeeName"
-            :state="newEmployeeName.trim().length > 0 ? true : false"
+            :state="(newEmployeeName.trim().length > 0)? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -50,7 +49,7 @@
             type="text"
             placeholder="Password"
             v-model="newEmployeePassword"
-            :state="newEmployeePassword.trim().length > 0 ? true : false"
+            :state="(newEmployeePassword.trim().length >= 8 && newEmployeePassword.trim().length <= 30 && newEmployeePassword.indexOf(' ') < 0 )? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -76,12 +75,12 @@ export default {
     data() {
       return {
         oldEmployeeUsername: '',
-        oldEmployeeFirstName: '',
-        oldEmployeeLastName : '',
         oldEmployeeFullName: '',
         oldEmployeePassword: '',
         newEmployeeName: '',
         newEmployeePassword: '', 
+        showErrorAlert: false,
+        errorData: ''
       }
     },
   created() {
@@ -89,10 +88,7 @@ export default {
     axiosEmployee.get('employee/' + username)
     .then(response => {
         this.oldEmployeeUsername= response.data.username; 
-        const myArray = response.data.name.split(" ");
-        this.oldEmployeeFirstName = myArray[0]; 
-        this.oldEmployeeLastName = myArray[1]; 
-        this.oldEmployeeFullName = this.oldEmployeeFirstName + " " + this.oldEmployeeLastName
+        this.oldEmployeeFullName = response.data.name; 
         this.oldEmployeePassword = response.data.password; 
     })
     },
@@ -112,31 +108,27 @@ export default {
               "password": self.newEmployeePassword
           }})
         .then(response => {
-            const myArray = response.data.name.split(" ");
-            this.oldEmployeeFirstName = myArray[0]; 
-            this.oldEmployeeLastName = myArray[1];
-            this.oldEmployeeFullName = this.oldEmployeeFirstName + " " + this.oldEmployeeLastName
+            this.oldEmployeeFullName = response.data.name;
             this.oldEmployeePassword = response.data.password; 
 
-        })
-        .catch(e => {
-            console.log('Error in PUT /employee/edit/' + employeeUsername)
-            console.log(e)
         })
     },
     checkEditEmployeeFormValidity() {
         return this.newEmployeeName.trim().length > 0 && 
         this.newEmployeePassword.length  >= 8 &&
-        this.newEmployeePassword.length  <= 30
+        this.newEmployeePassword.length  <= 30 &&
+        this.newEmployeePassword.indexOf(' ') < 0 
         
     },
     handleSubmitEditEmployeeAccount: async function () {
+      const self = this
         if (!this.checkEditEmployeeFormValidity()) {
-            console.log('failed to edit employee')
+            self.errorData = "Incorrect information was entered"
+            self.showErrorAlert = true
             return
         }
         this.editEmployeeAccount(this.oldEmployeeUsername)
-        console.log('edited employee')
+        // console.log('edited employee')
         this.$nextTick(() => {
             this.$bvModal.hide("edit-employee-account-modal")
         })

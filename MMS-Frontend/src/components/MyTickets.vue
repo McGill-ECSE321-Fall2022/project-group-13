@@ -16,11 +16,13 @@
             <th>Status</th>
           </tr>
         </thead>
+        <tbody>
         <tr v-for="ticket in tickets">
           <td>{{ ticket.ticketId }}</td>
-          <td>{{ ticket.fee }}</td>
+          <td>${{ ticket.fee }}</td>
           <td>{{ ticket.isActive }}</td>
         </tr>
+      </tbody>
     </table>
   </div>
 </template>

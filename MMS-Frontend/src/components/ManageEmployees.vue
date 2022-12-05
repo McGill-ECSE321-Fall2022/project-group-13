@@ -44,7 +44,10 @@
     @hidden="resetNewEmployeeModal"
     @ok="handleOkNewEmployeeModal"
     >
-      <form ref="newDonationArtifactForm" @submit.stop.prevent="handleSubmitNewDonationArtifact">
+
+      <form ref="newEmployeeAccountForm" @submit.stop.prevent="handleSubmitNewEmployeeAccount">
+        <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
+
         <b-form-group
           label="Employee Username"
           invalid-feedback="Username is required"
@@ -53,7 +56,7 @@
             type="text"
             placeholder="Username"
             v-model="newEmployeeUsername"
-            :state="newEmployeeUsername.trim().length > 0 ? true : false"
+            :state="(newEmployeeUsername.trim().length > 0 && newEmployeeUsername.indexOf(' ') < 0)? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -66,7 +69,7 @@
             type="text"
             placeholder="Full Name"
             v-model="newEmployeeName"
-            :state="newEmployeeName.trim().length > 0 ? true : false"
+            :state="(newEmployeeName.trim().length > 0) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -80,7 +83,7 @@
             type="text"
             placeholder="Password"
             v-model="newEmployeePassword"
-            :state="newEmployeePassword.trim().length > 0 ? true : false"
+            :state="(newEmployeePassword.trim().length >= 8 && newEmployeePassword.trim().length <= 30 && newEmployeePassword.indexOf(' ') < 0 ) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -109,7 +112,9 @@ export default {
       employees: [],
       newEmployeeUsername: '', 
       newEmployeeName: '', 
-      newEmployeePassword: ''
+      newEmployeePassword: '',
+      showErrorAlert: false,
+      errorData: ''
     }
   }, 
   created(){
@@ -126,7 +131,6 @@ export default {
     deleteEmployee: function(EmployeeUsername){
         const self = this;
         var fetchDateUrl = ({EmployeeUsername}) => `/employee/delete/${EmployeeUsername}`;
-        // this.deleteAllShiftsForEmployee(EmployeeUsername);
         axiosManager.delete(fetchDateUrl({EmployeeUsername: EmployeeUsername}))
         .then(response => {
             console.log(response)
@@ -136,22 +140,8 @@ export default {
             console.log(e)
         })
         //reload page to show updated table
-        // window.location.reload();
-        ///employee/delete/{username}
+        window.location.reload();
     }, 
-    // deleteAllShiftsForEmployee: function(NewEmployeeUsername){
-    //     axiosManager.delete('/shift/employee',{}, {
-    //     params: {
-    //         "employeeUsername": NewEmployeeUsername
-    //     }}).then(response => {
-    //         console.log('deleted shits')
-    //         console.log(response)
-    //     })
-    //     .catch(e => {
-    //         console.log('Error in DELETE /shift/employee/' + EmployeeUsername)
-    //         console.log(e)
-    //     })
-    // },
     createEmployeeAccount : function() {
       const self = this
       console.log(self.newEmployeeName)
@@ -168,10 +158,17 @@ export default {
             console.log(response)
             resolve(result)
         },
-          e => {
-            console.log('Error in POST /employee')
-            console.log(e)
-            reject(e)
+        e => {
+          if (e.response.data == "Cannot have empty fields" || e.response.data == "The username cannot have spaces" || e.response.data == "Invalid name" 
+          || e.response.data =="Invalid password" || e.response.data == "This username is already taken" ){
+              self.errorData = e.response.data
+              self.showErrorAlert = true
+            }
+          else if (e.response.status == 400 || e.response.status == 409){
+                  self.errorData = "Wrong Input Format"
+                  self.showErrorAlert = true
+                }
+                reject(e)
         })
       })
     },
@@ -184,17 +181,18 @@ export default {
     checkNewEmployeeFormValidity() {
         return this.newEmployeeUsername.trim().length > 0 && 
         this.newEmployeeName.length > 0 && 
-        this.newEmployeePassword.length  >= 8 &&
-        this.newEmployeePassword.length  <= 30
+        this.newEmployeePassword.length  > 0
         
     },
     handleSubmitNewEmployeeAccount: async function () {
+      const self = this
         if (!this.checkNewEmployeeFormValidity()) {
-            console.log('failed to create employee')
+            self.errorData = "Fields can't be empty"
+            self.showErrorAlert = true
             return
         }
         this.newEmployeeAccount = await this.createEmployeeAccount()
-        console.log('created new employee')
+        // console.log('created new employee')
         this.$nextTick(() => {
             this.$bvModal.hide("new-employee-account-modal")
         })
@@ -209,18 +207,6 @@ export default {
 
   }
 }
-
-// axiosClient.get(fetchDateUrl({username: this.username}), {
-//                 params: {
-//                   password
-//                 }}).
-// @DeleteMapping(value = { "/shift/employee", "/shift/employee/" })
-//     public void deleteAllShiftsForEmployee(@RequestParam String employeeUsername)
-//             throws IllegalArgumentException {
-//         Employee employee = employeeAccountService.getEmployee(employeeUsername);
-//         employeeScheduleService.deleteAllShiftsForEmployee(employee);
-//     }
-
 </script>
 
 <style scoped>
