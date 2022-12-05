@@ -36,8 +36,7 @@
             type="text"
             :placeholder="this.oldClientFullName"
             v-model="newClientName"
-            :state="(newClientName.trim().length > 0 && newClientName.split(' ').length == 2 && newClientName.split(' ')[0].length >0 
-            && newClientName.split(' ')[1].length >0) ? true : false"
+            :state="(newClientName.trim().length > 0) ? true : false"
             required
           ></b-form-input>
         </b-form-group>
@@ -118,7 +117,6 @@ export default {
     },
     checkEditClientFormValidity() {
         return this.newClientName.trim().length > 0 && 
-        this.newClientName.split(" ").length >= 2 &&
         this.newClientPassword.length  >= 8 &&
         this.newClientPassword.length  <= 30
         

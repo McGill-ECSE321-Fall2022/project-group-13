@@ -36,7 +36,7 @@
             type="text"
             :placeholder="this.oldEmployeeFullName"
             v-model="newEmployeeName"
-            :state="(newEmployeeName.trim().length > 0 && newEmployeeName.split(' ').length >= 2 && newEmployeeName.split(' ')[0].length >0 )? true : false"
+            :state="(newEmployeeName.trim().length > 0)? true : false"
             required
           ></b-form-input>
         </b-form-group>

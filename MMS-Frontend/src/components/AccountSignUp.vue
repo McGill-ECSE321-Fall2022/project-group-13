@@ -1,6 +1,7 @@
 <template>
     <div class="accountSignup">
-      
+      <b-alert :show="showErrorAlert" variant="danger">{{this.errorData}}</b-alert>
+
     <div class = "dinoPicture">
         <img src="../assets/dinoLogo.png">
     </div>
@@ -15,11 +16,7 @@
         </div>
 
         <div class="form-group" style="margin:20;">
-            <input style="width: 20%;" type = "firstNameInput" class="form-control" v-model="firstName" placeholder="First Name" />
-        </div>
-
-        <div class="form-group" style="margin:20;">
-            <input style="width: 20%; bottom = 20px;" type = "lastNameInput" class="form-control" v-model="lastName" placeholder="Last Name" />
+            <input style="width: 20%; bottom = 20px;" type = "nameInput" class="form-control" v-model="name" placeholder="Name" />
         </div>
 
         <div class="form-group" style="margin:20;">
@@ -61,9 +58,10 @@ export default {
     data() {
       return {
         username: '',
-        firstName: '',
-        lastName: '',
-        password: ''
+        name: '',
+        password: '',
+        showErrorAlert: false,
+        errorData: ''
       };
     },
 
@@ -77,7 +75,7 @@ export default {
         
       handleSubmit(username,password) {
         const self = this;
-        let nameOfClient = self.firstName + " " + self.lastName;
+        let nameOfClient = self.name;
         console.log(nameOfClient);
 
         axiosClient.post("/client", {}, {
@@ -88,6 +86,18 @@ export default {
           }
       }).then((response) => {
         self.$router.push({ path: '/' });
+        },
+        e => {
+          if (e.response.data == "Cannot have empty fields" || e.response.data == "The username cannot have spaces" || e.response.data == "Invalid name" 
+          || e.response.data =="Invalid password" || e.response.data == "This username is already taken" ){
+              self.errorData = e.response.data
+              self.showErrorAlert = true
+            }
+          else if (e.response.status == 400 || e.response.status == 409){
+                  self.errorData = "Wrong Input Format"
+                  self.showErrorAlert = true
+                }
+                reject(e)
         })
       
       }
