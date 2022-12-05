@@ -10,8 +10,7 @@
       <div class = "account-info">
 
         <div class="usernameLabel">Username: {{this.oldClientUsername}}</div>
-        <div class="firstNameLabel">First Name: {{this.oldClientFirstName}}</div>
-        <div class="lastNameLabel">Last Name: {{this.oldClientLastName}}</div>
+        <div class="fullNameLabel">Name: {{this.oldClientFullName}}</div>
         <div class="passwordLabel">Password: {{this.oldClientPassword}}</div>
 
       </div>
@@ -77,8 +76,6 @@ export default {
     data() {
       return {
         oldClientUsername: '',
-        oldClientFirstName: '',
-        oldClientLastName : '',
         oldClientFullName: '',
         oldClientPassword: '',
         newClientName: '',
@@ -90,10 +87,7 @@ export default {
     axiosClient.get('client/' + username)
     .then(response => {
         this.oldClientUsername= response.data.username; 
-        const myArray = response.data.name.split(" ");
-        this.oldClientFirstName = myArray[0]; 
-        this.oldClientLastName = myArray[1];
-        this.oldClientFullName = this.oldClientFirstName + " " + this.oldClientLastName
+        this.oldClientFullName = response.data.name;
         this.oldClientPassword = response.data.password; 
     })
     },
@@ -113,9 +107,6 @@ export default {
               "password": self.newClientPassword
           }})
         .then(response => {
-            const myArray = response.data.name.split(" ");
-            this.oldClientFirstName = myArray[0]; 
-            this.oldClientLastName = myArray[1];
             this.oldClientFullName = response.data.name;
             this.oldClientPassword = response.data.password; 
 
@@ -127,7 +118,7 @@ export default {
     },
     checkEditClientFormValidity() {
         return this.newClientName.trim().length > 0 && 
-        this.newClientName.split(" ").length == 2 &&
+        this.newClientName.split(" ").length >= 2 &&
         this.newClientPassword.length  >= 8 &&
         this.newClientPassword.length  <= 30
         
@@ -138,7 +129,7 @@ export default {
             return
         }
         this.editClientAccount(this.oldClientUsername)
-        // console.log('edited client')
+        console.log('edited client')
         this.$nextTick(() => {
             this.$bvModal.hide("edit-client-account-modal")
         })
