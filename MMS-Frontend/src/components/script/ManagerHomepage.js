@@ -60,11 +60,17 @@ export default {
         this.handleSubmitTicketFee()
     },
     handleSubmitTicketFee: async function () {
+        if (!this.checkTicketEditFormValidity()) {
+            return
+        }
         await this.updateTicketFee()
         this.$nextTick(() => {
             this.$bvModal.hide("edit-ticket-fee-modal")
         })
         window.location.reload();
+    },
+    checkTicketEditFormValidity() {
+        return this.newTicketFee.trim().length > 0 && parseInt(this.newTicketFee) >= 0
     },
     updateHours: function() {
         const self= this;
