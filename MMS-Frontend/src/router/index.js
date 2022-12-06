@@ -13,7 +13,6 @@ import MyLoanRequests from '@/components/MyLoanRequests'
 import MyTickets from '@/components/MyTickets'
 import TicketPurchase from '@/components/TicketPurchase'
 import BrowseCatalog from '@/components/BrowseCatalog'
-import ClientSpecificArtifact from '@/components/ClientSpecificArtifact'
 import ClientAccount from '@/components/ClientAccount'
 import EmployeeAccount from '@/components/EmployeeAccount'
 import ManageCatalog from '@/components/ManageCatalog'
@@ -83,13 +82,8 @@ export default new Router({
           name: 'client_browsecatalog',
           component: BrowseCatalog
         },
-        {
-          path: 'specificartifact',
-          name: 'client_specificartifact',
-          component: ClientSpecificArtifact
-        }
       ]
-    }, 
+    },
     {
       path: '/employee',
       name: 'Employee',
@@ -131,7 +125,7 @@ export default new Router({
           component: ManageTickets
         },
       ]
-    }, 
+    },
     {
       path: '/manager',
       name: 'Manager',
