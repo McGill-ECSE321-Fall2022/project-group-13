@@ -24,18 +24,12 @@
       <tr v-for="artifact in artifacts" :key="artifact.artifactId">
         <td>{{artifact.artifactId}}</td>
         <td>{{artifact.name}}</td>
-        <td><button class="styled-button" v-b-modal.view-request-modal @click="sendInfo(request)">View</button></td>
+        <td><button class="styled-button" v-b-modal.view-artifact-modal @click="sendInfo(artifact)">View</button></td>
         <td>
-          <button v-if="request.status == 'Pending'" class="styled-button" @click="approveButton(request)">Approve</button>
-          <button v-else class="delete-button" disabled>Approve</button>
+          <button class="styled-button" @click="approveButton(request)">Edit</button>
         </td>
         <td>
-          <button v-if="request.status == 'Pending'" class="delete-button" @click="rejectDonationRequest(request)">Reject</button>
-          <button v-else class="delete-button" disabled>Reject</button>
-        </td>
-        <td>
-          <button v-if="request.status == 'Rejected'" class="delete-button" @click="deleteRejectedDonationRequest(request)">Delete</button>
-          <button v-else class="delete-button" disabled>Delete</button>
+          <button class="delete-button" @click="deleteArtifact(artifact)">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -84,7 +78,7 @@
         >
           <select @change = "onChange($event)" class = "form-select form-control">
             <option value = "Available"> Available </option>
-            <option value = "Unvailable"> Unavailable </option>
+            <option value = "Unavailable"> Unavailable </option>
           </select>
         </b-form-group>
 
@@ -142,21 +136,16 @@
     </b-modal>
 
     <!-- Popup for view specific donation request -->
-    <b-modal modal-class="popup" id="view-artifact-modal" centered title="DONATION INFO" hide-footer>
-      <span class="view-artifact"><strong>Name: </strong> {{this.currentDonationArtifactName}}<br></span>
-      <span class="view-artifact"><strong>Description: </strong> {{this.currentDonationArtifactDescription}}<br></span>
-      <span class="view-artifact"><strong>Worth: </strong> {{this.currentDonationArtifactWorth}}$<br></span>
+    <b-modal modal-class="popup" id="view-artifact-modal" centered title="ARTIFACT INFO" hide-footer>
+      <span class="view-artifact"><strong>Name: </strong> {{this.currentArtifactName}}<br></span>
+      <span class="view-artifact"><strong>Description: </strong> {{this.currentArtifactDescription}}<br></span>
+      <span class="view-artifact"><strong>Worth: </strong> {{this.currentArtifactWorth}}$<br></span>
       <span class="view-artifact"><strong>Condition: </strong>
-        <span v-if="this.currentDonationArtifactIsDamaged == false">Mint condition</span>
+        <span v-if="this.currentArtifactIsDamaged == false">Mint condition</span>
         <span v-else> There are damages to the item </span><br></span>
     </b-modal>
 
     <!-- Alert -->
-    <div class="bottomText">
-      <b-alert v-model="showDismissibleAlert" variant="danger" dismissible fade in>
-        Client with username does not exist!
-      </b-alert>
-    </div>
   </div>
 </template>
 
@@ -187,7 +176,7 @@ export default {
       newArtifactName: '',
       newArtifactImage: '',
       newArtifactDescription: '',
-      newArtifactStatus: '',
+      newArtifactStatus: 'Available',
       newArtifactFee: '',
       newArtifactWorth: 0,
       newArtifactIsDamaged: 'Good',
@@ -208,46 +197,48 @@ export default {
   methods:{
     createArtifact: function () {
       const self = this
-      return new Promise(function(resolve,reject){
-        let state = false
-        if (self.newArtifactIsDamaged == 'Damaged') {
-          state = true
+      let state = false
+      let status = 'Available'
+      if (self.newArtifactIsDamaged == 'Damaged') {
+        state = true
+      }
+      if (self.newArtifactStatus == 'Unavailable') {
+        status = 'Unavailable'
+      }
+      axiosStaff.post('/artifact/createArtifact', {}, {
+        params: {
+          name: self.newArtifactName,
+          description: self.newArtifactDescription,
+          image: self.newArtifactImage,
+          status: status,
+          loanFee: self.newArtifactFee,
+          isDamaged: state,
+          worth: self.newArtifactWorth,
+          roomId: self.newArtifactRoom,
         }
-
-        axiosStaff.post('/artifact', {}, {
-          params: {
-            name: self.newArtifactName,
-            image: self.newArtifactImage,
-            description: self.newArtifactDescription,
-            status: self.newArtifactStatus,
-            loanFee: self.newArtifactFee,
-            isDamaged: state,
-            worth: self.newDonationArtifactWorth,
-            roomId: self.newArtifactRoom,
-          }
-        })
+      })
         .then(response => {
-          var result = response.data
-          console.log(response)
-          resolve(result)
-        },
+            var result = response.data
+            console.log(response)
+            resolve(result)
+          },
           error => {
             console.log('Error in POST createArtifact')
             console.log(error)
             reject(error)
           })
-      })
+
     },
     resetNewArtifactModal: function () {
       this.newArtifact = {}
       this.newArtifactName = ''
       this.newArtifactImage = "MMS-backend/images/Donation.PNG"
       this.newArtifactDescription = ''
-      this.newArtifactStatus = '',
-      this.newArtifactFee = '',
-      this.newArtifactWorth = 0
+      this.newArtifactStatus = 'Available',
+        this.newArtifactFee = '',
+        this.newArtifactWorth = 0
       this.newArtifactIsDamaged = 'Good',
-      this.newArtifactRoom = ''
+        this.newArtifactRoom = ''
     },
     checkNewArtifactFormValidity() {
       return this.newArtifactName.trim().length > 0 &&
@@ -267,8 +258,28 @@ export default {
     handleOkNewArtifactModal: function (bvModalEvent) {
       bvModalEvent.preventDefault()
       this.handleSubmitNewArtifact()
-    }
-
+    },
+    onChange: function (e){
+      this.newArtifactStatus = e.target.value
+      this.newArtifactIsDamaged = e.target.value
+    },
+    deleteArtifact: function (artifact) {
+      axiosStaff.delete('artifacts/' + artifact.artifactId)
+      .then(response => {
+        console.log(response)
+        window.location.reload()
+      })
+      .catch(e=> {
+        console.log('Error in DELETE artifacts/' + artifact.artifactId)
+        console.log(e)
+      })
+    },
+    sendInfo: function (artifact) {
+      this.currentArtifactName = artifact.name
+      this.currentArtifactDescription = artifact.description
+      this.currentArtifactWorth = artifact.worth
+      this.currentArtifactIsDamaged = artifact.isDamaged
+    },
   }
 }
 </script>
