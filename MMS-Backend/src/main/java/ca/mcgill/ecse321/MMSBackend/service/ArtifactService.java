@@ -331,7 +331,7 @@ public class ArtifactService {
         String absolute = img.getAbsolutePath();
         File newImage = new File(absolute);
 
-        if(!newImage.exists()) throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND,"Image file does not exist.");
+//        if(!newImage.exists()) throw new MuseumManagementSystemException(HttpStatus.NOT_FOUND,"Image file does not exist.");
 
         if(loanFee<0) throw new MuseumManagementSystemException(HttpStatus.BAD_REQUEST, "The loan fee can not be " +
                 "a negative value.");
