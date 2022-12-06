@@ -78,7 +78,7 @@ export default {
     },
     //makes sure that entered ticket fee is valid, or button cannot be clicked
     checkTicketEditFormValidity() {
-        return this.newTicketFee.trim().length > 0 && parseInt(this.newTicketFee) >= 0
+        return this.newTicketFee.trim().length > 0 && parseInt(this.newTicketFee) >= 0 && !isNaN(this.newTicketFee)
     },
     //function to update opening hours
     updateHours: function() {
