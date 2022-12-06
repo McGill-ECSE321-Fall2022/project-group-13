@@ -61,7 +61,7 @@ In teams of six students, we will gather requirements, design a multi-tier softw
 | <p align="center">Mona Kalaoun </p> |<p align="center">46 hours</p>| <p align="center"> Oversees Catalog Feature </p> |
 | <p align="center">Yu An Lu</p> |<p align="center">51 hours</p>| <p align="center"> Oversees Donation Request Feature </p> |
 | <p align="center">Nikolas Pasichnik</p> |<p align="center">46.5 hours</p>| <p align="center"> Oversees Account Feature </p> |
-| <p align="center">Lucy Zhang</p> |<p align="center">48 hours</p>| <p align="center"> Oversees Ticket </p> |
+| <p align="center">Lucy Zhang</p> |<p align="center">48 hours</p>| <p align="center"> Oversees Ticket Feature </p> |
 
 ### Project reports
 [Project Deliverable 3](https://github.com/McGill-ECSE321-Fall2022/project-group-13/wiki/Deliverable-3-Report)
