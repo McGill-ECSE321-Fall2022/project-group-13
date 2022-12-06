@@ -61,8 +61,8 @@
 .button-container {
   position: relative;
   top: 22%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 37.5%;
+  margin-right: 37.5%;
   width: 25%;
   display: block;
 }

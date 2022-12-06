@@ -26,7 +26,7 @@
         </table>
 
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
-    <b-modal modal-class="popup" id="view-artifact-modal" centered title="REQUEST" ok-only ok-variant="dark" ok-title="Back">
+    <b-modal modal-class="popup" id="view-artifact-modal" centered title="REQUEST" ok-only ok-variant="dark" ok-title="Back" hide-header-close>
                   <span class="modalContent"><strong>Title: </strong> {{this.artifactName}}<br></span>
                   <span class="modalContent"><strong>Description: </strong> {{this.artifactDescription}}<br></span>
                   <span class="modalContent"><strong>Worth: </strong> {{this.artifactWorth}}$<br></span>
@@ -40,6 +40,7 @@
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
     <b-modal modal-class="popup" id="make-loan-request-modal" centered title="REQUEST" ok-title="Confirm Request"
     ok-variant="light" cancel-variant="dark"
+    hide-header-close
     @show="resetLoanRequestModal"
     @hidden="resetLoanRequestModal"
     @ok="handleOkLoanRequestModal">
@@ -91,7 +92,11 @@ export default {
         axiosClient.get('artifacts/')
            .then(response => {
               console.log(response)
-              this.artifacts = response.data
+              for (let index in response.data) {
+                if (response.data[index].roomLocation != null) {
+                  this.artifacts.push(response.data[index])
+                }
+              }
            }).catch(e => {
               console.log('Error in GET artifacts')
               console.log(e)
@@ -151,7 +156,7 @@ export default {
            this.artifactLoanFee = artifact.loanFee
            this.artifactStatus = artifact.loanStatus
            this.artifactId = artifact.artifactId
-        },
+        }
     }
 }
 </script>

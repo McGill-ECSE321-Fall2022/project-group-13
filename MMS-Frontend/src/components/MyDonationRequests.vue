@@ -35,7 +35,7 @@
     <!-- Popup for create donation request -->
     <b-modal modal-class="popup" id="new-artifact-donation-modal" centered title="MAKE YOUR DONATION" 
       ok-title="Donate" ok-variant="light" cancel-variant="dark"
-      no-close-on-esc no-close-on-backdrop hide-header-close
+      hide-header-close
       @show="resetNewArtifactModal"
       @hidden="resetNewArtifactModal"
       @ok="handleOkNewArtifactModal"
