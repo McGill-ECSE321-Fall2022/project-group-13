@@ -1,6 +1,6 @@
 /**
  * @author Yu An Lu (yu-an-lu)
- * 
+ * This class handles front-end and http requests for the Manage Donation Requests page.
  */
  import axios from 'axios'
  var config = require('../../../config')
@@ -41,6 +41,7 @@
             })
     },
     methods: {
+        // Gets the storage room id
         getStorageRoom: function () {
             // Export this function scope to promise
             const self = this
@@ -60,6 +61,7 @@
                     })
             })
         },
+        // Approves a donation request
         approveDonationRequest: function (request) {
             axiosStaff.put('donationRequest/approveRequest/' + request.requestId, {}, {
                 params: {
@@ -75,6 +77,7 @@
                 console.log(e)
             })
         },
+        // Rejects a donation request
         rejectDonationRequest: function (request) {
             axiosStaff.put('donationRequest/rejectRequest/' + request.requestId)
             .then(response => {
@@ -86,6 +89,7 @@
                 console.log(e)
             })
         },
+        // Deletes a donation request
         deleteRejectedDonationRequest: function (request) {
             axiosStaff.delete('donationRequest/delete/' + request.requestId)
             .then(response => {
@@ -97,10 +101,12 @@
                 console.log(e)
             })
         },
+        // Called when approve button is clicked
         approveButton: async function (request) {
             this.storageRoomId = await this.getStorageRoom()
             this.approveDonationRequest(request)
         },
+        // Gets the details of a donation request & donated artifact
         sendInfo: function (request) {
             this.currentRequestId = request.currentRequestId
             this.currentDonationArtifactName = request.artifact.name
@@ -108,6 +114,7 @@
             this.currentDonationArtifactWorth = request.artifact.worth
             this.currentDonationArtifactIsDamaged = request.artifact.isDamaged
         },
+        // Handles donation request status filter
         statusOnChange: function (e) {
             this.displayedStatus = e.target.value
             if (this.displayedStatus == 'Pending') {
@@ -153,6 +160,7 @@
             }
             this.clientId = ''
         },
+        // Handles filter by client username
         getAllDonationRequestsByClient: function () {
             axiosStaff.get('donationRequests/ofClient/' + this.clientId)
                 .then(response => {
@@ -169,6 +177,7 @@
                     }
                 })
         },
+        // Shows alert when client username is invalid
         showAlert: function () {
             this.showDismissibleAlert = true
         }
