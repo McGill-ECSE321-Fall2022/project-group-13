@@ -34,7 +34,7 @@
           <b-form-input 
           :placeholder="this.oldTicketFee"
           v-model="newTicketFee"
-          :state="(newTicketFee.trim().length > 0 && parseInt(newTicketFee) >= 0) ? true : false"
+          :state="(newTicketFee.trim().length > 0 && parseInt(newTicketFee) >= 0 && !isNaN(newTicketFee)) ? true : false"
           required
           ></b-form-input>
           </b-form-group>
