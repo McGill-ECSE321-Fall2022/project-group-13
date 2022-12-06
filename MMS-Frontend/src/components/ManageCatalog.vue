@@ -26,10 +26,10 @@
         <td>{{artifact.name}}</td>
         <td><button class="styled-button" v-b-modal.view-artifact-modal @click="sendInfo(artifact)">View</button></td>
         <td>
-          <button class="styled-button" @click="approveButton(request)">Edit</button>
+          <button class="styled-button" v-b-modal.edit-artifact-modal @click="sendInfo(artifact)">Edit</button>
         </td>
         <td>
-          <button class="delete-button" @click="deleteArtifact(artifact)">Delete</button>
+          <button class="delete-button"  @click="deleteArtifact(artifact)">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -43,6 +43,107 @@
              @ok="handleOkNewArtifactModal"
     >
       <form ref="newArtifactForm" @submit.stop.prevent="handleSubmitNewArtifact">
+        <!-- Artifact Name -->
+        <b-form-group
+          label="Name"
+          invalid-feedback="Artifact Name is required"
+        >
+          <b-form-input
+            type="text"
+            placeholder="Artifact name"
+            v-model="newArtifactName"
+            :state="newArtifactName.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <!-- Artifact Description -->
+        <b-form-group
+          label="Description"
+          invalid-feedback="Description is required"
+        >
+          <b-form-textarea
+            placeholder="This artifact is ..."
+            v-model="newArtifactDescription"
+            rows="3"
+            max-rows="5"
+            :state="newArtifactDescription.trim().length > 0 ? true : false"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+
+        <!-- Artifact Loan Availability Status -->
+        <b-form-group
+          label="Loan Availability"
+        >
+          <select @change = "onChange($event)" class = "form-select form-control">
+            <option value = "Available"> Available </option>
+            <option value = "Unavailable"> Unavailable </option>
+          </select>
+        </b-form-group>
+
+        <!-- Loan Fee -->
+        <b-form-group
+          label="Loan Fee"
+        >
+          <b-form-input
+            type="number"
+            placeholder="0"
+            v-model="newArtifactFee"
+            :state="parseInt(newArtifactFee) > 0 && newArtifactFee.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <!-- Artifact Worth -->
+        <b-form-group
+          label="Worth"
+          invalid-feedback="Worth is required"
+        >
+          <b-form-input
+            type="number"
+            placeholder="0"
+            v-model="newArtifactWorth"
+            :state="parseInt(newArtifactWorth) > 0 && newArtifactWorth.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <!-- Artifact Preserved State -->
+        <b-form-group
+          label="Preserved State"
+        >
+          <select @change = "onChange($event)" class = "form-select form-control">
+            <option value = "Good"> Good </option>
+            <option value = "Damaged"> Damaged </option>
+          </select>
+        </b-form-group>
+
+        <!-- Artifact Room -->
+        <b-form-group
+          label="Room"
+          invalid-feedback="Room ID is required"
+        >
+          <b-form-input
+            type="number"
+            placeholder="0"
+            v-model="newArtifactRoom"
+            :state="parseInt(newArtifactRoom) > 0 && newArtifactRoom.trim().length > 0 ? true : false"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
+
+    <!--pop up for edit artifact -->
+    <b-modal modal-class="popup" id="edit-artifact-modal" centered title="Edit Artifact"
+             ok-title="Edit" ok-variant="light" cancel-variant="dark"
+             no-close-on-esc no-close-on-backdrop hide-header-close
+             @show="resetNewArtifactModal"
+             @hidden="resetNewArtifactModal"
+             @ok="handleOkNewArtifactModal"
+    >
+      <form ref="newArtifactForm" @submit.stop.prevent="handleEditArtifact">
         <!-- Artifact Name -->
         <b-form-group
           label="Name"
@@ -175,6 +276,16 @@ export default {
       currentArtifactWorth: '',
       currentArtifactIsDamaged: false,
       currentArtifactRoom: '',
+
+      editArtifactId: '',
+      editArtifactName: '',
+      editArtifactDescription: '',
+      editArtifactStatus: '',
+      editArtifactFee: '',
+      editArtifactWorth: '',
+      editArtifactIsDamaged: false,
+      editArtifactRoom: '',
+
       newArtifact: {},
       newArtifactName: '',
       newArtifactImage: '',
@@ -232,6 +343,40 @@ export default {
           })
 
     },
+    editArtifact: function () {
+      const self = this
+      let state = false
+      let status = 'Available'
+      if (self.newArtifactIsDamaged == 'Damaged') {
+        state = true
+      }
+      if (self.newArtifactStatus == 'Unavailable') {
+        status = 'Unavailable'
+      }
+      axiosStaff.put('/artifacts/${artifactId}', {}, {
+        params: {
+          name: self.editArtifactName,
+          description: self.editArtifactDescription,
+          image: self.editArtifactImage,
+          status: status,
+          loanFee: self.editArtifactFee,
+          isDamaged: state,
+          worth: self.editArtifactWorth,
+          roomId: self.editArtifactRoom,
+        }
+      })
+        .then(response => {
+            var result = response.data
+            console.log(response)
+            resolve(result)
+          },
+          error => {
+            console.log('Error in PUT editArtifact')
+            console.log(error)
+            reject(error)
+          })
+
+    },
     resetNewArtifactModal: function () {
       this.newArtifact = {}
       this.newArtifactName = ''
@@ -248,6 +393,11 @@ export default {
         this.newArtifactDescription.trim().length > 0 &&
         parseInt(this.newArtifactWorth) > 0
     },
+    checkEditArtifactFormValidity() {
+      return this.editArtifactName.trim().length > 0 &&
+        this.editArtifactDescription.trim().length > 0 &&
+        parseInt(this.editArtifactWorth) > 0
+    },
     handleSubmitNewArtifact: async function () {
       if (!this.checkNewArtifactFormValidity()) {
         return
@@ -258,9 +408,34 @@ export default {
       })
       window.location.reload();
     },
+    resetEditArtifactModal: function () {
+      this.editArtifact = {}
+      this.editArtifactName = ''
+      this.editArtifactImage = "MMS-backend/images/Donation.PNG"
+      this.editArtifactDescription = ''
+      this.editArtifactStatus = 'Available',
+        this.editArtifactFee = '',
+        this.editArtifactWorth = 0
+      this.editArtifactIsDamaged = 'Good',
+        this.editArtifactRoom = ''
+    },
     handleOkNewArtifactModal: function (bvModalEvent) {
       bvModalEvent.preventDefault()
       this.handleSubmitNewArtifact()
+    },
+    handleEditArtifact: async function () {
+      if (!this.checkEditArtifactFormValidity()){
+        return
+      }
+      this.editArtifact = await this.editArtifact()
+      this.$nextTick(() => {
+        this.$bvModal.hide("edit-artifact-modal")
+      })
+      window.location.reload();
+    },
+    handleOkEditArtifactModal: function (bvModalEvent) {
+      bvModalEvent.preventDefault()
+      this.handleEditArtifact()
     },
     onChange: function (e){
       this.newArtifactStatus = e.target.value
