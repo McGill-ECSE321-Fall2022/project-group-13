@@ -135,17 +135,19 @@
       </form>
     </b-modal>
 
-    <!-- Popup for view specific donation request -->
+    <!-- Popup for view specific artifact -->
     <b-modal modal-class="popup" id="view-artifact-modal" centered title="ARTIFACT INFO" hide-footer>
       <span class="view-artifact"><strong>Name: </strong> {{this.currentArtifactName}}<br></span>
       <span class="view-artifact"><strong>Description: </strong> {{this.currentArtifactDescription}}<br></span>
+      <span class="view-artifact"><strong>Loan Availability: </strong> {{this.currentArtifactStatus}}<br></span>
+      <span class="view-artifact"><strong>Loan Fee: </strong> {{this.currentArtifactFee}}$<br></span>
       <span class="view-artifact"><strong>Worth: </strong> {{this.currentArtifactWorth}}$<br></span>
       <span class="view-artifact"><strong>Condition: </strong>
         <span v-if="this.currentArtifactIsDamaged == false">Mint condition</span>
         <span v-else> There are damages to the item </span><br></span>
+      <span class="view-artifact"><strong>Room: </strong> {{this.currentArtifactRoom}}<br></span>
     </b-modal>
 
-    <!-- Alert -->
   </div>
 </template>
 
@@ -172,6 +174,7 @@ export default {
       currentArtifactFee: '',
       currentArtifactWorth: '',
       currentArtifactIsDamaged: false,
+      currentArtifactRoom: '',
       newArtifact: {},
       newArtifactName: '',
       newArtifactImage: '',
@@ -277,8 +280,11 @@ export default {
     sendInfo: function (artifact) {
       this.currentArtifactName = artifact.name
       this.currentArtifactDescription = artifact.description
+      this.currentArtifactStatus = artifact.status
+      this.currentArtifactFee = artifact.loanFee
       this.currentArtifactWorth = artifact.worth
       this.currentArtifactIsDamaged = artifact.isDamaged
+      this.currentArtifactRoom = artifact.roomId
     },
   }
 }
@@ -294,6 +300,25 @@ export default {
   top: 50px;
   left: 0px;
   overflow: hidden;
+}
+
+.delete-button {
+  background: white;
+  border-color: #008573;
+  color: #008573;
+  border-radius: 12px;
+  padding: 15px;
+  opacity: 1;
+  font-family: Inter;
+  font-weight: 600;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.delete-button:hover {
+  background: black;
+  border: none;
+  color: white;
 }
 
 </style>
