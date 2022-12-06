@@ -1,18 +1,22 @@
+<!-- @author Lucy Zhang (Lucy-Zh) -->
 <template>
     <div class="ticketPurchase">
         <head>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter|Inter:600">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         </head>
+        <!-- alert for if displayed ticket price is different from actual price -->
         <div style="margin-top:7%;">
             <b-alert v-model="showAlert" variant="info">Price has changed, please refresh the page and try again.</b-alert>  
         </div>
+        <!-- slogan and ticket price -->
         <div style="margin-top:2%; margin-left: 20%;">      
             <span class="slogan">Fulfill your curiosity with us.</span>
             <span class="ticketprice">Regular Admission: CA ${{ticketFee}}</span>
             <button class="styled-button bookTicketButton" v-b-modal.new-ticket-purchase-modal>Book Tickets</button>
         </div>
         <div><hr class="line"></div>
+        <!-- schedule -->
         <div class="weeklyOpening">
             <tr>
             <span style="font-family:inter; font-size: 30px; font-weight: 700; left: 0; padding:5px;">Opening Hours:</span>
@@ -53,6 +57,7 @@
             <td class="schedule" v-else>CLOSED</td>
             </tr>
         </div>
+        <!-- modal to buy tickets -->
         <b-modal modal-class="popup" id="new-ticket-purchase-modal" centered title="RESERVE YOUR SPOT" ok-only ok-title="Reserve" ok-variant="dark"
         @show="resetNewTicketPurchaseModal"
         @ok="handleSubmitNewTicketPurchase"

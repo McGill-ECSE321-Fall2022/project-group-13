@@ -1,3 +1,4 @@
+<!-- @author Lucy Zhang (Lucy-Zh) -->
 <template>
   <div class="myTickets">
       <head>
@@ -8,6 +9,7 @@
         <span class="title">MY TICKETS</span>
         <button class="styled-button bookTicketButton" onclick="window.location.href = '/client/ticketpurchase';">GET TICKETS</button>
       </div>
+      <!-- ticket table, all tickets found for current client -->
       <table class="styled-table">
         <thead>
           <tr>

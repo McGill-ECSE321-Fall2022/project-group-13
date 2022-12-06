@@ -1,3 +1,9 @@
+/**
+ * @author Samantha Perez Hoffman (samperezh)
+ * @author Lucy Zhang (Lucy-Zh)
+ * 
+ * This class handles front-end and http requests for the Manager Homepage.
+ */
 import axios from 'axios';
 var config = require('../../../config')
 
@@ -41,6 +47,7 @@ export default {
         })
     },
     methods: {
+    //function for edit ticket fee modal
     updateTicketFee: function() {
         axiosManager.put('/mms/fee',{},{params: {
             ticketFee: this.newTicketFee
@@ -69,9 +76,11 @@ export default {
         })
         window.location.reload();
     },
+    //makes sure that entered ticket fee is valid, or button cannot be clicked
     checkTicketEditFormValidity() {
         return this.newTicketFee.trim().length > 0 && parseInt(this.newTicketFee) >= 0
     },
+    //function to update opening hours
     updateHours: function() {
         const self= this;
         return new Promise(function (resolve, reject) {
@@ -126,6 +135,7 @@ export default {
             bvModalEvent.preventDefault()
             this.handleSubmitOpeningHours()
         },
+    //function to update specific day
     updateDayStatus: function() {
         const self= this;
         return new Promise(function (resolve, reject) {

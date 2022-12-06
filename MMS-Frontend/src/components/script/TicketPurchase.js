@@ -1,6 +1,7 @@
 /**
  * @author Lucy Zhang (Lucy-Zh)
  * 
+ * This class handles front-end and http requests for the Ticket Purchase page.
  */
 
 import axios from 'axios'
@@ -33,6 +34,7 @@ export default {
             }
         },
         created() {
+                //get museum ticket fee
                 axiosTicketPurchase.get('/mms/getMms')
                 .then(response => {
                     this.ticketFee = response.data.ticketFee;
