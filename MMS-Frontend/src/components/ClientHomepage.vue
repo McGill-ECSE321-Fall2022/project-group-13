@@ -39,7 +39,7 @@
 
 .subtitle {
   top: 55%;
-  color: #008573;
+  color: black;
   position: relative;
   font-family: Inter;
   font-weight: 450;
@@ -52,17 +52,17 @@
   top: 10%;
   width: 50%;
   height: 20%;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-left: auto;
+  margin-right: auto;
   background: rgba(255,255,255,1);
   opacity: 1;
 }
 
 .button-container {
   position: relative;
-  top: 15%;
-  margin-left: 37.5%;
-  margin-right: 37.5%;
+  top: 22%;
+  margin-left: auto;
+  margin-right: auto;
   width: 25%;
   display: block;
 }
