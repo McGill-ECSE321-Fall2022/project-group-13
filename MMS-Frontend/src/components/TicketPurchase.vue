@@ -12,7 +12,47 @@
             <span class="ticketprice">Regular Admission: CA ${{ticketFee}}</span>
             <button class="styled-button bookTicketButton" v-b-modal.new-ticket-purchase-modal>Book Tickets</button>
         </div>
-        <div style="margin-top:10%;"><hr class="line"></div>
+        <div><hr class="line"></div>
+        <div class="weeklyOpening">
+            <tr>
+            <span style="font-family:inter; font-size: 30px; font-weight: 700; left: 0; padding:5px;">Opening Hours:</span>
+            </tr>
+            <tr>
+            <td class="schedule">Monday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="monClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+            <tr>
+            <td class="schedule">Tuesday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="tueClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+            <tr>
+            <td class="schedule">Wednesday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="wedClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+            <tr>
+            <td class="schedule">Thursday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="thuClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+            <tr>
+            <td class="schedule">Friday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="friClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+            <tr>
+            <td class="schedule">Saturday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="satClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+            <tr>
+            <td class="schedule">Sunday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="schedule" v-if="sunClosed == false">{{openTime}}-{{closeTime}}</td>
+            <td class="schedule" v-else>CLOSED</td>
+            </tr>
+        </div>
         <b-modal modal-class="popup" id="new-ticket-purchase-modal" centered title="RESERVE YOUR SPOT" ok-only ok-title="Reserve" ok-variant="dark"
         @show="resetNewTicketPurchaseModal"
         @ok="handleSubmitNewTicketPurchase"
@@ -159,5 +199,16 @@
         .total{
             font-weight: 600;
             float: right;
+        }
+        .schedule{
+            font-size:20px; 
+            font-weight: 800; 
+            font-family: inter;
+            padding: 5px;
+            text-align: left;
+        }
+        .weeklyOpening{
+            margin-left: 20%;
+            margin-top: 5%;
         }
 </style>
