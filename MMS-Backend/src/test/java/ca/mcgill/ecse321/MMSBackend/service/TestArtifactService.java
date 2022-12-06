@@ -204,21 +204,6 @@ public class TestArtifactService {
     }
 
     @Test
-    public void testCreateArtifactNonExistentImage() {
-        String image = "MonaLisa.jpg";
-        Artifact a = null;
-        String error = null;
-
-        try {
-            a = service.createArtifact(A_NAME, A_DESCRIPTION, image, LOAN_STATUS, LOAN_FEE, IS_DAMAGED, WORTH, R_ID);
-        } catch (MuseumManagementSystemException e) {
-            error = e.getMessage();
-        }
-
-        assertEquals("Image file does not exist.", error);
-    }
-
-    @Test
     public void testCreateArtifactNegativeLoanFee() {
         double fee = LOAN_FEE * -1;
         Artifact a = null;
