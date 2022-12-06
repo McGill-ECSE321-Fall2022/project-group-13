@@ -7,8 +7,9 @@
         <div class="welcome">
         <p class="title">WELCOME TO THE CABINET OF CURIOSITIES </p>
         <p class="subtitle"> Fulfill your curiosity with us</p>
-        <br><br>
-        <a href="/client/ticketpurchase"> <button class="styledButton subtitle">Book Tickets</button> </a>
+        </div>
+        <div class="button-container">
+            <a href="/client/ticketpurchase"> <button class="styledButton subtitle">Tickets</button> </a>
         </div>
     </div>
 </template>
@@ -55,6 +56,15 @@
   margin-right: 25%;
   background: rgba(255,255,255,1);
   opacity: 1;
+}
+
+.button-container {
+  position: relative;
+  top: 15%;
+  margin-left: 37.5%;
+  margin-right: 37.5%;
+  width: 25%;
+  display: block;
 }
 
 .styledButton {
