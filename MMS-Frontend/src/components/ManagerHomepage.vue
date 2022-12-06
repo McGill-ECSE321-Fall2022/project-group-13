@@ -1,4 +1,4 @@
-<!-- @author Samantha Perez Hoffman (samperezh)-->
+<!-- @author Samantha Perez Hoffman (samperezh) @author Lucy Zhang (Lucy-Zh)-->
 
 <template>
     <div class="managerHomepage">
@@ -12,13 +12,16 @@
         <p class="subtitle"> Fulfill your curiosity with us</p>
         </div>
 
+        <!-- three homepage buttons -->
         <div class="button-container">
             <button class="styled-button" v-b-modal.edit-ticket-fee-modal>EDIT TICKET FEE</button>
             <button class="styled-button" v-b-modal.update-day-modal>EDIT DAY STATUS</button>
             <button class="styled-button" v-b-modal.update-hours-modal>EDIT OPENING HOURS</button>
         </div>
 
-        <b-modal modal-class="popup" id="edit-ticket-fee-modal" centered title="TICKET FEE" ok-title="Save" ok-variant="light" cancel-variant="dark"
+        <!-- modal for edit ticket fee -->
+        <b-modal modal-class="popup" id="edit-ticket-fee-modal" centered title="TICKET FEE" ok-title="Save" ok-variant="light" cancel-variant="dark" 
+        hide-header-close
         @show="resetEditTicketFeeModal"
         @hidden="resetEditTicketFeeModal"
         @ok="handleOkEditTicketFeeModal"
@@ -37,7 +40,10 @@
           </b-form-group>
         </form>
         </b-modal>
+
+        <!-- modal for update hours -->
         <b-modal modal-class="popup" id="update-hours-modal" centered title="OPENING HOURS" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      hide-header-close
       @show="resetUpdateHoursModal"
       @hidden="resetUpdateHoursModal"
       @ok="handleOkUpdateHoursModal"
@@ -71,8 +77,9 @@
       </form>
     </b-modal>
 
-
+    <!-- modal to change day status -->
     <b-modal modal-class="popup" id="update-day-modal" centered title="DAY STATUS" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      hide-header-close
       @show="resetUpdateDayModal"
       @hidden="resetUpdateDayModal"
       @ok="handleOkUpdateDayModal"

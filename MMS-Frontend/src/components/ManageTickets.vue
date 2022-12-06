@@ -1,3 +1,4 @@
+<!-- @author Lucy Zhang (Lucy-Zh) -->
 <template>
     <div class="viewTickets">
         <head>
@@ -5,6 +6,7 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         </head>
         <span class="title">ALL TICKETS</span>
+        <!-- table to display all tickets ever bought -->
         <table class="styled-table">
             <thead>
             <tr>
@@ -24,7 +26,7 @@
                     <td>${{ ticket.fee }}</td>
                     <td>{{ ticket.isActive }}</td>
                     <td>
-                        <button v-if="ticket.isActive == 'Inactive'" class="styled-button" @click="makeActive(ticket)">Make Active</button>
+                        <button v-if="ticket.isActive == 'Inactive'" class="make-active-button" @click="makeActive(ticket)">Make Active</button>
                         <button v-else class="styled-button" @click="makeInactive(ticket)">Make Inactive</button>
                      </td>
                 </tr>
@@ -45,5 +47,23 @@
   top: 0px;
   left: 0px;
   overflow: hidden;
+}
+.make-active-button {
+  background: black;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  opacity: 1;
+  font-family: Inter;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  transition: 0.2s;
+}
+.make-active-button:hover {
+  background: white;
+  border: solid;
+  border-color: black;
+  color: black;
 }
 </style>

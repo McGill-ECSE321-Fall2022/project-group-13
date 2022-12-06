@@ -27,7 +27,7 @@
                 </tr>
               </tbody>
         </table>
-      <b-modal modal-class="popup" id="view-request-modal" centered title="REQUEST" ok-only ok-variant="dark" ok-title="Back">
+      <b-modal modal-class="popup" id="view-request-modal" centered title="REQUEST" ok-only ok-variant="dark" ok-title="Back" hide-footer>
               <span class="modalContent"><strong>Title: </strong> {{this.artifactTitle}}<br></span>
               <span class="modalContent"><strong>Description: </strong> {{this.artifactDescription}}<br></span>
               <span class="modalContent"><strong>Worth: </strong> {{this.artifactWorth}}$<br></span>

@@ -1,6 +1,7 @@
 /**
  * @author Lucy Zhang (Lucy-Zh)
  * 
+ * This class handles front-end and http requests for the My Tickets page.
  */
  import axios from 'axios'
  var config = require('../../../config')
@@ -21,7 +22,7 @@
     },
     created() {
         let username = sessionStorage.getItem('loggedInClient');
-        axiosMyTickets.get('/tickets/' + username)
+        axiosMyTickets.get('/tickets/' + username) //gets all tickets by logged in client
                     .then(response => {
                       var response = response.data;
                       for (var i = 0; i < response.length; i++) {

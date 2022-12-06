@@ -1,6 +1,7 @@
 /**
  * @author Lucy Zhang (Lucy-Zh)
  * 
+ * This class handles front-end and http requests for the Manage Tickets page.
  */
  import axios from 'axios'
  var config = require('../../../config')
@@ -20,6 +21,7 @@
         }
     },
     created() {
+        //gets all tickets ever bought and attributes
         axiosManageTickets.get('/tickets')
                     .then(response => {
                         var response = response.data;
@@ -37,6 +39,7 @@
                     })
     },
     methods: {
+        //methods to change status of tickets for staff
         makeActive: function (ticket) {
             axiosManageTickets.put('/ticket/' + ticket.ticketId,{},{params: {
                 isActive: true

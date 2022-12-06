@@ -1,3 +1,4 @@
+<!-- @author Lucy Zhang (Lucy-Zh) -->
 <template>
   <div id="client">
     <router-view></router-view>
@@ -8,6 +9,7 @@
     <div class="clientHome">
         <a href="/client/myaccount">Hi, {{clientName}}!</a>
     </div>
+    <!-- navigation bar for clients -->
     <div class="topnav">
         <a href="/client/browsecatalog">Browse Catalog</a>
         <a href="/client/myloanrequests">My Loans</a>
@@ -19,6 +21,7 @@
         <img src="../assets/dinoLogo.png" alt="Home" style="width:70px;height:120;position: absolute;left: 0;bottom: 0;">
       </a>
     </button>
+    <!-- footer -->
   <footer class="text-white text-center text-lg-start" style="background-color: #01695a;">
     <!-- Grid container -->
     <div class="container p-4">
@@ -131,7 +134,7 @@ export default {
         const response = axiosClient.get('client/' + username);
         this.clientName = username;
 
-        //set opening and closing times
+        //set opening and closing times for opened days
         axiosClient.get('/mms/getMms')
         .then(response => {
                 this.openTime = response.data.openingTime;
@@ -140,6 +143,7 @@ export default {
         .catch(error => {
             console.log(error);
         })
+        //goes through each day of the week to check whether it is closed or not
         //get monday closing status
         axiosClient.get('mms/DayByDayType', {
             params: {

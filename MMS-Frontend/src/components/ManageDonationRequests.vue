@@ -1,3 +1,4 @@
+<!-- @author Yu An Lu (yu-an-lu) -->
 <template>
   <div class="manageDonationsRequests">
     <head>
@@ -5,7 +6,8 @@
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
     <span class="title">ALL DONATION REQUESTS</span>
-    <span class="title">ALL DONATION REQUESTS</span>
+
+    <!-- Search & Filter bar -->
     <div class="search-bar">
       <div class="search-dropdown">
         <span><strong>Filters:  &nbsp</strong></span>
@@ -20,6 +22,7 @@
       <button v-if="clientId.trim().length > 0" class="styled-button" @click="getAllDonationRequestsByClient()">Search</button>
       <button v-else class="delete-button" disabled>Search</button>
     </div>
+
     <!-- Display table for all donation requests -->
     <table class="styled-table">
       <thead>

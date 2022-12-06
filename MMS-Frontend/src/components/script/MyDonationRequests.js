@@ -1,6 +1,6 @@
 /**
  * @author Yu An Lu (yu-an-lu)
- * 
+ * This class handles front-end and http requests for the My Donation Requests page.
  */
 import axios from 'axios'
 var config = require('../../../config')
@@ -47,6 +47,7 @@ export default {
         this.clientId = username
     },
     methods: {
+        // Creates a new donation artifact
         createDonationArtifact: function () {
             // Export this function scope to promise
             const self = this
@@ -78,24 +79,8 @@ export default {
                         reject(error)
                     })
             })
-            // axiosClient.post('donationArtifact', {}, {
-            //     params: {
-            //         name: this.newDonationArtifactName,
-            //         image: this.newDonationArtifactImage,
-            //         description: this.newDonationArtifactDescription,
-            //         isDamaged: this.newDonationArtifactIsDamaged,
-            //         worth: this.newDonationArtifactWorth
-            //     }
-            // })
-            //     .then(response => {
-            //         console.log(response)
-            //         this.newDonationArtifact = response.data.artifactId
-            //     })
-            //     .catch(e => {
-            //         console.log('Error in POST createDonationArtifact')
-            //         console.log(e)
-            //     })
         },
+        // Creates a new donation request
         createDonationRequest: function () {
             axiosClient.post('donationRequest', {}, {
                 params: {
@@ -121,11 +106,13 @@ export default {
             this.newDonationArtifactWorth = 0
             this.newDonationArtifactIsDamaged = 'Good'
         },
+        // Check if all inputs to create a new donation artifact are valid
         checkNewArtifactFormValidity() {
             return this.newDonationArtifactName.trim().length > 0 && 
             this.newDonationArtifactDescription.trim().length > 0 && 
             parseInt(this.newDonationArtifactWorth) > 0 
         },
+        // Create donation request if all inputs are valid
         handleSubmitNewDonationArtifact: async function () {
             if (!this.checkNewArtifactFormValidity()) {
                 return
@@ -136,13 +123,16 @@ export default {
                 this.$bvModal.hide("new-artifact-donation-modal")
             })
         },
+        // Wrapper function when Donate button is clicked
         handleOkNewArtifactModal: function (bvModalEvent) {
             bvModalEvent.preventDefault()
             this.handleSubmitNewDonationArtifact()
         },
+        // Handles dropdown menu for preserved state
         onChange: function (e){
             this.newDonationArtifactIsDamaged = e.target.value
         },
+        // Gets details of the selected donation request and donated artifact
         sendInfo: function (request) {
             this.currentRequestId = request.currentRequestId
             this.currentDonationArtifactName = request.artifact.name
