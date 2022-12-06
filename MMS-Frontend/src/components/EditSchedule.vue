@@ -41,6 +41,7 @@
 
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
     <b-modal modal-class="popup" id="new-shift-modal" centered title="NEW SHIFT" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      hide-header-close
       @show="resetNewShiftModal"
       @hidden="resetNewShiftModal"
       @ok="handleOkNewShiftModal"
@@ -87,6 +88,7 @@
     </b-modal>
 
     <b-modal modal-class="popup" id="update-shift-modal" centered title="UPDATE SHIFT" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      hide-header-close
       @show="resetUpdateShiftModal"
       @hidden="resetUpdateShiftModal"
       @ok="handleOkUpdateShiftModal"
@@ -393,10 +395,9 @@ export default {
 }
 
 .employeeDropdown {
-  width: 20%;
-  position:relative; 
-  top: 50px;
-  margin:auto; 
+  position: absolute;
+  top: 6%;
+  right: 15px;
 }
 
 .deleteButton:hover {

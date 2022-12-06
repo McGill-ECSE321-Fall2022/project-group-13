@@ -106,10 +106,8 @@ export default {
 }
 
 .dayDropdown {
-  width: 20%;
-  position:relative; 
-  margin-top: 10%;
-  margin-left: auto; 
-  margin-right: auto;
+  position: absolute;
+  top: 6%;
+  right: 15px;
 }
 </style>

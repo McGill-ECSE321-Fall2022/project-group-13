@@ -18,7 +18,8 @@
             <button class="styled-button" v-b-modal.update-hours-modal>EDIT OPENING HOURS</button>
         </div>
 
-        <b-modal modal-class="popup" id="edit-ticket-fee-modal" centered title="TICKET FEE" ok-title="Save" ok-variant="light" cancel-variant="dark"
+        <b-modal modal-class="popup" id="edit-ticket-fee-modal" centered title="TICKET FEE" ok-title="Save" ok-variant="light" cancel-variant="dark" 
+        hide-header-close
         @show="resetEditTicketFeeModal"
         @hidden="resetEditTicketFeeModal"
         @ok="handleOkEditTicketFeeModal"
@@ -38,6 +39,7 @@
         </form>
         </b-modal>
         <b-modal modal-class="popup" id="update-hours-modal" centered title="OPENING HOURS" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      hide-header-close
       @show="resetUpdateHoursModal"
       @hidden="resetUpdateHoursModal"
       @ok="handleOkUpdateHoursModal"
@@ -73,6 +75,7 @@
 
 
     <b-modal modal-class="popup" id="update-day-modal" centered title="DAY STATUS" ok-title="Save" ok-variant="light" cancel-variant="dark"
+      hide-header-close
       @show="resetUpdateDayModal"
       @hidden="resetUpdateDayModal"
       @ok="handleOkUpdateDayModal"

@@ -40,6 +40,7 @@
 
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
     <b-modal modal-class="popup" id="new-employee-account-modal" centered title="CREATE NEW EMPLOYEE" ok-title="Create" ok-variant="light" cancel-variant="dark"
+    hide-header-close
     @show="resetNewEmployeeModal"
     @hidden="resetNewEmployeeModal"
     @ok="handleOkNewEmployeeModal"
@@ -221,38 +222,12 @@ export default {
   overflow: hidden;
 }
 
-.styled-table {
-    border-collapse: collapse;
-    margin: 200px 60px;
-    font-size: 25px;
-    font-family: sans-serif;
-    min-width: 90%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-
-.styled-table thead tr {
-    background-color: #008573;
-    color: #ffffff;
-    text-align: middle;
-}
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
 .CreateEmployeeButton {
   position: absolute;
   top: 50px;
   right: 15px;
 }
+
 .editSchedules {
   position: absolute;
   top: 50px;
@@ -264,7 +239,6 @@ export default {
   top: 50px;
   right: 440px;
 }
-
 
 /deep/ .popup {
   background: rgba(0, 0, 0, 0.5);

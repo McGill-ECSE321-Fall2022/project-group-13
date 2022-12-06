@@ -22,6 +22,7 @@
         
     <!-- Template for Pop up b-modal from https://bootstrap-vue.org/docs/components/modal -->
     <b-modal modal-class="popup" id="edit-client-account-modal" centered title="EDIT YOUR INFORMATION" ok-title="Save Changes" ok-variant="light" cancel-variant="dark"
+    hide-header-close
     @show="resetEditClientModal"
     @hidden="resetEditClientModal"
     @ok="handleOkEditClientModal"
