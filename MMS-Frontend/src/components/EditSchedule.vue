@@ -176,6 +176,7 @@ export default {
     }
   }, 
   created(){
+    // When page is loaded, get all employees to populate the drop down menu and shifts for selected employee (if any) to populate the table
     axiosManager.get('/employees')
     .then(response => {
         console.log(response)
@@ -202,6 +203,7 @@ export default {
     }
   },
   methods: {
+    //if the user selects a different employee, get the shifts for that employee
     onChange: function(){
         sessionStorage.setItem('selectedEmployeeSchedule', this.selectedEmployee)
         axiosManager.get('/shift/employee', {
@@ -218,6 +220,7 @@ export default {
             console.log(e)
         })
     }, 
+    //deletes shift from database and reloads page to show updated table
     deleteShift: function(shiftId){
         const self = this;
         var fetchDateUrl = ({shiftId}) => `/deleteShift/${shiftId}`;
@@ -232,6 +235,7 @@ export default {
         //reload page to show updated table
         window.location.reload();
     }, 
+    // when user clicks on the edit button next to a shift, open the modal to edit the shift
     updateShift : function() {
       const self = this
       let shiftId = self.updatedShiftId
@@ -265,12 +269,14 @@ export default {
         })
       })
     }, 
+    // sends info needed in the modal 
     sendInfo(s){
         this.updatedShiftId = s.shiftId
         this.oldShiftDay = s.specificWeekDay.dayType
         this.oldShiftStartTime = s.startTime
         this.oldShiftEndTime = s.endTime
     },
+    // when user clicks on the add shift button, open the modal to add a shift
     addNewShift : function() {
       const self = this
       return new Promise(function (resolve, reject) {

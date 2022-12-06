@@ -69,7 +69,7 @@ export default {
         
     },
     methods: {
-        //This method gets the current value of the dropdown menu
+        //Once selected day is changed, get the shifts for that day from the backend 
         onChange(e){
           this.selectedDay = e.target.value;
           if(this.selectedDay == "PickDay"){
