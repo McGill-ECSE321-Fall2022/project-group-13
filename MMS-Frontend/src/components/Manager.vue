@@ -20,6 +20,83 @@
           <img src="../assets/dinoLogo.png" alt="Home" style="width:70px;height:120;position: absolute;left: 0;bottom: 0;">
         </a>   
     </button>
+    <footer class="text-white text-center text-lg-start" style="background-color: #01695a;">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <!--Grid row-->
+      <div class="row mt-4">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4">About Cabinet of Curiosities</h5>
+
+          <p>
+            We are here to inspire and empower you to fulfill your curiosity through our exhibitions and events.
+          </p>
+        </div>
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4 pb-1">Main Entrance</h5>
+              <span class="ms-2">3630 Rue University,<br>Montréal, QC H3A 2B3<br><br></span>
+              <span class="ms-2">contact@cabinetofcuriosities.com<br><br></span>
+              <span class="ms-2">(514) 398-7878</span>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4">Opening hours</h5>
+
+          <table class="table text-center text-white">
+            <tbody class="fw-normal">
+              <tr>
+                <td>Monday:</td>
+                <td v-if="monClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Tuesday:</td>
+                <td v-if="tueClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Wednesday:</td>
+                <td v-if="wedClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Thursday:</td>
+                <td v-if="thuClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Friday:</td>
+                <td v-if="friClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Saturday:</td>
+                <td v-if="satClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+              <tr>
+                <td>Sunday:</td>
+                <td v-if="sunClosed == false">{{openTime}}-{{closeTime}}</td>
+                <td v-else>CLOSED</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      ©2022 Montreal Cabinet of Curiosities
+    </div>
+    <!-- Copyright -->
+  </footer>
   </div>
 </template>
 
@@ -39,12 +116,116 @@ export default {
   data() {
       return {
         managerName: '',
+        closeTime: '',
+        monClosed: false,
+        tueClosed: false,
+        wedClosed: false,
+        thuClosed: false,
+        friClosed: false,
+        satClosed: false,
+        sunClosed: false,
       }
     },
   created() {
         let username = sessionStorage.getItem('loggedInManager');
         const response = axiosManager.get('/managers');
         this.managerName = username;
+
+        //set opening and closing times
+        axiosManager.get('/mms/getMms')
+        .then(response => {
+                this.openTime = response.data.openingTime;
+                this.closeTime = response.data.closingTime;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get monday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: 'Monday',
+            }
+        })
+        .then(response => {
+                console.log(response)
+                this.monClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get tuesday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: 'Tuesday',
+            }
+        })
+        .then(response => {
+                console.log(response.isClosed)
+                this.tueClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get wednesday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: "Wednesday",
+            }
+        })
+        .then(response => {
+                this.wedClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get thursday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: "Thursday",
+            }
+        })
+        .then(response => {
+                this.thuClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get friday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: "Friday",
+            }
+        })
+        .then(response => {
+                this.friClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get saturday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: "Saturday",
+            }
+        })
+        .then(response => {
+                this.satClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        //get sunday closing status
+        axiosManager.get('mms/DayByDayType', {
+            params: {
+                    day: "Sunday",
+            }
+        })
+        .then(response => {
+                this.sunClosed = response.data.isClosed;
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
   }
 </script>
