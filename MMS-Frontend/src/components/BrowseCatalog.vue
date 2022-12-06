@@ -99,10 +99,11 @@ export default {
     },
     methods: {
         createLoanRequest: function () {
-        // Export this function scope to promise
+          // Export this function scope to promise
           const self = this
           let username = sessionStorage.getItem('loggedInClient')
           return new Promise(function (resolve, reject) {
+          // create a loan request
           axiosClient.post('loanRequest', {}, {
              params: {
                loanDuration: self.loanDuration,
@@ -131,6 +132,7 @@ export default {
             if (!this.checkLoanRequestFormValidity()) {
                 return
             }
+            // loan request is created and we hide the modal
             this.createLoanRequest()
             this.$nextTick(() => {
                 this.$bvModal.hide("make-loan-request-modal")
@@ -140,6 +142,7 @@ export default {
             bvModalEvent.preventDefault()
             this.handleSubmitNewLoanRequest()
         },
+        // updating data to be displayed in the view modal
         sendInfo(artifact){
            this.artifactName = artifact.name
            this.artifactDescription = artifact.description
